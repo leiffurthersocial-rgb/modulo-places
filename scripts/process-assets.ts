@@ -76,6 +76,11 @@ const manifest: Manifest = existsSync(manifestPath)
   ? (JSON.parse(readFileSync(manifestPath, 'utf8')) as Manifest)
   : { materials: {}, models: {}, hdris: {}, audio: {} };
 
+function saveManifest(): void {
+  mkdirSync(dirname(manifestPath), { recursive: true });
+  writeFileSync(manifestPath, JSON.stringify(manifest, null, 1) + '\n');
+}
+
 /** Write bytes as <dir>/<name>.<hash8><ext>; returns the site-relative URL. */
 function writeHashed(dir: string, name: string, ext: string, data: Uint8Array): string {
   const hash = createHash('sha256').update(data).digest('hex').slice(0, 8);
@@ -192,6 +197,21 @@ async function processModels(p: Picks): Promise<void> {
     .registerExtensions(ALL_EXTENSIONS)
     .registerDependencies({ 'meshopt.encoder': MeshoptEncoder });
   for (const [key, m] of Object.entries(p.models ?? {})) {
+    if (manifest.models[key]?.id === m.id && !process.argv.includes('--force')) {
+      console.log(`  · model ${key} already processed`);
+      continue;
+    }
+    try {
+      await processModel(io, key, m);
+    } catch (e) {
+      console.error(`  ✗ model ${key} (${m.id}): ${(e as Error).message}`);
+    }
+    saveManifest(); // persist progress after every model (scans can take minutes each)
+  }
+}
+
+async function processModel(io: NodeIO, key: string, m: NonNullable<Picks['models']>[string]): Promise<void> {
+  {
     const src = await polyhavenModel(m.id, '2k');
     const doc: Document = await io.read(src);
     await doc.transform(dedup(), prune(), weld(), resample());
@@ -269,8 +289,16 @@ async function processModels(p: Picks): Promise<void> {
       ktx2({ isUASTC: false, qualityLevel: 220, generateMipmap: true, imageDecoder }) as never,
     );
     // Normal maps in models are ETC1S here for size; revisit per model if artefacts show.
-    await doc.transform(meshopt({ encoder: MeshoptEncoder, level: 'medium' }));
-    const glb = await io.writeBinary(doc);
+    let glb: Uint8Array;
+    try {
+      const compressed = cloneDocument(doc);
+      await compressed.transform(meshopt({ encoder: MeshoptEncoder, level: 'medium' }));
+      glb = await io.writeBinary(compressed);
+    } catch (e) {
+      // Some scans carry attribute layouts the meshopt encoder rejects; ship uncompressed instead.
+      console.warn(`  ! model ${key}: meshopt failed (${(e as Error).message}); writing uncompressed`);
+      glb = await io.writeBinary(doc);
+    }
     manifest.models[key] = {
       source: m.source,
       id: m.id,
@@ -437,8 +465,7 @@ if (!only || only === 'materials') await processMaterials(picks);
 if (!only || only === 'models') await processModels(picks);
 if (!only || only === 'hdris') await processHdris(picks);
 if (!only || only === 'audio') processAudio(picks);
-mkdirSync(dirname(manifestPath), { recursive: true });
-writeFileSync(manifestPath, JSON.stringify(manifest, null, 1) + '\n');
+saveManifest();
 writeCredits();
 sizeReport();
 console.log(`pack total: ${(packBytes() / 1048576).toFixed(1)} MB`);
