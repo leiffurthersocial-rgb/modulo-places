@@ -4,6 +4,9 @@ Newest first. Each entry: decision · why · source (only pages actually opened;
 
 ## 2026-11-13 — M2 asset pipeline
 
+### D-027 Half-resolution normals on the 2k tier
+Measured on `forest_leaves_02`, 2k normal map: UASTC+zstd 5.5 MB; UASTC RDO level 4 5.0 MB; RDO level 8 4.6 MB (ktx2-encoder's RDO barely helps); ETC1S 1.15 MB, but blocky. Non-hero materials therefore ship 1k UASTC normals in the 2k tier (≈1.4 MB). At walking distance on rough natural surfaces the loss is minor. Hero materials keep full-res normals. Colour maps are flagged sRGB in the KTX2 (`isSetKTX2SRGBTransferFunc`) so three decodes them correctly.
+
 ### D-026 Shipped asset files are content-hashed under /pack
 `process-assets.ts` writes `public/pack/<kind>/<key>/<name>.<sha256-8>.<ext>` plus `public/pack/manifest.json`. Hashed names make long-term immutable caching safe; `vercel.json` gives `/pack/*` the same immutable header as `/assets/*`. The manifest itself is not hashed and is revalidated.
 

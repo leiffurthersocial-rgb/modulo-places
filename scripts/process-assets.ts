@@ -15,7 +15,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import { basename, dirname, extname, join } from 'node:path';
 import { NodeIO, type Document } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
-import { cloneDocument, dedup, meshopt, mergeDocuments, prune, resample, simplify, textureCompress, weld } from '@gltf-transform/functions';
+import { cloneDocument, dedup, meshopt, mergeDocuments, prune, resample, simplify, textureCompress, unpartition, weld } from '@gltf-transform/functions';
 import { encodeToKTX2 } from 'ktx2-encoder';
 import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer';
 import sharp from 'sharp';
@@ -87,9 +87,12 @@ async function processMaterials(p: Picks): Promise<void> {
     for (const t of tiers) {
       const dir = `materials/${key}/${t}`;
       const color = await sharp(files.color).resize(t, t).png().toBuffer();
-      const normal = await sharp(files.normal).resize(t, t).png().toBuffer();
+      // UASTC normals compress poorly (RDO barely helps with this encoder), so the 2k+ tiers of
+      // non-hero materials ship half-resolution normals (DECISIONS D-027).
+      const nSize = !m.hero && t >= 2048 ? t / 2 : t;
+      const normal = await sharp(files.normal).resize(nSize, nSize).png().toBuffer();
       const arm = await armImage(files, t);
-      const kColor = await encodeToKTX2(new Uint8Array(color), { isUASTC: false, qualityLevel: 230, compressionLevel: 2, generateMipmap: true, isPerceptual: true, imageDecoder });
+      const kColor = await encodeToKTX2(new Uint8Array(color), { isUASTC: false, qualityLevel: 230, compressionLevel: 2, generateMipmap: true, isPerceptual: true, isSetKTX2SRGBTransferFunc: true, imageDecoder });
       const kArm = await encodeToKTX2(new Uint8Array(arm), { isUASTC: false, qualityLevel: 200, compressionLevel: 2, generateMipmap: true, isPerceptual: false, imageDecoder });
       const kNormal = await encodeToKTX2(new Uint8Array(normal), { isUASTC: true, isNormalMap: true, needSupercompression: true, generateMipmap: true, isPerceptual: false, imageDecoder });
       entry.tiers[t] = {
@@ -133,7 +136,7 @@ async function processModels(p: Picks): Promise<void> {
     const lod0 = doc.createNode('LOD0');
     for (const n of baseNodes) lod0.addChild(n);
     baseScene.addChild(lod0);
-    await doc.transform(dedup(), prune());
+    await doc.transform(dedup(), prune(), unpartition());
     for (const node of baseScene.listChildren()) {
       let tris = 0;
       node.traverse((n) => {
@@ -144,6 +147,7 @@ async function processModels(p: Picks): Promise<void> {
     await doc.transform(textureCompress({ encoder: sharp, resize: [1024, 1024], targetFormat: 'png' }));
     const { ktx2 } = await import('ktx2-encoder/gltf-transform');
     await doc.transform(ktx2({ isUASTC: false, qualityLevel: 220, generateMipmap: true, imageDecoder }) as never);
+    // Normal maps in models are ETC1S here for size; revisit per model if artefacts show.
     await doc.transform(meshopt({ encoder: MeshoptEncoder, level: 'medium' }));
     const glb = await io.writeBinary(doc);
     manifest.models[key] = { source: m.source, id: m.id, file: writeHashed('models', key.replaceAll('/', '-'), '.glb', glb), bytes: glb.byteLength, lods: ratios.length, triangles };

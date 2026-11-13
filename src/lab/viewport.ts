@@ -84,7 +84,11 @@ export class Viewport {
     installFogChunks();
     this.scene.fog = new THREE.FogExp2(0x000000, 0); // enables USE_FOG; real fog is in the chunks
     this.pipeline = new RenderPipeline(container, this.scene, this.camera);
-    this.pipeline.setQuality(QUALITY_PRESETS.high);
+    // Default is the high preset; ?quality=low|medium|... is a debug escape for weak GPUs/software GL.
+    const qp = new URLSearchParams(location.search).get('quality');
+    const preset =
+      qp && qp in QUALITY_PRESETS ? QUALITY_PRESETS[qp as keyof typeof QUALITY_PRESETS] : QUALITY_PRESETS.high;
+    this.pipeline.setQuality(preset);
     this.pmrem = new THREE.PMREMGenerator(this.pipeline.renderer);
     this.blender = new MoodBlender(initial);
 
@@ -93,7 +97,7 @@ export class Viewport {
     this.envScene.add(envSky);
 
     this.scene.add(this.sky.mesh, this.hemi, this.sun, this.sun.target);
-    const q = QUALITY_PRESETS.high.shadows;
+    const q = preset.shadows;
     this.sun.castShadow = q.enabled;
     this.sun.shadow.mapSize.set(q.mapSize, q.mapSize);
     const sc = this.sun.shadow.camera;

@@ -338,7 +338,7 @@ function startLab(root: HTMLElement, manifest: LabManifest): void {
               );
             }),
           ),
-      h('p', { class: 'note' }, 'Page: /lab.html. HDRI previews only; loading HDRIs comes later.'),
+      h('p', { class: 'note' }, 'HDRIs are preview thumbnails only; the lab does not load them as environment maps.'),
     );
   }
 
