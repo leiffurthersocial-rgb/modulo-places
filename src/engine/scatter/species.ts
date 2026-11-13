@@ -25,8 +25,27 @@ export interface Species {
   owned: (THREE.BufferGeometry | THREE.Material)[];
 }
 
+/** Greybox stand-in for a pack model that is not available (e.g. assets not processed yet). */
+export function placeholderIdFor(id: string): string {
+  if (!id.startsWith('model:')) return id;
+  const k = id.toLowerCase();
+  const map: [RegExp, string][] = [
+    [/broadleaf/, 'broadleaf'],
+    [/fir|pine|sapling|tree/, 'tree'],
+    [/boulder/, 'boulder'],
+    [/rock/, 'rock'],
+    [/trunk|log/, 'log'],
+    [/stump|root/, 'stump'],
+    [/fern/, 'fern'],
+    [/grass/, 'grass'],
+    [/shrub|nettle|weed|moss/, 'bush'],
+    [/branch/, 'pebble'],
+  ];
+  return map.find(([re]) => re.test(k))?.[1] ?? 'rock';
+}
+
 export function placeholderSpecies(id: string): Species {
-  const p = buildPlaceholderSpecies(id);
+  const p = buildPlaceholderSpecies(placeholderIdFor(id));
   patchMaterial(p.material, { wind: p.wind, windHeight: p.windHeight, flutter: p.flutter });
   return {
     variants: [p.lods.map((g) => [{ geometry: g, material: p.material, castShadow: true }])],
