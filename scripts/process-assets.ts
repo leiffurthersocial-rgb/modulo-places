@@ -195,6 +195,21 @@ function sizeReport(): void {
   writeFileSync(join(ROOT, 'reports', 'asset-sizes.md'), lines.join('\n') + '\n');
 }
 
+/** Credits for shipped assets only (lab candidates are credited on the lab page). */
+function writeCredits(): void {
+  const lic = JSON.parse(readFileSync(join(ROOT, 'assets', 'LICENSES.json'), 'utf8')) as Record<string, { name: string; authors: string[]; license: string; url: string; source: string }>;
+  const keys = new Set<string>();
+  for (const m of Object.values(manifest.materials)) keys.add(`${m.source}:${m.id}`);
+  for (const m of Object.values(manifest.models)) keys.add(`${m.source}:${m.id}`);
+  for (const h of Object.values(manifest.hdris)) keys.add(`${h.source}:${h.id}`);
+  const out = [...keys].sort().map((k) => {
+    const e = lic[k];
+    if (!e) throw new Error(`No license entry for shipped asset ${k}`);
+    return { name: e.name, role: `${e.source} · ${e.authors.join(', ')}`, license: e.license, url: e.url };
+  });
+  writeFileSync(join(ROOT, 'src', 'data', 'asset-credits.json'), JSON.stringify(out, null, 2) + '\n');
+}
+
 function packBytes(): number {
   if (!existsSync(PACK)) return 0;
   let n = 0;
@@ -221,5 +236,6 @@ if (!only || only === 'hdris') await processHdris(picks);
 if (!only || only === 'audio') processAudio(picks);
 mkdirSync(dirname(manifestPath), { recursive: true });
 writeFileSync(manifestPath, JSON.stringify(manifest, null, 1) + '\n');
+writeCredits();
 sizeReport();
 console.log(`pack total: ${(packBytes() / 1048576).toFixed(1)} MB`);

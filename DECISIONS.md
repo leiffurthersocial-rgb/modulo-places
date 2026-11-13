@@ -2,6 +2,26 @@
 
 Newest first. Each entry: decision · why · source (only pages actually opened; see RESEARCH.md).
 
+## 2026-11-13 — M2 asset pipeline
+
+### D-026 Shipped asset files are content-hashed under /pack
+`process-assets.ts` writes `public/pack/<kind>/<key>/<name>.<sha256-8>.<ext>` plus `public/pack/manifest.json`. Hashed names make long-term immutable caching safe; `vercel.json` gives `/pack/*` the same immutable header as `/assets/*`. The manifest itself is not hashed and is revalidated.
+
+### D-025 Lab previews: Poly Haven live from CDN, ambientCG as committed WebP
+Poly Haven's CDN sends `Access-Control-Allow-Origin: *` and its API terms allow live use with credit. So `/lab` loads Poly Haven candidates directly (1k JPG) and credits them on the page. ambientCG only ships zips, so its candidates become 1k WebP previews in `public/lab/acg/` (≈0.6 MB each). To limit repo growth, previews are generated per scene when that scene is being worked on (`--scene forest` now).
+
+### D-024 KTX2 encoding settings
+Colour uses ETC1S (q230, sRGB). ARM uses ETC1S (q200, linear). Normals use UASTC + zstd, because ETC1S block artefacts are very visible in normals. Tiers are 512/1k/2k, plus 4k for hero picks. GPU memory is ≈1 byte/px after transcoding to ASTC 4×4/ETC2, so a 2k material (3 maps, mips) is ≈16 MB.
+
+### D-023 Model LODs inside one GLB
+`simplify` (meshoptimizer) builds LOD1/LOD2 at ratios 0.35/0.12 by default (overridable per pick). These are merged as `LOD0..2` nodes into one GLB sharing the same KTX2 textures, then meshopt-compressed. Impostors are baked at scene load in the engine (resolution per quality tier) instead of shipped, which saves download and memory. This is implemented with the real trees in M3.
+
+### D-022 Node fetch through the session proxy
+Node's built-in `fetch` ignores `HTTPS_PROXY`. The npm scripts set `NODE_USE_ENV_PROXY=1`; it is a no-op on machines without a proxy.
+
+### D-021 ambientCG download host
+ambientCG's `/get` endpoint redirects to `acg-download.struffelproductions.com`. That exact host was added to the `modulo-places` cloud environment.
+
 ## 2026-11-13 — M1 engine greybox
 
 ### D-020 N8AO 2.0.1 + one-line patch for three r187
