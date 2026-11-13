@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.asset-cache/
+playwright-report/
+test-results/
+screenshots/latest/
+.vercel
+.env*
+!.env.example
+*.log
