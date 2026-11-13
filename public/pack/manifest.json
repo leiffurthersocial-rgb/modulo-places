@@ -1,0 +1,199 @@
+{
+ "materials": {
+  "forest/moss": {
+   "source": "ambientcg",
+   "id": "Moss001",
+   "tiers": {
+    "1024": {
+     "color": "/pack/materials/forest/moss/1024/color.689d7757.ktx2",
+     "normal": "/pack/materials/forest/moss/1024/normal.a340ffd0.ktx2",
+     "arm": "/pack/materials/forest/moss/1024/arm.07450a5c.ktx2",
+     "bytes": 1868896
+    },
+    "512": {
+     "color": "/pack/materials/forest/moss/512/color.c17d52b2.ktx2",
+     "normal": "/pack/materials/forest/moss/512/normal.8cf5afa7.ktx2",
+     "arm": "/pack/materials/forest/moss/512/arm.7a21c57d.ktx2",
+     "bytes": 506187
+    },
+    "2048": {
+     "color": "/pack/materials/forest/moss/2048/color.0a800edf.ktx2",
+     "normal": "/pack/materials/forest/moss/2048/normal.a340ffd0.ktx2",
+     "arm": "/pack/materials/forest/moss/2048/arm.b3058c1d.ktx2",
+     "bytes": 3377210
+    }
+   }
+  },
+  "forest/bark-pine": {
+   "source": "polyhaven",
+   "id": "pine_bark",
+   "tiers": {
+    "1024": {
+     "color": "/pack/materials/forest/bark-pine/1024/color.df215e91.ktx2",
+     "normal": "/pack/materials/forest/bark-pine/1024/normal.3bacc4a4.ktx2",
+     "arm": "/pack/materials/forest/bark-pine/1024/arm.4aac6597.ktx2",
+     "bytes": 1818278
+    },
+    "512": {
+     "color": "/pack/materials/forest/bark-pine/512/color.c5b08500.ktx2",
+     "normal": "/pack/materials/forest/bark-pine/512/normal.4c64fb45.ktx2",
+     "arm": "/pack/materials/forest/bark-pine/512/arm.79b74df4.ktx2",
+     "bytes": 495562
+    },
+    "2048": {
+     "color": "/pack/materials/forest/bark-pine/2048/color.cc894360.ktx2",
+     "normal": "/pack/materials/forest/bark-pine/2048/normal.3bacc4a4.ktx2",
+     "arm": "/pack/materials/forest/bark-pine/2048/arm.2bc29497.ktx2",
+     "bytes": 2993967
+    }
+   }
+  },
+  "forest/forest-floor": {
+   "source": "polyhaven",
+   "id": "brown_mud_leaves_01",
+   "tiers": {
+    "1024": {
+     "color": "/pack/materials/forest/forest-floor/1024/color.c8f6af2d.ktx2",
+     "normal": "/pack/materials/forest/forest-floor/1024/normal.708eac60.ktx2",
+     "arm": "/pack/materials/forest/forest-floor/1024/arm.c9fab0a2.ktx2",
+     "bytes": 1875698
+    },
+    "512": {
+     "color": "/pack/materials/forest/forest-floor/512/color.82e07146.ktx2",
+     "normal": "/pack/materials/forest/forest-floor/512/normal.fca067d7.ktx2",
+     "arm": "/pack/materials/forest/forest-floor/512/arm.9cdbe85d.ktx2",
+     "bytes": 507219
+    },
+    "2048": {
+     "color": "/pack/materials/forest/forest-floor/2048/color.38f940ea.ktx2",
+     "normal": "/pack/materials/forest/forest-floor/2048/normal.708eac60.ktx2",
+     "arm": "/pack/materials/forest/forest-floor/2048/arm.0256d176.ktx2",
+     "bytes": 3262859
+    }
+   }
+  },
+  "forest/bark-knotted": {
+   "source": "polyhaven",
+   "id": "knotted_pine_bark",
+   "tiers": {
+    "1024": {
+     "color": "/pack/materials/forest/bark-knotted/1024/color.32208d5d.ktx2",
+     "normal": "/pack/materials/forest/bark-knotted/1024/normal.ff68b0e8.ktx2",
+     "arm": "/pack/materials/forest/bark-knotted/1024/arm.d6adbc95.ktx2",
+     "bytes": 1809923
+    },
+    "512": {
+     "color": "/pack/materials/forest/bark-knotted/512/color.09da79c4.ktx2",
+     "normal": "/pack/materials/forest/bark-knotted/512/normal.f08631ef.ktx2",
+     "arm": "/pack/materials/forest/bark-knotted/512/arm.7880a049.ktx2",
+     "bytes": 489838
+    },
+    "2048": {
+     "color": "/pack/materials/forest/bark-knotted/2048/color.23839a28.ktx2",
+     "normal": "/pack/materials/forest/bark-knotted/2048/normal.ff68b0e8.ktx2",
+     "arm": "/pack/materials/forest/bark-knotted/2048/arm.687c6b2a.ktx2",
+     "bytes": 3008693
+    }
+   }
+  },
+  "forest/dirt-path": {
+   "source": "ambientcg",
+   "id": "Ground086",
+   "tiers": {
+    "1024": {
+     "color": "/pack/materials/forest/dirt-path/1024/color.3a86d4e7.ktx2",
+     "normal": "/pack/materials/forest/dirt-path/1024/normal.8d75e652.ktx2",
+     "arm": "/pack/materials/forest/dirt-path/1024/arm.02d7f304.ktx2",
+     "bytes": 1843810
+    },
+    "512": {
+     "color": "/pack/materials/forest/dirt-path/512/color.a9c38da7.ktx2",
+     "normal": "/pack/materials/forest/dirt-path/512/normal.c51b12f7.ktx2",
+     "arm": "/pack/materials/forest/dirt-path/512/arm.014c8ea8.ktx2",
+     "bytes": 501175
+    },
+    "2048": {
+     "color": "/pack/materials/forest/dirt-path/2048/color.e38d4d1e.ktx2",
+     "normal": "/pack/materials/forest/dirt-path/2048/normal.8d75e652.ktx2",
+     "arm": "/pack/materials/forest/dirt-path/2048/arm.c4fa59a9.ktx2",
+     "bytes": 3174179
+    }
+   }
+  },
+  "forest/creek-bed": {
+   "source": "polyhaven",
+   "id": "river_small_rocks",
+   "tiers": {
+    "1024": {
+     "color": "/pack/materials/forest/creek-bed/1024/color.f358b343.ktx2",
+     "normal": "/pack/materials/forest/creek-bed/1024/normal.d5144078.ktx2",
+     "arm": "/pack/materials/forest/creek-bed/1024/arm.5cab8a00.ktx2",
+     "bytes": 1857677
+    },
+    "512": {
+     "color": "/pack/materials/forest/creek-bed/512/color.c925882d.ktx2",
+     "normal": "/pack/materials/forest/creek-bed/512/normal.a6cd862e.ktx2",
+     "arm": "/pack/materials/forest/creek-bed/512/arm.1cdd1b86.ktx2",
+     "bytes": 506899
+    },
+    "2048": {
+     "color": "/pack/materials/forest/creek-bed/2048/color.89bc18e0.ktx2",
+     "normal": "/pack/materials/forest/creek-bed/2048/normal.d5144078.ktx2",
+     "arm": "/pack/materials/forest/creek-bed/2048/arm.e51d6f07.ktx2",
+     "bytes": 3182592
+    }
+   }
+  },
+  "forest/bark": {
+   "source": "polyhaven",
+   "id": "jolcham_oak_bark_01",
+   "tiers": {
+    "1024": {
+     "color": "/pack/materials/forest/bark/1024/color.52f53344.ktx2",
+     "normal": "/pack/materials/forest/bark/1024/normal.d4a43c9b.ktx2",
+     "arm": "/pack/materials/forest/bark/1024/arm.9c129626.ktx2",
+     "bytes": 1851574
+    },
+    "512": {
+     "color": "/pack/materials/forest/bark/512/color.7ec0d9ed.ktx2",
+     "normal": "/pack/materials/forest/bark/512/normal.2c7039bf.ktx2",
+     "arm": "/pack/materials/forest/bark/512/arm.92fed726.ktx2",
+     "bytes": 505021
+    },
+    "2048": {
+     "color": "/pack/materials/forest/bark/2048/color.0f8b5422.ktx2",
+     "normal": "/pack/materials/forest/bark/2048/normal.d4a43c9b.ktx2",
+     "arm": "/pack/materials/forest/bark/2048/arm.485b7efc.ktx2",
+     "bytes": 3140334
+    }
+   }
+  },
+  "forest/rock": {
+   "source": "polyhaven",
+   "id": "aerial_rocks_04",
+   "tiers": {
+    "1024": {
+     "color": "/pack/materials/forest/rock/1024/color.3bd35150.ktx2",
+     "normal": "/pack/materials/forest/rock/1024/normal.14b3fbac.ktx2",
+     "arm": "/pack/materials/forest/rock/1024/arm.bdafd999.ktx2",
+     "bytes": 1872074
+    },
+    "512": {
+     "color": "/pack/materials/forest/rock/512/color.de1d0022.ktx2",
+     "normal": "/pack/materials/forest/rock/512/normal.0f4219c9.ktx2",
+     "arm": "/pack/materials/forest/rock/512/arm.17c08144.ktx2",
+     "bytes": 510033
+    },
+    "2048": {
+     "color": "/pack/materials/forest/rock/2048/color.e3639a33.ktx2",
+     "normal": "/pack/materials/forest/rock/2048/normal.14b3fbac.ktx2",
+     "arm": "/pack/materials/forest/rock/2048/arm.ae171e36.ktx2",
+     "bytes": 3253515
+    }
+   }
+  }
+ },
+ "models": {},
+ "hdris": {},
+ "audio": {}
+}
