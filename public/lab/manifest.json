@@ -1,0 +1,1383 @@
+{
+ "generatedAt": "2026-11-13T18:32:27.722Z",
+ "scenes": {
+  "forest": {
+   "materials": {
+    "forest-floor": {
+     "label": "Forest floor",
+     "use": "Main ground cover under trees: leaf litter, needles, damp soil",
+     "candidates": [
+      {
+       "source": "ambientcg",
+       "id": "Ground037",
+       "name": "Ground 037",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Ground037",
+       "why": "Photoscan damp woodland ground, moss and green overgrowth",
+       "maps": {
+        "color": "/lab/acg/Ground037/color.webp",
+        "normal": "/lab/acg/Ground037/normal.webp",
+        "arm": "/lab/acg/Ground037/arm.webp",
+        "height": "/lab/acg/Ground037/height.webp"
+       },
+       "previewBytes": 1177918
+      },
+      {
+       "source": "polyhaven",
+       "id": "forest_leaves_02",
+       "name": "Forest Leaves 02",
+       "authors": [
+        "Rob Tuytel"
+       ],
+       "url": "https://polyhaven.com/a/forest_leaves_02",
+       "why": "Mossy ground with twigs and leaves, soft temperate look",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_leaves_02/forest_leaves_02_diffuse_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_leaves_02/forest_leaves_02_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_leaves_02/forest_leaves_02_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_leaves_02/forest_leaves_02_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "polyhaven",
+       "id": "forrest_ground_03",
+       "name": "Forest Ground 03",
+       "authors": [
+        "Rob Tuytel"
+       ],
+       "url": "https://polyhaven.com/a/forrest_ground_03",
+       "why": "Pine needle litter, suits conifer-dominated misty forest",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forrest_ground_03/forrest_ground_03_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forrest_ground_03/forrest_ground_03_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forrest_ground_03/forrest_ground_03_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forrest_ground_03/forrest_ground_03_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Ground076",
+       "name": "Ground 076",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Ground076",
+       "why": "Leaves, roots and tree-base soil, good variety",
+       "maps": {
+        "color": "/lab/acg/Ground076/color.webp",
+        "normal": "/lab/acg/Ground076/normal.webp",
+        "arm": "/lab/acg/Ground076/arm.webp",
+        "height": "/lab/acg/Ground076/height.webp"
+       },
+       "previewBytes": 1055172
+      },
+      {
+       "source": "polyhaven",
+       "id": "forest_ground_04",
+       "name": "Forest Ground 04",
+       "authors": [
+        "Rob Tuytel",
+        "Rico Cilliers"
+       ],
+       "url": "https://polyhaven.com/a/forest_ground_04",
+       "why": "Forest soil with stones, low-contrast base layer",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_ground_04/forest_ground_04_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_ground_04/forest_ground_04_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_ground_04/forest_ground_04_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_ground_04/forest_ground_04_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "polyhaven",
+       "id": "leaves_forest_ground",
+       "name": "Leaves Forest Ground",
+       "authors": [
+        "Dario Barresi",
+        "Dimitrios Savva"
+       ],
+       "url": "https://polyhaven.com/a/leaves_forest_ground",
+       "why": "Leaf litter with twigs, muted yellow-brown",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/leaves_forest_ground/leaves_forest_ground_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/leaves_forest_ground/leaves_forest_ground_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/leaves_forest_ground/leaves_forest_ground_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/leaves_forest_ground/leaves_forest_ground_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Ground077",
+       "name": "Ground 077",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Ground077",
+       "why": "Needles, cones and leaves, conifer floor",
+       "maps": {
+        "color": "/lab/acg/Ground077/color.webp",
+        "normal": "/lab/acg/Ground077/normal.webp",
+        "arm": "/lab/acg/Ground077/arm.webp",
+        "height": "/lab/acg/Ground077/height.webp"
+       },
+       "previewBytes": 1162070
+      },
+      {
+       "source": "polyhaven",
+       "id": "forest_floor",
+       "name": "Forest Floor",
+       "authors": [
+        "eye-candy.xyz"
+       ],
+       "url": "https://polyhaven.com/a/forest_floor",
+       "why": "Leaf litter over dirt, usable as blend layer",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_floor/forest_floor_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_floor/forest_floor_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_floor/forest_floor_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_floor/forest_floor_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Ground023",
+       "name": "Ground 023",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Ground023",
+       "why": "Brown forest dirt with leaves and sticks",
+       "maps": {
+        "color": "/lab/acg/Ground023/color.webp",
+        "normal": "/lab/acg/Ground023/normal.webp",
+        "arm": "/lab/acg/Ground023/arm.webp",
+        "height": "/lab/acg/Ground023/height.webp"
+       },
+       "previewBytes": 1137810
+      },
+      {
+       "source": "polyhaven",
+       "id": "brown_mud_leaves_01",
+       "name": "Brown Mud Leaves 01",
+       "authors": [
+        "Rob Tuytel"
+       ],
+       "url": "https://polyhaven.com/a/brown_mud_leaves_01",
+       "why": "Damp mud with moss and leaves for wet patches",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brown_mud_leaves_01/brown_mud_leaves_01_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brown_mud_leaves_01/brown_mud_leaves_01_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brown_mud_leaves_01/brown_mud_leaves_01_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brown_mud_leaves_01/brown_mud_leaves_01_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "ScatteredLeaves009",
+       "name": "Scattered Leaves 009",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=ScatteredLeaves009",
+       "why": "Dry fallen leaves cover, good scatter overlay",
+       "maps": {
+        "color": "/lab/acg/ScatteredLeaves009/color.webp",
+        "normal": "/lab/acg/ScatteredLeaves009/normal.webp",
+        "arm": "/lab/acg/ScatteredLeaves009/arm.webp",
+        "height": "/lab/acg/ScatteredLeaves009/height.webp"
+       },
+       "previewBytes": 1254388
+      }
+     ]
+    },
+    "moss": {
+     "label": "Moss",
+     "use": "Moss on ground, logs and rocks",
+     "candidates": [
+      {
+       "source": "ambientcg",
+       "id": "Moss001",
+       "name": "Moss 001",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Moss001",
+       "why": "Photoscanned moss-covered ground",
+       "maps": {
+        "color": "/lab/acg/Moss001/color.webp",
+        "normal": "/lab/acg/Moss001/normal.webp",
+        "arm": "/lab/acg/Moss001/arm.webp",
+        "height": "/lab/acg/Moss001/height.webp"
+       },
+       "previewBytes": 1428596
+      },
+      {
+       "source": "ambientcg",
+       "id": "Moss002",
+       "name": "Moss 002",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Moss002",
+       "why": "Dense green moss carpet",
+       "maps": {
+        "color": "/lab/acg/Moss002/color.webp",
+        "normal": "/lab/acg/Moss002/normal.webp",
+        "arm": "/lab/acg/Moss002/arm.webp",
+        "height": "/lab/acg/Moss002/height.webp"
+       },
+       "previewBytes": 1291382
+      },
+      {
+       "source": "ambientcg",
+       "id": "Moss003",
+       "name": "Moss 003",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Moss003",
+       "why": "Alternative moss pattern with more variation",
+       "maps": {
+        "color": "/lab/acg/Moss003/color.webp",
+        "normal": "/lab/acg/Moss003/normal.webp",
+        "arm": "/lab/acg/Moss003/arm.webp",
+        "height": "/lab/acg/Moss003/height.webp"
+       },
+       "previewBytes": 1344412
+      },
+      {
+       "source": "ambientcg",
+       "id": "Moss004",
+       "name": "Moss 004",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Moss004",
+       "why": "Fine moss, good for rock and log blends",
+       "maps": {
+        "color": "/lab/acg/Moss004/color.webp",
+        "normal": "/lab/acg/Moss004/normal.webp",
+        "arm": "/lab/acg/Moss004/arm.webp",
+        "height": "/lab/acg/Moss004/height.webp"
+       },
+       "previewBytes": 1106714
+      },
+      {
+       "source": "ambientcg",
+       "id": "Ground068",
+       "name": "Ground 068",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Ground068",
+       "why": "Photoscan dirt with moss and stone",
+       "maps": {
+        "color": "/lab/acg/Ground068/color.webp",
+        "normal": "/lab/acg/Ground068/normal.webp",
+        "arm": "/lab/acg/Ground068/arm.webp",
+        "height": "/lab/acg/Ground068/height.webp"
+       },
+       "previewBytes": 980768
+      },
+      {
+       "source": "polyhaven",
+       "id": "forest_leaves_02",
+       "name": "Forest Leaves 02",
+       "authors": [
+        "Rob Tuytel"
+       ],
+       "url": "https://polyhaven.com/a/forest_leaves_02",
+       "why": "Moss mixed with leaves and twigs",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_leaves_02/forest_leaves_02_diffuse_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_leaves_02/forest_leaves_02_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_leaves_02/forest_leaves_02_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_leaves_02/forest_leaves_02_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Ground001",
+       "name": "Ground 001",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Ground001",
+       "why": "Flat dirt with moss patches",
+       "maps": {
+        "color": "/lab/acg/Ground001/color.webp",
+        "normal": "/lab/acg/Ground001/normal.webp",
+        "arm": "/lab/acg/Ground001/arm.webp",
+        "height": "/lab/acg/Ground001/height.webp"
+       },
+       "previewBytes": 660302
+      },
+      {
+       "source": "ambientcg",
+       "id": "Ground024",
+       "name": "Ground 024",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Ground024",
+       "why": "Forest dirt, moss and sticks",
+       "maps": {
+        "color": "/lab/acg/Ground024/color.webp",
+        "normal": "/lab/acg/Ground024/normal.webp",
+        "arm": "/lab/acg/Ground024/arm.webp",
+        "height": "/lab/acg/Ground024/height.webp"
+       },
+       "previewBytes": 1067322
+      },
+      {
+       "source": "ambientcg",
+       "id": "Rock046L",
+       "name": "Rock 046 L",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Rock046L",
+       "why": "Moss-covered grey rock, usable as moss patch",
+       "maps": {
+        "color": "/lab/acg/Rock046L/color.webp",
+        "normal": "/lab/acg/Rock046L/normal.webp",
+        "arm": "/lab/acg/Rock046L/arm.webp",
+        "height": "/lab/acg/Rock046L/height.webp"
+       },
+       "previewBytes": 1065922
+      },
+      {
+       "source": "polyhaven",
+       "id": "aerial_grass_rock",
+       "name": "Aerial Grass Rock",
+       "authors": [
+        "Rob Tuytel"
+       ],
+       "url": "https://polyhaven.com/a/aerial_grass_rock",
+       "why": "Mossy rock face with grass, aerial photoscan",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/aerial_grass_rock/aerial_grass_rock_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/aerial_grass_rock/aerial_grass_rock_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/aerial_grass_rock/aerial_grass_rock_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/aerial_grass_rock/aerial_grass_rock_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Bark011",
+       "name": "Bark 011",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Bark011",
+       "why": "Green-grey moss crust, works as tree-base moss",
+       "maps": {
+        "color": "/lab/acg/Bark011/color.webp",
+        "normal": "/lab/acg/Bark011/normal.webp",
+        "arm": "/lab/acg/Bark011/arm.webp",
+        "height": "/lab/acg/Bark011/height.webp"
+       },
+       "previewBytes": 551820
+      }
+     ]
+    },
+    "bark": {
+     "label": "Tree bark",
+     "use": "Trunks of conifers and broadleaf trees",
+     "candidates": [
+      {
+       "source": "polyhaven",
+       "id": "knotted_pine_bark",
+       "name": "Knotted Pine Bark",
+       "authors": [
+        "Dimitrios Savva"
+       ],
+       "url": "https://polyhaven.com/a/knotted_pine_bark",
+       "why": "Photoscan conifer bark with knots",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/knotted_pine_bark/knotted_pine_bark_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/knotted_pine_bark/knotted_pine_bark_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/knotted_pine_bark/knotted_pine_bark_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/knotted_pine_bark/knotted_pine_bark_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Bark014",
+       "name": "Bark 014",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Bark014",
+       "why": "Fir bark, photoscanned, matches misty conifers",
+       "maps": {
+        "color": "/lab/acg/Bark014/color.webp",
+        "normal": "/lab/acg/Bark014/normal.webp",
+        "arm": "/lab/acg/Bark014/arm.webp",
+        "height": "/lab/acg/Bark014/height.webp"
+       },
+       "previewBytes": 778282
+      },
+      {
+       "source": "polyhaven",
+       "id": "pine_bark",
+       "name": "Pine Bark",
+       "authors": [
+        "Dimitrios Savva"
+       ],
+       "url": "https://polyhaven.com/a/pine_bark",
+       "why": "Rough weathered pine bark",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/pine_bark/pine_bark_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/pine_bark/pine_bark_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/pine_bark/pine_bark_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/pine_bark/pine_bark_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Bark016",
+       "name": "Bark 016",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Bark016",
+       "why": "Mossy bark, ideal for damp forest",
+       "maps": {
+        "color": "/lab/acg/Bark016/color.webp",
+        "normal": "/lab/acg/Bark016/normal.webp",
+        "arm": "/lab/acg/Bark016/arm.webp",
+        "height": "/lab/acg/Bark016/height.webp"
+       },
+       "previewBytes": 793510
+      },
+      {
+       "source": "polyhaven",
+       "id": "bark_brown_01",
+       "name": "Bark Brown 01",
+       "authors": [
+        "Rob Tuytel"
+       ],
+       "url": "https://polyhaven.com/a/bark_brown_01",
+       "why": "Deeply furrowed brown bark with grooves",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/bark_brown_01/bark_brown_01_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/bark_brown_01/bark_brown_01_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/bark_brown_01/bark_brown_01_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/bark_brown_01/bark_brown_01_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "polyhaven",
+       "id": "jolcham_oak_bark_01",
+       "name": "Jolcham Oak Bark 01",
+       "authors": [
+        "Charlotte Baglioni"
+       ],
+       "url": "https://polyhaven.com/a/jolcham_oak_bark_01",
+       "why": "Mossy oak bark, temperate broadleaf",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/jolcham_oak_bark_01/jolcham_oak_bark_01_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/jolcham_oak_bark_01/jolcham_oak_bark_01_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/jolcham_oak_bark_01/jolcham_oak_bark_01_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/jolcham_oak_bark_01/jolcham_oak_bark_01_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "polyhaven",
+       "id": "tree_bark_03",
+       "name": "Tree Bark 03",
+       "authors": [
+        "Rob Tuytel"
+       ],
+       "url": "https://polyhaven.com/a/tree_bark_03",
+       "why": "Old fissured bark with moss",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/tree_bark_03/tree_bark_03_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/tree_bark_03/tree_bark_03_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/tree_bark_03/tree_bark_03_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/tree_bark_03/tree_bark_03_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Bark012",
+       "name": "Bark 012",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Bark012",
+       "why": "Brown oak bark photoscan",
+       "maps": {
+        "color": "/lab/acg/Bark012/color.webp",
+        "normal": "/lab/acg/Bark012/normal.webp",
+        "arm": "/lab/acg/Bark012/arm.webp",
+        "height": "/lab/acg/Bark012/height.webp"
+       },
+       "previewBytes": 1109482
+      },
+      {
+       "source": "polyhaven",
+       "id": "japanese_cedar_bark",
+       "name": "Japanese Cedar Bark",
+       "authors": [
+        "Charlotte Baglioni"
+       ],
+       "url": "https://polyhaven.com/a/japanese_cedar_bark",
+       "why": "Fissured cedar bark, vertical fibres",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/japanese_cedar_bark/japanese_cedar_bark_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/japanese_cedar_bark/japanese_cedar_bark_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/japanese_cedar_bark/japanese_cedar_bark_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/japanese_cedar_bark/japanese_cedar_bark_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Bark008",
+       "name": "Bark 008",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Bark008",
+       "why": "Brown bark with green moss",
+       "maps": {
+        "color": "/lab/acg/Bark008/color.webp",
+        "normal": "/lab/acg/Bark008/normal.webp",
+        "arm": "/lab/acg/Bark008/arm.webp",
+        "height": "/lab/acg/Bark008/height.webp"
+       },
+       "previewBytes": 522392
+      },
+      {
+       "source": "polyhaven",
+       "id": "metasequoia_bark",
+       "name": "Metasequoia Bark",
+       "authors": [
+        "Charlotte Baglioni"
+       ],
+       "url": "https://polyhaven.com/a/metasequoia_bark",
+       "why": "Furrowed redwood-like bark for tall trunks",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/metasequoia_bark/metasequoia_bark_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/metasequoia_bark/metasequoia_bark_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/metasequoia_bark/metasequoia_bark_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/metasequoia_bark/metasequoia_bark_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      }
+     ]
+    },
+    "rock": {
+     "label": "Rock outcrop",
+     "use": "Mossy boulders and granite outcrops",
+     "candidates": [
+      {
+       "source": "ambientcg",
+       "id": "Rock064",
+       "name": "Rock 064",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Rock064",
+       "why": "Mossy forest rock, stacked and irregular",
+       "maps": {
+        "color": "/lab/acg/Rock064/color.webp",
+        "normal": "/lab/acg/Rock064/normal.webp",
+        "arm": "/lab/acg/Rock064/arm.webp",
+        "height": "/lab/acg/Rock064/height.webp"
+       },
+       "previewBytes": 652390
+      },
+      {
+       "source": "polyhaven",
+       "id": "mossy_rock",
+       "name": "Mossy Rock",
+       "authors": [
+        "Rob Tuytel"
+       ],
+       "url": "https://polyhaven.com/a/mossy_rock",
+       "why": "Rough rock face with moss and lichen",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/mossy_rock/mossy_rock_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/mossy_rock/mossy_rock_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/mossy_rock/mossy_rock_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/mossy_rock/mossy_rock_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "polyhaven",
+       "id": "rock_pitted_mossy",
+       "name": "Rock Pitted Mossy",
+       "authors": [
+        "Dimitrios Savva",
+        "Rico Cilliers"
+       ],
+       "url": "https://polyhaven.com/a/rock_pitted_mossy",
+       "why": "Pitted boulder surface with moss",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_pitted_mossy/rock_pitted_mossy_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_pitted_mossy/rock_pitted_mossy_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_pitted_mossy/rock_pitted_mossy_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_pitted_mossy/rock_pitted_mossy_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "polyhaven",
+       "id": "aerial_rocks_01",
+       "name": "Aerial Rocks 01",
+       "authors": [
+        "Rob Tuytel"
+       ],
+       "url": "https://polyhaven.com/a/aerial_rocks_01",
+       "why": "Mossy lichened cliff face photoscan",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/aerial_rocks_01/aerial_rocks_01_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/aerial_rocks_01/aerial_rocks_01_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/aerial_rocks_01/aerial_rocks_01_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/aerial_rocks_01/aerial_rocks_01_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Rock063",
+       "name": "Rock 063",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Rock063",
+       "why": "Layered mossy rock, damaged and eroded",
+       "maps": {
+        "color": "/lab/acg/Rock063/color.webp",
+        "normal": "/lab/acg/Rock063/normal.webp",
+        "arm": "/lab/acg/Rock063/arm.webp",
+        "height": "/lab/acg/Rock063/height.webp"
+       },
+       "previewBytes": 381856
+      },
+      {
+       "source": "polyhaven",
+       "id": "lichen_rock",
+       "name": "Lichen Rock",
+       "authors": [
+        "Rico Cilliers"
+       ],
+       "url": "https://polyhaven.com/a/lichen_rock",
+       "why": "Lichen-covered grey rock",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/lichen_rock/lichen_rock_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/lichen_rock/lichen_rock_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/lichen_rock/lichen_rock_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/lichen_rock/lichen_rock_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Rock057",
+       "name": "Rock 057",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Rock057",
+       "why": "Green-grey mossy stone",
+       "maps": {
+        "color": "/lab/acg/Rock057/color.webp",
+        "normal": "/lab/acg/Rock057/normal.webp",
+        "arm": "/lab/acg/Rock057/arm.webp",
+        "height": "/lab/acg/Rock057/height.webp"
+       },
+       "previewBytes": 387806
+      },
+      {
+       "source": "polyhaven",
+       "id": "aerial_rocks_04",
+       "name": "Aerial Rocks 04",
+       "authors": [
+        "Rob Tuytel"
+       ],
+       "url": "https://polyhaven.com/a/aerial_rocks_04",
+       "why": "Rough mossy rock face",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/aerial_rocks_04/aerial_rocks_04_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/aerial_rocks_04/aerial_rocks_04_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/aerial_rocks_04/aerial_rocks_04_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/aerial_rocks_04/aerial_rocks_04_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Rock053",
+       "name": "Rock 053",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Rock053",
+       "why": "Brown mossy rock with green smudges",
+       "maps": {
+        "color": "/lab/acg/Rock053/color.webp",
+        "normal": "/lab/acg/Rock053/normal.webp",
+        "arm": "/lab/acg/Rock053/arm.webp",
+        "height": "/lab/acg/Rock053/height.webp"
+       },
+       "previewBytes": 797374
+      },
+      {
+       "source": "polyhaven",
+       "id": "rock_boulder_dry",
+       "name": "Rock Boulder Dry",
+       "authors": [
+        "Dimitrios Savva",
+        "Rico Cilliers"
+       ],
+       "url": "https://polyhaven.com/a/rock_boulder_dry",
+       "why": "Weathered grey boulder for bare areas",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_boulder_dry/rock_boulder_dry_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_boulder_dry/rock_boulder_dry_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_boulder_dry/rock_boulder_dry_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_boulder_dry/rock_boulder_dry_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Rock046S",
+       "name": "Rock 046 S",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Rock046S",
+       "why": "Moss-covered grey rock, small tile",
+       "maps": {
+        "color": "/lab/acg/Rock046S/color.webp",
+        "normal": "/lab/acg/Rock046S/normal.webp",
+        "arm": "/lab/acg/Rock046S/arm.webp",
+        "height": "/lab/acg/Rock046S/height.webp"
+       },
+       "previewBytes": 1010764
+      }
+     ]
+    },
+    "dirt-path": {
+     "label": "Dirt path",
+     "use": "Walking trail through the forest",
+     "candidates": [
+      {
+       "source": "ambientcg",
+       "id": "Ground086",
+       "name": "Ground 086",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Ground086",
+       "why": "Forest path with stones and dirt",
+       "maps": {
+        "color": "/lab/acg/Ground086/color.webp",
+        "normal": "/lab/acg/Ground086/normal.webp",
+        "arm": "/lab/acg/Ground086/arm.webp",
+        "height": "/lab/acg/Ground086/height.webp"
+       },
+       "previewBytes": 782508
+      },
+      {
+       "source": "polyhaven",
+       "id": "stony_dirt_path",
+       "name": "Stony Dirt Path",
+       "authors": [
+        "eye-candy.xyz"
+       ],
+       "url": "https://polyhaven.com/a/stony_dirt_path",
+       "why": "Brown dirt path with leaves and stones",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/stony_dirt_path/stony_dirt_path_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/stony_dirt_path/stony_dirt_path_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/stony_dirt_path/stony_dirt_path_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/stony_dirt_path/stony_dirt_path_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Ground078",
+       "name": "Ground 078",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Ground078",
+       "why": "Forest floor path with sand and stones",
+       "maps": {
+        "color": "/lab/acg/Ground078/color.webp",
+        "normal": "/lab/acg/Ground078/normal.webp",
+        "arm": "/lab/acg/Ground078/arm.webp",
+        "height": "/lab/acg/Ground078/height.webp"
+       },
+       "previewBytes": 472766
+      },
+      {
+       "source": "polyhaven",
+       "id": "forest_ground_05",
+       "name": "Forest Ground 05",
+       "authors": [
+        "Charlotte Baglioni"
+       ],
+       "url": "https://polyhaven.com/a/forest_ground_05",
+       "why": "Compact forest soil, path-like",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_ground_05/forest_ground_05_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_ground_05/forest_ground_05_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_ground_05/forest_ground_05_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_ground_05/forest_ground_05_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Pathway002",
+       "name": "Pathway 002",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Pathway002",
+       "why": "Muddy dirt pathway photoscan",
+       "maps": {
+        "color": "/lab/acg/Pathway002/color.webp",
+        "normal": "/lab/acg/Pathway002/normal.webp",
+        "arm": "/lab/acg/Pathway002/arm.webp",
+        "height": "/lab/acg/Pathway002/height.webp"
+       },
+       "previewBytes": 436798
+      },
+      {
+       "source": "polyhaven",
+       "id": "rocky_trail_02",
+       "name": "Rocky Trail 02",
+       "authors": [
+        "Amal Kumar"
+       ],
+       "url": "https://polyhaven.com/a/rocky_trail_02",
+       "why": "Earthy rocky trail, rugged",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rocky_trail_02/rocky_trail_02_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rocky_trail_02/rocky_trail_02_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rocky_trail_02/rocky_trail_02_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rocky_trail_02/rocky_trail_02_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Ground085",
+       "name": "Ground 085",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Ground085",
+       "why": "Rocky forest dirt with stones",
+       "maps": {
+        "color": "/lab/acg/Ground085/color.webp",
+        "normal": "/lab/acg/Ground085/normal.webp",
+        "arm": "/lab/acg/Ground085/arm.webp",
+        "height": "/lab/acg/Ground085/height.webp"
+       },
+       "previewBytes": 1062918
+      },
+      {
+       "source": "polyhaven",
+       "id": "rock_path",
+       "name": "Rock Path",
+       "authors": [
+        "Amal Kumar"
+       ],
+       "url": "https://polyhaven.com/a/rock_path",
+       "why": "Rocky path with fallen leaves",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_path/rock_path_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_path/rock_path_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_path/rock_path_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_path/rock_path_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "polyhaven",
+       "id": "forest_ground_06",
+       "name": "Forest Ground 06",
+       "authors": [
+        "Charlotte Baglioni"
+       ],
+       "url": "https://polyhaven.com/a/forest_ground_06",
+       "why": "Loose earth, worn dirt look",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_ground_06/forest_ground_06_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_ground_06/forest_ground_06_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_ground_06/forest_ground_06_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_ground_06/forest_ground_06_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Ground074",
+       "name": "Ground 074",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Ground074",
+       "why": "Dirt pathway with rocks and sand",
+       "maps": {
+        "color": "/lab/acg/Ground074/color.webp",
+        "normal": "/lab/acg/Ground074/normal.webp",
+        "arm": "/lab/acg/Ground074/arm.webp",
+        "height": "/lab/acg/Ground074/height.webp"
+       },
+       "previewBytes": 893534
+      },
+      {
+       "source": "polyhaven",
+       "id": "raked_dirt",
+       "name": "Raked Dirt",
+       "authors": [
+        "Dario Barresi",
+        "Dimitrios Savva"
+       ],
+       "url": "https://polyhaven.com/a/raked_dirt",
+       "why": "Smooth brown compacted dirt with leaves",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/raked_dirt/raked_dirt_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/raked_dirt/raked_dirt_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/raked_dirt/raked_dirt_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/raked_dirt/raked_dirt_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      }
+     ]
+    },
+    "creek-bed": {
+     "label": "Creek bed",
+     "use": "Pebbles and gravel under and beside the stream",
+     "candidates": [
+      {
+       "source": "polyhaven",
+       "id": "dry_river_pebbles",
+       "name": "Dry River Pebbles",
+       "authors": [
+        "Amal Kumar"
+       ],
+       "url": "https://polyhaven.com/a/dry_river_pebbles",
+       "why": "River pebbles photoscan, loose stones",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/dry_river_pebbles/dry_river_pebbles_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/dry_river_pebbles/dry_river_pebbles_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/dry_river_pebbles/dry_river_pebbles_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/dry_river_pebbles/dry_river_pebbles_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Gravel008",
+       "name": "Gravel 008",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Gravel008",
+       "why": "River bed gravel, grey pebbles",
+       "maps": {
+        "color": "/lab/acg/Gravel008/color.webp",
+        "normal": "/lab/acg/Gravel008/normal.webp",
+        "arm": "/lab/acg/Gravel008/arm.webp",
+        "height": "/lab/acg/Gravel008/height.webp"
+       },
+       "previewBytes": 1503878
+      },
+      {
+       "source": "polyhaven",
+       "id": "ganges_river_pebbles",
+       "name": "Ganges River Pebbles",
+       "authors": [
+        "Amal Kumar"
+       ],
+       "url": "https://polyhaven.com/a/ganges_river_pebbles",
+       "why": "Rough river pebbles, varied sizes",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/ganges_river_pebbles/ganges_river_pebbles_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/ganges_river_pebbles/ganges_river_pebbles_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/ganges_river_pebbles/ganges_river_pebbles_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/ganges_river_pebbles/ganges_river_pebbles_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Gravel035",
+       "name": "Gravel 035",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Gravel035",
+       "why": "Grey riverbed gravel",
+       "maps": {
+        "color": "/lab/acg/Gravel035/color.webp",
+        "normal": "/lab/acg/Gravel035/normal.webp",
+        "arm": "/lab/acg/Gravel035/arm.webp",
+        "height": "/lab/acg/Gravel035/height.webp"
+       },
+       "previewBytes": 1096534
+      },
+      {
+       "source": "ambientcg",
+       "id": "Ground022",
+       "name": "Ground 022",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Ground022",
+       "why": "River pebbles and rocks",
+       "maps": {
+        "color": "/lab/acg/Ground022/color.webp",
+        "normal": "/lab/acg/Ground022/normal.webp",
+        "arm": "/lab/acg/Ground022/arm.webp",
+        "height": "/lab/acg/Ground022/height.webp"
+       },
+       "previewBytes": 1118098
+      },
+      {
+       "source": "polyhaven",
+       "id": "river_small_rocks",
+       "name": "River Small Rocks",
+       "authors": [
+        "Rob Tuytel",
+        "Rico Cilliers"
+       ],
+       "url": "https://polyhaven.com/a/river_small_rocks",
+       "why": "Small river stones, uneven",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/river_small_rocks/river_small_rocks_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/river_small_rocks/river_small_rocks_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/river_small_rocks/river_small_rocks_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/river_small_rocks/river_small_rocks_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "polyhaven",
+       "id": "clean_pebbles",
+       "name": "Clean Pebbles",
+       "authors": [
+        "Dario Barresi",
+        "Charlotte Baglioni"
+       ],
+       "url": "https://polyhaven.com/a/clean_pebbles",
+       "why": "Clean rounded pebbles, good under water",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/clean_pebbles/clean_pebbles_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/clean_pebbles/clean_pebbles_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/clean_pebbles/clean_pebbles_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/clean_pebbles/clean_pebbles_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Rocks024L",
+       "name": "Rocks 024 L",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Rocks024L",
+       "why": "Flat grey riverbed rocks",
+       "maps": {
+        "color": "/lab/acg/Rocks024L/color.webp",
+        "normal": "/lab/acg/Rocks024L/normal.webp",
+        "arm": "/lab/acg/Rocks024L/arm.webp",
+        "height": "/lab/acg/Rocks024L/height.webp"
+       },
+       "previewBytes": 808610
+      },
+      {
+       "source": "ambientcg",
+       "id": "Gravel042",
+       "name": "Gravel 042",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Gravel042",
+       "why": "Pebbles with fallen leaves at shore",
+       "maps": {
+        "color": "/lab/acg/Gravel042/color.webp",
+        "normal": "/lab/acg/Gravel042/normal.webp",
+        "arm": "/lab/acg/Gravel042/arm.webp",
+        "height": "/lab/acg/Gravel042/height.webp"
+       },
+       "previewBytes": 998292
+      },
+      {
+       "source": "polyhaven",
+       "id": "floor_pebbles_01",
+       "name": "Floor Pebbles 01",
+       "authors": [
+        "Rob Tuytel"
+       ],
+       "url": "https://polyhaven.com/a/floor_pebbles_01",
+       "why": "Pebble pathway, good for creek banks",
+       "maps": {
+        "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/floor_pebbles_01/floor_pebbles_01_diff_1k.jpg",
+        "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/floor_pebbles_01/floor_pebbles_01_nor_gl_1k.jpg",
+        "arm": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/floor_pebbles_01/floor_pebbles_01_arm_1k.jpg",
+        "height": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/floor_pebbles_01/floor_pebbles_01_disp_1k.jpg"
+       },
+       "previewBytes": 0
+      },
+      {
+       "source": "ambientcg",
+       "id": "Gravel036L",
+       "name": "Gravel 036 L",
+       "authors": [
+        "ambientCG (Lennart Demes)"
+       ],
+       "url": "https://ambientcg.com/view?id=Gravel036L",
+       "why": "Grey riverbed gravel with sand",
+       "maps": {
+        "color": "/lab/acg/Gravel036L/color.webp",
+        "normal": "/lab/acg/Gravel036L/normal.webp",
+        "arm": "/lab/acg/Gravel036L/arm.webp",
+        "height": "/lab/acg/Gravel036L/height.webp"
+       },
+       "previewBytes": 1250330
+      }
+     ]
+    }
+   },
+   "hdris": {
+    "dawn": {
+     "label": "Dawn mist",
+     "candidates": [
+      {
+       "id": "misty_pines",
+       "name": "Misty Pines",
+       "url": "https://polyhaven.com/a/misty_pines",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/misty_pines.png?width=256&height=256&format=webp&v=db9e5e98"
+      },
+      {
+       "id": "kloofendal_misty_morning",
+       "name": "Kloofendal Misty Morning",
+       "url": "https://polyhaven.com/a/kloofendal_misty_morning",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/kloofendal_misty_morning.png?width=256&height=256&format=webp&v=8fe02806"
+      },
+      {
+       "id": "misty_dawn",
+       "name": "Misty Dawn",
+       "url": "https://polyhaven.com/a/misty_dawn",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/misty_dawn.png?width=256&height=256&format=webp&v=05575a9d"
+      },
+      {
+       "id": "spruit_dawn",
+       "name": "Spruit Dawn",
+       "url": "https://polyhaven.com/a/spruit_dawn",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/spruit_dawn.png?width=256&height=256&format=webp&v=64228d13"
+      },
+      {
+       "id": "kloofendal_28d_misty",
+       "name": "Kloofendal 28d Misty",
+       "url": "https://polyhaven.com/a/kloofendal_28d_misty",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/kloofendal_28d_misty.png?width=256&height=256&format=webp&v=f10f19cd"
+      },
+      {
+       "id": "golf_course_sunrise",
+       "name": "Golf Course Sunrise",
+       "url": "https://polyhaven.com/a/golf_course_sunrise",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/golf_course_sunrise.png?width=256&height=256&format=webp&v=60371ce9"
+      },
+      {
+       "id": "lauter_waterfall",
+       "name": "Lauter Waterfall",
+       "url": "https://polyhaven.com/a/lauter_waterfall",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/lauter_waterfall.png?width=256&height=256&format=webp&v=483b8a8e"
+      },
+      {
+       "id": "forest_slope",
+       "name": "Forest Slope",
+       "url": "https://polyhaven.com/a/forest_slope",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/forest_slope.png?width=256&height=256&format=webp&v=913d8ad9"
+      },
+      {
+       "id": "green_sanctuary",
+       "name": "Green Sanctuary",
+       "url": "https://polyhaven.com/a/green_sanctuary",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/green_sanctuary.png?width=256&height=256&format=webp&v=6879a0ac"
+      },
+      {
+       "id": "schachen_forest",
+       "name": "Schachen Forest",
+       "url": "https://polyhaven.com/a/schachen_forest",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/schachen_forest.png?width=256&height=256&format=webp&v=5c669d4b"
+      },
+      {
+       "id": "nqweba_dawn",
+       "name": "Nqweba Dawn",
+       "url": "https://polyhaven.com/a/nqweba_dawn",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/nqweba_dawn.png?width=256&height=256&format=webp&v=9f75b432"
+      }
+     ]
+    },
+    "midday": {
+     "label": "Midday",
+     "candidates": [
+      {
+       "id": "niederwihl_forest",
+       "name": "Niederwihl Forest",
+       "url": "https://polyhaven.com/a/niederwihl_forest",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/niederwihl_forest.png?width=256&height=256&format=webp&v=6d68726a"
+      },
+      {
+       "id": "epping_forest_02",
+       "name": "Epping Forest 02",
+       "url": "https://polyhaven.com/a/epping_forest_02",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/epping_forest_02.png?width=256&height=256&format=webp&v=ee677965"
+      },
+      {
+       "id": "phalzer_forest_01",
+       "name": "Pfälzer Forest 01",
+       "url": "https://polyhaven.com/a/phalzer_forest_01",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/phalzer_forest_01.png?width=256&height=256&format=webp&v=466802e4"
+      },
+      {
+       "id": "mossy_forest",
+       "name": "Mossy Forest",
+       "url": "https://polyhaven.com/a/mossy_forest",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/mossy_forest.png?width=256&height=256&format=webp&v=29924064"
+      },
+      {
+       "id": "xanderklinge",
+       "name": "Xanderklinge",
+       "url": "https://polyhaven.com/a/xanderklinge",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/xanderklinge.png?width=256&height=256&format=webp&v=5e7fdc95"
+      },
+      {
+       "id": "shady_patch",
+       "name": "Shady Patch",
+       "url": "https://polyhaven.com/a/shady_patch",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/shady_patch.png?width=256&height=256&format=webp&v=82ab24c9"
+      },
+      {
+       "id": "epping_forest_01",
+       "name": "Epping Forest 01",
+       "url": "https://polyhaven.com/a/epping_forest_01",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/epping_forest_01.png?width=256&height=256&format=webp&v=44da4eee"
+      },
+      {
+       "id": "forest_slope",
+       "name": "Forest Slope",
+       "url": "https://polyhaven.com/a/forest_slope",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/forest_slope.png?width=256&height=256&format=webp&v=913d8ad9"
+      },
+      {
+       "id": "lush_dirt_path",
+       "name": "Lush Dirt Path",
+       "url": "https://polyhaven.com/a/lush_dirt_path",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/lush_dirt_path.png?width=256&height=256&format=webp&v=5b74393f"
+      },
+      {
+       "id": "monks_forest",
+       "name": "Monk's forest",
+       "url": "https://polyhaven.com/a/monks_forest",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/monks_forest.png?width=256&height=256&format=webp&v=ef40cecc"
+      },
+      {
+       "id": "hochsal_forest",
+       "name": "Hochsal Forest",
+       "url": "https://polyhaven.com/a/hochsal_forest",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/hochsal_forest.png?width=256&height=256&format=webp&v=57c2e1aa"
+      }
+     ]
+    },
+    "dusk": {
+     "label": "Dusk",
+     "candidates": [
+      {
+       "id": "sunset_forest",
+       "name": "Sunset Forest",
+       "url": "https://polyhaven.com/a/sunset_forest",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/sunset_forest.png?width=256&height=256&format=webp&v=0dddfe39"
+      },
+      {
+       "id": "river_walk_2",
+       "name": "River Walk 2",
+       "url": "https://polyhaven.com/a/river_walk_2",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/river_walk_2.png?width=256&height=256&format=webp&v=f7a9abdc"
+      },
+      {
+       "id": "river_walk_1",
+       "name": "River Walk 1",
+       "url": "https://polyhaven.com/a/river_walk_1",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/river_walk_1.png?width=256&height=256&format=webp&v=e5a3091a"
+      },
+      {
+       "id": "nature_reserve_forest",
+       "name": "Nature Reserve Forest",
+       "url": "https://polyhaven.com/a/nature_reserve_forest",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/nature_reserve_forest.png?width=256&height=256&format=webp&v=991131ae"
+      },
+      {
+       "id": "forest_grove",
+       "name": "Forest Grove",
+       "url": "https://polyhaven.com/a/forest_grove",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/forest_grove.png?width=256&height=256&format=webp&v=17b04966"
+      },
+      {
+       "id": "dark_autumn_forest",
+       "name": "Dark Autumn Forest",
+       "url": "https://polyhaven.com/a/dark_autumn_forest",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/dark_autumn_forest.png?width=256&height=256&format=webp&v=4ff0155b"
+      },
+      {
+       "id": "autumn_forest_04",
+       "name": "Autumn Forest 04",
+       "url": "https://polyhaven.com/a/autumn_forest_04",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/autumn_forest_04.png?width=256&height=256&format=webp&v=889d3d58"
+      },
+      {
+       "id": "treetop_balcony",
+       "name": "Treetop Balcony",
+       "url": "https://polyhaven.com/a/treetop_balcony",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/treetop_balcony.png?width=256&height=256&format=webp&v=5d13d705"
+      },
+      {
+       "id": "birchwood",
+       "name": "Birchwood",
+       "url": "https://polyhaven.com/a/birchwood",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/birchwood.png?width=256&height=256&format=webp&v=c1ef3ab8"
+      },
+      {
+       "id": "sunset_meadow_path",
+       "name": "Sunset Meadow Path",
+       "url": "https://polyhaven.com/a/sunset_meadow_path",
+       "preview": "https://cdn.polyhaven.com/asset_img/thumbs/sunset_meadow_path.png?width=256&height=256&format=webp&v=12a10400"
+      }
+     ]
+    }
+   }
+  }
+ }
+}

@@ -15,7 +15,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import { basename, dirname, extname, join } from 'node:path';
 import { NodeIO, type Document } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
-import { cloneDocument, dedup, meshopt, mergeDocuments, prune, resample, simplify, textureCompress, unpartition, weld } from '@gltf-transform/functions';
+import { cloneDocument, compactPrimitive, dedup, meshopt, mergeDocuments, prune, resample, simplify, textureCompress, unpartition, weld } from '@gltf-transform/functions';
 import { encodeToKTX2 } from 'ktx2-encoder';
 import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer';
 import sharp from 'sharp';
@@ -38,7 +38,7 @@ interface Manifest {
 
 interface Picks {
   materials: Record<string, { source: 'polyhaven' | 'ambientcg'; id: string; hero?: boolean }>;
-  models?: Record<string, { source: 'polyhaven'; id: string; lodRatios?: number[] }>;
+  models?: Record<string, { source: 'polyhaven'; id: string; maxTriangles?: number }>;
   hdris?: Record<string, { source: 'polyhaven'; id: string }>;
   audio?: Record<string, { file: string }>;
 }
@@ -107,6 +107,24 @@ async function processMaterials(p: Picks): Promise<void> {
   }
 }
 
+function sloppySimplify(d: Document, ratio: number): void {
+  for (const mesh of d.getRoot().listMeshes()) {
+    for (const prim of mesh.listPrimitives()) {
+      const idx = prim.getIndices();
+      const pos = prim.getAttribute('POSITION');
+      if (!idx || !pos) continue;
+      const positions = new Float32Array(pos.getCount() * 3);
+      const v: number[] = [];
+      for (let i = 0; i < pos.getCount(); i++) positions.set(pos.getElement(i, v), i * 3);
+      const indices = Uint32Array.from(idx.getArray()!);
+      const target = Math.max(3, Math.floor((indices.length * ratio) / 3) * 3);
+      const [out] = MeshoptSimplifier.simplifySloppy(indices, positions, 3, null, target, 0.05);
+      idx.setArray(pos.getCount() > 65535 ? new Uint32Array(out) : Uint16Array.from(out));
+      compactPrimitive(prim);
+    }
+  }
+}
+
 async function processModels(p: Picks): Promise<void> {
   await MeshoptEncoder.ready;
   await MeshoptSimplifier.ready;
@@ -115,16 +133,29 @@ async function processModels(p: Picks): Promise<void> {
     const src = await polyhavenModel(m.id, '2k');
     const doc: Document = await io.read(src);
     await doc.transform(dedup(), prune(), weld(), resample());
-    // LOD chain: duplicate each mesh's primitives and simplify the copies.
-    const ratios = m.lodRatios ?? [1, 0.35, 0.12];
-    const triangles: number[] = [];
-    const root = doc.getRoot();
-    const baseScene = root.listScenes()[0]!;
+    // LOD chain with absolute triangle targets (scans can be millions of triangles). Each LOD is
+    // simplified from a pristine copy of the source, then merged in as an "LOD<i>" node.
+    const countTris = (d: Document) =>
+      d.getRoot().listMeshes().reduce((s, mesh) => s + mesh.listPrimitives().reduce((a, pr) => a + (pr.getIndices()?.getCount() ?? 0) / 3, 0), 0);
+    const pristine = cloneDocument(doc);
+    const srcTris = countTris(pristine);
+    const lod0Target = Math.min(srcTris, m.maxTriangles ?? 60000);
+    const targets = [lod0Target, lod0Target * 0.3, lod0Target * 0.08];
+    const baseScene = doc.getRoot().listScenes()[0]!;
     const baseNodes = baseScene.listChildren();
-    for (let li = 1; li < ratios.length; li++) {
-      const lodDoc = cloneDocument(doc);
-      await lodDoc.transform(simplify({ simplifier: MeshoptSimplifier, ratio: ratios[li]!, error: 0.002 * li, lockBorder: false }));
-      // Merge the simplified meshes back as "LOD<li>" nodes.
+    if (lod0Target < srcTris) {
+      await doc.transform(simplify({ simplifier: MeshoptSimplifier, ratio: lod0Target / srcTris, error: 0.05, lockBorder: false }));
+    }
+    const lod0 = doc.createNode('LOD0');
+    for (const n of baseNodes) lod0.addChild(n);
+    baseScene.addChild(lod0);
+    for (let li = 1; li < targets.length; li++) {
+      const lodDoc = cloneDocument(pristine);
+      await lodDoc.transform(simplify({ simplifier: MeshoptSimplifier, ratio: targets[li]! / srcTris, error: 0.08 * li, lockBorder: false }));
+      // Scans with many UV seams stall the seam-preserving simplifier; fall back to the sloppy one
+      // (ignores attribute seams; fine at far LOD distances).
+      const got = countTris(lodDoc);
+      if (got > targets[li]! * 1.5) sloppySimplify(lodDoc, targets[li]! / got);
       const lodScene = lodDoc.getRoot().listScenes()[0]!;
       const map = mergeDocuments(doc, lodDoc);
       const merged = map.get(lodScene) as typeof baseScene;
@@ -133,11 +164,10 @@ async function processModels(p: Picks): Promise<void> {
       baseScene.addChild(group);
       merged.dispose();
     }
-    const lod0 = doc.createNode('LOD0');
-    for (const n of baseNodes) lod0.addChild(n);
-    baseScene.addChild(lod0);
+    const ratios = targets;
+    const triangles: number[] = [];
     await doc.transform(dedup(), prune(), unpartition());
-    for (const node of baseScene.listChildren()) {
+    for (const node of [...baseScene.listChildren()].sort((a, b) => a.getName().localeCompare(b.getName()))) {
       let tris = 0;
       node.traverse((n) => {
         for (const prim of n.getMesh()?.listPrimitives() ?? []) tris += (prim.getIndices()?.getCount() ?? 0) / 3;

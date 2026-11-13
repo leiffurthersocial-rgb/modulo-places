@@ -1,4 +1,172 @@
 {
+  "ambientcg:Bark008": {
+    "source": "ambientcg",
+    "id": "Bark008",
+    "name": "Bark 008",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Bark008",
+    "key": "ambientcg:Bark008",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Bark011": {
+    "source": "ambientcg",
+    "id": "Bark011",
+    "name": "Bark 011",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Bark011",
+    "key": "ambientcg:Bark011",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Bark012": {
+    "source": "ambientcg",
+    "id": "Bark012",
+    "name": "Bark 012",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Bark012",
+    "key": "ambientcg:Bark012",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Bark014": {
+    "source": "ambientcg",
+    "id": "Bark014",
+    "name": "Bark 014",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Bark014",
+    "key": "ambientcg:Bark014",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Bark016": {
+    "source": "ambientcg",
+    "id": "Bark016",
+    "name": "Bark 016",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Bark016",
+    "key": "ambientcg:Bark016",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Gravel008": {
+    "source": "ambientcg",
+    "id": "Gravel008",
+    "name": "Gravel 008",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Gravel008",
+    "key": "ambientcg:Gravel008",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Gravel035": {
+    "source": "ambientcg",
+    "id": "Gravel035",
+    "name": "Gravel 035",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Gravel035",
+    "key": "ambientcg:Gravel035",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Gravel036L": {
+    "source": "ambientcg",
+    "id": "Gravel036L",
+    "name": "Gravel 036 L",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Gravel036L",
+    "key": "ambientcg:Gravel036L",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Gravel042": {
+    "source": "ambientcg",
+    "id": "Gravel042",
+    "name": "Gravel 042",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Gravel042",
+    "key": "ambientcg:Gravel042",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Ground001": {
+    "source": "ambientcg",
+    "id": "Ground001",
+    "name": "Ground 001",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Ground001",
+    "key": "ambientcg:Ground001",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Ground022": {
+    "source": "ambientcg",
+    "id": "Ground022",
+    "name": "Ground 022",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Ground022",
+    "key": "ambientcg:Ground022",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Ground023": {
+    "source": "ambientcg",
+    "id": "Ground023",
+    "name": "Ground 023",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Ground023",
+    "key": "ambientcg:Ground023",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Ground024": {
+    "source": "ambientcg",
+    "id": "Ground024",
+    "name": "Ground 024",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Ground024",
+    "key": "ambientcg:Ground024",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Ground037": {
+    "source": "ambientcg",
+    "id": "Ground037",
+    "name": "Ground 037",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Ground037",
+    "key": "ambientcg:Ground037",
+    "fetchedAt": "2026-11-13"
+  },
   "ambientcg:Ground054": {
     "source": "ambientcg",
     "id": "Ground054",
@@ -9,6 +177,318 @@
     "license": "CC0-1.0",
     "url": "https://ambientcg.com/view?id=Ground054",
     "key": "ambientcg:Ground054",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Ground068": {
+    "source": "ambientcg",
+    "id": "Ground068",
+    "name": "Ground 068",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Ground068",
+    "key": "ambientcg:Ground068",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Ground074": {
+    "source": "ambientcg",
+    "id": "Ground074",
+    "name": "Ground 074",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Ground074",
+    "key": "ambientcg:Ground074",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Ground076": {
+    "source": "ambientcg",
+    "id": "Ground076",
+    "name": "Ground 076",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Ground076",
+    "key": "ambientcg:Ground076",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Ground077": {
+    "source": "ambientcg",
+    "id": "Ground077",
+    "name": "Ground 077",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Ground077",
+    "key": "ambientcg:Ground077",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Ground078": {
+    "source": "ambientcg",
+    "id": "Ground078",
+    "name": "Ground 078",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Ground078",
+    "key": "ambientcg:Ground078",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Ground085": {
+    "source": "ambientcg",
+    "id": "Ground085",
+    "name": "Ground 085",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Ground085",
+    "key": "ambientcg:Ground085",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Ground086": {
+    "source": "ambientcg",
+    "id": "Ground086",
+    "name": "Ground 086",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Ground086",
+    "key": "ambientcg:Ground086",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Moss001": {
+    "source": "ambientcg",
+    "id": "Moss001",
+    "name": "Moss 001",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Moss001",
+    "key": "ambientcg:Moss001",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Moss002": {
+    "source": "ambientcg",
+    "id": "Moss002",
+    "name": "Moss 002",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Moss002",
+    "key": "ambientcg:Moss002",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Moss003": {
+    "source": "ambientcg",
+    "id": "Moss003",
+    "name": "Moss 003",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Moss003",
+    "key": "ambientcg:Moss003",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Moss004": {
+    "source": "ambientcg",
+    "id": "Moss004",
+    "name": "Moss 004",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Moss004",
+    "key": "ambientcg:Moss004",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Pathway002": {
+    "source": "ambientcg",
+    "id": "Pathway002",
+    "name": "Pathway 002",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Pathway002",
+    "key": "ambientcg:Pathway002",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Rock046L": {
+    "source": "ambientcg",
+    "id": "Rock046L",
+    "name": "Rock 046 L",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Rock046L",
+    "key": "ambientcg:Rock046L",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Rock046S": {
+    "source": "ambientcg",
+    "id": "Rock046S",
+    "name": "Rock 046 S",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Rock046S",
+    "key": "ambientcg:Rock046S",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Rock053": {
+    "source": "ambientcg",
+    "id": "Rock053",
+    "name": "Rock 053",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Rock053",
+    "key": "ambientcg:Rock053",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Rock057": {
+    "source": "ambientcg",
+    "id": "Rock057",
+    "name": "Rock 057",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Rock057",
+    "key": "ambientcg:Rock057",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Rock063": {
+    "source": "ambientcg",
+    "id": "Rock063",
+    "name": "Rock 063",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Rock063",
+    "key": "ambientcg:Rock063",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Rock064": {
+    "source": "ambientcg",
+    "id": "Rock064",
+    "name": "Rock 064",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Rock064",
+    "key": "ambientcg:Rock064",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:Rocks024L": {
+    "source": "ambientcg",
+    "id": "Rocks024L",
+    "name": "Rocks 024 L",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Rocks024L",
+    "key": "ambientcg:Rocks024L",
+    "fetchedAt": "2026-11-13"
+  },
+  "ambientcg:ScatteredLeaves009": {
+    "source": "ambientcg",
+    "id": "ScatteredLeaves009",
+    "name": "Scattered Leaves 009",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=ScatteredLeaves009",
+    "key": "ambientcg:ScatteredLeaves009",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:aerial_grass_rock": {
+    "source": "polyhaven",
+    "id": "aerial_grass_rock",
+    "name": "Aerial Grass Rock",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/aerial_grass_rock",
+    "key": "polyhaven:aerial_grass_rock",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:aerial_rocks_01": {
+    "source": "polyhaven",
+    "id": "aerial_rocks_01",
+    "name": "Aerial Rocks 01",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/aerial_rocks_01",
+    "key": "polyhaven:aerial_rocks_01",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:aerial_rocks_04": {
+    "source": "polyhaven",
+    "id": "aerial_rocks_04",
+    "name": "Aerial Rocks 04",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/aerial_rocks_04",
+    "key": "polyhaven:aerial_rocks_04",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:autumn_forest_04": {
+    "source": "polyhaven",
+    "id": "autumn_forest_04",
+    "name": "Autumn Forest 04",
+    "authors": [
+      "Alexander Scholten"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/autumn_forest_04",
+    "key": "polyhaven:autumn_forest_04",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:bark_brown_01": {
+    "source": "polyhaven",
+    "id": "bark_brown_01",
+    "name": "Bark Brown 01",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/bark_brown_01",
+    "key": "polyhaven:bark_brown_01",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:birchwood": {
+    "source": "polyhaven",
+    "id": "birchwood",
+    "name": "Birchwood",
+    "authors": [
+      "Sergej Majboroda"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/birchwood",
+    "key": "polyhaven:birchwood",
     "fetchedAt": "2026-11-13"
   },
   "polyhaven:boulder_01": {
@@ -23,6 +503,80 @@
     "key": "polyhaven:boulder_01",
     "fetchedAt": "2026-11-13"
   },
+  "polyhaven:brown_mud_leaves_01": {
+    "source": "polyhaven",
+    "id": "brown_mud_leaves_01",
+    "name": "Brown Mud Leaves 01",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/brown_mud_leaves_01",
+    "key": "polyhaven:brown_mud_leaves_01",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:clean_pebbles": {
+    "source": "polyhaven",
+    "id": "clean_pebbles",
+    "name": "Clean Pebbles",
+    "authors": [
+      "Dario Barresi",
+      "Charlotte Baglioni"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/clean_pebbles",
+    "key": "polyhaven:clean_pebbles",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:dark_autumn_forest": {
+    "source": "polyhaven",
+    "id": "dark_autumn_forest",
+    "name": "Dark Autumn Forest",
+    "authors": [
+      "Greg Zaal",
+      "Dimitrios Savva"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/dark_autumn_forest",
+    "key": "polyhaven:dark_autumn_forest",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:dry_river_pebbles": {
+    "source": "polyhaven",
+    "id": "dry_river_pebbles",
+    "name": "Dry River Pebbles",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/dry_river_pebbles",
+    "key": "polyhaven:dry_river_pebbles",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:epping_forest_01": {
+    "source": "polyhaven",
+    "id": "epping_forest_01",
+    "name": "Epping Forest 01",
+    "authors": [
+      "Andreas Mischok"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/epping_forest_01",
+    "key": "polyhaven:epping_forest_01",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:epping_forest_02": {
+    "source": "polyhaven",
+    "id": "epping_forest_02",
+    "name": "Epping Forest 02",
+    "authors": [
+      "Andreas Mischok"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/epping_forest_02",
+    "key": "polyhaven:epping_forest_02",
+    "fetchedAt": "2026-11-13"
+  },
   "polyhaven:fir_tree_01": {
     "source": "polyhaven",
     "id": "fir_tree_01",
@@ -34,6 +588,80 @@
     "license": "CC0-1.0",
     "url": "https://polyhaven.com/a/fir_tree_01",
     "key": "polyhaven:fir_tree_01",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:floor_pebbles_01": {
+    "source": "polyhaven",
+    "id": "floor_pebbles_01",
+    "name": "Floor Pebbles 01",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/floor_pebbles_01",
+    "key": "polyhaven:floor_pebbles_01",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:forest_floor": {
+    "source": "polyhaven",
+    "id": "forest_floor",
+    "name": "Forest Floor",
+    "authors": [
+      "eye-candy.xyz"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/forest_floor",
+    "key": "polyhaven:forest_floor",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:forest_ground_04": {
+    "source": "polyhaven",
+    "id": "forest_ground_04",
+    "name": "Forest Ground 04",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/forest_ground_04",
+    "key": "polyhaven:forest_ground_04",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:forest_ground_05": {
+    "source": "polyhaven",
+    "id": "forest_ground_05",
+    "name": "Forest Ground 05",
+    "authors": [
+      "Charlotte Baglioni"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/forest_ground_05",
+    "key": "polyhaven:forest_ground_05",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:forest_ground_06": {
+    "source": "polyhaven",
+    "id": "forest_ground_06",
+    "name": "Forest Ground 06",
+    "authors": [
+      "Charlotte Baglioni"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/forest_ground_06",
+    "key": "polyhaven:forest_ground_06",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:forest_grove": {
+    "source": "polyhaven",
+    "id": "forest_grove",
+    "name": "Forest Grove",
+    "authors": [
+      "Dimitrios Savva",
+      "Jarod Guest"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/forest_grove",
+    "key": "polyhaven:forest_grove",
     "fetchedAt": "2026-11-13"
   },
   "polyhaven:forest_leaves_02": {
@@ -58,6 +686,520 @@
     "license": "CC0-1.0",
     "url": "https://polyhaven.com/a/forest_slope",
     "key": "polyhaven:forest_slope",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:forrest_ground_03": {
+    "source": "polyhaven",
+    "id": "forrest_ground_03",
+    "name": "Forest Ground 03",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/forrest_ground_03",
+    "key": "polyhaven:forrest_ground_03",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:ganges_river_pebbles": {
+    "source": "polyhaven",
+    "id": "ganges_river_pebbles",
+    "name": "Ganges River Pebbles",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/ganges_river_pebbles",
+    "key": "polyhaven:ganges_river_pebbles",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:golf_course_sunrise": {
+    "source": "polyhaven",
+    "id": "golf_course_sunrise",
+    "name": "Golf Course Sunrise",
+    "authors": [
+      "Dimitrios Savva",
+      "Jarod Guest"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/golf_course_sunrise",
+    "key": "polyhaven:golf_course_sunrise",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:green_sanctuary": {
+    "source": "polyhaven",
+    "id": "green_sanctuary",
+    "name": "Green Sanctuary",
+    "authors": [
+      "Andreas Mischok"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/green_sanctuary",
+    "key": "polyhaven:green_sanctuary",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:hochsal_forest": {
+    "source": "polyhaven",
+    "id": "hochsal_forest",
+    "name": "Hochsal Forest",
+    "authors": [
+      "Adrian Kubasa"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/hochsal_forest",
+    "key": "polyhaven:hochsal_forest",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:japanese_cedar_bark": {
+    "source": "polyhaven",
+    "id": "japanese_cedar_bark",
+    "name": "Japanese Cedar Bark",
+    "authors": [
+      "Charlotte Baglioni"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/japanese_cedar_bark",
+    "key": "polyhaven:japanese_cedar_bark",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:jolcham_oak_bark_01": {
+    "source": "polyhaven",
+    "id": "jolcham_oak_bark_01",
+    "name": "Jolcham Oak Bark 01",
+    "authors": [
+      "Charlotte Baglioni"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/jolcham_oak_bark_01",
+    "key": "polyhaven:jolcham_oak_bark_01",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:kloofendal_28d_misty": {
+    "source": "polyhaven",
+    "id": "kloofendal_28d_misty",
+    "name": "Kloofendal 28d Misty",
+    "authors": [
+      "Greg Zaal",
+      "Jenelle van Heerden"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/kloofendal_28d_misty",
+    "key": "polyhaven:kloofendal_28d_misty",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:kloofendal_misty_morning": {
+    "source": "polyhaven",
+    "id": "kloofendal_misty_morning",
+    "name": "Kloofendal Misty Morning",
+    "authors": [
+      "Greg Zaal"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/kloofendal_misty_morning",
+    "key": "polyhaven:kloofendal_misty_morning",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:knotted_pine_bark": {
+    "source": "polyhaven",
+    "id": "knotted_pine_bark",
+    "name": "Knotted Pine Bark",
+    "authors": [
+      "Dimitrios Savva"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/knotted_pine_bark",
+    "key": "polyhaven:knotted_pine_bark",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:lauter_waterfall": {
+    "source": "polyhaven",
+    "id": "lauter_waterfall",
+    "name": "Lauter Waterfall",
+    "authors": [
+      "Andreas Mischok"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/lauter_waterfall",
+    "key": "polyhaven:lauter_waterfall",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:leaves_forest_ground": {
+    "source": "polyhaven",
+    "id": "leaves_forest_ground",
+    "name": "Leaves Forest Ground",
+    "authors": [
+      "Dario Barresi",
+      "Dimitrios Savva"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/leaves_forest_ground",
+    "key": "polyhaven:leaves_forest_ground",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:lichen_rock": {
+    "source": "polyhaven",
+    "id": "lichen_rock",
+    "name": "Lichen Rock",
+    "authors": [
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/lichen_rock",
+    "key": "polyhaven:lichen_rock",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:lush_dirt_path": {
+    "source": "polyhaven",
+    "id": "lush_dirt_path",
+    "name": "Lush Dirt Path",
+    "authors": [
+      "Alexander Scholten"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/lush_dirt_path",
+    "key": "polyhaven:lush_dirt_path",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:metasequoia_bark": {
+    "source": "polyhaven",
+    "id": "metasequoia_bark",
+    "name": "Metasequoia Bark",
+    "authors": [
+      "Charlotte Baglioni"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/metasequoia_bark",
+    "key": "polyhaven:metasequoia_bark",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:misty_dawn": {
+    "source": "polyhaven",
+    "id": "misty_dawn",
+    "name": "Misty Dawn",
+    "authors": [
+      "Greg Zaal"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/misty_dawn",
+    "key": "polyhaven:misty_dawn",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:misty_pines": {
+    "source": "polyhaven",
+    "id": "misty_pines",
+    "name": "Misty Pines",
+    "authors": [
+      "Greg Zaal"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/misty_pines",
+    "key": "polyhaven:misty_pines",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:monks_forest": {
+    "source": "polyhaven",
+    "id": "monks_forest",
+    "name": "Monk's forest",
+    "authors": [
+      "Greg Zaal"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/monks_forest",
+    "key": "polyhaven:monks_forest",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:mossy_forest": {
+    "source": "polyhaven",
+    "id": "mossy_forest",
+    "name": "Mossy Forest",
+    "authors": [
+      "Greg Zaal"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/mossy_forest",
+    "key": "polyhaven:mossy_forest",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:mossy_rock": {
+    "source": "polyhaven",
+    "id": "mossy_rock",
+    "name": "Mossy Rock",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/mossy_rock",
+    "key": "polyhaven:mossy_rock",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:nature_reserve_forest": {
+    "source": "polyhaven",
+    "id": "nature_reserve_forest",
+    "name": "Nature Reserve Forest",
+    "authors": [
+      "Dimitrios Savva",
+      "Jarod Guest"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/nature_reserve_forest",
+    "key": "polyhaven:nature_reserve_forest",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:niederwihl_forest": {
+    "source": "polyhaven",
+    "id": "niederwihl_forest",
+    "name": "Niederwihl Forest",
+    "authors": [
+      "Adrian Kubasa"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/niederwihl_forest",
+    "key": "polyhaven:niederwihl_forest",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:nqweba_dawn": {
+    "source": "polyhaven",
+    "id": "nqweba_dawn",
+    "name": "Nqweba Dawn",
+    "authors": [
+      "Dario Barresi",
+      "Jarod Guest"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/nqweba_dawn",
+    "key": "polyhaven:nqweba_dawn",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:phalzer_forest_01": {
+    "source": "polyhaven",
+    "id": "phalzer_forest_01",
+    "name": "Pfälzer Forest 01",
+    "authors": [
+      "Andreas Mischok"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/phalzer_forest_01",
+    "key": "polyhaven:phalzer_forest_01",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:pine_bark": {
+    "source": "polyhaven",
+    "id": "pine_bark",
+    "name": "Pine Bark",
+    "authors": [
+      "Dimitrios Savva"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/pine_bark",
+    "key": "polyhaven:pine_bark",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:raked_dirt": {
+    "source": "polyhaven",
+    "id": "raked_dirt",
+    "name": "Raked Dirt",
+    "authors": [
+      "Dario Barresi",
+      "Dimitrios Savva"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/raked_dirt",
+    "key": "polyhaven:raked_dirt",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:river_small_rocks": {
+    "source": "polyhaven",
+    "id": "river_small_rocks",
+    "name": "River Small Rocks",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/river_small_rocks",
+    "key": "polyhaven:river_small_rocks",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:river_walk_1": {
+    "source": "polyhaven",
+    "id": "river_walk_1",
+    "name": "River Walk 1",
+    "authors": [
+      "Greg Zaal"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/river_walk_1",
+    "key": "polyhaven:river_walk_1",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:river_walk_2": {
+    "source": "polyhaven",
+    "id": "river_walk_2",
+    "name": "River Walk 2",
+    "authors": [
+      "Greg Zaal"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/river_walk_2",
+    "key": "polyhaven:river_walk_2",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:rock_boulder_dry": {
+    "source": "polyhaven",
+    "id": "rock_boulder_dry",
+    "name": "Rock Boulder Dry",
+    "authors": [
+      "Dimitrios Savva",
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/rock_boulder_dry",
+    "key": "polyhaven:rock_boulder_dry",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:rock_path": {
+    "source": "polyhaven",
+    "id": "rock_path",
+    "name": "Rock Path",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/rock_path",
+    "key": "polyhaven:rock_path",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:rock_pitted_mossy": {
+    "source": "polyhaven",
+    "id": "rock_pitted_mossy",
+    "name": "Rock Pitted Mossy",
+    "authors": [
+      "Dimitrios Savva",
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/rock_pitted_mossy",
+    "key": "polyhaven:rock_pitted_mossy",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:rocky_trail_02": {
+    "source": "polyhaven",
+    "id": "rocky_trail_02",
+    "name": "Rocky Trail 02",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/rocky_trail_02",
+    "key": "polyhaven:rocky_trail_02",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:schachen_forest": {
+    "source": "polyhaven",
+    "id": "schachen_forest",
+    "name": "Schachen Forest",
+    "authors": [
+      "Adrian Kubasa"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/schachen_forest",
+    "key": "polyhaven:schachen_forest",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:shady_patch": {
+    "source": "polyhaven",
+    "id": "shady_patch",
+    "name": "Shady Patch",
+    "authors": [
+      "Greg Zaal"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/shady_patch",
+    "key": "polyhaven:shady_patch",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:spruit_dawn": {
+    "source": "polyhaven",
+    "id": "spruit_dawn",
+    "name": "Spruit Dawn",
+    "authors": [
+      "Greg Zaal"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/spruit_dawn",
+    "key": "polyhaven:spruit_dawn",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:stony_dirt_path": {
+    "source": "polyhaven",
+    "id": "stony_dirt_path",
+    "name": "Stony Dirt Path",
+    "authors": [
+      "eye-candy.xyz"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/stony_dirt_path",
+    "key": "polyhaven:stony_dirt_path",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:sunset_forest": {
+    "source": "polyhaven",
+    "id": "sunset_forest",
+    "name": "Sunset Forest",
+    "authors": [
+      "Andreas Mischok"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/sunset_forest",
+    "key": "polyhaven:sunset_forest",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:sunset_meadow_path": {
+    "source": "polyhaven",
+    "id": "sunset_meadow_path",
+    "name": "Sunset Meadow Path",
+    "authors": [
+      "Elvis Posa"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/sunset_meadow_path",
+    "key": "polyhaven:sunset_meadow_path",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:tree_bark_03": {
+    "source": "polyhaven",
+    "id": "tree_bark_03",
+    "name": "Tree Bark 03",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/tree_bark_03",
+    "key": "polyhaven:tree_bark_03",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:treetop_balcony": {
+    "source": "polyhaven",
+    "id": "treetop_balcony",
+    "name": "Treetop Balcony",
+    "authors": [
+      "Dimitrios Savva",
+      "Jarod Guest"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/treetop_balcony",
+    "key": "polyhaven:treetop_balcony",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:xanderklinge": {
+    "source": "polyhaven",
+    "id": "xanderklinge",
+    "name": "Xanderklinge",
+    "authors": [
+      "Andreas Mischok"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/xanderklinge",
+    "key": "polyhaven:xanderklinge",
     "fetchedAt": "2026-11-13"
   }
 }

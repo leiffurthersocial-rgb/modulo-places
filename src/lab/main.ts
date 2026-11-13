@@ -109,8 +109,11 @@ function startLab(root: HTMLElement, manifest: LabManifest): void {
   stage.append(vpEl, toolbar, tagA, tagB, divider, status, debug);
 
   const moodsOf = () => LAB_MOODS[st.scene] ?? [];
+  // Open on midday where available: clear light makes textures easiest to judge.
+  const defaultMoodIdx = () => Math.max(0, moodsOf().findIndex((m) => m.id === 'midday'));
+  st.moodIdx = defaultMoodIdx();
   const sceneData = () => manifest.scenes[st.scene]!;
-  const vp = new Viewport(vpEl, moodsOf()[0]!);
+  const vp = new Viewport(vpEl, moodsOf()[st.moodIdx]!);
   const lib = new MaterialLibrary(vp.renderer);
   lib.onChange = () => {
     updateStatus();
@@ -149,8 +152,8 @@ function startLab(root: HTMLElement, manifest: LabManifest): void {
   }
   function selectScene(id: string): void {
     st.scene = id;
-    st.moodIdx = 0;
-    vp.setMood(moodsOf()[0]!, 0);
+    st.moodIdx = defaultMoodIdx();
+    vp.setMood(moodsOf()[st.moodIdx]!, 0);
     const keys = Object.keys(sceneData().materials);
     st.hdriMood = Object.keys(sceneData().hdris)[0] ?? '';
     selectKey(keys[0] ?? '');
