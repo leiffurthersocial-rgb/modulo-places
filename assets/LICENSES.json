@@ -1,0 +1,63 @@
+{
+  "ambientcg:Ground054": {
+    "source": "ambientcg",
+    "id": "Ground054",
+    "name": "Ground 054",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Ground054",
+    "key": "ambientcg:Ground054",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:boulder_01": {
+    "source": "polyhaven",
+    "id": "boulder_01",
+    "name": "Boulder 01",
+    "authors": [
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/boulder_01",
+    "key": "polyhaven:boulder_01",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:fir_tree_01": {
+    "source": "polyhaven",
+    "id": "fir_tree_01",
+    "name": "Fir Tree 01",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/fir_tree_01",
+    "key": "polyhaven:fir_tree_01",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:forest_leaves_02": {
+    "source": "polyhaven",
+    "id": "forest_leaves_02",
+    "name": "Forest Leaves 02",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/forest_leaves_02",
+    "key": "polyhaven:forest_leaves_02",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:forest_slope": {
+    "source": "polyhaven",
+    "id": "forest_slope",
+    "name": "Forest Slope",
+    "authors": [
+      "Andreas Mischok"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/forest_slope",
+    "key": "polyhaven:forest_slope",
+    "fetchedAt": "2026-11-13"
+  }
+}

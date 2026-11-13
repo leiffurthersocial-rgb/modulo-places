@@ -15,7 +15,9 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "e2e": "playwright test --trace off",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "assets:fetch": "NODE_USE_ENV_PROXY=1 NODE_NO_WARNINGS=1 tsx scripts/fetch-assets.ts",
+    "assets:process": "NODE_USE_ENV_PROXY=1 NODE_NO_WARNINGS=1 tsx scripts/process-assets.ts"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "^0.21.0",

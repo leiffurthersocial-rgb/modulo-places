@@ -1,0 +1,2799 @@
+{
+  "version": 1,
+  "scenes": {
+    "forest": {
+      "materials": {
+        "forest-floor": {
+          "label": "Forest floor",
+          "use": "Main ground cover under trees: leaf litter, needles, damp soil",
+          "candidates": [
+            {
+              "source": "ambientcg",
+              "id": "Ground037",
+              "why": "Photoscan damp woodland ground, moss and green overgrowth"
+            },
+            {
+              "source": "polyhaven",
+              "id": "forest_leaves_02",
+              "why": "Mossy ground with twigs and leaves, soft temperate look"
+            },
+            {
+              "source": "polyhaven",
+              "id": "forrest_ground_03",
+              "why": "Pine needle litter, suits conifer-dominated misty forest"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground076",
+              "why": "Leaves, roots and tree-base soil, good variety"
+            },
+            {
+              "source": "polyhaven",
+              "id": "forest_ground_04",
+              "why": "Forest soil with stones, low-contrast base layer"
+            },
+            {
+              "source": "polyhaven",
+              "id": "leaves_forest_ground",
+              "why": "Leaf litter with twigs, muted yellow-brown"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground077",
+              "why": "Needles, cones and leaves, conifer floor"
+            },
+            {
+              "source": "polyhaven",
+              "id": "forest_floor",
+              "why": "Leaf litter over dirt, usable as blend layer"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground023",
+              "why": "Brown forest dirt with leaves and sticks"
+            },
+            {
+              "source": "polyhaven",
+              "id": "brown_mud_leaves_01",
+              "why": "Damp mud with moss and leaves for wet patches"
+            },
+            {
+              "source": "ambientcg",
+              "id": "ScatteredLeaves009",
+              "why": "Dry fallen leaves cover, good scatter overlay"
+            }
+          ]
+        },
+        "moss": {
+          "label": "Moss",
+          "use": "Moss on ground, logs and rocks",
+          "candidates": [
+            {
+              "source": "ambientcg",
+              "id": "Moss001",
+              "why": "Photoscanned moss-covered ground"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Moss002",
+              "why": "Dense green moss carpet"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Moss003",
+              "why": "Alternative moss pattern with more variation"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Moss004",
+              "why": "Fine moss, good for rock and log blends"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground068",
+              "why": "Photoscan dirt with moss and stone"
+            },
+            {
+              "source": "polyhaven",
+              "id": "forest_leaves_02",
+              "why": "Moss mixed with leaves and twigs"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground001",
+              "why": "Flat dirt with moss patches"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground024",
+              "why": "Forest dirt, moss and sticks"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Rock046L",
+              "why": "Moss-covered grey rock, usable as moss patch"
+            },
+            {
+              "source": "polyhaven",
+              "id": "aerial_grass_rock",
+              "why": "Mossy rock face with grass, aerial photoscan"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bark011",
+              "why": "Green-grey moss crust, works as tree-base moss"
+            }
+          ]
+        },
+        "bark": {
+          "label": "Tree bark",
+          "use": "Trunks of conifers and broadleaf trees",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "knotted_pine_bark",
+              "why": "Photoscan conifer bark with knots"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bark014",
+              "why": "Fir bark, photoscanned, matches misty conifers"
+            },
+            {
+              "source": "polyhaven",
+              "id": "pine_bark",
+              "why": "Rough weathered pine bark"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bark016",
+              "why": "Mossy bark, ideal for damp forest"
+            },
+            {
+              "source": "polyhaven",
+              "id": "bark_brown_01",
+              "why": "Deeply furrowed brown bark with grooves"
+            },
+            {
+              "source": "polyhaven",
+              "id": "jolcham_oak_bark_01",
+              "why": "Mossy oak bark, temperate broadleaf"
+            },
+            {
+              "source": "polyhaven",
+              "id": "tree_bark_03",
+              "why": "Old fissured bark with moss"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bark012",
+              "why": "Brown oak bark photoscan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "japanese_cedar_bark",
+              "why": "Fissured cedar bark, vertical fibres"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bark008",
+              "why": "Brown bark with green moss"
+            },
+            {
+              "source": "polyhaven",
+              "id": "metasequoia_bark",
+              "why": "Furrowed redwood-like bark for tall trunks"
+            }
+          ]
+        },
+        "rock": {
+          "label": "Rock outcrop",
+          "use": "Mossy boulders and granite outcrops",
+          "candidates": [
+            {
+              "source": "ambientcg",
+              "id": "Rock064",
+              "why": "Mossy forest rock, stacked and irregular"
+            },
+            {
+              "source": "polyhaven",
+              "id": "mossy_rock",
+              "why": "Rough rock face with moss and lichen"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_pitted_mossy",
+              "why": "Pitted boulder surface with moss"
+            },
+            {
+              "source": "polyhaven",
+              "id": "aerial_rocks_01",
+              "why": "Mossy lichened cliff face photoscan"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Rock063",
+              "why": "Layered mossy rock, damaged and eroded"
+            },
+            {
+              "source": "polyhaven",
+              "id": "lichen_rock",
+              "why": "Lichen-covered grey rock"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Rock057",
+              "why": "Green-grey mossy stone"
+            },
+            {
+              "source": "polyhaven",
+              "id": "aerial_rocks_04",
+              "why": "Rough mossy rock face"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Rock053",
+              "why": "Brown mossy rock with green smudges"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_boulder_dry",
+              "why": "Weathered grey boulder for bare areas"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Rock046S",
+              "why": "Moss-covered grey rock, small tile"
+            }
+          ]
+        },
+        "dirt-path": {
+          "label": "Dirt path",
+          "use": "Walking trail through the forest",
+          "candidates": [
+            {
+              "source": "ambientcg",
+              "id": "Ground086",
+              "why": "Forest path with stones and dirt"
+            },
+            {
+              "source": "polyhaven",
+              "id": "stony_dirt_path",
+              "why": "Brown dirt path with leaves and stones"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground078",
+              "why": "Forest floor path with sand and stones"
+            },
+            {
+              "source": "polyhaven",
+              "id": "forest_ground_05",
+              "why": "Compact forest soil, path-like"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Pathway002",
+              "why": "Muddy dirt pathway photoscan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rocky_trail_02",
+              "why": "Earthy rocky trail, rugged"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground085",
+              "why": "Rocky forest dirt with stones"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_path",
+              "why": "Rocky path with fallen leaves"
+            },
+            {
+              "source": "polyhaven",
+              "id": "forest_ground_06",
+              "why": "Loose earth, worn dirt look"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground074",
+              "why": "Dirt pathway with rocks and sand"
+            },
+            {
+              "source": "polyhaven",
+              "id": "raked_dirt",
+              "why": "Smooth brown compacted dirt with leaves"
+            }
+          ]
+        },
+        "creek-bed": {
+          "label": "Creek bed",
+          "use": "Pebbles and gravel under and beside the stream",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "dry_river_pebbles",
+              "why": "River pebbles photoscan, loose stones"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Gravel008",
+              "why": "River bed gravel, grey pebbles"
+            },
+            {
+              "source": "polyhaven",
+              "id": "ganges_river_pebbles",
+              "why": "Rough river pebbles, varied sizes"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Gravel035",
+              "why": "Grey riverbed gravel"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground022",
+              "why": "River pebbles and rocks"
+            },
+            {
+              "source": "polyhaven",
+              "id": "river_small_rocks",
+              "why": "Small river stones, uneven"
+            },
+            {
+              "source": "polyhaven",
+              "id": "clean_pebbles",
+              "why": "Clean rounded pebbles, good under water"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Rocks024L",
+              "why": "Flat grey riverbed rocks"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Gravel042",
+              "why": "Pebbles with fallen leaves at shore"
+            },
+            {
+              "source": "polyhaven",
+              "id": "floor_pebbles_01",
+              "why": "Pebble pathway, good for creek banks"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Gravel036L",
+              "why": "Grey riverbed gravel with sand"
+            }
+          ]
+        }
+      },
+      "models": {
+        "trees": {
+          "label": "Trees",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "pine_tree_01",
+              "why": "Full-size pine from Pine Forest collection, hero tree"
+            },
+            {
+              "source": "polyhaven",
+              "id": "fir_tree_01",
+              "why": "Full conifer fir, mist-friendly silhouette"
+            },
+            {
+              "source": "polyhaven",
+              "id": "tree_small_02",
+              "why": "Broadleaf tree to break up the conifer mass"
+            },
+            {
+              "source": "polyhaven",
+              "id": "fir_sapling_medium",
+              "why": "Medium fir, good for midground density"
+            },
+            {
+              "source": "polyhaven",
+              "id": "pine_sapling_medium",
+              "why": "Medium pine with needles, high poly"
+            },
+            {
+              "source": "polyhaven",
+              "id": "fir_sapling",
+              "why": "Small fir for understory"
+            },
+            {
+              "source": "polyhaven",
+              "id": "pine_sapling_small",
+              "why": "Small pine for understory"
+            }
+          ]
+        },
+        "rocks": {
+          "label": "Rocks",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "rock_moss_set_01",
+              "why": "Mossy stone set from Pine Forest collection"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_moss_set_02",
+              "why": "Second mossy stone set, variation"
+            },
+            {
+              "source": "polyhaven",
+              "id": "boulder_01",
+              "why": "Lichen boulder, hero rock"
+            },
+            {
+              "source": "polyhaven",
+              "id": "stone_01",
+              "why": "Rock with pebbles, ground detail"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_07",
+              "why": "Mid-size boulder, low poly"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_09",
+              "why": "Mid-size boulder, low poly"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_face_01",
+              "why": "Rock face for banks and cliffs"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_face_02",
+              "why": "Rock face variant"
+            },
+            {
+              "source": "polyhaven",
+              "id": "mountainside",
+              "why": "Large rock face for backdrop"
+            }
+          ]
+        },
+        "logs-stumps": {
+          "label": "Logs and stumps",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "dead_tree_trunk",
+              "why": "Fallen trunk from Pine Forest collection"
+            },
+            {
+              "source": "polyhaven",
+              "id": "tree_stump_01",
+              "why": "Tree stump, pine forest collection"
+            },
+            {
+              "source": "polyhaven",
+              "id": "tree_stump_02",
+              "why": "Woodland stump variant"
+            },
+            {
+              "source": "polyhaven",
+              "id": "dead_tree_trunk_02",
+              "why": "Second fallen trunk"
+            },
+            {
+              "source": "polyhaven",
+              "id": "pine_roots",
+              "why": "Pine root cluster, good at trunk bases"
+            },
+            {
+              "source": "polyhaven",
+              "id": "root_cluster_01",
+              "why": "Exposed root cluster"
+            },
+            {
+              "source": "polyhaven",
+              "id": "root_cluster_02",
+              "why": "Dead tree roots"
+            },
+            {
+              "source": "polyhaven",
+              "id": "single_root",
+              "why": "Single exposed root with leaf litter"
+            }
+          ]
+        },
+        "plants": {
+          "label": "Ferns, shrubs and ground cover",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "fern_02",
+              "why": "Fern from Pine Forest collection"
+            },
+            {
+              "source": "polyhaven",
+              "id": "moss_01",
+              "why": "Moss ground cover, pine forest collection"
+            },
+            {
+              "source": "polyhaven",
+              "id": "grass_medium_01",
+              "why": "Grass tuft, pine forest collection"
+            },
+            {
+              "source": "polyhaven",
+              "id": "grass_medium_02",
+              "why": "Meadow grass tuft"
+            },
+            {
+              "source": "polyhaven",
+              "id": "shrub_01",
+              "why": "Shrub, 282k tris, close-range only"
+            },
+            {
+              "source": "polyhaven",
+              "id": "shrub_02",
+              "why": "Sapling-like shrub, light"
+            },
+            {
+              "source": "polyhaven",
+              "id": "shrub_03",
+              "why": "Light meadow shrub"
+            },
+            {
+              "source": "polyhaven",
+              "id": "shrub_04",
+              "why": "Shrub, medium weight"
+            },
+            {
+              "source": "polyhaven",
+              "id": "weed_plant_02",
+              "why": "Low ground cover plant"
+            },
+            {
+              "source": "polyhaven",
+              "id": "nettle_plant",
+              "why": "Nettle, undergrowth filler"
+            }
+          ]
+        },
+        "ground-clutter": {
+          "label": "Branches, cones, mushrooms, leaves",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "dry_branches_medium_01",
+              "why": "Dry branches from Pine Forest collection"
+            },
+            {
+              "source": "polyhaven",
+              "id": "single_root",
+              "why": "Root fragment, works as ground debris"
+            },
+            {
+              "source": "polyhaven",
+              "id": "moss_01",
+              "why": "Moss clump for rocks and logs"
+            },
+            {
+              "source": "polyhaven",
+              "id": "pine_roots",
+              "why": "Root cluster doubling as ground clutter"
+            },
+            {
+              "source": "polyhaven",
+              "id": "weed_plant_02",
+              "why": "Low weeds for ground breakup"
+            },
+            {
+              "source": "polyhaven",
+              "id": "bark_debris_01",
+              "why": "Dead wood debris, arid (Karoo) but usable; 362k tris"
+            }
+          ]
+        }
+      },
+      "hdris": {
+        "dawn": {
+          "label": "Dawn mist",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "misty_pines",
+              "why": "Foggy morning in conifer forest, best match"
+            },
+            {
+              "source": "polyhaven",
+              "id": "kloofendal_misty_morning",
+              "why": "Misty morning, low contrast, grass hilltop"
+            },
+            {
+              "source": "polyhaven",
+              "id": "misty_dawn",
+              "why": "Sunrise fog over field with trees and river"
+            },
+            {
+              "source": "polyhaven",
+              "id": "spruit_dawn",
+              "why": "Sunrise fog on riverbank with trees"
+            },
+            {
+              "source": "polyhaven",
+              "id": "kloofendal_28d_misty",
+              "why": "Misty morning with faint sun disc"
+            },
+            {
+              "source": "polyhaven",
+              "id": "golf_course_sunrise",
+              "why": "Sunrise fog over lake, treeline horizon"
+            },
+            {
+              "source": "polyhaven",
+              "id": "lauter_waterfall",
+              "why": "Overcast morning in forest by river"
+            },
+            {
+              "source": "polyhaven",
+              "id": "forest_slope",
+              "why": "Clear morning conifer slope, low contrast"
+            },
+            {
+              "source": "polyhaven",
+              "id": "green_sanctuary",
+              "why": "Dappled morning glade, tree canopy"
+            },
+            {
+              "source": "polyhaven",
+              "id": "schachen_forest",
+              "why": "Overcast morning deciduous forest"
+            },
+            {
+              "source": "polyhaven",
+              "id": "nqweba_dawn",
+              "why": "Overcast sunrise over reservoir"
+            }
+          ]
+        },
+        "midday": {
+          "label": "Midday",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "niederwihl_forest",
+              "why": "Overcast midday glade, logs and moss"
+            },
+            {
+              "source": "polyhaven",
+              "id": "epping_forest_02",
+              "why": "Midday woodland path, partly cloudy"
+            },
+            {
+              "source": "polyhaven",
+              "id": "phalzer_forest_01",
+              "why": "Conifer forest afternoon, rock formations"
+            },
+            {
+              "source": "polyhaven",
+              "id": "mossy_forest",
+              "why": "Overcast mossy forest trail with river"
+            },
+            {
+              "source": "polyhaven",
+              "id": "xanderklinge",
+              "why": "Overcast midday forest with river and logs"
+            },
+            {
+              "source": "polyhaven",
+              "id": "shady_patch",
+              "why": "Clear midday shaded forest clearing"
+            },
+            {
+              "source": "polyhaven",
+              "id": "epping_forest_01",
+              "why": "Midday forest canopy by lake"
+            },
+            {
+              "source": "polyhaven",
+              "id": "forest_slope",
+              "why": "Morning conifer slope, soft clear light"
+            },
+            {
+              "source": "polyhaven",
+              "id": "lush_dirt_path",
+              "why": "Dense forest dirt road, midday"
+            },
+            {
+              "source": "polyhaven",
+              "id": "monks_forest",
+              "why": "Afternoon clear forest path"
+            },
+            {
+              "source": "polyhaven",
+              "id": "hochsal_forest",
+              "why": "Overcast midday forest, low contrast"
+            }
+          ]
+        },
+        "dusk": {
+          "label": "Dusk",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "sunset_forest",
+              "why": "Forest path at sunset, low sun"
+            },
+            {
+              "source": "polyhaven",
+              "id": "river_walk_2",
+              "why": "Forest river path at sunset, canopy"
+            },
+            {
+              "source": "polyhaven",
+              "id": "river_walk_1",
+              "why": "Forest path at sunset with leaves"
+            },
+            {
+              "source": "polyhaven",
+              "id": "nature_reserve_forest",
+              "why": "Mixed forest at sunset, low contrast"
+            },
+            {
+              "source": "polyhaven",
+              "id": "forest_grove",
+              "why": "Dry forest clearing at sunset"
+            },
+            {
+              "source": "polyhaven",
+              "id": "dark_autumn_forest",
+              "why": "Autumn forest path, sunset, medium contrast"
+            },
+            {
+              "source": "polyhaven",
+              "id": "autumn_forest_04",
+              "why": "Sunset sun through autumn forest, high contrast"
+            },
+            {
+              "source": "polyhaven",
+              "id": "treetop_balcony",
+              "why": "Forest view at sunset, partly cloudy"
+            },
+            {
+              "source": "polyhaven",
+              "id": "birchwood",
+              "why": "Frozen birch forest at sunset"
+            },
+            {
+              "source": "polyhaven",
+              "id": "sunset_meadow_path",
+              "why": "Meadow path with low sun"
+            }
+          ]
+        }
+      }
+    },
+    "village": {
+      "materials": {
+        "roof-tiles": {
+          "label": "Roof tiles",
+          "use": "Tiled kawara roofs on wooden houses",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "grey_roof_tiles",
+              "why": "Grey mossy damp ceramic roof tiles photoscan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "roof_slates_02",
+              "why": "Uneven weathered slate, dark roof look"
+            },
+            {
+              "source": "polyhaven",
+              "id": "clay_roof_tiles_02",
+              "why": "Old interlocking clay roof tiles"
+            },
+            {
+              "source": "polyhaven",
+              "id": "roof_tiles_14",
+              "why": "Ceramic tiles with moss, discoloured"
+            },
+            {
+              "source": "polyhaven",
+              "id": "grey_roof_tiles_02",
+              "why": "Grey slate with moss, cottage roof"
+            },
+            {
+              "source": "ambientcg",
+              "id": "RoofingTiles015A",
+              "why": "Grey clay roof tiling, procedural but clean"
+            },
+            {
+              "source": "ambientcg",
+              "id": "RoofingTiles009",
+              "why": "Black modern tiles, kawara-like dark colour"
+            },
+            {
+              "source": "polyhaven",
+              "id": "clay_roof_tiles_03",
+              "why": "Weathered overlapping clay tiles"
+            },
+            {
+              "source": "ambientcg",
+              "id": "RoofingTiles014B",
+              "why": "Dirty old clay roof, aged"
+            },
+            {
+              "source": "polyhaven",
+              "id": "roof_3",
+              "why": "Old worn ceramic tiles with moss"
+            },
+            {
+              "source": "ambientcg",
+              "id": "RoofingTiles001",
+              "why": "Old slate roofing, city house"
+            }
+          ]
+        },
+        "wood-planks": {
+          "label": "Aged wood siding and beams",
+          "use": "Walls, eaves, verandas, doors",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "japanese_cedar_planks",
+              "why": "Japanese cedar, natural vertical planks"
+            },
+            {
+              "source": "polyhaven",
+              "id": "hinoki_planks",
+              "why": "Hinoki grain, varnished, good for shrine details"
+            },
+            {
+              "source": "polyhaven",
+              "id": "weathered_plank_siding",
+              "why": "Rough exterior siding, rustic"
+            },
+            {
+              "source": "ambientcg",
+              "id": "WoodSiding009",
+              "why": "Photoscan house wall siding"
+            },
+            {
+              "source": "polyhaven",
+              "id": "dark_planks",
+              "why": "Dark weathered overlapping planks"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wood_planks_grey",
+              "why": "Grey aged planks for old buildings"
+            },
+            {
+              "source": "polyhaven",
+              "id": "raw_plank_wall",
+              "why": "Weathered chipped planks, scratched"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_rough_planks",
+              "why": "Mossy rough planks and logs"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Planks039",
+              "why": "Dirty large old planks, photoscan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wood_shutter",
+              "why": "Rough sawn timber for shutters and doors"
+            },
+            {
+              "source": "polyhaven",
+              "id": "brown_planks_09",
+              "why": "Raw brown deck planks"
+            }
+          ]
+        },
+        "plaster": {
+          "label": "Lime plaster walls",
+          "use": "Pale plaster walls between timber framing",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "white_plaster_rough_01",
+              "why": "White plaster with moss patches"
+            },
+            {
+              "source": "polyhaven",
+              "id": "white_plaster_02",
+              "why": "Smooth flat white plaster"
+            },
+            {
+              "source": "polyhaven",
+              "id": "white_plaster_rough_02",
+              "why": "Broken cracked plaster with moss"
+            },
+            {
+              "source": "polyhaven",
+              "id": "worn_mossy_plasterwall",
+              "why": "Weathered plaster with moss, aged"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Plaster007",
+              "why": "Photoscan broken old white plaster"
+            },
+            {
+              "source": "ambientcg",
+              "id": "PaintedPlaster017",
+              "why": "Clean white painted plaster photoscan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "white_stucco_02",
+              "why": "Coarse white stucco, exterior"
+            },
+            {
+              "source": "polyhaven",
+              "id": "clay_plaster",
+              "why": "Cracked earth plaster, warm tone"
+            },
+            {
+              "source": "polyhaven",
+              "id": "white_rough_plaster",
+              "why": "Chipped rough white plaster"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Plaster001",
+              "why": "Matte white outdoor plaster, procedural"
+            },
+            {
+              "source": "polyhaven",
+              "id": "yellow_plaster",
+              "why": "Worn warm plaster, option for variation"
+            }
+          ]
+        },
+        "gravel-path": {
+          "label": "Gravel path",
+          "use": "Raked gravel courtyards and garden paths",
+          "candidates": [
+            {
+              "source": "ambientcg",
+              "id": "Gravel043",
+              "why": "Fine grey granular pathway gravel"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Gravel037",
+              "why": "Light clean beige gravel"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Gravel038",
+              "why": "Light beige gravel variant"
+            },
+            {
+              "source": "polyhaven",
+              "id": "ground_grey",
+              "why": "Grey crushed gravel"
+            },
+            {
+              "source": "polyhaven",
+              "id": "gravel_floor_04",
+              "why": "Sandy fine granular gravel"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground091",
+              "why": "Fine grey gravel on dirt"
+            },
+            {
+              "source": "polyhaven",
+              "id": "sandy_gravel_02",
+              "why": "Sandy stony gravel"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Pathway003",
+              "why": "Gravel path photoscan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "gravel_ground_01",
+              "why": "Gravel pathway with stones"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Gravel023",
+              "why": "Bright light gravel, raked-garden look"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground032",
+              "why": "Gravel path ground"
+            }
+          ]
+        },
+        "stone-paving": {
+          "label": "Wet stone paving",
+          "use": "Stepping stones, steps and shrine path",
+          "candidates": [
+            {
+              "source": "ambientcg",
+              "id": "PavingStones115A",
+              "why": "Wet medieval paving with puddles"
+            },
+            {
+              "source": "polyhaven",
+              "id": "cobblestone_floor_04",
+              "why": "Damp moss cobblestone, wet"
+            },
+            {
+              "source": "polyhaven",
+              "id": "stone_pathway",
+              "why": "Weathered flagstone pathway"
+            },
+            {
+              "source": "polyhaven",
+              "id": "grey_stone_path",
+              "why": "Grey stone path, outdoor stonework"
+            },
+            {
+              "source": "ambientcg",
+              "id": "PavingStones138",
+              "why": "Mossy old grey paving, photoscan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "mossy_cobblestone",
+              "why": "Weathered cobblestone with moss"
+            },
+            {
+              "source": "polyhaven",
+              "id": "stone_pathway_02",
+              "why": "Rough stones with fallen leaves"
+            },
+            {
+              "source": "ambientcg",
+              "id": "PavingStones113",
+              "why": "Mossy old paving stones"
+            },
+            {
+              "source": "ambientcg",
+              "id": "PavingStones139",
+              "why": "Overgrown paving with pebbles"
+            },
+            {
+              "source": "polyhaven",
+              "id": "large_grey_tiles",
+              "why": "Large uneven grey tiles"
+            },
+            {
+              "source": "polyhaven",
+              "id": "japanese_stone_wall",
+              "why": "Japanese stone wall, for terrace and step risers"
+            }
+          ]
+        },
+        "bamboo": {
+          "label": "Bamboo",
+          "use": "Fences, screens, grove surface detail",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "bamboo_wall",
+              "why": "Photoscan bamboo paneling, wall and fence"
+            },
+            {
+              "source": "polyhaven",
+              "id": "bamboo_wall_02",
+              "why": "Bamboo paneling variant"
+            },
+            {
+              "source": "polyhaven",
+              "id": "bamboo_wall_03",
+              "why": "Bamboo paneling variant"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bamboo001A",
+              "why": "Green bamboo wall, procedural"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bamboo002A",
+              "why": "Green bamboo wall, procedural variant"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bamboo001C",
+              "why": "Old brown bamboo, aged"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bamboo002C",
+              "why": "Dirty old bamboo, aged"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bamboo001B",
+              "why": "Beige bamboo, dry"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bamboo002B",
+              "why": "Beige bamboo, dry variant"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Wicker008A",
+              "why": "Fill: woven natural fibre, for baskets and screens"
+            },
+            {
+              "source": "polyhaven",
+              "id": "japanese_cedar_planks",
+              "why": "Fill: natural vertical planks, for screens"
+            }
+          ]
+        }
+      },
+      "models": {
+        "props": {
+          "label": "Props",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "wooden_lantern_01",
+              "why": "Portable wooden lantern, closest to a lantern"
+            },
+            {
+              "source": "polyhaven",
+              "id": "Lantern_01",
+              "why": "Metal and glass lantern, 33k tris"
+            },
+            {
+              "source": "polyhaven",
+              "id": "brass_diya_lantern",
+              "why": "Brass oil lamp, alternative light prop"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_barrels_01",
+              "why": "Wooden barrels group"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wine_barrel_01",
+              "why": "Single wooden barrel"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_bucket_01",
+              "why": "Wooden bucket, garden and well"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_bucket_02",
+              "why": "Wooden bucket variant"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_crate_01",
+              "why": "Wooden crate"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_crate_02",
+              "why": "Wooden crate variant"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wicker_basket_01",
+              "why": "Wicker basket"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_stool_01",
+              "why": "Wooden stool, outdoor"
+            },
+            {
+              "source": "polyhaven",
+              "id": "chinese_stool",
+              "why": "Simple Asian-style stool"
+            },
+            {
+              "source": "polyhaven",
+              "id": "folding_wooden_stool",
+              "why": "Folding wooden stool"
+            },
+            {
+              "source": "polyhaven",
+              "id": "chinese_tea_table",
+              "why": "Low Asian tea table"
+            },
+            {
+              "source": "polyhaven",
+              "id": "planter_pot_clay",
+              "why": "Terracotta planter"
+            },
+            {
+              "source": "polyhaven",
+              "id": "ceramic_pot",
+              "why": "Ceramic pot"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_broom",
+              "why": "Wooden broom"
+            },
+            {
+              "source": "polyhaven",
+              "id": "jug_01",
+              "why": "Jug"
+            },
+            {
+              "source": "polyhaven",
+              "id": "painted_wooden_bench",
+              "why": "Painted wooden bench"
+            },
+            {
+              "source": "polyhaven",
+              "id": "stone_fire_pit",
+              "why": "Small stone fire pit"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_ladder_02",
+              "why": "Wooden ladder"
+            }
+          ]
+        },
+        "plants": {
+          "label": "Plants",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "shrub_01",
+              "why": "Shrub, 282k tris, hero use only"
+            },
+            {
+              "source": "polyhaven",
+              "id": "shrub_03",
+              "why": "Light shrub, garden filler"
+            },
+            {
+              "source": "polyhaven",
+              "id": "shrub_04",
+              "why": "Medium shrub"
+            },
+            {
+              "source": "polyhaven",
+              "id": "shrub_02",
+              "why": "Sapling-like shrub"
+            },
+            {
+              "source": "polyhaven",
+              "id": "fern_02",
+              "why": "Fern for shaded garden edges"
+            },
+            {
+              "source": "polyhaven",
+              "id": "moss_01",
+              "why": "Moss ground cover"
+            },
+            {
+              "source": "polyhaven",
+              "id": "grass_medium_02",
+              "why": "Meadow grass tuft"
+            },
+            {
+              "source": "polyhaven",
+              "id": "periwinkle_plant",
+              "why": "Small flowers, ground garden bed"
+            },
+            {
+              "source": "polyhaven",
+              "id": "pine_sapling_small",
+              "why": "Small pine, closest to garden pines"
+            },
+            {
+              "source": "polyhaven",
+              "id": "tree_small_02",
+              "why": "Broadleaf tree for village edge"
+            },
+            {
+              "source": "polyhaven",
+              "id": "potted_plant_01",
+              "why": "Potted plant for porches"
+            },
+            {
+              "source": "polyhaven",
+              "id": "dandelion_01",
+              "why": "Dandelion ground detail"
+            }
+          ]
+        }
+      },
+      "hdris": {
+        "lantern-dusk": {
+          "label": "Lantern dusk",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "qwantani_dusk_2",
+              "why": "Dusk over lakeside hill, grass, partly cloudy"
+            },
+            {
+              "source": "polyhaven",
+              "id": "qwantani_dusk_1",
+              "why": "Dusk over lakeside hill, softer sky"
+            },
+            {
+              "source": "polyhaven",
+              "id": "kiara_9_dusk",
+              "why": "Dusk over rocky valley, clear"
+            },
+            {
+              "source": "polyhaven",
+              "id": "river_walk_2",
+              "why": "Forest path at sunset, tree canopy"
+            },
+            {
+              "source": "polyhaven",
+              "id": "forest_grove",
+              "why": "Forest clearing sunset, low contrast"
+            },
+            {
+              "source": "polyhaven",
+              "id": "evening_field",
+              "why": "Low sun evening field"
+            },
+            {
+              "source": "polyhaven",
+              "id": "sunset_forest",
+              "why": "Forest path at sunset"
+            },
+            {
+              "source": "polyhaven",
+              "id": "nature_reserve_forest",
+              "why": "Wooded sunset, low contrast"
+            },
+            {
+              "source": "polyhaven",
+              "id": "eilenriede_park",
+              "why": "Park at sunset, trees and benches"
+            },
+            {
+              "source": "polyhaven",
+              "id": "aarfontein_dusk",
+              "why": "Overcast dusk over rocky grassland"
+            }
+          ]
+        },
+        "rainy-morning": {
+          "label": "Rainy morning",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "kloofendal_overcast",
+              "why": "Overcast hill, even grey light"
+            },
+            {
+              "source": "polyhaven",
+              "id": "mossy_forest",
+              "why": "Overcast mossy forest trail"
+            },
+            {
+              "source": "polyhaven",
+              "id": "lauter_waterfall",
+              "why": "Overcast morning forest and river"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rainforest_trail",
+              "why": "Overcast wet forest trail"
+            },
+            {
+              "source": "polyhaven",
+              "id": "killesberg_park",
+              "why": "Overcast morning garden, low contrast"
+            },
+            {
+              "source": "polyhaven",
+              "id": "stuttgart_hillside",
+              "why": "Overcast hillside, even light"
+            },
+            {
+              "source": "polyhaven",
+              "id": "kloetzle_blei",
+              "why": "Overcast mountain valley"
+            },
+            {
+              "source": "polyhaven",
+              "id": "hausdorf_meadow",
+              "why": "Overcast meadow, flat light"
+            },
+            {
+              "source": "polyhaven",
+              "id": "lythwood_field",
+              "why": "Overcast morning field and trees"
+            },
+            {
+              "source": "polyhaven",
+              "id": "fouriesburg_mountain_cloudy",
+              "why": "Cloudy mountain view"
+            }
+          ]
+        },
+        "midday": {
+          "label": "Midday",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "xiequ_yuan",
+              "why": "Midday Asian garden with pond and buildings"
+            },
+            {
+              "source": "polyhaven",
+              "id": "chinese_garden",
+              "why": "Asian garden, clear afternoon"
+            },
+            {
+              "source": "polyhaven",
+              "id": "ninomaru_teien",
+              "why": "Japanese garden with stairs and path, low sun"
+            },
+            {
+              "source": "polyhaven",
+              "id": "pond",
+              "why": "Midday garden pond with stones"
+            },
+            {
+              "source": "polyhaven",
+              "id": "nagoya_wall_path",
+              "why": "Clear afternoon path with trees, Japan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "bamboo_tunnel",
+              "why": "Midday bamboo grove path"
+            },
+            {
+              "source": "polyhaven",
+              "id": "immenstadter_horn",
+              "why": "Midday mountain view, partly cloudy"
+            },
+            {
+              "source": "polyhaven",
+              "id": "kloofendal_38d_partly_cloudy",
+              "why": "Partly cloudy hill, soft midday"
+            },
+            {
+              "source": "polyhaven",
+              "id": "meadow",
+              "why": "Meadow clearing, partly cloudy midday"
+            },
+            {
+              "source": "polyhaven",
+              "id": "pizzo_pernice",
+              "why": "Midday mountain view, clear"
+            }
+          ]
+        }
+      }
+    },
+    "jungle": {
+      "materials": {
+        "jungle-stone": {
+          "label": "Weathered carved stone",
+          "use": "Temple walls, blocks, steps",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "sandstone_blocks_05",
+              "why": "Large old sandstone blocks, rough"
+            },
+            {
+              "source": "polyhaven",
+              "id": "large_sandstone_blocks_01",
+              "why": "Rough sandstone wall blocks"
+            },
+            {
+              "source": "polyhaven",
+              "id": "medieval_blocks_06",
+              "why": "Stacked large blocks, fortress wall"
+            },
+            {
+              "source": "polyhaven",
+              "id": "old_sandstone_02",
+              "why": "Weathered rough sandstone wall"
+            },
+            {
+              "source": "polyhaven",
+              "id": "mossy_sandstone",
+              "why": "Rough weathered sandstone with moss"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bricks099",
+              "why": "Old beige sandstone blocks, photoscan"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bricks100",
+              "why": "Old beige stone blocks, photoscan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "stone_wall_05",
+              "why": "Ancient walls, coursed stone"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bricks087",
+              "why": "Medieval beige stone wall"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rabdentse_ruins_wall",
+              "why": "Chipped weathered ruin wall"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Tiles130",
+              "why": "Broken old stone floor, castle"
+            }
+          ]
+        },
+        "mossy-ruin": {
+          "label": "Moss-covered stone",
+          "use": "Mossy ruin walls, stairs and floors",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "mossy_stone_wall",
+              "why": "Weathered rubble wall with moss"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bricks075B",
+              "why": "Dirty mossy old stone, photoscan"
+            },
+            {
+              "source": "ambientcg",
+              "id": "PavingStones113",
+              "why": "Mossy old paving, usable for stairs"
+            },
+            {
+              "source": "polyhaven",
+              "id": "mossy_sandstone",
+              "why": "Weathered sandstone with moss"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Rock064",
+              "why": "Mossy stacked rock"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Rock057",
+              "why": "Green-grey mossy stone"
+            },
+            {
+              "source": "ambientcg",
+              "id": "PavingStones139",
+              "why": "Overgrown paving with pebbles"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Concrete038",
+              "why": "Mossy grey-green stone, photoscan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_pitted_mossy",
+              "why": "Mossy boulder surface"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bricks079",
+              "why": "Dirty mossy orange bricks"
+            },
+            {
+              "source": "polyhaven",
+              "id": "mossy_cobblestone",
+              "why": "Cobblestone with moss, floor"
+            }
+          ]
+        },
+        "mud": {
+          "label": "Mud",
+          "use": "Wet trails and ruin surroundings",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "brown_mud_02",
+              "why": "Wet mud photoscan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "brown_mud_03",
+              "why": "Wet mud variant"
+            },
+            {
+              "source": "polyhaven",
+              "id": "mud_forest",
+              "why": "Forest mud with leaves"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground025",
+              "why": "Wet clay mud"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground106",
+              "why": "Photoscan forest mud with leaves"
+            },
+            {
+              "source": "polyhaven",
+              "id": "brown_mud_rocks_01",
+              "why": "Wet mud with moss, forest stones"
+            },
+            {
+              "source": "polyhaven",
+              "id": "muddy_tracks",
+              "why": "Wet muddy surface with tracks"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground049A",
+              "why": "Mud, procedural"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground050",
+              "why": "Mud with puddles, rainy look"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground051",
+              "why": "Dark wet mud"
+            },
+            {
+              "source": "polyhaven",
+              "id": "red_dirt_mud_01",
+              "why": "Red mud with gravel, tropical colour"
+            }
+          ]
+        },
+        "jungle-floor": {
+          "label": "Jungle floor",
+          "use": "Leaf litter and tropical ground around ruins",
+          "candidates": [
+            {
+              "source": "ambientcg",
+              "id": "Ground037",
+              "why": "Damp overgrown woodland ground with moss"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground076",
+              "why": "Leaves, roots and soil"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground084",
+              "why": "Brown forest ground with roots"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground070",
+              "why": "Leaves and roots, forest litter"
+            },
+            {
+              "source": "polyhaven",
+              "id": "brown_mud_leaves_01",
+              "why": "Mud with moss and leaves"
+            },
+            {
+              "source": "polyhaven",
+              "id": "roots",
+              "why": "Exposed roots in dirt"
+            },
+            {
+              "source": "polyhaven",
+              "id": "leaves_forest_ground",
+              "why": "Leaf litter with twigs"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground040",
+              "why": "Leaf litter on mud, procedural"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Ground071",
+              "why": "Dirt, mud and sticks"
+            },
+            {
+              "source": "polyhaven",
+              "id": "red_laterite_soil_stones",
+              "why": "Red laterite soil, tropical look"
+            },
+            {
+              "source": "polyhaven",
+              "id": "forest_leaves_03",
+              "why": "Dry leaf litter"
+            }
+          ]
+        },
+        "bark-tropical": {
+          "label": "Tropical bark",
+          "use": "Trunks of jungle trees",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "palm_bark",
+              "why": "Palm bark photoscan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "palm_tree_bark",
+              "why": "Damaged palm bark"
+            },
+            {
+              "source": "polyhaven",
+              "id": "fever_tree_bark",
+              "why": "Tropical rough bark"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bark013",
+              "why": "Mossy green bark, photoscan"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bark008",
+              "why": "Brown bark with moss"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bark016",
+              "why": "Mossy bark photoscan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "eucalyptus_bark",
+              "why": "Weathered bark with moss and lichen"
+            },
+            {
+              "source": "polyhaven",
+              "id": "jolcham_oak_bark_01",
+              "why": "Mossy fissured bark"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bark010",
+              "why": "Brown-green rough bark"
+            },
+            {
+              "source": "polyhaven",
+              "id": "tree_bark_03",
+              "why": "Old fissured bark with moss"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bark011",
+              "why": "Green-grey mossy bark"
+            }
+          ]
+        }
+      },
+      "models": {
+        "plants": {
+          "label": "Plants",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "anthurium_botany_01",
+              "why": "Tropical anthurium, light 4k tris"
+            },
+            {
+              "source": "polyhaven",
+              "id": "calathea_orbifolia_01",
+              "why": "Large round leaves, tropical"
+            },
+            {
+              "source": "polyhaven",
+              "id": "pachira_aquatica_01",
+              "why": "Tropical shrub, tagged jungle"
+            },
+            {
+              "source": "polyhaven",
+              "id": "fern_02",
+              "why": "Fern, light"
+            },
+            {
+              "source": "polyhaven",
+              "id": "shrub_sorrel_01",
+              "why": "Light shrub, tropical-ish"
+            },
+            {
+              "source": "polyhaven",
+              "id": "island_tree_01",
+              "why": "Tree tagged jungle, 3.7M tris, hero only"
+            },
+            {
+              "source": "polyhaven",
+              "id": "island_tree_02",
+              "why": "Tree tagged jungle"
+            },
+            {
+              "source": "polyhaven",
+              "id": "shrub_02",
+              "why": "Sapling-like shrub, tagged jungle"
+            },
+            {
+              "source": "polyhaven",
+              "id": "moss_01",
+              "why": "Moss ground cover"
+            },
+            {
+              "source": "polyhaven",
+              "id": "weed_plant_02",
+              "why": "Low plant"
+            },
+            {
+              "source": "polyhaven",
+              "id": "nettle_plant",
+              "why": "Nettle, undergrowth"
+            }
+          ]
+        },
+        "rocks": {
+          "label": "Rocks",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "boulder_01",
+              "why": "Lichen boulder"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_moss_set_01",
+              "why": "Mossy stone set"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_moss_set_02",
+              "why": "Mossy stone set variant"
+            },
+            {
+              "source": "polyhaven",
+              "id": "stone_01",
+              "why": "Rock with pebbles"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_07",
+              "why": "Boulder"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_09",
+              "why": "Boulder"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_face_01",
+              "why": "Rock face"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_face_02",
+              "why": "Rock face variant"
+            },
+            {
+              "source": "polyhaven",
+              "id": "mountainside",
+              "why": "Large rock face, backdrop"
+            }
+          ]
+        },
+        "ruins-structures": {
+          "label": "Ruins and structures",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "modular_fort_01",
+              "why": "Modular old stone fort pieces, closest to ruins"
+            },
+            {
+              "source": "polyhaven",
+              "id": "large_castle_door",
+              "why": "Heavy old door, 12k tris"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_face_01",
+              "why": "Rock face usable as cliff wall to carve"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_face_02",
+              "why": "Rock face variant"
+            },
+            {
+              "source": "polyhaven",
+              "id": "gothic_statue",
+              "why": "Stone statue bust, 27k tris"
+            },
+            {
+              "source": "polyhaven",
+              "id": "marble_bust_01",
+              "why": "Marble bust, weathered stone prop"
+            },
+            {
+              "source": "polyhaven",
+              "id": "stone_fire_pit",
+              "why": "Stone ring, small structure"
+            },
+            {
+              "source": "polyhaven",
+              "id": "modular_wooden_pier",
+              "why": "Old wooden boardwalk pieces"
+            }
+          ]
+        }
+      },
+      "hdris": {
+        "midday": {
+          "label": "Midday shafts",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "rainforest_trail",
+              "why": "Dense wet forest trail with planks"
+            },
+            {
+              "source": "polyhaven",
+              "id": "lush_dirt_path",
+              "why": "Dense forest path, midday"
+            },
+            {
+              "source": "polyhaven",
+              "id": "bamboo_tunnel",
+              "why": "Midday bamboo canopy tunnel"
+            },
+            {
+              "source": "polyhaven",
+              "id": "green_sanctuary",
+              "why": "Dappled shaded glade, canopy"
+            },
+            {
+              "source": "polyhaven",
+              "id": "cave_wall",
+              "why": "Rock wall with vines and river"
+            },
+            {
+              "source": "polyhaven",
+              "id": "epping_forest_01",
+              "why": "Midday canopy by lake"
+            },
+            {
+              "source": "polyhaven",
+              "id": "skukuza_golf",
+              "why": "Shaded midday trees by lake"
+            },
+            {
+              "source": "polyhaven",
+              "id": "shady_patch",
+              "why": "Shaded forest clearing"
+            },
+            {
+              "source": "polyhaven",
+              "id": "herkulessaulen",
+              "why": "Rock formations in forest, midday"
+            },
+            {
+              "source": "polyhaven",
+              "id": "hikers_cave",
+              "why": "Forest cave, midday"
+            }
+          ]
+        },
+        "storm": {
+          "label": "Storm",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "approaching_storm",
+              "why": "Park with approaching storm clouds"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rainforest_trail",
+              "why": "Overcast wet forest trail"
+            },
+            {
+              "source": "polyhaven",
+              "id": "mossy_forest",
+              "why": "Overcast mossy forest"
+            },
+            {
+              "source": "polyhaven",
+              "id": "abandoned_waterworks",
+              "why": "Overcast overgrown concrete ruin"
+            },
+            {
+              "source": "polyhaven",
+              "id": "missile_launch_facility_03",
+              "why": "Overcast forest ruin, rubble"
+            },
+            {
+              "source": "polyhaven",
+              "id": "muddy_autumn_forest",
+              "why": "Overcast muddy forest"
+            },
+            {
+              "source": "polyhaven",
+              "id": "forest_cave",
+              "why": "Overcast forest cave"
+            },
+            {
+              "source": "polyhaven",
+              "id": "niederwihl_forest",
+              "why": "Overcast forest glade, logs"
+            },
+            {
+              "source": "polyhaven",
+              "id": "teufelsberg_roof",
+              "why": "Rain over ruins, afternoon"
+            },
+            {
+              "source": "polyhaven",
+              "id": "kloofendal_overcast",
+              "why": "Overcast grey sky"
+            }
+          ]
+        },
+        "golden-hour": {
+          "label": "Golden hour",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "sunset_forest",
+              "why": "Forest path at sunset"
+            },
+            {
+              "source": "polyhaven",
+              "id": "river_walk_1",
+              "why": "Forest path with leaves, sunset"
+            },
+            {
+              "source": "polyhaven",
+              "id": "treetop_balcony",
+              "why": "Forest view, sunset"
+            },
+            {
+              "source": "polyhaven",
+              "id": "nature_reserve_forest",
+              "why": "Mixed forest sunset"
+            },
+            {
+              "source": "polyhaven",
+              "id": "autumn_forest_04",
+              "why": "Low sun through forest, high contrast"
+            },
+            {
+              "source": "polyhaven",
+              "id": "forest_grove",
+              "why": "Forest clearing sunset"
+            },
+            {
+              "source": "polyhaven",
+              "id": "reinforced_concrete_01",
+              "why": "Sunset over concrete ruins and grass"
+            },
+            {
+              "source": "polyhaven",
+              "id": "dark_autumn_forest",
+              "why": "Sunset path in forest"
+            },
+            {
+              "source": "polyhaven",
+              "id": "sabie_tent",
+              "why": "Sunset veranda over river"
+            },
+            {
+              "source": "polyhaven",
+              "id": "river_walk_2",
+              "why": "Forest river path, canopy"
+            }
+          ]
+        }
+      }
+    },
+    "cabin": {
+      "materials": {
+        "snow": {
+          "label": "Deep snow",
+          "use": "Ground, drifts, roof cover",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "snow_02",
+              "why": "Fresh smooth powdery snow photoscan"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Snow005",
+              "why": "Bright fluffy fresh snow photoscan"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Snow014",
+              "why": "Soft smooth white snow"
+            },
+            {
+              "source": "polyhaven",
+              "id": "snow_01",
+              "why": "Trampled powdery snow with footprints"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Snow010A",
+              "why": "Clean white snow, procedural"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Snow008A",
+              "why": "Snow dunes and waves"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Snow007A",
+              "why": "Clean smooth snow"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Snow006",
+              "why": "Stomped snow steps"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Snow013",
+              "why": "Footprints in frosty snow"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Snow009A",
+              "why": "Snow dunes"
+            },
+            {
+              "source": "polyhaven",
+              "id": "snow_03",
+              "why": "Trampled snow with mud for paths"
+            }
+          ]
+        },
+        "log-wood": {
+          "label": "Log cabin logs",
+          "use": "Cabin walls, stacked logs, timber",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "wood_trunk_wall",
+              "why": "Tree trunk log wall photoscan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "beam_wall_01",
+              "why": "Stacked log cabin wall, hut"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_rough_planks",
+              "why": "Rough moss logs and planks"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Logs001",
+              "why": "Photoscan logs"
+            },
+            {
+              "source": "ambientcg",
+              "id": "TreeEnd004",
+              "why": "Log end grain, for log ends"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Wood086",
+              "why": "Rough brown wood"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rough_wood",
+              "why": "Rough weathered wood"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Wood040",
+              "why": "Dark old rough wood"
+            },
+            {
+              "source": "polyhaven",
+              "id": "dark_wooden_planks",
+              "why": "Old weathered damaged timber"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rough_pine_door",
+              "why": "Rough pine timber"
+            },
+            {
+              "source": "ambientcg",
+              "id": "TreeEnd005",
+              "why": "Cut tree end"
+            }
+          ]
+        },
+        "cabin-planks": {
+          "label": "Cabin planks",
+          "use": "Floor, trim, doors, sheds",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "brown_planks_04",
+              "why": "Old untreated cabin planks, clapboard"
+            },
+            {
+              "source": "polyhaven",
+              "id": "dark_planks",
+              "why": "Cabin overlapping planks with nail holes"
+            },
+            {
+              "source": "polyhaven",
+              "id": "brown_planks_09",
+              "why": "Raw wood deck planks"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wood_planks_grey",
+              "why": "Worn grey planks"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Planks021",
+              "why": "Raw brown rough planks, photoscan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "weathered_planks",
+              "why": "Old weathered planks"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Planks039",
+              "why": "Old rough dirty planks"
+            },
+            {
+              "source": "polyhaven",
+              "id": "brown_planks_03",
+              "why": "Dry untreated planks"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Wood080",
+              "why": "Old planks photoscan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "planks_brown_10",
+              "why": "Old discoloured planks"
+            },
+            {
+              "source": "polyhaven",
+              "id": "medieval_wood",
+              "why": "Weathered old planks"
+            }
+          ]
+        },
+        "rock-alpine": {
+          "label": "Alpine rock",
+          "use": "Mountain faces, boulders, cliffs",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "rock_face_03",
+              "why": "Rough weathered cliff face"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_face",
+              "why": "Solid rock cliff landscape"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Rock051",
+              "why": "Mountain rock wall photoscan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "cliff_side",
+              "why": "Eroded cliff, rugged"
+            },
+            {
+              "source": "polyhaven",
+              "id": "dark_rock_02",
+              "why": "Dark fractured rock face"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Rock050",
+              "why": "Cliff rock photoscan"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Rock045",
+              "why": "Jagged cliff rock"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_boulder_dry",
+              "why": "Weathered boulder"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Rock044",
+              "why": "Rough large cliff rock"
+            },
+            {
+              "source": "polyhaven",
+              "id": "quarry_wall_02",
+              "why": "Layered rock wall"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Rock056",
+              "why": "Brown mountain rock wall"
+            }
+          ]
+        },
+        "pine-bark": {
+          "label": "Pine bark",
+          "use": "Pine trunks around the cabin",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "pine_bark",
+              "why": "Rough weathered pine bark"
+            },
+            {
+              "source": "polyhaven",
+              "id": "knotted_pine_bark",
+              "why": "Pine bark with knots"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bark014",
+              "why": "Fir bark photoscan"
+            },
+            {
+              "source": "polyhaven",
+              "id": "bark_brown_02",
+              "why": "Brown furrowed bark with knots"
+            },
+            {
+              "source": "polyhaven",
+              "id": "japanese_cedar_bark",
+              "why": "Fissured cedar bark"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bark015",
+              "why": "Layered rustic bark photoscan"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bark007",
+              "why": "Rough brown bark"
+            },
+            {
+              "source": "polyhaven",
+              "id": "chinese_cedar_bark",
+              "why": "Fissured cedar bark variant"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bark012",
+              "why": "Brown oak bark"
+            },
+            {
+              "source": "polyhaven",
+              "id": "metasequoia_bark",
+              "why": "Furrowed bark"
+            },
+            {
+              "source": "ambientcg",
+              "id": "Bark001",
+              "why": "Forest bark, approximated scan"
+            }
+          ]
+        }
+      },
+      "models": {
+        "trees": {
+          "label": "Pines and conifers",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "pine_tree_01",
+              "why": "Full pine, 17M tris, hero"
+            },
+            {
+              "source": "polyhaven",
+              "id": "fir_tree_01",
+              "why": "Full fir, 7.8M tris"
+            },
+            {
+              "source": "polyhaven",
+              "id": "fir_sapling_medium",
+              "why": "Medium fir, 2.3M tris"
+            },
+            {
+              "source": "polyhaven",
+              "id": "pine_sapling_medium",
+              "why": "Medium pine, 9.8M tris"
+            },
+            {
+              "source": "polyhaven",
+              "id": "fir_sapling",
+              "why": "Small fir, 433k tris, best for instancing"
+            },
+            {
+              "source": "polyhaven",
+              "id": "pine_sapling_small",
+              "why": "Small pine, 398k tris"
+            },
+            {
+              "source": "polyhaven",
+              "id": "dead_tree_trunk",
+              "why": "Dead trunk for snow scene"
+            }
+          ]
+        },
+        "rocks": {
+          "label": "Rocks",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "boulder_01",
+              "why": "Boulder"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_07",
+              "why": "Boulder"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_09",
+              "why": "Boulder"
+            },
+            {
+              "source": "polyhaven",
+              "id": "stone_01",
+              "why": "Rock with pebbles"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_moss_set_01",
+              "why": "Rock set, will need snow cover"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_moss_set_02",
+              "why": "Rock set variant"
+            },
+            {
+              "source": "polyhaven",
+              "id": "mountainside",
+              "why": "Mountain face, backdrop"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_face_01",
+              "why": "Rock face"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rock_face_02",
+              "why": "Rock face variant"
+            }
+          ]
+        },
+        "props": {
+          "label": "Props",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "hatchet",
+              "why": "Hatchet, tagged firewood"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_axe",
+              "why": "Wooden axe"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_axe_02",
+              "why": "Wooden axe variant"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_axe_03",
+              "why": "Wooden axe variant"
+            },
+            {
+              "source": "polyhaven",
+              "id": "tree_stump_01",
+              "why": "Chopping block"
+            },
+            {
+              "source": "polyhaven",
+              "id": "tree_stump_02",
+              "why": "Chopping block variant"
+            },
+            {
+              "source": "polyhaven",
+              "id": "barrel_stove",
+              "why": "Barrel wood stove, cabin heating"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_bucket_01",
+              "why": "Wooden bucket"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_barrels_01",
+              "why": "Wooden barrels"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_crate_01",
+              "why": "Wooden crate"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_stool_01",
+              "why": "Wooden stool"
+            },
+            {
+              "source": "polyhaven",
+              "id": "vintage_oil_lamp",
+              "why": "Oil lamp for window glow"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_lantern_01",
+              "why": "Wooden lantern"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wicker_basket_01",
+              "why": "Basket for kindling"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rusted_spade_01",
+              "why": "Old spade, snow shoveling"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_ladder",
+              "why": "Wooden ladder"
+            },
+            {
+              "source": "polyhaven",
+              "id": "wooden_broom",
+              "why": "Broom for porch"
+            }
+          ]
+        }
+      },
+      "hdris": {
+        "blue-hour": {
+          "label": "Blue hour",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "winter_lake_01",
+              "why": "Winter lake at sunset, snow and frozen"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rural_winter_roadside",
+              "why": "Snowy roadside at sunset"
+            },
+            {
+              "source": "polyhaven",
+              "id": "birchwood",
+              "why": "Snowy birch forest, sunset, frozen river"
+            },
+            {
+              "source": "polyhaven",
+              "id": "qwantani_dusk_2",
+              "why": "Dusk over lakeside mountains (no snow)"
+            },
+            {
+              "source": "polyhaven",
+              "id": "qwantani_dusk_1",
+              "why": "Dusk over mountains (no snow)"
+            },
+            {
+              "source": "polyhaven",
+              "id": "kiara_9_dusk",
+              "why": "Dusk over rocky valley"
+            },
+            {
+              "source": "polyhaven",
+              "id": "stierberg_sunrise",
+              "why": "Snowy field at sunrise, forest"
+            },
+            {
+              "source": "polyhaven",
+              "id": "night_bridge",
+              "why": "Night snow, overcast, urban fringe"
+            },
+            {
+              "source": "polyhaven",
+              "id": "winter_evening",
+              "why": "Night snow, overcast, buildings"
+            },
+            {
+              "source": "polyhaven",
+              "id": "blaubeuren_church_square",
+              "why": "Night snow in town"
+            }
+          ]
+        },
+        "midday": {
+          "label": "Midday",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "lago_disola",
+              "why": "Alpine valley, snow, midday"
+            },
+            {
+              "source": "polyhaven",
+              "id": "snowy_hillside",
+              "why": "Snowy hill and forest, morning"
+            },
+            {
+              "source": "polyhaven",
+              "id": "horn-koppe_snow",
+              "why": "Snow field and forest, sun"
+            },
+            {
+              "source": "polyhaven",
+              "id": "snowy_field",
+              "why": "Snow field with trees, partly cloudy"
+            },
+            {
+              "source": "polyhaven",
+              "id": "snowy_forest_path_01",
+              "why": "Snowy forest path, afternoon, clear"
+            },
+            {
+              "source": "polyhaven",
+              "id": "pisztyk",
+              "why": "Snow field with trees, morning"
+            },
+            {
+              "source": "polyhaven",
+              "id": "passendorf_snow",
+              "why": "Snow field, sun, forest edge"
+            },
+            {
+              "source": "polyhaven",
+              "id": "bergen",
+              "why": "Alpine peaks with snow, clear"
+            },
+            {
+              "source": "polyhaven",
+              "id": "snowy_hillside_02",
+              "why": "Overcast midday snowy path"
+            },
+            {
+              "source": "polyhaven",
+              "id": "snowy_forest",
+              "why": "Overcast snowy conifer forest"
+            }
+          ]
+        },
+        "aurora-night": {
+          "label": "Aurora night",
+          "candidates": [
+            {
+              "source": "polyhaven",
+              "id": "kloppenheim_02",
+              "why": "Clear dark starry sky, field, moon and galaxy"
+            },
+            {
+              "source": "polyhaven",
+              "id": "moonless_golf",
+              "why": "Moonless clear night, stars and Milky Way"
+            },
+            {
+              "source": "polyhaven",
+              "id": "lakeside_night",
+              "why": "Clear night lake with trees, stars"
+            },
+            {
+              "source": "polyhaven",
+              "id": "qwantani_night",
+              "why": "Clear night, mountains and lake"
+            },
+            {
+              "source": "polyhaven",
+              "id": "kloppenheim_02_puresky",
+              "why": "Sky-only variant, easy to layer an aurora on"
+            },
+            {
+              "source": "polyhaven",
+              "id": "rogland_clear_night",
+              "why": "Stars and Milky Way, rocky"
+            },
+            {
+              "source": "polyhaven",
+              "id": "clarens_night_01",
+              "why": "Night hilltop, mountains"
+            },
+            {
+              "source": "polyhaven",
+              "id": "satara_night_no_lamps",
+              "why": "Night with stars, no lamps"
+            },
+            {
+              "source": "polyhaven",
+              "id": "winter_evening",
+              "why": "Snowy night, overcast, buildings"
+            },
+            {
+              "source": "polyhaven",
+              "id": "kloppenheim_07",
+              "why": "Night overcast, moon, field"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "notes": [
+    "Poly Haven has no pine/fir trees beyond the Pine Forest collection (pine_tree_01 17M tris, fir_tree_01 7.8M, saplings 0.4-9.8M): all are very heavy and need decimation or LODs; no spruce, bamboo, maple, cedar or tropical canopy trees exist. Consider Quaternius/Kenney CC0 or procedural trees.",
+    "No Poly Haven models for mushrooms, pine cones, fallen leaves, firewood stacks, logs piles, vines, large tropical leaves, bamboo stalks, stone lanterns (toro), torii, shrine or temple pieces, Japanese roofs/houses, or stone stairs. Village architecture, bamboo grove and stone lanterns must be built procedurally or sourced elsewhere.",
+    "forest ground-clutter is thin (6): only dry_branches_medium_01, moss_01, root pieces, weeds; bark_debris_01 is a Karoo desert asset (362k tris) and is a weak fit.",
+    "jungle ruins-structures has no real ruin kit: modular_fort_01, large_castle_door, statue busts and rock faces are loose approximations; plan to model blocks/stairs from jungle-stone and mossy-ruin materials.",
+    "jungle plants: only a few tropical species (anthurium, calathea, pachira, fern); no palms, banana or monstera. island_tree_* are tagged jungle but are coastal trees with 1.7-4.8M tris.",
+    "village props: wooden_lantern_01 and Lantern_01 are the only lanterns (no paper/stone lanterns); keep an emissive paper-lantern prop procedural.",
+    "cabin props: no firewood or log pile models; hatchet/axes, stumps and barrel_stove are the closest. No snow-covered pine variants: pines are green, snow must be added with shader or decals.",
+    "Procedural ambientCG materials used where photoscans are absent: Moss002-004, Bamboo001-002, RoofingTiles*, Plaster001, Snow007-010 (Snow005/006/011-015 are photo), Ground040/049-051. Bamboo is paneling only (no round culm texture); 3 Poly Haven bamboo_wall photoscans plus 6 procedural ambientCG; last two bamboo entries are fill (Wicker008A, japanese_cedar_planks).",
+    "No dedicated Poly Haven moss or snow-covered-rock textures; moss candidates are mossy grounds/rocks/bark. Thatch-free village: roof tiles are generic ceramic/slate, not true Japanese kawara; grey_roof_tiles and black RoofingTiles009 are the nearest colours.",
+    "HDRIs: none have aurora. aurora-night uses clear starry night skies; add aurora via a shader or overlay (kloppenheim_02_puresky is a sky-only option). No snowy night HDRI with a mountain/cabin horizon: winter_evening and night_bridge are urban.",
+    "HDRIs: only 3 rain-tagged outdoor HDRIs (castel_st_angelo_roof, teufelsberg_roof, vignaioli_night), all urban/industrial. rainy-morning and jungle storm use overcast/stormy forest and hill skies; add rain with particles/post. No true tropical/jungle HDRIs exist; the rainforest_trail and bamboo_tunnel are the best.",
+    "HDRIs: blue-hour snow options are limited to winter_lake_01, rural_winter_roadside, birchwood (sunset with snow) and stierberg_sunrise; qwantani_dusk_* and kiara_9_dusk give the right twilight colour without snow.",
+    "Village lantern-dusk uses hill/forest dusk HDRIs; Japanese-garden HDRIs exist only for daylight (ninomaru_teien at sunrise, xiequ_yuan, chinese_garden). Check ninomaru_teien and others for sun direction/exposure in the viewer before choosing."
+  ]
+}
