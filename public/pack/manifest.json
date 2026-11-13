@@ -217,6 +217,30 @@
     13402,
     3565
    ]
+  },
+  "forest/fir-sapling": {
+   "source": "polyhaven",
+   "id": "fir_sapling",
+   "file": "/pack/models/forest-fir-sapling.9bdc792e.glb",
+   "bytes": 1834440,
+   "lods": 3,
+   "triangles": [
+    11581,
+    3154,
+    698
+   ]
+  },
+  "forest/pine-sapling": {
+   "source": "polyhaven",
+   "id": "pine_sapling_small",
+   "file": "/pack/models/forest-pine-sapling.96f984b8.glb",
+   "bytes": 1806724,
+   "lods": 3,
+   "triangles": [
+    11714,
+    3569,
+    947
+   ]
   }
  },
  "hdris": {},
