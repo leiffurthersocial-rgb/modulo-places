@@ -19,9 +19,16 @@ type Lic = Omit<LicenseEntry, 'key' | 'fetchedAt'>;
 
 // ---- Poly Haven (CC0; API terms ask for credit when used live) ---------------------------------
 
-interface PhFile { url: string; md5: string; size: number }
+interface PhFile {
+  url: string;
+  md5: string;
+  size: number;
+}
 type PhFiles = Record<string, Record<string, Record<string, PhFile | Record<string, unknown>>>>;
-interface PhInfo { name: string; authors: Record<string, string> }
+interface PhInfo {
+  name: string;
+  authors: Record<string, string>;
+}
 
 export async function polyhavenInfo(id: string): Promise<Lic> {
   const info = await getJson<PhInfo>(`https://api.polyhaven.com/info/${id}`, `ph-info-${id}`);
@@ -40,7 +47,10 @@ export async function polyhavenFiles(id: string): Promise<PhFiles> {
 }
 
 /** Public CDN URLs for a texture's maps (used live by /lab; Poly Haven sends CORS *). */
-export async function polyhavenTextureUrls(id: string, res: Res = '1k'): Promise<Record<string, string>> {
+export async function polyhavenTextureUrls(
+  id: string,
+  res: Res = '1k',
+): Promise<Record<string, string>> {
   const f = await polyhavenFiles(id);
   const pick = (map: string, fmt = 'jpg') => (f[map]?.[res]?.[fmt] as PhFile | undefined)?.url;
   const out: Record<string, string> = {};
@@ -60,7 +70,11 @@ export async function polyhavenTexture(id: string, res: Res): Promise<MaterialFi
   const get = async (map: string, fmt = 'jpg') => {
     const file = f[map]?.[res]?.[fmt] as PhFile | undefined;
     if (!file) return undefined;
-    return download(file.url, `polyhaven/textures/${id}/${res}/${file.url.split('/').pop()}`, file.md5);
+    return download(
+      file.url,
+      `polyhaven/textures/${id}/${res}/${file.url.split('/').pop()}`,
+      file.md5,
+    );
   };
   const color = await get('Diffuse');
   const normal = await get('nor_gl');
@@ -79,7 +93,8 @@ export async function polyhavenModel(id: string, res: Res): Promise<string> {
   if (!g) throw new Error(`polyhaven ${id}: no gltf at ${res}`);
   const dir = `polyhaven/models/${id}/${res}`;
   const main = await download(g.url, `${dir}/${g.url.split('/').pop()}`, g.md5);
-  for (const [rel, file] of Object.entries(g.include ?? {})) await download(file.url, `${dir}/${rel}`, file.md5);
+  for (const [rel, file] of Object.entries(g.include ?? {}))
+    await download(file.url, `${dir}/${rel}`, file.md5);
   return main;
 }
 
@@ -92,10 +107,15 @@ export async function polyhavenHdri(id: string, res: Res): Promise<string> {
 
 // ---- ambientCG (CC0) ---------------------------------------------------------------------------
 
-interface AcgV2 { foundAssets: { assetId: string; displayName: string }[] }
+interface AcgV2 {
+  foundAssets: { assetId: string; displayName: string }[];
+}
 
 export async function ambientcgInfo(id: string): Promise<Lic> {
-  const d = await getJson<AcgV2>(`https://ambientcg.com/api/v2/full_json?id=${id}`, `acg-info-${id}`);
+  const d = await getJson<AcgV2>(
+    `https://ambientcg.com/api/v2/full_json?id=${id}`,
+    `acg-info-${id}`,
+  );
   const a = d.foundAssets[0];
   if (!a) throw new Error(`ambientCG ${id} not found`);
   return {
@@ -110,7 +130,10 @@ export async function ambientcgInfo(id: string): Promise<Lic> {
 
 export async function ambientcgTexture(id: string, res: Res): Promise<MaterialFiles> {
   const attr = `${res.toUpperCase()}-JPG`;
-  const zip = await download(`https://ambientcg.com/get?file=${id}_${attr}.zip`, `ambientcg/${id}/${id}_${attr}.zip`);
+  const zip = await download(
+    `https://ambientcg.com/get?file=${id}_${attr}.zip`,
+    `ambientcg/${id}/${id}_${attr}.zip`,
+  );
   const dir = join(CACHE, 'ambientcg', id, attr);
   if (!existsSync(dir)) {
     mkdirSync(dir, { recursive: true });

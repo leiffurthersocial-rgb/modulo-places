@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { PRESET_ORDER } from '../../data/quality-presets';
 import { SCENES } from '../../scenes';
 import { UI } from '../../ui/UI';
+import { AMBIENCE_PRESETS, AudioEngine } from '../audio/AudioEngine';
 import { DebugOverlay, estimateMemory, FrameTimer } from '../debug/DebugOverlay';
 import { InputManager } from '../input/InputManager';
 import { capture, PhotoMode } from '../photo/PhotoMode';
@@ -52,6 +53,9 @@ export class App {
   readonly input: InputManager;
   readonly debug: DebugOverlay;
   readonly photo = new PhotoMode();
+  readonly audio: AudioEngine;
+  private strideAcc = 0;
+  private lastFeet = new THREE.Vector3();
   private pmrem: THREE.PMREMGenerator;
   private runtime: SceneRuntime | null = null;
   private quality: QualitySettings;
@@ -92,7 +96,7 @@ export class App {
     this.ui = new UI(uiRoot, {
       events: this.events,
       settings: this.settings,
-      scenes: SCENES.map((s) => ({
+      scenes: SCENES.filter((s) => !s.hidden).map((s) => ({
         id: s.id,
         name: s.name,
         description: s.description,
@@ -129,6 +133,15 @@ export class App {
       },
     });
 
+    this.audio = new AudioEngine({ masterVolume: this.settings.get().masterVolume });
+    // iOS/Safari only allow audio after a user gesture.
+    const unlock = () => {
+      void this.audio.unlock();
+      if (this.audio.unlocked)
+        for (const t of ['pointerdown', 'keydown', 'touchend'])
+          removeEventListener(t, unlock, true);
+    };
+    for (const t of ['pointerdown', 'keydown', 'touchend']) addEventListener(t, unlock, true);
     this.events.on('settings:changed', () => this.onSettings());
     this.input.onCanvasTap((x, y) => this.onTap(x, y));
     new ResizeObserver(() => this.resize()).observe(container);
@@ -163,6 +176,7 @@ export class App {
       this.camera.updateProjectionMatrix();
     }
     document.documentElement.style.setProperty('--ui-scale', String(s.uiScale));
+    this.audio?.setMasterVolume(s.masterVolume);
     this.events.emit('quality:applied', { preset: s.preset, settings: this.quality });
   }
 
@@ -211,11 +225,18 @@ export class App {
       progress(0.01, 'Loading physics');
       const [R, def] = await Promise.all([loadRapier(), entry.load()]);
       const rt = new SceneRuntime(R, def, this.quality, this.seedOverride);
-      await rt.load(this.settings, progress);
+      await rt.load(this.settings, progress, this.pipeline.renderer);
       this.runtime = rt;
       this.scene.add(rt.root);
       const mood = moodId && def.moods.some((m) => m.id === moodId) ? moodId : def.defaultMood;
+      progress(0.93, 'Loading sky');
+      await rt.preloadSkies();
       rt.setMood(mood, 0);
+      this.applyAudioMood(mood, 0.5);
+      this.audio.setEmitters(
+        rt.creek ? [{ id: 'creek', kind: 'creek', points: rt.creek.centerline, level: 1 }] : [],
+      );
+      this.lastFeet.copy(rt.player.feet);
       this.events.emit('mood:changed', { id: mood, name: rt.mood(mood).name });
       progress(0.97, 'Compiling shaders');
       rt.update(0, null, this.camera, this.pipeline.renderer, this.scene, this.pmrem);
@@ -279,6 +300,7 @@ export class App {
     if (this.photo.active) this.togglePhoto(false);
     const id = this.runtime?.def.id;
     this.disposeRuntime();
+    this.audio.setEmitters([]);
     this.renderMenuBackdrop();
     this.ui.showMainMenu();
     this.input.setMode('ui');
@@ -302,7 +324,14 @@ export class App {
     const rt = this.runtime;
     if (!rt) return;
     rt.setMood(id, this.settings.get().reduceMotion ? 0.5 : 3);
+    this.applyAudioMood(id, 4);
     this.events.emit('mood:changed', { id, name: rt.mood(id).name });
+  }
+
+  private applyAudioMood(id: string, seconds: number): void {
+    const key = this.runtime?.mood(id).audio;
+    const preset = key ? AMBIENCE_PRESETS[key] : undefined;
+    if (preset) this.audio.setMix(preset, seconds);
   }
 
   private cycleMood(): void {
@@ -448,6 +477,7 @@ export class App {
     this.positionSunSprite();
     this.pipeline.configure(this.gradeInputs(), this.quality.liveDof);
     this.pipeline.render(dt);
+    this.updateAudio(dt);
     this.timer.tick(now);
     this.watchdog();
     this.debug.update(
@@ -465,6 +495,26 @@ export class App {
       },
       now,
     );
+  }
+
+  private updateAudio(dt: number): void {
+    const rt = this.runtime;
+    if (!rt) return;
+    const fwd = new THREE.Vector3();
+    this.camera.getWorldDirection(fwd);
+    this.audio.update({ position: this.camera.position, forward: fwd }, dt);
+    if (this.photo.active) return;
+    const p = rt.player;
+    const moved = Math.hypot(p.feet.x - this.lastFeet.x, p.feet.z - this.lastFeet.z);
+    this.lastFeet.copy(p.feet);
+    if (p.speed < 0.3 || moved > 2) return;
+    this.strideAcc += moved;
+    const stride = p.speed > 3 ? 1.15 : p.crouching ? 0.55 : 0.78;
+    if (this.strideAcc >= stride) {
+      this.strideAcc = 0;
+      const intensity = Math.min(1, 0.25 + p.speed / 4.5) * (p.crouching ? 0.5 : 1);
+      this.audio.footstep(rt.surfaceAt(p.feet.x, p.feet.z), intensity);
+    }
   }
 
   private positionSunSprite(): void {
@@ -499,11 +549,13 @@ export class App {
     if (this.running || !this.runtime || this.loading || this.ui.menuOpen) return;
     this.running = true;
     this.lastFrame = 0;
+    this.audio.resume();
     requestAnimationFrame(this.frame);
   }
 
   stop(): void {
     this.running = false;
+    this.audio?.suspend();
   }
 
   // ---- capture ----------------------------------------------------------------------------------

@@ -55,8 +55,11 @@ function maskValue(
       const d = Math.hypot(x - m.x, z - m.z);
       return soft > 0 ? smoothstep(m.radius, m.radius + soft, d) : d > m.radius ? 1 : 0;
     }
-    case 'layer':
-      return opts.layerWeight ? (opts.layerWeight(m.layer, x, z) >= m.min ? 1 : 0) : 1;
+    case 'layer': {
+      if (!opts.layerWeight) return 1;
+      const w = opts.layerWeight(m.layer, x, z);
+      return band(w, m.min, m.max);
+    }
   }
 }
 

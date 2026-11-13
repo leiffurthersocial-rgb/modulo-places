@@ -2,7 +2,13 @@
 // resource it creates and releases them in dispose() (verified by the enter/exit leak test).
 import type RAPIER_NS from '@dimforge/rapier3d-compat';
 import * as THREE from 'three';
-import { Sky } from '../atmosphere/sky';
+import { AssetLoader, loadPackManifest, type Tier } from '../assets/AssetLoader';
+import { ParticleField, type ParticlePreset } from '../atmosphere/particles/Particles';
+import { findHdriSun, Sky } from '../atmosphere/sky';
+import { bakeImpostor, type Impostor } from '../scatter/impostor/Impostor';
+import { type Species, speciesFromGltf } from '../scatter/species';
+import type { TerrainLayerMaps } from '../terrain/terrainMaterial';
+import { Creek } from '../water/Creek';
 import { MoodBlender, type MoodState } from '../lighting/moods';
 import { PlayerController } from '../player/PlayerController';
 import { sharedUniforms } from '../render/materials';
@@ -40,6 +46,12 @@ export class SceneRuntime {
   private envAge = Infinity;
   private quality: QualitySettings;
   private R: Rapier;
+  assets: AssetLoader | null = null;
+  particles: ParticleField | null = null;
+  creek: Creek | null = null;
+  private modelSpecies = new Map<string, Species>();
+  private impostors: Impostor[] = [];
+  private hdris = new Map<string, Promise<{ tex: THREE.DataTexture; sunAz: number } | null>>();
 
   constructor(R: Rapier, def: SceneDef, quality: QualitySettings, seedOverride: number | null) {
     this.R = R;
@@ -52,22 +64,87 @@ export class SceneRuntime {
     this.envScene.add(this.envSky);
   }
 
-  async load(settings: SettingsStore, progress: Progress): Promise<void> {
+  async load(
+    settings: SettingsStore,
+    progress: Progress,
+    renderer: THREE.WebGLRenderer,
+  ): Promise<void> {
     const d = this.def;
+    const q = this.quality;
+    progress(0.03, 'Reading asset manifest');
+    const manifest = await loadPackManifest();
+    if (manifest) this.assets = new AssetLoader(renderer, manifest);
     progress(0.05, 'Shaping terrain');
     await nextFrame();
     this.hf = generateHeightfield(d.terrain, this.seed);
-    // Flatten targets without explicit height adopt the generated height at their centre.
-    progress(0.25, 'Painting ground');
+
+    progress(0.12, 'Loading ground materials');
+    let layerMaps: (TerrainLayerMaps | null)[] | null = null;
+    if (this.assets) {
+      layerMaps = await Promise.all(
+        d.terrain.layers.slice(0, 4).map(async (l) => {
+          const maps = await this.assets!.material(l.material, q.textureTier as Tier, q.anisotropy);
+          return maps ? { maps, scale: l.scale ?? 2.5, triplanar: !!l.triplanar } : null;
+        }),
+      );
+    }
+    progress(0.3, 'Painting ground');
     await nextFrame();
-    this.terrain = new TerrainMesh(this.hf, d.terrain.layers, this.seed, this.quality.anisotropy);
+    this.terrain = new TerrainMesh(this.hf, d.terrain, this.seed, {
+      anisotropy: q.anisotropy,
+      layerMaps,
+      antiTiling: q.textureTier >= 1024,
+    });
     this.root.add(this.terrain.mesh);
 
-    progress(0.4, 'Growing vegetation');
+    if (d.terrain.creek) {
+      const c = d.terrain.creek;
+      const bed =
+        c.bedMaterial && this.assets
+          ? await this.assets.material(
+              c.bedMaterial,
+              Math.min(q.textureTier, 1024) as Tier,
+              q.anisotropy,
+            )
+          : null;
+      this.creek = new Creek({
+        points: c.points,
+        width: c.width,
+        groundHeight: (x, z) => sampleHeight(this.hf, x, z),
+        bed,
+        quality: q.water,
+      });
+      this.root.add(this.creek.root);
+    }
+
+    progress(0.35, 'Loading plants and rocks');
+    await this.loadModelSpecies(renderer, progress);
+    progress(0.6, 'Growing vegetation');
     await nextFrame();
-    this.scatter = new ScatterRenderer(this.quality);
+    this.scatter = new ScatterRenderer(q, (id) => this.modelSpecies.get(id) ?? null);
     this.rescatter();
     this.root.add(this.scatter.root);
+
+    // Atmosphere particles: every preset any mood uses; intensities follow the mood.
+    const presets = new Set<ParticlePreset>();
+    for (const m of d.moods) for (const p of m.particles ?? []) presets.add(p as ParticlePreset);
+    if (presets.size > 0 && q.particles > 0) {
+      this.particles = new ParticleField({ groundHeight: (x, z) => sampleHeight(this.hf, x, z) });
+      const spec: Record<
+        ParticlePreset,
+        { count: number; radius: number; height: [number, number] }
+      > = {
+        pollen: { count: 1400, radius: 18, height: [0.3, 6] },
+        dust: { count: 900, radius: 14, height: [0.3, 5] },
+        mist: { count: 70, radius: 45, height: [0, 3] },
+        leaves: { count: 160, radius: 22, height: [0, 14] },
+        rain: { count: 6000, radius: 18, height: [0, 14] },
+        snow: { count: 4000, radius: 22, height: [0, 14] },
+      };
+      this.particles.setLayers([...presets].map((p) => ({ preset: p, ...spec[p] })));
+      this.particles.setDensityScale(q.particles);
+      this.root.add(this.particles.root);
+    }
 
     progress(0.75, 'Building collision');
     await nextFrame();
@@ -93,6 +170,44 @@ export class SceneRuntime {
     this.root.add(this.sun, this.sun.target, this.hemi, this.sky.mesh);
     this.moods = new MoodBlender(this.mood(d.defaultMood));
     this.applyQuality(this.quality);
+  }
+
+  /** Load every model referenced by scatter rules ("model:<pack key>") and build species. */
+  private async loadModelSpecies(renderer: THREE.WebGLRenderer, progress: Progress): Promise<void> {
+    if (!this.assets) return;
+    const rules = this.def.scatter.filter((r) => r.mesh.startsWith('model:'));
+    const keys = [...new Set(rules.map((r) => r.mesh))];
+    let done = 0;
+    const msaa = this.quality.aa === 'msaa' || this.quality.aa === 'msaa+smaa';
+    await Promise.all(
+      keys.map(async (meshId) => {
+        const key = meshId.slice('model:'.length);
+        const gltf = await this.assets!.model(key).catch((e: unknown) => {
+          console.warn(`model ${key} failed`, e);
+          return null;
+        });
+        progress(0.35 + (0.25 * ++done) / keys.length, 'Loading plants and rocks');
+        if (!gltf) return;
+        const rule = rules.find((r) => r.mesh === meshId)!;
+        const sp = speciesFromGltf(gltf.scene, {
+          wind: rule.wind ?? 0,
+          flutter: rule.flutter ?? 0,
+          alphaToCoverage: msaa,
+        });
+        if (rule.impostor && this.quality.drawDistance > 60) {
+          const src = new THREE.Group();
+          for (const part of sp.variants[0]![0]!)
+            src.add(new THREE.Mesh(part.geometry, part.material));
+          const imp = bakeImpostor(renderer, src, {
+            views: 12,
+            resolution: this.quality.textureTier >= 2048 ? 512 : 256,
+          });
+          this.impostors.push(imp);
+          sp.impostor = [{ geometry: imp.geometry, material: imp.material, castShadow: false }];
+        }
+        this.modelSpecies.set(meshId, sp);
+      }),
+    );
   }
 
   mood(id: string): MoodDef {
@@ -121,7 +236,10 @@ export class SceneRuntime {
                 y + sp.height * s * 0.3,
                 z,
               )
-            : this.R.ColliderDesc.cylinder(1.5, sp.radius * s).setTranslation(x, y + 1.5, z);
+            : this.R.ColliderDesc.cylinder(
+                1.5,
+                (rule.collisionRadius ?? sp.radius * 0.12) * s,
+              ).setTranslation(x, y + 1.5, z);
         this.world.createCollider(desc);
       });
     }
@@ -132,6 +250,8 @@ export class SceneRuntime {
     this.quality = q;
     this.scatter.setQuality(q);
     if (densityChanged) this.rescatter();
+    this.particles?.setDensityScale(q.particles);
+    this.creek?.setQuality(q.water);
     this.terrain.setAnisotropy(q.anisotropy);
     const s = this.sun.shadow;
     this.sun.castShadow = q.shadows.enabled;
@@ -151,9 +271,47 @@ export class SceneRuntime {
     cam.updateProjectionMatrix();
   }
 
+  private hdri(key: string) {
+    let p = this.hdris.get(key);
+    if (!p) {
+      const res = this.quality.textureTier >= 2048 ? '2k' : '1k';
+      p = (this.assets?.hdri(key, res) ?? Promise.resolve(null)).then((tex) => {
+        if (!tex) return null;
+        return { tex, sunAz: findHdriSun(tex).azimuth };
+      });
+      this.hdris.set(key, p);
+    }
+    return p;
+  }
+
+  /** Preload the HDRIs of all moods (so mood switches cross-fade without a pop). */
+  async preloadSkies(): Promise<void> {
+    await Promise.all(this.def.moods.filter((m) => m.sky.hdri).map((m) => this.hdri(m.sky.hdri!)));
+  }
+
   setMood(id: string, seconds = 3): void {
-    this.moods.go(this.mood(id), seconds);
+    const m = this.mood(id);
+    this.moods.go(m, seconds);
+    const key = m.sky.hdri;
+    if (key) {
+      void this.hdri(key).then((h) => {
+        if (this.moods.current !== m) return; // superseded
+        const moodAz = THREE.MathUtils.degToRad(m.sun.azimuth);
+        this.sky.setHdri(
+          h?.tex ?? null,
+          h ? moodAz - h.sunAz : 0,
+          m.sky.hdriIntensity ?? 1,
+          seconds,
+        );
+        this.envAge = Infinity;
+      });
+    } else this.sky.setHdri(null, 0, 1, seconds);
     this.envAge = Infinity;
+    if (this.particles) {
+      for (const p of ['pollen', 'dust', 'mist', 'leaves', 'rain', 'snow'] as const) {
+        this.particles.setIntensity(p, m.particles?.includes(p) ? 1 : 0, seconds);
+      }
+    }
   }
 
   /** Apply the blended mood to lights, sky, fog uniforms and IBL. */
@@ -186,9 +344,23 @@ export class SceneRuntime {
     sharedUniforms.uFogSunDir.value.copy(s.sunDir);
     sharedUniforms.uFogSunColor.value.copy(s.sunColor);
     sharedUniforms.uFogSunScatter.value = s.fogSunScatter;
+    const ambient = s.ambSky.clone().multiplyScalar(s.ambIntensity);
+    this.particles?.setLight(
+      s.sunDir,
+      this.sun.color.clone().multiplyScalar(this.sun.intensity / 3),
+      ambient,
+    );
+    for (const imp of this.impostors) {
+      imp.setLighting(
+        s.sunDir,
+        this.sun.color.clone().multiplyScalar(this.sun.intensity),
+        this.hemi.color.clone().multiplyScalar(this.hemi.intensity),
+        this.hemi.groundColor.clone().multiplyScalar(this.hemi.intensity),
+      );
+    }
     // IBL from the analytic sky; refreshed when the mood changes (throttled during cross-fades).
     this.envAge += dt;
-    if (this.envAge > (this.moods.blending ? 0.4 : Infinity) || !this.envRT) {
+    if (this.envAge > (this.moods.blending || this.sky.fading ? 0.4 : Infinity) || !this.envRT) {
       this.envAge = 0;
       const prev = this.envRT;
       this.envRT = pmrem.fromScene(this.envScene, 0, 0.1, 200);
@@ -213,8 +385,14 @@ export class SceneRuntime {
     }
     this.moods.update(dt);
     this.applyMood(this.moods.state, renderer, scene, pmrem, dt);
-    this.sky.update(camera);
+    this.sky.update(camera, dt);
     this.scatter.update(camera);
+    this.particles?.update(
+      camera,
+      dt,
+      sharedUniforms.uWindDir.value,
+      sharedUniforms.uWindStrength.value,
+    );
     this.updateShadowFrustum(camera);
   }
 
@@ -247,6 +425,24 @@ export class SceneRuntime {
     this.sun.target.updateMatrixWorld();
   }
 
+  /** Dominant terrain layer's footstep surface at (x, z) (creek banks → gravel). */
+  surfaceAt(
+    x: number,
+    z: number,
+  ): 'leaves' | 'dirt' | 'moss' | 'rock' | 'gravel' | 'snow' | 'wood' {
+    if (this.terrain.splat.wetness(x, z) > 0.6) return 'gravel';
+    let best = this.def.terrain.layers[0];
+    let bw = -1;
+    for (const l of this.def.terrain.layers) {
+      const w = this.terrain.splat.weight(l.id, x, z);
+      if (w > bw) {
+        bw = w;
+        best = l;
+      }
+    }
+    return best?.surface ?? 'leaves';
+  }
+
   groundHeight(x: number, z: number): number {
     return sampleHeight(this.hf, x, z);
   }
@@ -255,6 +451,10 @@ export class SceneRuntime {
     this.player?.dispose();
     this.world?.free();
     this.scatter?.dispose();
+    this.particles?.dispose();
+    this.creek?.dispose();
+    for (const imp of this.impostors) imp.dispose();
+    this.assets?.dispose();
     this.terrain?.dispose();
     this.sky.dispose();
     this.sun.shadow.map?.dispose();

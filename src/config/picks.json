@@ -1,0 +1,42 @@
+{
+  "materials": {
+    "forest/forest-floor": { "source": "polyhaven", "id": "brown_mud_leaves_01" },
+    "forest/moss": { "source": "ambientcg", "id": "Moss001" },
+    "forest/bark": { "source": "polyhaven", "id": "jolcham_oak_bark_01" },
+    "forest/bark-pine": { "source": "polyhaven", "id": "pine_bark" },
+    "forest/bark-knotted": { "source": "polyhaven", "id": "knotted_pine_bark" },
+    "forest/rock": { "source": "polyhaven", "id": "aerial_rocks_04" },
+    "forest/dirt-path": { "source": "ambientcg", "id": "Ground086" },
+    "forest/creek-bed": { "source": "polyhaven", "id": "river_small_rocks" }
+  },
+  "models": {
+    "forest/fir": { "source": "polyhaven", "id": "fir_tree_01", "maxTriangles": 45000 },
+    "forest/pine": { "source": "polyhaven", "id": "pine_tree_01", "maxTriangles": 45000 },
+    "forest/fir-sapling": { "source": "polyhaven", "id": "fir_sapling", "maxTriangles": 12000 },
+    "forest/pine-sapling": { "source": "polyhaven", "id": "pine_sapling_small", "maxTriangles": 12000 },
+    "forest/broadleaf": { "source": "polyhaven", "id": "tree_small_02", "maxTriangles": 40000 },
+    "forest/rocks-moss-a": { "source": "polyhaven", "id": "rock_moss_set_01", "maxTriangles": 24000 },
+    "forest/rocks-moss-b": { "source": "polyhaven", "id": "rock_moss_set_02", "maxTriangles": 24000 },
+    "forest/boulder": { "source": "polyhaven", "id": "boulder_01", "maxTriangles": 16000 },
+    "forest/rock-07": { "source": "polyhaven", "id": "rock_07", "maxTriangles": 8000 },
+    "forest/rock-09": { "source": "polyhaven", "id": "rock_09", "maxTriangles": 8000 },
+    "forest/rock-face": { "source": "polyhaven", "id": "rock_face_01", "maxTriangles": 14000 },
+    "forest/dead-trunk": { "source": "polyhaven", "id": "dead_tree_trunk", "maxTriangles": 16000 },
+    "forest/stump-a": { "source": "polyhaven", "id": "tree_stump_01", "maxTriangles": 8000 },
+    "forest/stump-b": { "source": "polyhaven", "id": "tree_stump_02", "maxTriangles": 8000 },
+    "forest/pine-roots": { "source": "polyhaven", "id": "pine_roots", "maxTriangles": 12000 },
+    "forest/fern": { "source": "polyhaven", "id": "fern_02", "maxTriangles": 4000 },
+    "forest/shrub-a": { "source": "polyhaven", "id": "shrub_02", "maxTriangles": 9000 },
+    "forest/shrub-b": { "source": "polyhaven", "id": "shrub_03", "maxTriangles": 7000 },
+    "forest/nettle": { "source": "polyhaven", "id": "nettle_plant", "maxTriangles": 5000 },
+    "forest/weeds": { "source": "polyhaven", "id": "weed_plant_02", "maxTriangles": 4000 },
+    "forest/grass": { "source": "polyhaven", "id": "grass_medium_01", "maxTriangles": 2500 },
+    "forest/moss-clump": { "source": "polyhaven", "id": "moss_01", "maxTriangles": 4000 },
+    "forest/branches": { "source": "polyhaven", "id": "dry_branches_medium_01", "maxTriangles": 3000 }
+  },
+  "hdris": {
+    "forest/dawn": { "source": "polyhaven", "id": "misty_pines" },
+    "forest/midday": { "source": "polyhaven", "id": "phalzer_forest_01" },
+    "forest/dusk": { "source": "polyhaven", "id": "sunset_forest" }
+  }
+}

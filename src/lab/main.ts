@@ -9,7 +9,13 @@ import {
   type LabMaterial,
   loadManifest,
 } from './manifest';
-import { candidateKey, DEFAULT_TUNING, labUniforms, MaterialLibrary, type Tuning } from './materials';
+import {
+  candidateKey,
+  DEFAULT_TUNING,
+  labUniforms,
+  MaterialLibrary,
+  type Tuning,
+} from './materials';
 import { exportPicks, loadPicks, type Picks, savePicks } from './picks';
 import { type CameraPreset, type Layout, Viewport } from './viewport';
 import { formatBytes, vramTable } from './vram';
@@ -47,7 +53,12 @@ async function boot(root: HTMLElement): Promise<void> {
           'div',
           {},
           h('h2', {}, 'Material & Asset Lab'),
-          h('p', {}, 'The lab manifest is not available yet. ', e instanceof Error ? e.message : ''),
+          h(
+            'p',
+            {},
+            'The lab manifest is not available yet. ',
+            e instanceof Error ? e.message : '',
+          ),
           h('p', {}, 'Generate it with:'),
           h('code', {}, FETCH_COMMAND),
           h('p', { class: 'note' }, 'Then reload this page.'),
@@ -110,7 +121,11 @@ function startLab(root: HTMLElement, manifest: LabManifest): void {
 
   const moodsOf = () => LAB_MOODS[st.scene] ?? [];
   // Open on midday where available: clear light makes textures easiest to judge.
-  const defaultMoodIdx = () => Math.max(0, moodsOf().findIndex((m) => m.id === 'midday'));
+  const defaultMoodIdx = () =>
+    Math.max(
+      0,
+      moodsOf().findIndex((m) => m.id === 'midday'),
+    );
   st.moodIdx = defaultMoodIdx();
   const sceneData = () => manifest.scenes[st.scene]!;
   const vp = new Viewport(vpEl, moodsOf()[st.moodIdx]!);
@@ -142,7 +157,8 @@ function startLab(root: HTMLElement, manifest: LabManifest): void {
     st.key = key;
     const list = candidates();
     const pick = picks.materials[`${st.scene}/${key}`];
-    st.a = list.find((c) => pick && c.source === pick.source && c.id === pick.id) ?? list[0] ?? null;
+    st.a =
+      list.find((c) => pick && c.source === pick.source && c.id === pick.id) ?? list[0] ?? null;
     st.b = list.find((c) => c !== st.a) ?? null;
     st.focus = st.a;
     st.tab = 'materials';
@@ -311,8 +327,31 @@ function startLab(root: HTMLElement, manifest: LabManifest): void {
       h(
         'div',
         { class: 'tabs' },
-        h('button', { class: st.tab === 'materials' ? 'on' : '', onclick: () => { st.tab = 'materials'; renderSide(); renderPanel(); } }, 'Materials'),
-        h('button', { class: st.tab === 'hdris' ? 'on' : '', onclick: () => { st.tab = 'hdris'; if (!st.hdriMood) st.hdriMood = Object.keys(hd)[0] ?? ''; renderSide(); renderPanel(); } }, 'HDRIs'),
+        h(
+          'button',
+          {
+            class: st.tab === 'materials' ? 'on' : '',
+            onclick: () => {
+              st.tab = 'materials';
+              renderSide();
+              renderPanel();
+            },
+          },
+          'Materials',
+        ),
+        h(
+          'button',
+          {
+            class: st.tab === 'hdris' ? 'on' : '',
+            onclick: () => {
+              st.tab = 'hdris';
+              if (!st.hdriMood) st.hdriMood = Object.keys(hd)[0] ?? '';
+              renderSide();
+              renderPanel();
+            },
+          },
+          'HDRIs',
+        ),
       ),
       st.tab === 'materials'
         ? h(
@@ -335,13 +374,24 @@ function startLab(root: HTMLElement, manifest: LabManifest): void {
               const picked = picks.hdris[`${st.scene}/${mood}`];
               return h(
                 'button',
-                { class: mood === st.hdriMood ? 'on' : '', onclick: () => { st.hdriMood = mood; renderSide(); renderPanel(); } },
+                {
+                  class: mood === st.hdriMood ? 'on' : '',
+                  onclick: () => {
+                    st.hdriMood = mood;
+                    renderSide();
+                    renderPanel();
+                  },
+                },
                 h('span', {}, g.label),
                 h('span', { class: 'meta' }, `${picked ? '★ ' : ''}${g.candidates.length}`),
               );
             }),
           ),
-      h('p', { class: 'note' }, 'HDRIs are preview thumbnails only; the lab does not load them as environment maps.'),
+      h(
+        'p',
+        { class: 'note' },
+        'HDRIs are preview thumbnails only; the lab does not load them as environment maps.',
+      ),
     );
   }
 
@@ -380,7 +430,12 @@ function startLab(root: HTMLElement, manifest: LabManifest): void {
           { class: 'hdri' },
           ...(g?.candidates ?? []).map((c) => {
             const picked = picks.hdris[`${st.scene}/${st.hdriMood}`]?.id === c.id;
-            const img = h('img', { src: c.preview, alt: c.name, loading: 'lazy', crossorigin: 'anonymous' });
+            const img = h('img', {
+              src: c.preview,
+              alt: c.name,
+              loading: 'lazy',
+              crossorigin: 'anonymous',
+            });
             return h(
               'div',
               { class: `cand${picked ? ' a' : ''}` },
@@ -394,13 +449,25 @@ function startLab(root: HTMLElement, manifest: LabManifest): void {
                   'div',
                   { class: 'btns' },
                   h('a', { href: c.url, target: '_blank', rel: 'noopener' }, 'Page'),
-                  h('button', { class: `star${picked ? ' on' : ''}`, 'aria-pressed': String(picked), onclick: () => toggleHdriPick(c) }, picked ? '★ Picked' : '☆ Pick'),
+                  h(
+                    'button',
+                    {
+                      class: `star${picked ? ' on' : ''}`,
+                      'aria-pressed': String(picked),
+                      onclick: () => toggleHdriPick(c),
+                    },
+                    picked ? '★ Picked' : '☆ Pick',
+                  ),
                 ),
               ),
             );
           }),
         ),
-        h('p', { class: 'note', style: g?.candidates.length ? 'display:none' : '' }, 'No HDRI candidates for this mood.'),
+        h(
+          'p',
+          { class: 'note', style: g?.candidates.length ? 'display:none' : '' },
+          'No HDRI candidates for this mood.',
+        ),
       );
       ctlBox.style.display = 'none';
       infoBox.replaceChildren();
@@ -424,15 +491,63 @@ function startLab(root: HTMLElement, manifest: LabManifest): void {
               h(
                 'div',
                 { class: 'btns' },
-                h('button', { class: c === st.a ? 'on' : '', onclick: () => { st.a = c; st.focus = c; applyMaterials(); renderPanel(); } }, 'A'),
-                h('button', { class: c === st.b && st.compare ? 'on' : '', onclick: () => { st.b = c; st.focus = c; st.compare = true; applyMaterials(); renderToolbar(); renderPanel(); } }, 'B'),
-                h('button', { onclick: () => { st.focus = c; renderPanel(); } }, 'Info'),
-                h('button', { class: `star${picked ? ' on' : ''}`, 'aria-pressed': String(picked), 'aria-label': 'Pick candidate', onclick: () => togglePick(c) }, picked ? '★' : '☆'),
+                h(
+                  'button',
+                  {
+                    class: c === st.a ? 'on' : '',
+                    onclick: () => {
+                      st.a = c;
+                      st.focus = c;
+                      applyMaterials();
+                      renderPanel();
+                    },
+                  },
+                  'A',
+                ),
+                h(
+                  'button',
+                  {
+                    class: c === st.b && st.compare ? 'on' : '',
+                    onclick: () => {
+                      st.b = c;
+                      st.focus = c;
+                      st.compare = true;
+                      applyMaterials();
+                      renderToolbar();
+                      renderPanel();
+                    },
+                  },
+                  'B',
+                ),
+                h(
+                  'button',
+                  {
+                    onclick: () => {
+                      st.focus = c;
+                      renderPanel();
+                    },
+                  },
+                  'Info',
+                ),
+                h(
+                  'button',
+                  {
+                    class: `star${picked ? ' on' : ''}`,
+                    'aria-pressed': String(picked),
+                    'aria-label': 'Pick candidate',
+                    onclick: () => togglePick(c),
+                  },
+                  picked ? '★' : '☆',
+                ),
               ),
             ),
           );
         }),
-        h('p', { class: 'note', style: candidates().length ? 'display:none' : '' }, 'No candidates in the manifest for this material.'),
+        h(
+          'p',
+          { class: 'note', style: candidates().length ? 'display:none' : '' },
+          'No candidates in the manifest for this material.',
+        ),
       );
       renderInfo();
     }
@@ -454,22 +569,46 @@ function startLab(root: HTMLElement, manifest: LabManifest): void {
         h(
           'dl',
           {},
-          h('dt', {}, 'Source'), h('dd', {}, `${c.source} (${c.id})`),
-          h('dt', {}, 'Authors'), h('dd', {}, c.authors.join(', ') || 'unknown'),
-          h('dt', {}, 'License'), h('dd', {}, 'CC0 ', h('a', { href: c.url, target: '_blank', rel: 'noopener' }, 'source page')),
-          h('dt', {}, 'Preview'), h('dd', {}, cdn ? 'CDN' : formatBytes(c.previewBytes)),
-          c.why ? h('dt', {}, 'Why') : null, c.why ? h('dd', {}, c.why) : null,
+          h('dt', {}, 'Source'),
+          h('dd', {}, `${c.source} (${c.id})`),
+          h('dt', {}, 'Authors'),
+          h('dd', {}, c.authors.join(', ') || 'unknown'),
+          h('dt', {}, 'License'),
+          h(
+            'dd',
+            {},
+            'CC0 ',
+            h('a', { href: c.url, target: '_blank', rel: 'noopener' }, 'source page'),
+          ),
+          h('dt', {}, 'Preview'),
+          h('dd', {}, cdn ? 'CDN' : formatBytes(c.previewBytes)),
+          c.why ? h('dt', {}, 'Why') : null,
+          c.why ? h('dd', {}, c.why) : null,
         ),
-        h('div', { class: 'note', style: 'margin-top:8px' }, `Estimated GPU memory, KTX2 (ASTC/ETC2 8 bpp, mips), ${c.maps.arm ? 3 : 2} maps:`),
+        h(
+          'div',
+          { class: 'note', style: 'margin-top:8px' },
+          `Estimated GPU memory, KTX2 (ASTC/ETC2 8 bpp, mips), ${c.maps.arm ? 3 : 2} maps:`,
+        ),
         h(
           'table',
           {},
-          h('thead', {}, h('tr', {}, h('th', {}, 'Tier'), h('th', {}, 'Per map'), h('th', {}, 'Total'))),
+          h(
+            'thead',
+            {},
+            h('tr', {}, h('th', {}, 'Tier'), h('th', {}, 'Per map'), h('th', {}, 'Total')),
+          ),
           h(
             'tbody',
             {},
             ...vramTable(true, c.maps.arm ? 3 : 2).map((r) =>
-              h('tr', {}, h('td', {}, r.size >= 1024 ? `${r.size / 1024}k` : String(r.size)), h('td', {}, formatBytes(r.perMap)), h('td', {}, formatBytes(r.total))),
+              h(
+                'tr',
+                {},
+                h('td', {}, r.size >= 1024 ? `${r.size / 1024}k` : String(r.size)),
+                h('td', {}, formatBytes(r.perMap)),
+                h('td', {}, formatBytes(r.total)),
+              ),
             ),
           ),
         ),
@@ -488,7 +627,13 @@ function startLab(root: HTMLElement, manifest: LabManifest): void {
     fmt: (v: number) => string = (v) => v.toFixed(2),
   ): HTMLElement {
     const out = h('output', {}, fmt(value));
-    const input = h('input', { type: 'range', min: String(min), max: String(max), step: String(step), value: String(value) });
+    const input = h('input', {
+      type: 'range',
+      min: String(min),
+      max: String(max),
+      step: String(step),
+      value: String(value),
+    });
     input.addEventListener('input', () => {
       const v = Number(input.value);
       out.textContent = fmt(v);
@@ -501,29 +646,78 @@ function startLab(root: HTMLElement, manifest: LabManifest): void {
     'div',
     {},
     h('h2', {}, 'Material'),
-    slider('Tiling (repeats / m)', 0.25, 8, 0.05, tuning.tiling, (v) => { tuning.tiling = v; pushTuning(); }),
-    slider('Normal strength', 0, 3, 0.05, tuning.normalStrength, (v) => { tuning.normalStrength = v; pushTuning(); }),
-    slider('Roughness multiplier', 0.2, 2, 0.05, tuning.roughnessMul, (v) => { tuning.roughnessMul = v; pushTuning(); }),
+    slider('Tiling (repeats / m)', 0.25, 8, 0.05, tuning.tiling, (v) => {
+      tuning.tiling = v;
+      pushTuning();
+    }),
+    slider('Normal strength', 0, 3, 0.05, tuning.normalStrength, (v) => {
+      tuning.normalStrength = v;
+      pushTuning();
+    }),
+    slider('Roughness multiplier', 0.2, 2, 0.05, tuning.roughnessMul, (v) => {
+      tuning.roughnessMul = v;
+      pushTuning();
+    }),
     h('h2', {}, 'Weather'),
-    slider('Wetness', 0, 1, 0.01, 0, (v) => { labUniforms.uLabWet.value = v; }),
-    slider('Frost', 0, 1, 0.01, 0, (v) => { labUniforms.uLabFrost.value = v; }),
-    slider('Moss', 0, 1, 0.01, 0, (v) => { labUniforms.uLabMoss.value = v; }),
+    slider('Wetness', 0, 1, 0.01, 0, (v) => {
+      labUniforms.uLabWet.value = v;
+    }),
+    slider('Frost', 0, 1, 0.01, 0, (v) => {
+      labUniforms.uLabFrost.value = v;
+    }),
+    slider('Moss', 0, 1, 0.01, 0, (v) => {
+      labUniforms.uLabMoss.value = v;
+    }),
   );
   ctlBox.append(controls);
 
   // ---- export ----
   const ta = h('textarea', { readonly: true, 'aria-label': 'Exported picks JSON' });
-  const exportOut = h('div', { style: 'display:none' }, ta, h('div', { class: 'row', style: 'margin-top:6px' },
-    h('button', { onclick: () => { ta.select(); navigator.clipboard?.writeText(ta.value).catch(() => undefined); } }, 'Copy'),
-    h('button', { onclick: () => {
-      const url = URL.createObjectURL(new Blob([ta.value], { type: 'application/json' }));
-      const a = h('a', { href: url, download: 'lab-picks.json' });
-      a.click();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    } }, 'Download')));
+  const exportOut = h(
+    'div',
+    { style: 'display:none' },
+    ta,
+    h(
+      'div',
+      { class: 'row', style: 'margin-top:6px' },
+      h(
+        'button',
+        {
+          onclick: () => {
+            ta.select();
+            navigator.clipboard?.writeText(ta.value).catch(() => undefined);
+          },
+        },
+        'Copy',
+      ),
+      h(
+        'button',
+        {
+          onclick: () => {
+            const url = URL.createObjectURL(new Blob([ta.value], { type: 'application/json' }));
+            const a = h('a', { href: url, download: 'lab-picks.json' });
+            a.click();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+          },
+        },
+        'Download',
+      ),
+    ),
+  );
   exportBox.append(
     h('h2', {}, 'Picks'),
-    h('button', { onclick: () => { ta.value = exportPicks(picks); exportOut.style.display = ''; ta.select(); navigator.clipboard?.writeText(ta.value).catch(() => undefined); } }, 'Export picks'),
+    h(
+      'button',
+      {
+        onclick: () => {
+          ta.value = exportPicks(picks);
+          exportOut.style.display = '';
+          ta.select();
+          navigator.clipboard?.writeText(ta.value).catch(() => undefined);
+        },
+      },
+      'Export picks',
+    ),
     exportOut,
   );
 

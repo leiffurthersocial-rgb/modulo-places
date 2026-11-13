@@ -6,7 +6,15 @@ import { dirname, join } from 'node:path';
 export interface LicenseEntry {
   /** "<source>:<id>" */
   key: string;
-  source: 'polyhaven' | 'ambientcg' | 'quaternius' | 'kenney' | 'sketchfab' | 'freesound' | 'pixabay' | 'google-fonts';
+  source:
+    | 'polyhaven'
+    | 'ambientcg'
+    | 'quaternius'
+    | 'kenney'
+    | 'sketchfab'
+    | 'freesound'
+    | 'pixabay'
+    | 'google-fonts';
   id: string;
   name: string;
   authors: string[];
@@ -17,7 +25,13 @@ export interface LicenseEntry {
   fetchedAt: string;
 }
 
-export const ALLOWED_LICENSES = new Set(['CC0-1.0', 'CC-BY-4.0', 'CC-BY-3.0', 'OFL-1.1', 'Pixabay Content License']);
+export const ALLOWED_LICENSES = new Set([
+  'CC0-1.0',
+  'CC-BY-4.0',
+  'CC-BY-3.0',
+  'OFL-1.1',
+  'Pixabay Content License',
+]);
 
 const FILE = join(process.cwd(), 'assets', 'LICENSES.json');
 
@@ -32,8 +46,12 @@ export function saveLicenses(all: Record<string, LicenseEntry>): void {
   writeFileSync(FILE, JSON.stringify(sorted, null, 2) + '\n');
 }
 
-export function upsertLicense(all: Record<string, LicenseEntry>, e: Omit<LicenseEntry, 'key' | 'fetchedAt'>): void {
-  if (!ALLOWED_LICENSES.has(e.license)) throw new Error(`Refusing ${e.source}:${e.id}: license ${e.license} not allowed`);
+export function upsertLicense(
+  all: Record<string, LicenseEntry>,
+  e: Omit<LicenseEntry, 'key' | 'fetchedAt'>,
+): void {
+  if (!ALLOWED_LICENSES.has(e.license))
+    throw new Error(`Refusing ${e.source}:${e.id}: license ${e.license} not allowed`);
   const key = `${e.source}:${e.id}`;
   all[key] = { ...e, key, fetchedAt: all[key]?.fetchedAt ?? new Date().toISOString().slice(0, 10) };
 }

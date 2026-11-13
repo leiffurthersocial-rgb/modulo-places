@@ -21,7 +21,12 @@ export const CREDITS: CreditEntry[] = [
     license: 'Apache-2.0',
     url: 'https://rapier.rs',
   },
-  { name: 'N8AO', role: 'Ambient occlusion', license: 'ISC', url: 'https://github.com/N8python/n8ao' },
+  {
+    name: 'N8AO',
+    role: 'Ambient occlusion',
+    license: 'ISC',
+    url: 'https://github.com/N8python/n8ao',
+  },
   ...(assetCredits as CreditEntry[]),
 ];
 

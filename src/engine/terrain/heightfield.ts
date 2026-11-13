@@ -1,5 +1,6 @@
 // Pure heightfield generation and sampling (no three.js) so it can run in tests and workers.
 import { hashSeed, Noise2D, smoothstep } from '../core/random';
+import { distToPolyline, smoothPolyline } from './polyline';
 import type { TerrainDef } from '../types';
 
 export interface Heightfield {
@@ -51,7 +52,68 @@ export function generateHeightfield(def: TerrainDef, seed: number): Heightfield 
       if (h > maxH) maxH = h;
     }
   }
-  return { size, res, heights, step, minH, maxH };
+  const hf: Heightfield = { size, res, heights, step, minH, maxH };
+  carve(hf, def);
+  return hf;
+}
+
+/**
+ * Paths: blend toward a locally smoothed height across their width (walkable, slightly sunken).
+ * Creek: a smooth channel whose floor follows a monotonically descending profile along its length.
+ */
+function carve(hf: Heightfield, def: TerrainDef): void {
+  const { res, size, step, heights } = hf;
+  const orig = heights.slice();
+  const at = (x: number, z: number) => sampleHeight({ ...hf, heights: orig }, x, z);
+  if (def.creek) {
+    const pts = smoothPolyline(def.creek.points, 10);
+    // Channel floor profile: sample terrain along the creek, then force it to descend.
+    const prof = pts.map(([x, z]) => at(x, z));
+    for (let i = 1; i < prof.length; i++) prof[i] = Math.min(prof[i]!, prof[i - 1]! - 0.01);
+    const w = def.creek.width;
+    for (let iz = 0; iz < res; iz++) {
+      for (let ix = 0; ix < res; ix++) {
+        const x = -size / 2 + ix * step;
+        const z = -size / 2 + iz * step;
+        const { d, t } = distToPolyline(pts, x, z);
+        const bank = w * 1.8;
+        if (d > bank) continue;
+        const k = Math.min(prof.length - 1, Math.round(t * (prof.length - 1)));
+        const bed = prof[k]! - def.creek.depth;
+        // Smooth U-shaped channel: full depth in the middle, blending out over the banks.
+        const u = smoothstep(w * 0.25, bank, d);
+        const i = iz * res + ix;
+        heights[i] = Math.min(heights[i]!, bed * (1 - u) + heights[i]! * u);
+      }
+    }
+  }
+  for (const path of def.paths ?? []) {
+    const pts = smoothPolyline(path.points, 8);
+    const w = path.width;
+    for (let iz = 0; iz < res; iz++) {
+      for (let ix = 0; ix < res; ix++) {
+        const x = -size / 2 + ix * step;
+        const z = -size / 2 + iz * step;
+        const { d } = distToPolyline(pts, x, z);
+        if (d > w * 1.5) continue;
+        // Average height across the path → gentle cross-slope; sink by a few cm.
+        const r = w * (path.smoothing ?? 1.2);
+        const avg =
+          (at(x - r, z) + at(x + r, z) + at(x, z - r) + at(x, z + r) + at(x, z) * 2) / 6 - 0.06;
+        const k = 1 - smoothstep(w * 0.5, w * 1.5, d);
+        const i = iz * res + ix;
+        heights[i] = heights[i]! * (1 - k) + avg * k;
+      }
+    }
+  }
+  let minH = Infinity;
+  let maxH = -Infinity;
+  for (const h of heights) {
+    if (h < minH) minH = h;
+    if (h > maxH) maxH = h;
+  }
+  hf.minH = minH;
+  hf.maxH = maxH;
 }
 
 /** Bilinear height at world (x, z); clamps outside the field. */

@@ -1,15 +1,19 @@
-// Terrain rendering for the greybox: one indexed grid mesh with per-vertex splat weights blended
-// into vertex colours, plus tiling procedural detail (albedo variation + normal) textures. Phase 3
-// replaces the colours with a real splat shader sampling KTX2 layer textures.
+// Terrain rendering: one grid mesh. With real layer materials it uses the splat shader
+// (terrainMaterial.ts); without them (greybox / missing assets) it falls back to vertex colours plus
+// procedural detail textures.
 import * as THREE from 'three';
 import { hashSeed, Noise2D, smoothstep } from '../core/random';
 import { patchMaterial } from '../render/materials';
-import type { TerrainLayerDef } from '../types';
+import type { TerrainDef, TerrainLayerDef } from '../types';
+import { distToPolyline, smoothPolyline } from './polyline';
+import { createTerrainMaterial, type TerrainLayerMaps } from './terrainMaterial';
 import { type Heightfield, sampleHeight, sampleSlope } from './heightfield';
 
 export interface SplatSampler {
-  /** Normalised weight of layer id at (x, z). */
+  /** Normalised weight of layer id at (x, z) (rules, then paths and creek banks painted on top). */
   weight(layer: string, x: number, z: number): number;
+  /** 0..1 wetness near the creek. */
+  wetness(x: number, z: number): number;
 }
 
 function band(v: number, r: [number, number] | undefined, soft: number): number {
@@ -17,11 +21,8 @@ function band(v: number, r: [number, number] | undefined, soft: number): number 
   return smoothstep(r[0] - soft, r[0] + soft, v) * (1 - smoothstep(r[1] - soft, r[1] + soft, v));
 }
 
-export function createSplatSampler(
-  layers: TerrainLayerDef[],
-  hf: Heightfield,
-  seed: number,
-): SplatSampler {
+export function createSplatSampler(def: TerrainDef, hf: Heightfield, seed: number): SplatSampler {
+  const layers = def.layers;
   const noise = new Noise2D(hashSeed(seed, 'splat'));
   const raw = (l: TerrainLayerDef, x: number, z: number, i: number) => {
     const slope = sampleSlope(hf, x, z);
@@ -35,6 +36,27 @@ export function createSplatSampler(
       );
     return w + 1e-4;
   };
+  const paths = (def.paths ?? []).map((p) => ({ ...p, pts: smoothPolyline(p.points, 8) }));
+  const creek = def.creek ? { ...def.creek, pts: smoothPolyline(def.creek.points, 10) } : null;
+  const edgeNoise = (x: number, z: number) => noise.fbm(x * 0.35, z * 0.35, 2) * 0.35;
+  const paint = (x: number, z: number): { layer: string; k: number }[] => {
+    const out: { layer: string; k: number }[] = [];
+    if (creek?.bankLayer) {
+      const { d } = distToPolyline(creek.pts, x, z);
+      out.push({
+        layer: creek.bankLayer,
+        k: 1 - smoothstep(creek.width * 0.6, creek.width * (2.2 + edgeNoise(x, z) * 2), d),
+      });
+    }
+    for (const p of paths) {
+      const { d } = distToPolyline(p.pts, x, z);
+      out.push({
+        layer: p.layer,
+        k: 1 - smoothstep(p.width * 0.35, p.width * (0.6 + edgeNoise(x, z)), d),
+      });
+    }
+    return out;
+  };
   return {
     weight(layer, x, z) {
       let sum = 0;
@@ -44,7 +66,14 @@ export function createSplatSampler(
         sum += w;
         if (l.id === layer) mine = w;
       });
-      return sum > 0 ? mine / sum : 0;
+      let v = sum > 0 ? mine / sum : 0;
+      for (const p of paint(x, z)) v = v * (1 - p.k) + (p.layer === layer ? p.k : 0);
+      return v;
+    },
+    wetness(x, z) {
+      if (!creek) return 0;
+      const { d } = distToPolyline(creek.pts, x, z);
+      return 1 - smoothstep(creek.width * 0.4, creek.width * 2.0, d);
     },
   };
 }
@@ -104,17 +133,27 @@ function detailTextures(seed: number): { map: THREE.DataTexture; normal: THREE.D
   return { map: mk(albedo, true), normal: mk(normal, false) };
 }
 
+export interface TerrainBuildOptions {
+  anisotropy: number;
+  /** Real layer materials (index-aligned with def.layers, first 4 used); null → greybox colours. */
+  layerMaps?: (TerrainLayerMaps | null)[] | null;
+  antiTiling?: boolean;
+}
+
 export class TerrainMesh {
   readonly mesh: THREE.Mesh;
   readonly splat: SplatSampler;
-  private textures: THREE.Texture[];
+  private textures: THREE.Texture[] = [];
 
-  constructor(hf: Heightfield, layers: TerrainLayerDef[], seed: number, anisotropy: number) {
-    this.splat = createSplatSampler(layers, hf, seed);
+  constructor(hf: Heightfield, def: TerrainDef, seed: number, opts: TerrainBuildOptions) {
+    const layers = def.layers;
+    this.splat = createSplatSampler(def, hf, seed);
     const geo = new THREE.PlaneGeometry(hf.size, hf.size, hf.res - 1, hf.res - 1);
     geo.rotateX(-Math.PI / 2);
     const pos = geo.attributes.position as THREE.BufferAttribute;
     const colors = new Float32Array(pos.count * 3);
+    const wet = new Float32Array(pos.count);
+    const splatData = new Uint8Array(hf.res * hf.res * 4);
     const layerColors = layers.map((l) => new THREE.Color(l.color));
     const tmp = new THREE.Color();
     for (let i = 0; i < pos.count; i++) {
@@ -125,34 +164,59 @@ export class TerrainMesh {
       const iz = Math.round((z + hf.size / 2) / hf.step);
       pos.setY(i, hf.heights[iz * hf.res + ix]!);
       tmp.setRGB(0, 0, 0);
-      layers.forEach((l, li) => {
-        const w = this.splat.weight(l.id, x, z);
+      const ws = layers.map((l) => this.splat.weight(l.id, x, z));
+      ws.forEach((w, li) => {
         tmp.r += layerColors[li]!.r * w;
         tmp.g += layerColors[li]!.g * w;
         tmp.b += layerColors[li]!.b * w;
       });
       colors.set([tmp.r, tmp.g, tmp.b], i * 3);
+      const sum4 = Math.max(1e-4, (ws[0] ?? 0) + (ws[1] ?? 0) + (ws[2] ?? 0) + (ws[3] ?? 0));
+      const o = (iz * hf.res + ix) * 4;
+      for (let k = 0; k < 4; k++) splatData[o + k] = Math.round(((ws[k] ?? 0) / sum4) * 255);
+      wet[i] = this.splat.wetness(x, z);
     }
     geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    geo.setAttribute('aWet', new THREE.BufferAttribute(wet, 1));
     geo.computeVertexNormals();
     geo.computeBoundingSphere();
-    const { map, normal } = detailTextures(seed);
-    map.anisotropy = normal.anisotropy = anisotropy;
-    map.repeat.set(hf.size / 4.5, hf.size / 4.5);
-    normal.repeat.copy(map.repeat);
-    this.textures = [map, normal];
-    const roughness = layers.reduce((s, l) => s + l.roughness, 0) / Math.max(1, layers.length);
-    const mat = patchMaterial(
-      new THREE.MeshStandardMaterial({
-        name: 'terrain',
-        vertexColors: true,
-        map,
-        normalMap: normal,
-        normalScale: new THREE.Vector2(0.6, 0.6),
-        roughness,
-        metalness: 0,
-      }),
-    );
+
+    const real = opts.layerMaps?.slice(0, 4);
+    let mat: THREE.Material;
+    if (real && real.length > 0 && real.every((l) => l)) {
+      const L = real as TerrainLayerMaps[];
+      while (L.length < 4) L.push(L[L.length - 1]!);
+      const splat = new THREE.DataTexture(splatData, hf.res, hf.res, THREE.RGBAFormat);
+      splat.magFilter = THREE.LinearFilter;
+      splat.minFilter = THREE.LinearFilter;
+      splat.needsUpdate = true;
+      this.textures.push(splat);
+      mat = createTerrainMaterial({
+        layers: L,
+        splat,
+        terrainSize: hf.size,
+        splatRes: hf.res,
+        antiTiling: opts.antiTiling ?? true,
+      });
+    } else {
+      const { map, normal } = detailTextures(seed);
+      map.anisotropy = normal.anisotropy = opts.anisotropy;
+      map.repeat.set(hf.size / 4.5, hf.size / 4.5);
+      normal.repeat.copy(map.repeat);
+      this.textures.push(map, normal);
+      const roughness = layers.reduce((s, l) => s + l.roughness, 0) / Math.max(1, layers.length);
+      mat = patchMaterial(
+        new THREE.MeshStandardMaterial({
+          name: 'terrain',
+          vertexColors: true,
+          map,
+          normalMap: normal,
+          normalScale: new THREE.Vector2(0.6, 0.6),
+          roughness,
+          metalness: 0,
+        }),
+      );
+    }
     this.mesh = new THREE.Mesh(geo, mat);
     this.mesh.name = 'terrain';
     this.mesh.receiveShadow = true;

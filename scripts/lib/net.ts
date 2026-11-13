@@ -18,12 +18,19 @@ async function throttle(url: string): Promise<void> {
   lastHit.set(host, Date.now());
 }
 
-export async function fetchRetry(url: string, init: RequestInit = {}, tries = 4): Promise<Response> {
+export async function fetchRetry(
+  url: string,
+  init: RequestInit = {},
+  tries = 4,
+): Promise<Response> {
   let lastErr: unknown;
   for (let i = 0; i < tries; i++) {
     await throttle(url);
     try {
-      const res = await fetch(url, { ...init, headers: { 'User-Agent': UA, ...(init.headers ?? {}) } });
+      const res = await fetch(url, {
+        ...init,
+        headers: { 'User-Agent': UA, ...(init.headers ?? {}) },
+      });
       if (res.ok) return res;
       if (res.status === 429 || res.status >= 500) {
         lastErr = new Error(`${res.status} ${url}`);

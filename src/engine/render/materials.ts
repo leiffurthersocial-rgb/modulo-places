@@ -94,6 +94,11 @@ export interface PatchOptions {
   windHeight?: number;
   /** Leaf flutter amplitude (m). */
   flutter?: number;
+  /**
+   * Distinguishes shader variants whose onBeforeCompile code differs (e.g. "terrain"). three's
+   * program cache does not hash onBeforeCompile, so different custom shaders MUST use different keys.
+   */
+  key?: string;
 }
 
 const patched = new WeakSet<THREE.Material>();
@@ -154,6 +159,7 @@ uniform float uMotion;`,
     }
   };
   // Stable cache key so patched materials with identical options share programs.
-  mat.customProgramCacheKey = () => `modulo:w${wind}:${opts.windHeight ?? 1}:${opts.flutter ?? 0}`;
+  mat.customProgramCacheKey = () =>
+    `modulo:${opts.key ?? 'std'}:w${wind}:${opts.windHeight ?? 1}:${opts.flutter ?? 0}`;
   return mat;
 }

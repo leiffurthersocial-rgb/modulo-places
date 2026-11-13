@@ -243,7 +243,10 @@ function checkMask(v: unknown, p: string, errs: Errs): void {
       break;
     case 'layer':
       checkStr(o.layer, f('layer'), errs);
-      checkNum(o.min, f('min'), errs);
+      if (o.min === undefined && o.max === undefined)
+        fail(errs, f('min'), 'expected min and/or max');
+      if (o.min !== undefined) checkNum(o.min, f('min'), errs);
+      if (o.max !== undefined) checkNum(o.max, f('max'), errs);
       break;
     default:
       fail(errs, f('type'), "expected one of 'slope' | 'height' | 'noise' | 'exclude' | 'layer'");

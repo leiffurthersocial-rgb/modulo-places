@@ -86,7 +86,10 @@ export function patchLabMaterial<T extends THREE.MeshStandardMaterial>(mat: T): 
     shader.uniforms.uLabFrost = labUniforms.uLabFrost;
     shader.uniforms.uLabMoss = labUniforms.uLabMoss;
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nvarying vec3 vLabWPos;\nvarying vec3 vLabWNrm;')
+      .replace(
+        '#include <common>',
+        '#include <common>\nvarying vec3 vLabWPos;\nvarying vec3 vLabWNrm;',
+      )
       .replace(
         '#include <project_vertex>',
         `#include <project_vertex>

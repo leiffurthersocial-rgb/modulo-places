@@ -1,0 +1,870 @@
+{
+  "id": "forest",
+  "name": "Misty Forest",
+  "description": "A mossy conifer valley with a creek, ferns and fallen trunks.",
+  "seed": 4242,
+  "terrain": {
+    "size": 240,
+    "resolution": 321,
+    "source": {
+      "type": "procedural"
+    },
+    "height": 16,
+    "baseFrequency": 0.007,
+    "octaves": 5,
+    "warp": 28,
+    "flatten": [
+      {
+        "x": -6,
+        "z": 52,
+        "radius": 12
+      },
+      {
+        "x": 18,
+        "z": -8,
+        "radius": 16
+      }
+    ],
+    "creek": {
+      "points": [
+        [-110, -70],
+        [-70, -48],
+        [-40, -20],
+        [-14, -8],
+        [6, 10],
+        [24, 30],
+        [50, 46],
+        [80, 58],
+        [112, 70]
+      ],
+      "width": 3.2,
+      "depth": 0.9,
+      "bedMaterial": "forest/creek-bed",
+      "bankLayer": "moss"
+    },
+    "paths": [
+      {
+        "points": [
+          [-6, 60],
+          [-2, 40],
+          [6, 24],
+          [18, 6],
+          [24, -14],
+          [16, -36],
+          [-6, -56],
+          [-30, -74]
+        ],
+        "width": 1.6,
+        "layer": "path"
+      }
+    ],
+    "layers": [
+      {
+        "id": "litter",
+        "material": "forest/forest-floor",
+        "color": "#5e5034",
+        "roughness": 0.95,
+        "slope": [0, 30],
+        "noise": 0.5,
+        "scale": 3.0,
+        "surface": "leaves"
+      },
+      {
+        "id": "moss",
+        "material": "forest/moss",
+        "color": "#4a5f2e",
+        "roughness": 0.9,
+        "slope": [0, 22],
+        "noise": 1.0,
+        "scale": 2.2,
+        "surface": "moss"
+      },
+      {
+        "id": "path",
+        "material": "forest/dirt-path",
+        "color": "#5a4632",
+        "roughness": 0.92,
+        "slope": [26, 34],
+        "scale": 2.4,
+        "surface": "dirt"
+      },
+      {
+        "id": "rock",
+        "material": "forest/rock",
+        "color": "#6f6c65",
+        "roughness": 0.8,
+        "slope": [30, 90],
+        "scale": 4.0,
+        "triplanar": true,
+        "surface": "rock"
+      }
+    ]
+  },
+  "scatter": [
+    {
+      "id": "fir",
+      "mesh": "model:forest/fir",
+      "density": 1.4,
+      "minDistance": 5.5,
+      "scale": [0.75, 1.15],
+      "tilt": 2,
+      "sink": 0.3,
+      "detail": false,
+      "castShadow": true,
+      "collision": "cylinder",
+      "collisionRadius": 0.35,
+      "impostor": true,
+      "wind": 0.35,
+      "flutter": 0.02,
+      "lods": [22, 55, 130],
+      "colorVariation": 0.08,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 32,
+          "soft": 4
+        },
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        },
+        {
+          "type": "layer",
+          "layer": "moss",
+          "max": 0.85,
+          "soft": 0.1
+        }
+      ],
+      "cluster": {
+        "frequency": 0.025,
+        "strength": 0.45
+      }
+    },
+    {
+      "id": "pine",
+      "mesh": "model:forest/pine",
+      "density": 0.7,
+      "minDistance": 6,
+      "scale": [0.7, 1.1],
+      "tilt": 2,
+      "sink": 0.3,
+      "detail": false,
+      "castShadow": true,
+      "collision": "cylinder",
+      "collisionRadius": 0.3,
+      "impostor": true,
+      "wind": 0.35,
+      "flutter": 0.02,
+      "lods": [22, 55, 130],
+      "colorVariation": 0.08,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 30,
+          "soft": 4
+        },
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        }
+      ]
+    },
+    {
+      "id": "broadleaf",
+      "mesh": "model:forest/broadleaf",
+      "density": 0.25,
+      "minDistance": 8,
+      "scale": [0.8, 1.2],
+      "detail": false,
+      "castShadow": true,
+      "collision": "cylinder",
+      "collisionRadius": 0.3,
+      "impostor": true,
+      "wind": 0.3,
+      "flutter": 0.04,
+      "lods": [22, 55, 130],
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "moss",
+          "min": 0.35,
+          "soft": 0.15
+        },
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        }
+      ]
+    },
+    {
+      "id": "fir-sapling",
+      "mesh": "model:forest/fir-sapling",
+      "density": 1.6,
+      "minDistance": 2.5,
+      "scale": [0.6, 1.3],
+      "tilt": 4,
+      "wind": 0.12,
+      "flutter": 0.02,
+      "castShadow": true,
+      "lods": [15, 35],
+      "cullDistance": 90,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 30
+        },
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        }
+      ],
+      "cluster": {
+        "frequency": 0.05,
+        "strength": 0.6
+      }
+    },
+    {
+      "id": "pine-sapling",
+      "mesh": "model:forest/pine-sapling",
+      "density": 1.0,
+      "minDistance": 2.5,
+      "scale": [0.6, 1.3],
+      "tilt": 4,
+      "wind": 0.12,
+      "flutter": 0.02,
+      "castShadow": true,
+      "lods": [15, 35],
+      "cullDistance": 80,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 30
+        },
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        }
+      ]
+    },
+    {
+      "id": "rocks-a",
+      "mesh": "model:forest/rocks-moss-a",
+      "density": 1.2,
+      "minDistance": 3,
+      "scale": [0.7, 1.6],
+      "tilt": 15,
+      "alignToNormal": 0.7,
+      "sink": 0.12,
+      "detail": false,
+      "castShadow": true,
+      "lods": [18, 45],
+      "cullDistance": 140,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        }
+      ],
+      "cluster": {
+        "frequency": 0.04,
+        "strength": 0.7
+      }
+    },
+    {
+      "id": "rocks-b",
+      "mesh": "model:forest/rocks-moss-b",
+      "density": 1.2,
+      "minDistance": 3,
+      "scale": [0.7, 1.6],
+      "tilt": 15,
+      "alignToNormal": 0.7,
+      "sink": 0.12,
+      "detail": false,
+      "castShadow": true,
+      "lods": [18, 45],
+      "cullDistance": 140,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        }
+      ],
+      "cluster": {
+        "frequency": 0.04,
+        "strength": 0.7
+      }
+    },
+    {
+      "id": "boulders",
+      "mesh": "model:forest/boulder",
+      "density": 0.18,
+      "minDistance": 12,
+      "scale": [0.9, 1.8],
+      "tilt": 12,
+      "sink": 0.4,
+      "detail": false,
+      "castShadow": true,
+      "collision": "sphere",
+      "lods": [25, 70],
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        }
+      ]
+    },
+    {
+      "id": "rock-07",
+      "mesh": "model:forest/rock-07",
+      "density": 0.35,
+      "minDistance": 6,
+      "scale": [0.6, 1.4],
+      "tilt": 20,
+      "alignToNormal": 0.8,
+      "sink": 0.2,
+      "detail": false,
+      "castShadow": true,
+      "lods": [20, 50],
+      "cullDistance": 120,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        }
+      ]
+    },
+    {
+      "id": "rock-09",
+      "mesh": "model:forest/rock-09",
+      "density": 0.35,
+      "minDistance": 6,
+      "scale": [0.6, 1.4],
+      "tilt": 20,
+      "alignToNormal": 0.8,
+      "sink": 0.2,
+      "detail": false,
+      "castShadow": true,
+      "lods": [20, 50],
+      "cullDistance": 120,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        }
+      ]
+    },
+    {
+      "id": "rock-faces",
+      "mesh": "model:forest/rock-face",
+      "density": 0.4,
+      "minDistance": 10,
+      "scale": [0.8, 1.5],
+      "alignToNormal": 0.9,
+      "sink": 0.8,
+      "detail": false,
+      "castShadow": true,
+      "lods": [30, 80],
+      "masks": [
+        {
+          "type": "slope",
+          "min": 24,
+          "soft": 4
+        }
+      ]
+    },
+    {
+      "id": "dead-trunks",
+      "mesh": "model:forest/dead-trunk",
+      "density": 0.22,
+      "minDistance": 10,
+      "scale": [0.8, 1.2],
+      "alignToNormal": 1,
+      "sink": 0.1,
+      "detail": false,
+      "castShadow": true,
+      "lods": [20, 50],
+      "cullDistance": 120,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 20
+        },
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        }
+      ]
+    },
+    {
+      "id": "stumps-a",
+      "mesh": "model:forest/stump-a",
+      "density": 0.25,
+      "minDistance": 6,
+      "scale": [0.8, 1.2],
+      "sink": 0.05,
+      "detail": false,
+      "castShadow": true,
+      "lods": [15, 40],
+      "cullDistance": 90,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        }
+      ]
+    },
+    {
+      "id": "stumps-b",
+      "mesh": "model:forest/stump-b",
+      "density": 0.25,
+      "minDistance": 6,
+      "scale": [0.8, 1.2],
+      "sink": 0.05,
+      "detail": false,
+      "castShadow": true,
+      "lods": [15, 40],
+      "cullDistance": 90,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        }
+      ]
+    },
+    {
+      "id": "pine-roots",
+      "mesh": "model:forest/pine-roots",
+      "density": 0.25,
+      "minDistance": 8,
+      "scale": [0.8, 1.2],
+      "sink": 0.05,
+      "detail": false,
+      "castShadow": true,
+      "lods": [15, 40],
+      "cullDistance": 80,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        }
+      ]
+    },
+    {
+      "id": "ferns",
+      "mesh": "model:forest/fern",
+      "density": 26,
+      "minDistance": 0.7,
+      "scale": [0.7, 1.4],
+      "alignToNormal": 0.5,
+      "wind": 0.05,
+      "flutter": 0.02,
+      "castShadow": true,
+      "lods": [10, 24],
+      "cullDistance": 55,
+      "colorVariation": 0.15,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 32,
+          "soft": 4
+        },
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        },
+        {
+          "type": "noise",
+          "frequency": 0.035,
+          "threshold": 0.42,
+          "soft": 0.12
+        }
+      ],
+      "cluster": {
+        "frequency": 0.07,
+        "strength": 0.6
+      }
+    },
+    {
+      "id": "shrub-a",
+      "mesh": "model:forest/shrub-a",
+      "density": 2.5,
+      "minDistance": 1.8,
+      "scale": [0.6, 1.3],
+      "wind": 0.08,
+      "flutter": 0.03,
+      "castShadow": true,
+      "lods": [12, 30],
+      "cullDistance": 75,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        }
+      ],
+      "cluster": {
+        "frequency": 0.05,
+        "strength": 0.7
+      }
+    },
+    {
+      "id": "shrub-b",
+      "mesh": "model:forest/shrub-b",
+      "density": 2.0,
+      "minDistance": 1.8,
+      "scale": [0.6, 1.3],
+      "wind": 0.08,
+      "flutter": 0.03,
+      "castShadow": true,
+      "lods": [12, 30],
+      "cullDistance": 75,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        }
+      ]
+    },
+    {
+      "id": "nettles",
+      "mesh": "model:forest/nettle",
+      "density": 3,
+      "minDistance": 1.0,
+      "scale": [0.7, 1.2],
+      "wind": 0.06,
+      "flutter": 0.03,
+      "castShadow": false,
+      "lods": [10, 22],
+      "cullDistance": 45,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "moss",
+          "min": 0.3,
+          "soft": 0.15
+        },
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        }
+      ],
+      "cluster": {
+        "frequency": 0.08,
+        "strength": 0.8
+      }
+    },
+    {
+      "id": "weeds",
+      "mesh": "model:forest/weeds",
+      "density": 7,
+      "minDistance": 0.8,
+      "scale": [0.7, 1.3],
+      "wind": 0.05,
+      "flutter": 0.02,
+      "castShadow": false,
+      "lods": [10, 22],
+      "cullDistance": 45,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.6,
+          "soft": 0.15
+        }
+      ]
+    },
+    {
+      "id": "grass",
+      "mesh": "model:forest/grass",
+      "density": 30,
+      "minDistance": 0.5,
+      "scale": [0.7, 1.2],
+      "wind": 0.06,
+      "flutter": 0.02,
+      "castShadow": false,
+      "lods": [8, 18],
+      "cullDistance": 32,
+      "masks": [
+        {
+          "type": "noise",
+          "frequency": 0.02,
+          "threshold": 0.6,
+          "soft": 0.08,
+          "seedOffset": 5
+        },
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        },
+        {
+          "type": "slope",
+          "max": 25
+        }
+      ]
+    },
+    {
+      "id": "moss-clumps",
+      "mesh": "model:forest/moss-clump",
+      "density": 5,
+      "minDistance": 1.2,
+      "scale": [0.7, 1.4],
+      "alignToNormal": 1,
+      "castShadow": false,
+      "lods": [10, 25],
+      "cullDistance": 45,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "moss",
+          "min": 0.4,
+          "soft": 0.15
+        }
+      ]
+    },
+    {
+      "id": "branches",
+      "mesh": "model:forest/branches",
+      "density": 6,
+      "minDistance": 1.2,
+      "scale": [0.7, 1.3],
+      "alignToNormal": 1,
+      "castShadow": true,
+      "lods": [10, 25],
+      "cullDistance": 40,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.5,
+          "soft": 0.15
+        }
+      ]
+    },
+    {
+      "id": "pebbles",
+      "mesh": "pebble",
+      "density": 40,
+      "minDistance": 0.25,
+      "scale": [0.5, 2],
+      "tilt": 30,
+      "alignToNormal": 1,
+      "lods": [8],
+      "cullDistance": 22,
+      "color": "#8a8478",
+      "colorVariation": 0.2,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "path",
+          "min": 0.4,
+          "soft": 0.15
+        }
+      ]
+    }
+  ],
+  "props": [],
+  "spawn": {
+    "position": [-6, 0, 60],
+    "yaw": 0.15
+  },
+  "bounds": {
+    "walkRadius": 100,
+    "photoHalfExtent": 115,
+    "photoMaxHeight": 70
+  },
+  "defaultMood": "dawn",
+  "moods": [
+    {
+      "id": "dawn",
+      "name": "Dawn mist",
+      "audio": "forest-dawn",
+      "sky": {
+        "zenith": "#8a9bb0",
+        "horizon": "#d6d0c6",
+        "ground": "#5c5f58",
+        "hdri": "forest/dawn",
+        "hdriIntensity": 1.0
+      },
+      "sun": {
+        "azimuth": 100,
+        "elevation": 8,
+        "color": "#ffc99a",
+        "intensity": 2.2,
+        "discSize": 0.6
+      },
+      "ambient": {
+        "sky": "#b8c4d0",
+        "ground": "#4a4a40",
+        "intensity": 0.8
+      },
+      "fog": {
+        "color": "#c3c8c9",
+        "density": 0.038,
+        "heightFalloff": 0.12,
+        "baseHeight": -3,
+        "sunScatter": 0.7
+      },
+      "post": {
+        "exposure": 0.3,
+        "contrast": -0.03,
+        "saturation": -0.1,
+        "temperature": 0.05,
+        "tint": 0,
+        "bloom": 0.8,
+        "vignette": 0.3
+      },
+      "particles": ["mist", "pollen"]
+    },
+    {
+      "id": "midday",
+      "name": "Midday",
+      "audio": "forest-midday",
+      "sky": {
+        "zenith": "#4a7ab5",
+        "horizon": "#bcd0df",
+        "ground": "#5a5a50",
+        "hdri": "forest/midday",
+        "hdriIntensity": 1.0
+      },
+      "sun": {
+        "azimuth": 200,
+        "elevation": 55,
+        "color": "#fff3e2",
+        "intensity": 4.0,
+        "discSize": 0.55
+      },
+      "ambient": {
+        "sky": "#a9c3e0",
+        "ground": "#4c4a3c",
+        "intensity": 0.9
+      },
+      "fog": {
+        "color": "#b3c3d1",
+        "density": 0.007,
+        "heightFalloff": 0.05,
+        "baseHeight": 0,
+        "sunScatter": 0.25
+      },
+      "post": {
+        "exposure": -0.1,
+        "contrast": 0.05,
+        "saturation": 0.0,
+        "temperature": 0,
+        "tint": 0,
+        "bloom": 0.4,
+        "vignette": 0.25
+      },
+      "particles": ["pollen", "leaves"]
+    },
+    {
+      "id": "dusk",
+      "name": "Dusk",
+      "audio": "forest-dusk",
+      "sky": {
+        "zenith": "#36456a",
+        "horizon": "#e6976a",
+        "ground": "#3a3430",
+        "hdri": "forest/dusk",
+        "hdriIntensity": 1.0
+      },
+      "sun": {
+        "azimuth": 285,
+        "elevation": 5,
+        "color": "#ff9a5c",
+        "intensity": 2.4,
+        "discSize": 0.7
+      },
+      "ambient": {
+        "sky": "#7d86ad",
+        "ground": "#4a3a2e",
+        "intensity": 0.75
+      },
+      "fog": {
+        "color": "#a08680",
+        "density": 0.013,
+        "heightFalloff": 0.08,
+        "baseHeight": 0,
+        "sunScatter": 0.85
+      },
+      "post": {
+        "exposure": 0.45,
+        "contrast": 0.08,
+        "saturation": 0.1,
+        "temperature": 0.25,
+        "tint": 0.05,
+        "bloom": 1.0,
+        "vignette": 0.35
+      },
+      "particles": ["dust", "leaves"]
+    }
+  ],
+  "cameras": [
+    {
+      "id": "spawn",
+      "position": [-6, 1.65, 60],
+      "target": [2, 1.6, 30]
+    },
+    {
+      "id": "creek",
+      "position": [0, 1.6, 4],
+      "target": [20, 0.6, 26]
+    },
+    {
+      "id": "glade",
+      "position": [18, 1.65, -2],
+      "target": [-10, 2.5, -30]
+    },
+    {
+      "id": "low-ferns",
+      "position": [-20, 0.5, 20],
+      "target": [-40, 0.8, 0]
+    },
+    {
+      "id": "into-sun",
+      "position": [-10, 1.65, 30],
+      "target": [30, 6, 24]
+    },
+    {
+      "id": "path-uphill",
+      "position": [16, 1.65, -30],
+      "target": [-10, 2, -60]
+    }
+  ]
+}

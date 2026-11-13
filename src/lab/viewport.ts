@@ -80,14 +80,19 @@ export class Viewport {
   private fpsN = 0;
   private fps = 0;
 
-  constructor(private container: HTMLElement, initial: MoodDef) {
+  constructor(
+    private container: HTMLElement,
+    initial: MoodDef,
+  ) {
     installFogChunks();
     this.scene.fog = new THREE.FogExp2(0x000000, 0); // enables USE_FOG; real fog is in the chunks
     this.pipeline = new RenderPipeline(container, this.scene, this.camera);
     // Default is the high preset; ?quality=low|medium|... is a debug escape for weak GPUs/software GL.
     const qp = new URLSearchParams(location.search).get('quality');
     const preset =
-      qp && qp in QUALITY_PRESETS ? QUALITY_PRESETS[qp as keyof typeof QUALITY_PRESETS] : QUALITY_PRESETS.high;
+      qp && qp in QUALITY_PRESETS
+        ? QUALITY_PRESETS[qp as keyof typeof QUALITY_PRESETS]
+        : QUALITY_PRESETS.high;
     this.pipeline.setQuality(preset);
     this.pmrem = new THREE.PMREMGenerator(this.pipeline.renderer);
     this.blender = new MoodBlender(initial);

@@ -143,6 +143,8 @@ export interface MoodDef {
   /** Optional per-mood particle preset id ('mist', 'rain', 'snow', 'pollen', ...). */
   particles?: string[];
   ambience?: string[];
+  /** Ambience preset key (AMBIENCE_PRESETS) for the procedural audio engine. */
+  audio?: string;
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -162,13 +164,29 @@ export interface TerrainDef {
   warp: number;
   /** Optional flat areas or paths: [x, z, radius, targetHeight|null]. */
   flatten?: { x: number; z: number; radius: number; height?: number }[];
+  /** Footpaths: smoothed across their width, painted with `layer` in the splat map. */
+  paths?: { points: Vec2[]; width: number; layer: string; smoothing?: number }[];
+  /** A stream carved into the terrain; rendered with a water surface and a creek-bed material. */
+  creek?: {
+    points: Vec2[];
+    width: number;
+    depth: number;
+    bedMaterial?: string;
+    bankLayer?: string;
+  };
   layers: TerrainLayerDef[];
 }
 
 export interface TerrainLayerDef {
   id: string;
-  /** Material id resolved by the material registry (greybox: procedural). */
+  /** Pack material key (e.g. "forest/moss"); greybox falls back to `color`. */
   material: string;
+  /** Texture tiling: metres covered by one texture repeat. */
+  scale?: number;
+  /** Use triplanar projection (steep rock). */
+  triplanar?: boolean;
+  /** Footstep surface for audio. */
+  surface?: 'leaves' | 'dirt' | 'moss' | 'rock' | 'gravel' | 'snow' | 'wood';
   color: ColorHex;
   roughness: number;
   /** Splat rule: weights from slope (degrees) and height (m) ranges, plus noise. */
@@ -182,7 +200,7 @@ export type MaskDef =
   | { type: 'height'; min?: number; max?: number; soft?: number }
   | { type: 'noise'; frequency: number; threshold: number; soft?: number; seedOffset?: number }
   | { type: 'exclude'; x: number; z: number; radius: number; soft?: number }
-  | { type: 'layer'; layer: string; min: number };
+  | { type: 'layer'; layer: string; min?: number; max?: number };
 
 export interface ScatterRuleDef {
   id: string;
@@ -206,6 +224,13 @@ export interface ScatterRuleDef {
   cullDistance?: number;
   castShadow?: boolean;
   collision?: 'none' | 'cylinder' | 'sphere';
+  /** Collision radius at scale 1 (m); defaults to a fraction of the species footprint. */
+  collisionRadius?: number;
+  /** Bake a camera-facing impostor as the farthest LOD (trees). */
+  impostor?: boolean;
+  /** Main-bend wind amplitude (m at top) and leaf flutter for model species. */
+  wind?: number;
+  flutter?: number;
   /** Colour variation for greybox. */
   color?: ColorHex;
   colorVariation?: number;

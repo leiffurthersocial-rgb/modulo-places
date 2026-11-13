@@ -23,9 +23,26 @@ import {
   type Res,
 } from './lib/sources';
 
-interface Candidate { source: 'polyhaven' | 'ambientcg'; id: string; why?: string }
-interface Group { label: string; use?: string; candidates: Candidate[] }
-interface Candidates { scenes: Record<string, { materials: Record<string, Group>; models?: Record<string, Group>; hdris?: Record<string, Group> }> }
+interface Candidate {
+  source: 'polyhaven' | 'ambientcg';
+  id: string;
+  why?: string;
+}
+interface Group {
+  label: string;
+  use?: string;
+  candidates: Candidate[];
+}
+interface Candidates {
+  scenes: Record<
+    string,
+    {
+      materials: Record<string, Group>;
+      models?: Record<string, Group>;
+      hdris?: Record<string, Group>;
+    }
+  >;
+}
 
 export interface LabMaterial {
   source: string;
@@ -40,7 +57,16 @@ export interface LabMaterial {
 }
 export interface LabManifest {
   generatedAt: string;
-  scenes: Record<string, { materials: Record<string, { label: string; use?: string; candidates: LabMaterial[] }>; hdris: Record<string, { label: string; candidates: { id: string; name: string; url: string; preview: string }[] }> }>;
+  scenes: Record<
+    string,
+    {
+      materials: Record<string, { label: string; use?: string; candidates: LabMaterial[] }>;
+      hdris: Record<
+        string,
+        { label: string; candidates: { id: string; name: string; url: string; preview: string }[] }
+      >;
+    }
+  >;
 }
 
 const args = new Set(process.argv.slice(2));
@@ -75,10 +101,15 @@ async function packArm(files: MaterialFiles, size: number, out: string): Promise
     rgb[i * 3 + 1] = rough[i]!;
     rgb[i * 3 + 2] = 0;
   }
-  await sharp(rgb, { raw: { width: size, height: size, channels: 3 } }).webp({ quality: 82 }).toFile(out);
+  await sharp(rgb, { raw: { width: size, height: size, channels: 3 } })
+    .webp({ quality: 82 })
+    .toFile(out);
 }
 
-async function labAmbientcg(id: string, size: number): Promise<{ maps: LabMaterial['maps']; bytes: number }> {
+async function labAmbientcg(
+  id: string,
+  size: number,
+): Promise<{ maps: LabMaterial['maps']; bytes: number }> {
   const files = await ambientcgTexture(id, '1k');
   const dir = join(LAB_DIR, 'acg', id);
   mkdirSync(dir, { recursive: true });
@@ -86,20 +117,31 @@ async function labAmbientcg(id: string, size: number): Promise<{ maps: LabMateri
   const normal = join(dir, 'normal.webp');
   const arm = join(dir, 'arm.webp');
   const height = join(dir, 'height.webp');
-  if (!existsSync(color)) await sharp(files.color).resize(size, size).webp({ quality: 80 }).toFile(color);
-  if (!existsSync(normal)) await sharp(files.normal).resize(size, size).webp({ quality: 88 }).toFile(normal);
+  if (!existsSync(color))
+    await sharp(files.color).resize(size, size).webp({ quality: 80 }).toFile(color);
+  if (!existsSync(normal))
+    await sharp(files.normal).resize(size, size).webp({ quality: 88 }).toFile(normal);
   if (!existsSync(arm)) await packArm(files, size, arm);
-  if (files.height && !existsSync(height)) await sharp(files.height).resize(size / 2, size / 2).greyscale().webp({ quality: 80 }).toFile(height);
+  if (files.height && !existsSync(height))
+    await sharp(files.height)
+      .resize(size / 2, size / 2)
+      .greyscale()
+      .webp({ quality: 80 })
+      .toFile(height);
   const rel = (p: string) => '/' + p.slice(join(ROOT, 'public').length + 1).replaceAll('\\', '/');
   const maps: LabMaterial['maps'] = { color: rel(color), normal: rel(normal), arm: rel(arm) };
   if (files.height) maps.height = rel(height);
   const { statSync } = await import('node:fs');
-  const bytes = [color, normal, arm, files.height ? height : null].filter(Boolean).reduce((s, p) => s + statSync(p!).size, 0);
+  const bytes = [color, normal, arm, files.height ? height : null]
+    .filter(Boolean)
+    .reduce((s, p) => s + statSync(p!).size, 0);
   return { maps, bytes };
 }
 
 async function lab(): Promise<void> {
-  const cand = JSON.parse(readFileSync(join(ROOT, 'src/config/lab-candidates.json'), 'utf8')) as Candidates;
+  const cand = JSON.parse(
+    readFileSync(join(ROOT, 'src/config/lab-candidates.json'), 'utf8'),
+  ) as Candidates;
   const only = argVal('--scene');
   const lic = loadLicenses();
   const manifestPath = join(LAB_DIR, 'manifest.json');
@@ -113,7 +155,8 @@ async function lab(): Promise<void> {
       const list: LabMaterial[] = [];
       for (const c of group.candidates) {
         try {
-          const info = c.source === 'polyhaven' ? await polyhavenInfo(c.id) : await ambientcgInfo(c.id);
+          const info =
+            c.source === 'polyhaven' ? await polyhavenInfo(c.id) : await ambientcgInfo(c.id);
           upsertLicense(lic, info);
           let maps: LabMaterial['maps'];
           let bytes = 0;
@@ -126,7 +169,16 @@ async function lab(): Promise<void> {
           } else {
             ({ maps, bytes } = await labAmbientcg(c.id, 1024));
           }
-          list.push({ source: c.source, id: c.id, name: info.name, authors: info.authors, url: info.url, why: c.why, maps, previewBytes: bytes });
+          list.push({
+            source: c.source,
+            id: c.id,
+            name: info.name,
+            authors: info.authors,
+            url: info.url,
+            why: c.why,
+            maps,
+            previewBytes: bytes,
+          });
           console.log(`  ✓ ${sceneId}/${key}: ${c.source}:${c.id}`);
         } catch (e) {
           console.warn(`  ✗ ${sceneId}/${key}: ${c.source}:${c.id} — ${(e as Error).message}`);
@@ -163,7 +215,14 @@ interface Picks {
 }
 
 async function picks(): Promise<void> {
-  const p = JSON.parse(readFileSync((process.argv.includes('--picks-file') ? process.argv[process.argv.indexOf('--picks-file') + 1]! : join(ROOT, 'src/config/picks.json')), 'utf8')) as Picks;
+  const p = JSON.parse(
+    readFileSync(
+      process.argv.includes('--picks-file')
+        ? process.argv[process.argv.indexOf('--picks-file') + 1]!
+        : join(ROOT, 'src/config/picks.json'),
+      'utf8',
+    ),
+  ) as Picks;
   const lic = loadLicenses();
   for (const [key, m] of Object.entries(p.materials)) {
     const res: Res = m.hero ? '4k' : '2k';
