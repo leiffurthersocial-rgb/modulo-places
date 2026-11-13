@@ -1,13 +1,13 @@
 # PLAN.md — Modulo: Places
 
-Status: **awaiting your OK**. Nothing beyond the STEP 0 pipeline proof is built yet.
+Status: **approved 2026-11-13**. M1 in progress.
 
 ## 1. Milestones and review stops
 
 | # | Milestone | Done when | Stop for review |
 |---|---|---|---|
 | M1 | **Engine greybox** (Phase 1) | Walk/crouch/sprint with Rapier capsule on a heightfield. Data-driven scene loader. Seeded scatter with ~100k placeholder instances. 3 lighting moods with cross-fade. Quality manager + presets. Photo mode (free-fly, focal length, focus picker, exposure, DOF on capture, PNG 1×/2×). F3 overlay. Touch controls. Menu. Enter/exit leak test. Benchmark route. Screenshots of each mood × {desktop, iPad}. | **Yes** |
-| M2 | **Asset pipeline + Material/Asset Lab** (Phase 2) | `fetch-assets.ts` (Poly Haven, ambientCG v3, Quaternius, Kenney, Sketchfab CC0/CC-BY via token, Freesound; Pixabay audio via a manual list) with cache and license capture. `process-assets.ts` (KTX2 tiers, ORM packing, meshopt, LOD/impostor gen, audio Opus/Vorbis OGG + AAC fallback (Ogg only plays from Safari 18.4), size report). `LICENSES.json` + Credits. `/lab` with ≥ 8 candidates per key material per scene. | Yes, so you can pick materials in `/lab` |
+| M2 | **Asset pipeline + Material/Asset Lab** (Phase 2) | `fetch-assets.ts` (Poly Haven, ambientCG v3, Quaternius, Kenney, Sketchfab CC0/CC-BY via token, Freesound CC0/CC-BY previews via token + optional OAuth2 originals script; Pixabay audio via a manual list) with cache and license capture. `process-assets.ts` (KTX2 tiers, ORM packing, meshopt, LOD/impostor gen, audio Opus/Vorbis OGG + AAC fallback (Ogg only plays from Safari 18.4), size report). `LICENSES.json` + Credits. `/lab` with ≥ 8 candidates per key material per scene. | Yes, so you can pick materials in `/lab` |
 | M3 | **Misty forest, full quality** (Phase 3) | 3 moods hand-tuned. 6 fixed cameras × 3 moods × 2 viewports reviewed against reference photos. SCENE_GUIDE.md written. | **Yes** |
 | M4 | Japanese village | Per SCENE_GUIDE.md | **Yes** |
 | M5 | Jungle ruin | Per SCENE_GUIDE.md | **Yes** |
@@ -32,7 +32,7 @@ src/
     lighting/    moods (data), cross-fader, sun/shadows (CSM-lite), probes/env
     water/       stream/pond shader
     audio/       ambience layers, positional emitters, footsteps by surface, mood cross-fade
-    input/       keyboard/mouse (Pointer Lock with fallback), touch joystick/look, remapping
+    input/       keyboard/mouse (Pointer Lock on desktop; drag-to-look baseline on iPad, which has no Pointer Lock), touch joystick/look, remapping
     player/      Rapier capsule controller, head-bob, soft boundaries
     photo/       free camera, lens model, capture (tiled hi-res), film looks
     debug/       F3 overlay, seed override, benchmark camera paths
