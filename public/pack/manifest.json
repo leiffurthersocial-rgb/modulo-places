@@ -205,6 +205,18 @@
     10788,
     3522
    ]
+  },
+  "forest/pine": {
+   "source": "polyhaven",
+   "id": "pine_tree_01",
+   "file": "/pack/models/forest-pine.695c7d00.glb",
+   "bytes": 6763400,
+   "lods": 3,
+   "triangles": [
+    45066,
+    13402,
+    3565
+   ]
   }
  },
  "hdris": {},
