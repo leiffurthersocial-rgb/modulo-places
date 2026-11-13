@@ -16,7 +16,11 @@ export function generateHeightfield(def: TerrainDef, seed: number): Heightfield 
   const size = def.size;
   const step = size / (res - 1);
   const heights = new Float32Array(res * res);
-  const s = hashSeed(seed, 'terrain', def.source.type === 'procedural' ? (def.source.seedOffset ?? 0) : 0);
+  const s = hashSeed(
+    seed,
+    'terrain',
+    def.source.type === 'procedural' ? (def.source.seedOffset ?? 0) : 0,
+  );
   const n = new Noise2D(s);
   const warpN = new Noise2D(s ^ 0x5bd1e995);
   const f = def.baseFrequency;

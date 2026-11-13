@@ -237,7 +237,7 @@ export interface SceneDef {
   bounds: { walkRadius: number; photoHalfExtent: number; photoMaxHeight: number };
   moods: MoodDef[];
   defaultMood: string;
-  /** Fixed review cameras for screenshot QA. */
+  /** Fixed review cameras for screenshot QA. Y of position and target is height above terrain. */
   cameras: { id: string; position: Vec3; target: Vec3; fov?: number }[];
 }
 

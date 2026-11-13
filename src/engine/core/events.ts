@@ -15,7 +15,7 @@ export interface EngineEvents {
   'ui:menu': { open: boolean };
   'debug:toggled': { visible: boolean };
   'watchdog:downgrade': { from: PresetId; to: PresetId };
-  'toast': { text: string };
+  toast: { text: string };
 }
 
 type Handler<T> = (payload: T) => void;

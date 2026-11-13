@@ -153,14 +153,19 @@ export function keyLabel(code: string): string {
 }
 
 /** Other actions that already use `code`. */
-export function findBindingConflicts(bindings: KeyBindings, action: Action, code: string): Action[] {
+export function findBindingConflicts(
+  bindings: KeyBindings,
+  action: Action,
+  code: string,
+): Action[] {
   return ACTION_ORDER.filter((a) => a !== action && (bindings[a] ?? []).includes(code));
 }
 
 /** For a row: every other action sharing any of this action's keys. */
 export function conflictsForAction(bindings: KeyBindings, action: Action): Action[] {
   const out = new Set<Action>();
-  for (const code of bindings[action] ?? []) for (const a of findBindingConflicts(bindings, action, code)) out.add(a);
+  for (const code of bindings[action] ?? [])
+    for (const a of findBindingConflicts(bindings, action, code)) out.add(a);
   return [...out];
 }
 

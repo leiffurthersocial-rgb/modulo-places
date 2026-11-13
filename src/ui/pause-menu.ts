@@ -13,20 +13,25 @@ export class PauseMenu {
     private cb: { openSettings(): void; hide(): void },
   ) {
     this.resumeBtn = button('Resume', 'mp-btn-primary', () => host.actions.resume());
-    const dialog = el('div', 'mp-dialog mp-pause-dialog', { role: 'dialog', 'aria-label': 'Paused' }, [
-      el('h2', 'mp-h2', {}, ['Paused']),
-      this.resumeBtn,
-      el('h3', 'mp-h3', {}, ['Lighting']),
-      this.moodList,
-      el('div', 'mp-stack', {}, [
-        button('Photo mode', '', () => {
-          cb.hide();
-          host.actions.togglePhoto(true);
-        }),
-        button('Settings', '', () => cb.openSettings()),
-        button('Exit to menu', '', () => host.actions.exitToMenu()),
-      ]),
-    ]);
+    const dialog = el(
+      'div',
+      'mp-dialog mp-pause-dialog',
+      { role: 'dialog', 'aria-label': 'Paused' },
+      [
+        el('h2', 'mp-h2', {}, ['Paused']),
+        this.resumeBtn,
+        el('h3', 'mp-h3', {}, ['Lighting']),
+        this.moodList,
+        el('div', 'mp-stack', {}, [
+          button('Photo mode', '', () => {
+            cb.hide();
+            host.actions.togglePhoto(true);
+          }),
+          button('Settings', '', () => cb.openSettings()),
+          button('Exit to menu', '', () => host.actions.exitToMenu()),
+        ]),
+      ],
+    );
     this.root = el('div', 'mp-screen mp-modal', { hidden: '' }, [dialog]);
   }
 
@@ -55,7 +60,12 @@ export class PauseMenu {
     clear(this.moodList);
     this.moodList.hidden = this.moods.length === 0;
     for (const m of this.moods) {
-      const b = el('button', 'mp-btn mp-mood', { type: 'button', 'aria-pressed': String(m.id === this.current) }, [m.name]);
+      const b = el(
+        'button',
+        'mp-btn mp-mood',
+        { type: 'button', 'aria-pressed': String(m.id === this.current) },
+        [m.name],
+      );
       b.addEventListener('click', () => {
         this.current = m.id;
         this.host.actions.setMood(m.id);

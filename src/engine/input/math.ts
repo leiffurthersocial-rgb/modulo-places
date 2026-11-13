@@ -16,7 +16,12 @@ export function clampSpike(v: number, max: number = MAX_LOOK_SPIKE_PX): number {
 }
 
 /** Digital keyboard axes -> move vector with diagonals normalised to unit length. */
-export function keyboardMove(left: boolean, right: boolean, back: boolean, forward: boolean): { x: number; y: number } {
+export function keyboardMove(
+  left: boolean,
+  right: boolean,
+  back: boolean,
+  forward: boolean,
+): { x: number; y: number } {
   const x = (right ? 1 : 0) - (left ? 1 : 0);
   const y = (forward ? 1 : 0) - (back ? 1 : 0);
   if (x !== 0 && y !== 0) {

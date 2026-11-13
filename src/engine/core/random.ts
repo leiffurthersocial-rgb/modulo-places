@@ -38,7 +38,8 @@ export class Rng {
 
 /** Stateless integer hash → [0,1). Used for per-instance variation without storing state. */
 export function hash01(x: number, y = 0, seed = 0): number {
-  let h = Math.imul(x | 0, 0x27d4eb2d) ^ Math.imul(y | 0, 0x165667b1) ^ Math.imul(seed | 0, 0x9e3779b1);
+  let h =
+    Math.imul(x | 0, 0x27d4eb2d) ^ Math.imul(y | 0, 0x165667b1) ^ Math.imul(seed | 0, 0x9e3779b1);
   h = Math.imul(h ^ (h >>> 15), 0x85ebca6b);
   h = Math.imul(h ^ (h >>> 13), 0xc2b2ae35);
   return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
@@ -49,7 +50,14 @@ export function hash01(x: number, y = 0, seed = 0): number {
 export class Noise2D {
   private perm = new Uint8Array(512);
   private static readonly G = [
-    [1, 1], [-1, 1], [1, -1], [-1, -1], [1, 0], [-1, 0], [0, 1], [0, -1],
+    [1, 1],
+    [-1, 1],
+    [1, -1],
+    [-1, -1],
+    [1, 0],
+    [-1, 0],
+    [0, 1],
+    [0, -1],
   ] as const;
 
   constructor(seed: number) {

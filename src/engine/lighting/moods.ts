@@ -30,10 +30,16 @@ export interface MoodState {
 
 const c = (hex: string) => new THREE.Color(hex);
 
-export function sunDirection(azimuthDeg: number, elevationDeg: number, out = new THREE.Vector3()): THREE.Vector3 {
+export function sunDirection(
+  azimuthDeg: number,
+  elevationDeg: number,
+  out = new THREE.Vector3(),
+): THREE.Vector3 {
   const az = THREE.MathUtils.degToRad(azimuthDeg);
   const el = THREE.MathUtils.degToRad(elevationDeg);
-  return out.set(Math.sin(az) * Math.cos(el), Math.sin(el), Math.cos(az) * Math.cos(el)).normalize();
+  return out
+    .set(Math.sin(az) * Math.cos(el), Math.sin(el), Math.cos(az) * Math.cos(el))
+    .normalize();
 }
 
 export function moodToState(m: MoodDef): MoodState {
@@ -77,7 +83,9 @@ export function lerpMood(a: MoodState, b: MoodState, t: number, out: MoodState):
   out.ambGround.copy(a.ambGround).lerp(b.ambGround, t);
   out.ambIntensity = l(a.ambIntensity, b.ambIntensity);
   out.fogColor.copy(a.fogColor).lerp(b.fogColor, t);
-  out.fogDensity = Math.exp(l(Math.log(Math.max(a.fogDensity, 1e-6)), Math.log(Math.max(b.fogDensity, 1e-6))));
+  out.fogDensity = Math.exp(
+    l(Math.log(Math.max(a.fogDensity, 1e-6)), Math.log(Math.max(b.fogDensity, 1e-6))),
+  );
   out.fogFalloff = l(a.fogFalloff, b.fogFalloff);
   out.fogBase = l(a.fogBase, b.fogBase);
   out.fogSunScatter = l(a.fogSunScatter, b.fogSunScatter);

@@ -7,7 +7,18 @@ export class LoadingScreen {
   private name = el('h2', 'mp-loading-name');
   private label = el('p', 'mp-loading-label', { 'aria-live': 'polite' });
   private fill = el('div', 'mp-progress-fill');
-  private bar = el('div', 'mp-progress', { role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': '0', 'aria-label': 'Loading' }, [this.fill]);
+  private bar = el(
+    'div',
+    'mp-progress',
+    {
+      role: 'progressbar',
+      'aria-valuemin': '0',
+      'aria-valuemax': '100',
+      'aria-valuenow': '0',
+      'aria-label': 'Loading',
+    },
+    [this.fill],
+  );
 
   constructor() {
     this.root = el('div', 'mp-screen mp-loading', { hidden: '', 'aria-busy': 'true' }, [

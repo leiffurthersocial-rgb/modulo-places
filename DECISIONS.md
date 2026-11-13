@@ -2,6 +2,26 @@
 
 Newest first. Each entry: decision · why · source (only pages actually opened; see RESEARCH.md).
 
+## 2026-11-13 — M1 engine greybox
+
+### D-020 N8AO 2.0.1 + one-line patch for three r187
+N8AO's multi-render-target class overrides `.texture` to return an array. three r187's `setupRenderTarget` reads `texture.mipmaps` from it and crashes. N8AO itself only uses `.textures[i]`, so the getter is removed via `patches/n8ao+2.0.1.patch` (`patch-package` in `postinstall`). Re-check on every N8AO/three upgrade.
+
+### D-019 Rapier loaded lazily in its own chunk
+The menu loads only the 978 kB main bundle. Rapier (4.3 MB min / 1.6 MB gzip, inlined WASM) is fetched on first scene entry and warmed while the menu is open. This is still the largest download; the non-compat package with a separate cached `.wasm` stays on the list.
+
+### D-018 One InstancedMesh per 32 m cell per rule; LOD = geometry swap
+Instance data is shared across LOD levels: the cell's mesh swaps `geometry` by camera distance ÷ lodBias. Cells beyond the rule's cull distance (scaled by the preset's draw distance) are hidden. Measured on the greybox: 485 draws / 1.8 M triangles at Ultra (110k instances), 81 draws / 0.4 M at Battery Saver (34k).
+
+### D-017 Height fog by replacing three's fog chunks
+`fog_*` shader chunks are replaced globally with an analytic exponential-height-fog integral plus sun in-scattering tint, driven by shared uniforms. A `FogExp2` placeholder enables `USE_FOG`. Every scene material must go through `patchMaterial()`.
+
+### D-016 Review cameras are terrain-relative
+`scene.json` camera Y values are heights above the terrain, so cameras stay valid when terrain parameters or seeds change.
+
+### D-015 Post chain structure vs values
+The pmndrs chain is rebuilt only when its structure changes (AO on/off, AA type, DOF live, CA, grain, shafts). Mood and photo values are pushed as uniforms every frame. Order: AO → DOF → god rays → [linear grade, bloom, tone map, display grade, vignette, grain] → CA → SMAA/FXAA. Tiled capture renders tiles with a margin (no lens FX), then applies vignette and grain once on the whole image.
+
 ## 2026-11-13 — STEP 0 / STEP 1
 
 ### D-014 Audio formats: Ogg (Opus/Vorbis) + AAC fallback

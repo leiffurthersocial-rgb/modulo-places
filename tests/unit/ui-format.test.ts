@@ -27,7 +27,8 @@ describe('focal length mapping', () => {
     expect(focalToSlider(200)).toBeCloseTo(1);
   });
   it('round-trips common lenses', () => {
-    for (const mm of [14, 24, 35, 50, 85, 135, 200]) expect(focalFromSlider(focalToSlider(mm))).toBe(mm);
+    for (const mm of [14, 24, 35, 50, 85, 135, 200])
+      expect(focalFromSlider(focalToSlider(mm))).toBe(mm);
   });
   it('clamps out-of-range input', () => {
     expect(focalFromSlider(-1)).toBe(14);

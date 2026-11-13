@@ -1,6 +1,12 @@
 import type { PresetId, QualitySettings } from '../engine/types';
 
-export const PRESET_ORDER: Exclude<PresetId, 'custom'>[] = ['ultra', 'high', 'medium', 'low', 'saver'];
+export const PRESET_ORDER: Exclude<PresetId, 'custom'>[] = [
+  'ultra',
+  'high',
+  'medium',
+  'low',
+  'saver',
+];
 
 export const PRESET_LABELS: Record<PresetId, string> = {
   ultra: 'Ultra',

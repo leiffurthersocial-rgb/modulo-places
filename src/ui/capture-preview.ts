@@ -22,7 +22,12 @@ export class CapturePreview {
     const actions = el('div', 'mp-capture-actions', {}, [dl]);
 
     const file = new File([c.blob], c.filename, { type: c.blob.type || 'image/png' });
-    if (typeof navigator !== 'undefined' && typeof navigator.share === 'function' && typeof navigator.canShare === 'function' && navigator.canShare({ files: [file] })) {
+    if (
+      typeof navigator !== 'undefined' &&
+      typeof navigator.share === 'function' &&
+      typeof navigator.canShare === 'function' &&
+      navigator.canShare({ files: [file] })
+    ) {
       actions.append(
         button('Share', '', () => {
           window.clearTimeout(this.timer);

@@ -92,7 +92,7 @@ export class RenderPipeline {
     this.renderer.toneMapping = THREE.NoToneMapping;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.renderer.shadowMap.type = THREE.PCFShadowMap;
     this.renderer.info.autoReset = false;
     container.appendChild(this.renderer.domElement);
     this.composer = new EffectComposer(this.renderer, { frameBufferType: THREE.HalfFloatType });
@@ -104,7 +104,12 @@ export class RenderPipeline {
     };
     this.sunSprite = new THREE.Mesh(
       new THREE.SphereGeometry(1, 16, 8),
-      new THREE.MeshBasicMaterial({ color: 0xfff2d8, fog: false, transparent: true, depthWrite: false }),
+      new THREE.MeshBasicMaterial({
+        color: 0xfff2d8,
+        fog: false,
+        transparent: true,
+        depthWrite: false,
+      }),
     );
     this.sunSprite.name = 'godray-sun';
     this.sunSprite.frustumCulled = false;
@@ -116,7 +121,10 @@ export class RenderPipeline {
 
   /** Drawing-buffer size in device pixels. */
   get bufferSize(): { width: number; height: number } {
-    return { width: Math.round(this.width * this.pixelRatio), height: Math.round(this.height * this.pixelRatio) };
+    return {
+      width: Math.round(this.width * this.pixelRatio),
+      height: Math.round(this.height * this.pixelRatio),
+    };
   }
 
   setQuality(q: QualitySettings): void {
@@ -185,7 +193,9 @@ export class RenderPipeline {
 
     if (s.ao !== 'off') {
       const ao = new N8AOPostPass(this.scene, this.camera, this.width, this.height);
-      ao.setQualityMode(s.ao === 'performance' ? 'Performance' : s.ao === 'medium' ? 'Medium' : 'High');
+      ao.setQualityMode(
+        s.ao === 'performance' ? 'Performance' : s.ao === 'medium' ? 'Medium' : 'High',
+      );
       ao.configuration.aoRadius = 2.0;
       ao.configuration.distanceFalloff = 1.0;
       ao.configuration.intensity = 2.2;
@@ -196,15 +206,19 @@ export class RenderPipeline {
       add(ao);
     }
     if (s.dof) {
-      this.effects.dof = new DepthOfFieldEffect(this.camera, { focusDistance: 10, focusRange: 5, bokehScale: 2 });
+      this.effects.dof = new DepthOfFieldEffect(this.camera, {
+        focusDistance: 10,
+        focusRange: 5,
+        bokehScale: 2,
+      });
       add(new EffectPass(this.camera, this.effects.dof));
     }
     if (s.shafts) {
       this.effects.rays = new GodRaysEffect(this.camera, this.sunSprite, {
         density: 0.92,
         decay: 0.93,
-        weight: 0.35,
-        exposure: 0.45,
+        weight: 0.5,
+        exposure: 0.6,
         samples: 48,
         clampMax: 1,
         resolutionScale: 0.5,
@@ -214,20 +228,34 @@ export class RenderPipeline {
     }
     const main: import('postprocessing').Effect[] = [this.effects.linear];
     if (s.bloom) {
-      this.effects.bloom = new BloomEffect({ intensity: 0.6, luminanceThreshold: 1.1, luminanceSmoothing: 0.3, mipmapBlur: true, radius: 0.7 });
+      this.effects.bloom = new BloomEffect({
+        intensity: 0.6,
+        luminanceThreshold: 1.1,
+        luminanceSmoothing: 0.3,
+        mipmapBlur: true,
+        radius: 0.7,
+      });
       main.push(this.effects.bloom);
     }
     main.push(this.effects.tone, this.effects.display, this.effects.vignette);
     if (s.grain) {
-      this.effects.noise = new NoiseEffect({ blendFunction: BlendFunction.OVERLAY, premultiply: false });
+      this.effects.noise = new NoiseEffect({
+        blendFunction: BlendFunction.OVERLAY,
+        premultiply: false,
+      });
       main.push(this.effects.noise);
     }
     add(new EffectPass(this.camera, ...main));
     if (s.ca) {
-      this.effects.ca = new ChromaticAberrationEffect({ offset: new THREE.Vector2(0.001, 0.001), radialModulation: true, modulationOffset: 0.25 });
+      this.effects.ca = new ChromaticAberrationEffect({
+        offset: new THREE.Vector2(0.001, 0.001),
+        radialModulation: true,
+        modulationOffset: 0.25,
+      });
       add(new EffectPass(this.camera, this.effects.ca));
     }
-    if (s.aa === 'smaa' || s.aa === 'msaa+smaa') add(new EffectPass(this.camera, new SMAAEffect({ preset: SMAAPreset.MEDIUM })));
+    if (s.aa === 'smaa' || s.aa === 'msaa+smaa')
+      add(new EffectPass(this.camera, new SMAAEffect({ preset: SMAAPreset.MEDIUM })));
     else if (s.aa === 'fxaa') add(new EffectPass(this.camera, new FXAAEffect()));
   }
 
@@ -236,7 +264,11 @@ export class RenderPipeline {
     e.linear.set(g.exposure + g.look.exposure, g.temperature, g.tint);
     e.display.set(g.contrast, g.saturation, g.look);
     e.tone.mode =
-      g.look.toneMapping === 'aces' ? ToneMappingMode.ACES_FILMIC : g.look.toneMapping === 'neutral' ? ToneMappingMode.NEUTRAL : ToneMappingMode.AGX;
+      g.look.toneMapping === 'aces'
+        ? ToneMappingMode.ACES_FILMIC
+        : g.look.toneMapping === 'neutral'
+          ? ToneMappingMode.NEUTRAL
+          : ToneMappingMode.AGX;
     e.display.blendMode.opacity.value = q.grade ? 1 : 0;
     const vig = g.lensFx || q.lensFx ? g.vignette : 0;
     e.vignette.darkness = vig;

@@ -9,13 +9,13 @@
       html, body { margin: 0; height: 100%; background: #0b0d10; overflow: hidden; }
       #app { position: fixed; inset: 0; height: 100dvh; }
       canvas { display: block; width: 100%; height: 100%; touch-action: none; }
-      #hud { position: fixed; left: max(12px, env(safe-area-inset-left)); bottom: max(12px, env(safe-area-inset-bottom));
-        font: 12px/1.4 system-ui, sans-serif; color: #cfd6de; opacity: .8; pointer-events: none; }
+      body.shot-mode #ui, body.shot-mode #hud { display: none; }
     </style>
   </head>
   <body>
     <div id="app"></div>
     <div id="hud"></div>
+    <div id="ui"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

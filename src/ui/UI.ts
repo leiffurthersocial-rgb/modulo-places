@@ -35,8 +35,14 @@ export class UI {
   ) {
     this.credits = new CreditsScreen(() => this.refocus());
     this.settings = new SettingsPanel(host, () => this.refocus());
-    this.mainMenu = new MainMenu(host, { openSettings: () => this.settings.open(), openCredits: () => this.credits.open() });
-    this.pauseMenu = new PauseMenu(host, { openSettings: () => this.settings.open(), hide: () => this.pauseMenu.hide() });
+    this.mainMenu = new MainMenu(host, {
+      openSettings: () => this.settings.open(),
+      openCredits: () => this.credits.open(),
+    });
+    this.pauseMenu = new PauseMenu(host, {
+      openSettings: () => this.settings.open(),
+      hide: () => this.pauseMenu.hide(),
+    });
     this.photoPanel = new PhotoPanel(host);
 
     this.container = el('div', 'mp-ui', {}, [
@@ -58,7 +64,12 @@ export class UI {
     this.container.addEventListener('keydown', (e) => {
       const t = e.target;
       if (e.key === 'Escape') return;
-      if (t instanceof HTMLInputElement || t instanceof HTMLSelectElement || t instanceof HTMLTextAreaElement) e.stopPropagation();
+      if (
+        t instanceof HTMLInputElement ||
+        t instanceof HTMLSelectElement ||
+        t instanceof HTMLTextAreaElement
+      )
+        e.stopPropagation();
     });
 
     this.applySettings(host.settings.get());
@@ -81,13 +92,18 @@ export class UI {
       ev.on('ui:hidden', (h) => this.setHidden(h.hidden)),
       ev.on('toast', (t) => this.toasts.toast(t.text)),
       ev.on('watchdog:downgrade', (d) =>
-        this.toasts.toast(`Graphics lowered to ${PRESET_LABELS[d.to]} to keep things smooth.`, 6000),
+        this.toasts.toast(
+          `Graphics lowered to ${PRESET_LABELS[d.to]} to keep things smooth.`,
+          6000,
+        ),
       ),
     );
   }
 
   get menuOpen(): boolean {
-    return this.mainMenu.isOpen || this.pauseMenu.isOpen || this.settings.isOpen || this.credits.isOpen;
+    return (
+      this.mainMenu.isOpen || this.pauseMenu.isOpen || this.settings.isOpen || this.credits.isOpen
+    );
   }
 
   showMainMenu(): void {
@@ -157,6 +173,7 @@ export class UI {
 
   /** After a modal closes, put focus back on something sensible inside an open screen. */
   private refocus(): void {
-    if (this.pauseMenu.isOpen) this.root.querySelector<HTMLElement>('.mp-pause-dialog .mp-btn-primary')?.focus();
+    if (this.pauseMenu.isOpen)
+      this.root.querySelector<HTMLElement>('.mp-pause-dialog .mp-btn-primary')?.focus();
   }
 }

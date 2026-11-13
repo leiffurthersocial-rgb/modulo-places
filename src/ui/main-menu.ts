@@ -27,7 +27,9 @@ export class MainMenu {
   show(): void {
     this.root.hidden = false;
     this.root.scrollTop = 0;
-    const first = this.root.querySelector<HTMLElement>('.mp-card:not(.is-unavailable) .mp-btn-primary');
+    const first = this.root.querySelector<HTMLElement>(
+      '.mp-card:not(.is-unavailable) .mp-btn-primary',
+    );
     first?.focus({ preventScroll: true });
   }
 
@@ -42,7 +44,12 @@ export class MainMenu {
   private card(scene: UIHost['scenes'][number]): HTMLElement {
     const preview = el('div', 'mp-card-preview');
     if (scene.preview) {
-      const img = el('img', '', { src: scene.preview, alt: '', loading: 'lazy', decoding: 'async' });
+      const img = el('img', '', {
+        src: scene.preview,
+        alt: '',
+        loading: 'lazy',
+        decoding: 'async',
+      });
       img.addEventListener('error', () => {
         img.remove();
         preview.style.background = placeholderGradient(scene.id);
@@ -54,7 +61,10 @@ export class MainMenu {
     if (!scene.available) preview.append(el('span', 'mp-badge', {}, ['Coming soon']));
 
     let selected = scene.moods[0]?.id;
-    const moodRow = el('div', 'mp-chips', { role: 'radiogroup', 'aria-label': `Lighting mood for ${scene.name}` });
+    const moodRow = el('div', 'mp-chips', {
+      role: 'radiogroup',
+      'aria-label': `Lighting mood for ${scene.name}`,
+    });
     const chipButtons: { id: string; b: HTMLButtonElement }[] = [];
     const paint = (): void => {
       for (const c of chipButtons) {
@@ -63,7 +73,12 @@ export class MainMenu {
       }
     };
     for (const m of scene.moods) {
-      const b = el('button', 'mp-chip', { type: 'button', role: 'radio', 'aria-checked': 'false' }, [m.name]);
+      const b = el(
+        'button',
+        'mp-chip',
+        { type: 'button', role: 'radio', 'aria-checked': 'false' },
+        [m.name],
+      );
       b.disabled = !scene.available;
       b.addEventListener('click', () => {
         selected = m.id;

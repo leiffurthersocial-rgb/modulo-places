@@ -1,0 +1,474 @@
+{
+  "id": "greybox",
+  "name": "Misty Forest \u2014 Greybox",
+  "description": "Engine test bed: procedural terrain, ~100k scattered placeholder plants, three lighting moods.",
+  "seed": 20261113,
+  "terrain": {
+    "size": 220,
+    "resolution": 257,
+    "source": {
+      "type": "procedural"
+    },
+    "height": 14,
+    "baseFrequency": 0.008,
+    "octaves": 5,
+    "warp": 25,
+    "flatten": [
+      {
+        "x": 0,
+        "z": 30,
+        "radius": 14
+      }
+    ],
+    "layers": [
+      {
+        "id": "litter",
+        "material": "forest-litter",
+        "color": "#5e5034",
+        "roughness": 0.95,
+        "slope": [0, 24],
+        "noise": 0.6
+      },
+      {
+        "id": "moss",
+        "material": "forest-moss",
+        "color": "#4a5f2e",
+        "roughness": 0.9,
+        "slope": [0, 20],
+        "noise": 0.9
+      },
+      {
+        "id": "dirt",
+        "material": "forest-dirt",
+        "color": "#5a4632",
+        "roughness": 0.92,
+        "slope": [14, 40]
+      },
+      {
+        "id": "rock",
+        "material": "forest-rock",
+        "color": "#6f6c65",
+        "roughness": 0.8,
+        "slope": [32, 90]
+      }
+    ]
+  },
+  "scatter": [
+    {
+      "id": "conifers",
+      "mesh": "tree",
+      "density": 2.2,
+      "minDistance": 4.5,
+      "scale": [0.8, 1.5],
+      "tilt": 3,
+      "sink": 0.2,
+      "detail": false,
+      "castShadow": true,
+      "collision": "cylinder",
+      "lods": [30, 70, 130],
+      "color": "#ffffff",
+      "colorVariation": 0.12,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 34,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 30,
+          "radius": 7,
+          "soft": 3
+        }
+      ],
+      "cluster": {
+        "frequency": 0.03,
+        "strength": 0.5
+      }
+    },
+    {
+      "id": "broadleaf",
+      "mesh": "broadleaf",
+      "density": 0.9,
+      "minDistance": 6,
+      "scale": [0.8, 1.3],
+      "tilt": 4,
+      "sink": 0.2,
+      "detail": false,
+      "castShadow": true,
+      "collision": "cylinder",
+      "lods": [30, 70, 130],
+      "colorVariation": 0.15,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 26,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 30,
+          "radius": 8,
+          "soft": 3
+        }
+      ]
+    },
+    {
+      "id": "bushes",
+      "mesh": "bush",
+      "density": 8,
+      "minDistance": 1.4,
+      "scale": [0.6, 1.4],
+      "alignToNormal": 0.5,
+      "castShadow": true,
+      "lods": [18, 45],
+      "cullDistance": 110,
+      "colorVariation": 0.2,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 32,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 34,
+          "radius": 4,
+          "soft": 1.5
+        }
+      ],
+      "cluster": {
+        "frequency": 0.05,
+        "strength": 0.7
+      }
+    },
+    {
+      "id": "rocks",
+      "mesh": "rock",
+      "density": 3,
+      "minDistance": 2,
+      "scale": [0.4, 1.6],
+      "tilt": 20,
+      "alignToNormal": 0.8,
+      "sink": 0.15,
+      "detail": false,
+      "castShadow": true,
+      "lods": [20, 50],
+      "cullDistance": 130,
+      "colorVariation": 0.12,
+      "cluster": {
+        "frequency": 0.04,
+        "strength": 0.6
+      },
+      "masks": [
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 34,
+          "radius": 2.5,
+          "soft": 1.5
+        }
+      ]
+    },
+    {
+      "id": "boulders",
+      "mesh": "boulder",
+      "density": 0.25,
+      "minDistance": 10,
+      "scale": [1.8, 3.5],
+      "tilt": 15,
+      "sink": 0.6,
+      "detail": false,
+      "castShadow": true,
+      "collision": "sphere",
+      "lods": [30, 80],
+      "colorVariation": 0.1
+    },
+    {
+      "id": "logs",
+      "mesh": "log",
+      "density": 0.35,
+      "minDistance": 7,
+      "scale": [0.7, 1.3],
+      "alignToNormal": 1,
+      "sink": 0.05,
+      "detail": false,
+      "castShadow": true,
+      "lods": [25],
+      "cullDistance": 110,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 18
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 30,
+          "radius": 8
+        }
+      ]
+    },
+    {
+      "id": "stumps",
+      "mesh": "stump",
+      "density": 0.4,
+      "minDistance": 5,
+      "scale": [0.7, 1.3],
+      "sink": 0.05,
+      "detail": false,
+      "castShadow": true,
+      "cullDistance": 90
+    },
+    {
+      "id": "ferns",
+      "mesh": "fern",
+      "density": 40,
+      "minDistance": 0.6,
+      "scale": [0.6, 1.5],
+      "alignToNormal": 0.6,
+      "lods": [12, 28],
+      "cullDistance": 55,
+      "colorVariation": 0.2,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 30,
+          "soft": 4
+        },
+        {
+          "type": "noise",
+          "frequency": 0.04,
+          "threshold": 0.45,
+          "soft": 0.1
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 34,
+          "radius": 2.5,
+          "soft": 1.5
+        }
+      ]
+    },
+    {
+      "id": "grass",
+      "mesh": "grass",
+      "density": 360,
+      "minDistance": 0,
+      "scale": [0.6, 1.4],
+      "alignToNormal": 0.7,
+      "lods": [10, 22],
+      "cullDistance": 38,
+      "colorVariation": 0.2,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 28,
+          "soft": 4
+        },
+        {
+          "type": "noise",
+          "frequency": 0.03,
+          "threshold": 0.4,
+          "soft": 0.12,
+          "seedOffset": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 34,
+          "radius": 2.5,
+          "soft": 1.5
+        }
+      ],
+      "cluster": {
+        "frequency": 0.08,
+        "strength": 0.5
+      }
+    },
+    {
+      "id": "pebbles",
+      "mesh": "pebble",
+      "density": 80,
+      "minDistance": 0.25,
+      "scale": [0.5, 2],
+      "tilt": 30,
+      "alignToNormal": 1,
+      "lods": [8],
+      "cullDistance": 25,
+      "colorVariation": 0.2,
+      "masks": [
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 34,
+          "radius": 2.5,
+          "soft": 1.5
+        }
+      ]
+    }
+  ],
+  "props": [],
+  "spawn": {
+    "position": [0, 0, 34],
+    "yaw": 0
+  },
+  "bounds": {
+    "walkRadius": 92,
+    "photoHalfExtent": 108,
+    "photoMaxHeight": 70
+  },
+  "defaultMood": "dawn",
+  "moods": [
+    {
+      "id": "dawn",
+      "name": "Dawn mist",
+      "sky": {
+        "zenith": "#7f95ad",
+        "horizon": "#dcd2c4",
+        "ground": "#5c5f58"
+      },
+      "sun": {
+        "azimuth": 100,
+        "elevation": 7,
+        "color": "#ffc796",
+        "intensity": 2.4,
+        "discSize": 0.6
+      },
+      "ambient": {
+        "sky": "#b8c4d0",
+        "ground": "#4a4a40",
+        "intensity": 0.8
+      },
+      "fog": {
+        "color": "#c6cacb",
+        "density": 0.045,
+        "heightFalloff": 0.11,
+        "baseHeight": -2,
+        "sunScatter": 0.65
+      },
+      "post": {
+        "exposure": 0.25,
+        "contrast": -0.04,
+        "saturation": -0.12,
+        "temperature": 0.06,
+        "tint": 0,
+        "bloom": 0.8,
+        "vignette": 0.3
+      },
+      "particles": ["mist", "pollen"]
+    },
+    {
+      "id": "midday",
+      "name": "Midday",
+      "sky": {
+        "zenith": "#4a7ab5",
+        "horizon": "#bcd0df",
+        "ground": "#5a5a50"
+      },
+      "sun": {
+        "azimuth": 200,
+        "elevation": 58,
+        "color": "#fff3e2",
+        "intensity": 4.2,
+        "discSize": 0.55
+      },
+      "ambient": {
+        "sky": "#a9c3e0",
+        "ground": "#4c4a3c",
+        "intensity": 0.9
+      },
+      "fog": {
+        "color": "#b3c3d1",
+        "density": 0.008,
+        "heightFalloff": 0.05,
+        "baseHeight": 0,
+        "sunScatter": 0.2
+      },
+      "post": {
+        "exposure": -0.1,
+        "contrast": 0.05,
+        "saturation": 0.0,
+        "temperature": 0,
+        "tint": 0,
+        "bloom": 0.4,
+        "vignette": 0.25
+      },
+      "particles": ["pollen"]
+    },
+    {
+      "id": "dusk",
+      "name": "Dusk",
+      "sky": {
+        "zenith": "#36456a",
+        "horizon": "#e6976a",
+        "ground": "#3a3430"
+      },
+      "sun": {
+        "azimuth": 285,
+        "elevation": 4,
+        "color": "#ff9558",
+        "intensity": 2.2,
+        "discSize": 0.7
+      },
+      "ambient": {
+        "sky": "#7d86ad",
+        "ground": "#4a3a2e",
+        "intensity": 0.75
+      },
+      "fog": {
+        "color": "#a08680",
+        "density": 0.013,
+        "heightFalloff": 0.08,
+        "baseHeight": 0,
+        "sunScatter": 0.85
+      },
+      "post": {
+        "exposure": 0.45,
+        "contrast": 0.08,
+        "saturation": 0.1,
+        "temperature": 0.25,
+        "tint": 0.05,
+        "bloom": 1.0,
+        "vignette": 0.35
+      },
+      "particles": ["dust"]
+    }
+  ],
+  "cameras": [
+    {
+      "id": "spawn",
+      "position": [0, 1.65, 34],
+      "target": [0, 1.5, 0]
+    },
+    {
+      "id": "glade",
+      "position": [6, 1.6, 24],
+      "target": [-20, 1.5, 40]
+    },
+    {
+      "id": "low-grass",
+      "position": [-14, 0.45, 10],
+      "target": [-30, 0.6, -10]
+    },
+    {
+      "id": "ridge",
+      "position": [40, 2.5, -40],
+      "target": [0, 2, 0]
+    },
+    {
+      "id": "into-sun",
+      "position": [-10, 1.65, 0],
+      "target": [30, 4, -20]
+    },
+    {
+      "id": "aerial",
+      "position": [0, 40, 90],
+      "target": [0, 0, 0]
+    }
+  ]
+}

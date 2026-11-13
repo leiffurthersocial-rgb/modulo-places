@@ -6,7 +6,10 @@ import { formatAperture, formatFocal } from './format';
 export class PhotoOverlays {
   readonly root: HTMLElement;
   private grid = el('div', 'mp-grid', { 'aria-hidden': 'true' });
-  private level = el('div', 'mp-level', { 'aria-hidden': 'true' }, [el('div', 'mp-level-line'), el('div', 'mp-level-tick')]);
+  private level = el('div', 'mp-level', { 'aria-hidden': 'true' }, [
+    el('div', 'mp-level-line'),
+    el('div', 'mp-level-tick'),
+  ]);
   private meta = el('div', 'mp-meta');
   private scene = '';
   private mood = '';
@@ -39,6 +42,13 @@ export class PhotoOverlays {
     this.level.style.setProperty('--mp-roll', `${p.roll}deg`);
     this.level.classList.toggle('is-level', Math.abs(p.roll) < 0.5);
     this.meta.hidden = !p.metadataOverlay;
-    this.meta.textContent = [this.scene, this.mood, formatFocal(p.focalLength), formatAperture(p.aperture)].filter(Boolean).join('  ·  ');
+    this.meta.textContent = [
+      this.scene,
+      this.mood,
+      formatFocal(p.focalLength),
+      formatAperture(p.aperture),
+    ]
+      .filter(Boolean)
+      .join('  ·  ');
   }
 }

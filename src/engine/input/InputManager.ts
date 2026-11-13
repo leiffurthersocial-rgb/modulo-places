@@ -97,7 +97,12 @@ export class InputManager {
   private hudVisible = false;
   private disposed = false;
 
-  constructor(opts: { element: HTMLElement; hudRoot: HTMLElement; settings: SettingsStore; events: EventBus }) {
+  constructor(opts: {
+    element: HTMLElement;
+    hudRoot: HTMLElement;
+    settings: SettingsStore;
+    events: EventBus;
+  }) {
     this.element = opts.element;
     this.hudRoot = opts.hudRoot;
     this.settings = opts.settings;
@@ -136,7 +141,12 @@ export class InputManager {
       this.touchCrouch = !this.touchCrouch;
       this.crouchBtn.classList.toggle('tc-active', this.touchCrouch);
     });
-    const capture = this.pressButton('Capture', 'Take photo', 'capture', 'tc-btn-capture tc-photo-only');
+    const capture = this.pressButton(
+      'Capture',
+      'Take photo',
+      'capture',
+      'tc-btn-capture tc-photo-only',
+    );
     const up = this.holdButton('Up', 'Move up', 'up');
     const down = this.holdButton('Down', 'Move down', 'down');
     bottom.append(this.crouchBtn, capture, up, down);
@@ -263,8 +273,18 @@ export class InputManager {
     fn: (e: HTMLElementEventMap[K]) => void,
     opts?: AddEventListenerOptions,
   ): void;
-  private on(target: EventTarget, type: string, fn: (e: never) => void, opts?: AddEventListenerOptions): void;
-  private on(target: EventTarget, type: string, fn: (e: never) => void, opts?: AddEventListenerOptions): void {
+  private on(
+    target: EventTarget,
+    type: string,
+    fn: (e: never) => void,
+    opts?: AddEventListenerOptions,
+  ): void;
+  private on(
+    target: EventTarget,
+    type: string,
+    fn: (e: never) => void,
+    opts?: AddEventListenerOptions,
+  ): void {
     target.addEventListener(type, fn as EventListener, opts);
     this.removers.push(() => target.removeEventListener(type, fn as EventListener, opts));
   }
@@ -299,7 +319,12 @@ export class InputManager {
     return b;
   }
 
-  private pressButton(label: string, aria: string, action: Action, extraClass = ''): HTMLButtonElement {
+  private pressButton(
+    label: string,
+    aria: string,
+    action: Action,
+    extraClass = '',
+  ): HTMLButtonElement {
     const b = this.makeButton(label, aria, extraClass);
     this.on(b, 'pointerdown', (e) => {
       e.preventDefault();
@@ -377,7 +402,9 @@ export class InputManager {
 
   private emitTap(clientX: number, clientY: number): void {
     if (this._mode === 'ui' || this.tapCbs.size === 0) return;
-    const n = this.pointerLocked ? { x: 0, y: 0 } : toNdc(clientX, clientY, this.element.getBoundingClientRect());
+    const n = this.pointerLocked
+      ? { x: 0, y: 0 }
+      : toNdc(clientX, clientY, this.element.getBoundingClientRect());
     for (const cb of [...this.tapCbs]) cb(n.x, n.y);
   }
 
@@ -391,7 +418,13 @@ export class InputManager {
   private static isEditableTarget(t: EventTarget | null): boolean {
     if (!(t instanceof HTMLElement)) return false;
     const tag = t.tagName;
-    return tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA' || tag === 'BUTTON' || t.isContentEditable;
+    return (
+      tag === 'INPUT' ||
+      tag === 'SELECT' ||
+      tag === 'TEXTAREA' ||
+      tag === 'BUTTON' ||
+      t.isContentEditable
+    );
   }
 
   // ------------------------------------------------------------------------------------------
@@ -480,7 +513,12 @@ export class InputManager {
     this.on(el, 'pointerdown', (e: PointerEvent) => {
       if (this._mode === 'ui') return;
       if (e.pointerType === 'mouse' && e.button !== 0) return;
-      this.canvasPtr.set(e.pointerId, { x: e.clientX, y: e.clientY, t: performance.now(), dist: 0 });
+      this.canvasPtr.set(e.pointerId, {
+        x: e.clientX,
+        y: e.clientY,
+        t: performance.now(),
+        dist: 0,
+      });
       const wantsLock = e.pointerType === 'mouse' && this.lockSupported && !this.lockFailed;
       if (wantsLock) {
         if (!this.pointerLocked) {
@@ -505,7 +543,8 @@ export class InputManager {
     });
     this.on(el, 'pointermove', (e: PointerEvent) => {
       const track = this.canvasPtr.get(e.pointerId);
-      if (track) track.dist = Math.max(track.dist, Math.hypot(e.clientX - track.x, e.clientY - track.y));
+      if (track)
+        track.dist = Math.max(track.dist, Math.hypot(e.clientX - track.x, e.clientY - track.y));
       if (this.dragId !== e.pointerId || this._mode === 'ui' || this.pointerLocked) return;
       const dx = clampSpike(e.clientX - this.dragLast.x);
       const dy = clampSpike(e.clientY - this.dragLast.y);
@@ -516,7 +555,8 @@ export class InputManager {
       const track = this.canvasPtr.get(e.pointerId);
       this.canvasPtr.delete(e.pointerId);
       if (this.dragId === e.pointerId) this.dragId = null;
-      if (track && !cancelled && isTap(track.dist, performance.now() - track.t)) this.emitTap(e.clientX, e.clientY);
+      if (track && !cancelled && isTap(track.dist, performance.now() - track.t))
+        this.emitTap(e.clientX, e.clientY);
     };
     this.on(el, 'pointerup', (e: PointerEvent) => end(e, false));
     this.on(el, 'pointercancel', (e: PointerEvent) => end(e, true));
@@ -529,7 +569,11 @@ export class InputManager {
         e.preventDefault();
         if (this.pointerLocked) return;
         const k = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? 400 : 1;
-        this.addLook(clampSpike(e.deltaX * k, 2000), clampSpike(e.deltaY * k, 2000), WHEEL_RAD_PER_UNIT);
+        this.addLook(
+          clampSpike(e.deltaX * k, 2000),
+          clampSpike(e.deltaY * k, 2000),
+          WHEEL_RAD_PER_UNIT,
+        );
       },
       { passive: false },
     );
@@ -615,7 +659,8 @@ export class InputManager {
       const t = this.lookTrack;
       this.lookId = null;
       this.lookTrack = null;
-      if (t && !cancelled && isTap(t.dist, performance.now() - t.t)) this.emitTap(e.clientX, e.clientY);
+      if (t && !cancelled && isTap(t.dist, performance.now() - t.t))
+        this.emitTap(e.clientX, e.clientY);
     };
     this.on(zr, 'pointerup', (e: PointerEvent) => lookEnd(e, false));
     this.on(zr, 'pointercancel', (e: PointerEvent) => lookEnd(e, true));

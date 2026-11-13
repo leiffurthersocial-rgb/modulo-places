@@ -22,7 +22,14 @@ export interface ScatterOptions {
   radius?: number;
 }
 
-function maskValue(m: MaskDef, x: number, z: number, hf: Heightfield, noise: Noise2D, opts: ScatterOptions): number {
+function maskValue(
+  m: MaskDef,
+  x: number,
+  z: number,
+  hf: Heightfield,
+  noise: Noise2D,
+  opts: ScatterOptions,
+): number {
   const soft = (m as { soft?: number }).soft ?? 0;
   const band = (v: number, lo?: number, hi?: number) => {
     let w = 1;
@@ -36,8 +43,13 @@ function maskValue(m: MaskDef, x: number, z: number, hf: Heightfield, noise: Noi
     case 'height':
       return band(sampleHeight(hf, x, z), m.min, m.max);
     case 'noise': {
-      const v = noise.fbm(x * m.frequency + (m.seedOffset ?? 0) * 13.1, z * m.frequency, 3) * 0.5 + 0.5;
-      return soft > 0 ? smoothstep(m.threshold - soft, m.threshold + soft, v) : v >= m.threshold ? 1 : 0;
+      const v =
+        noise.fbm(x * m.frequency + (m.seedOffset ?? 0) * 13.1, z * m.frequency, 3) * 0.5 + 0.5;
+      return soft > 0
+        ? smoothstep(m.threshold - soft, m.threshold + soft, v)
+        : v >= m.threshold
+          ? 1
+          : 0;
     }
     case 'exclude': {
       const d = Math.hypot(x - m.x, z - m.z);
@@ -53,7 +65,11 @@ function maskValue(m: MaskDef, x: number, z: number, hf: Heightfield, noise: Noi
  * give blue-noise-like spacing at a fraction of Bridson's cost, and the result depends only on
  * (seed, rule id, heightfield), never on iteration order of other rules.
  */
-export function scatterRule(rule: ScatterRuleDef, hf: Heightfield, opts: ScatterOptions): ScatterResult {
+export function scatterRule(
+  rule: ScatterRuleDef,
+  hf: Heightfield,
+  opts: ScatterOptions,
+): ScatterResult {
   const ruleSeed = hashSeed(opts.seed, 'scatter', rule.id);
   const rng = new Rng(ruleSeed);
   const noise = new Noise2D(ruleSeed ^ 0xa511e9b3);
@@ -92,7 +108,9 @@ export function scatterRule(rule: ScatterRuleDef, hf: Heightfield, opts: Scatter
         if (p <= 0) break;
       }
       if (p > 0 && rule.cluster) {
-        const c = noise.fbm(x * rule.cluster.frequency + 71.3, z * rule.cluster.frequency - 3.7, 3) * 0.5 + 0.5;
+        const c =
+          noise.fbm(x * rule.cluster.frequency + 71.3, z * rule.cluster.frequency - 3.7, 3) * 0.5 +
+          0.5;
         p *= 1 - rule.cluster.strength + rule.cluster.strength * smoothstep(0.35, 0.75, c) * 2;
       }
       if (pick >= p) continue;
@@ -141,6 +159,10 @@ export function scatterRule(rule: ScatterRuleDef, hf: Heightfield, opts: Scatter
   return { rule, count: out.length / STRIDE, data: new Float32Array(out) };
 }
 
-export function scatterAll(rules: ScatterRuleDef[], hf: Heightfield, opts: ScatterOptions): ScatterResult[] {
+export function scatterAll(
+  rules: ScatterRuleDef[],
+  hf: Heightfield,
+  opts: ScatterOptions,
+): ScatterResult[] {
   return rules.map((r) => scatterRule(r, hf, opts));
 }

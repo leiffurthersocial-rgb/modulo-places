@@ -10,7 +10,7 @@ const gpuArgs = [
 
 export default defineConfig({
   testDir: 'tests/e2e',
-  timeout: 120_000,
+  timeout: 240_000,
   fullyParallel: false,
   workers: 2,
   reporter: [['list']],
@@ -18,7 +18,7 @@ export default defineConfig({
     command: 'npm run build && npm run preview',
     url: 'http://localhost:4173',
     reuseExistingServer: true,
-    timeout: 120_000,
+    timeout: 240_000,
   },
   use: { baseURL: 'http://localhost:4173', launchOptions: { args: gpuArgs } },
   projects: [

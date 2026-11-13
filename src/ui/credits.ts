@@ -14,7 +14,13 @@ export const CREDITS: CreditEntry[] = [
     license: 'Zlib',
     url: 'https://github.com/pmndrs/postprocessing',
   },
-  { name: 'Rapier', role: 'Physics and collision', license: 'Apache-2.0', url: 'https://rapier.rs' },
+  {
+    name: 'Rapier',
+    role: 'Physics and collision',
+    license: 'Apache-2.0',
+    url: 'https://rapier.rs',
+  },
 ];
 
-export const CREDITS_NOTE = 'Assets: procedural placeholders (Phase 1). Asset credits will appear here.';
+export const CREDITS_NOTE =
+  'Assets: procedural placeholders (Phase 1). Asset credits will appear here.';

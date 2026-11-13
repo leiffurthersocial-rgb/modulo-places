@@ -43,8 +43,27 @@ export class PhotoPanel {
       this.controls.push(c);
       parent.append(c.el);
     };
-    const num = (parent: HTMLElement, label: string, key: NumKey, min: number, max: number, step: number, fmt: (v: number) => string): void =>
-      add(parent, slider({ label, min, max, step, get: () => params()[key], set: (v) => set({ [key]: v }), format: fmt }));
+    const num = (
+      parent: HTMLElement,
+      label: string,
+      key: NumKey,
+      min: number,
+      max: number,
+      step: number,
+      fmt: (v: number) => string,
+    ): void =>
+      add(
+        parent,
+        slider({
+          label,
+          min,
+          max,
+          step,
+          get: () => params()[key],
+          set: (v) => set({ [key]: v }),
+          format: fmt,
+        }),
+      );
     const flag = (parent: HTMLElement, label: string, key: BoolKey): void =>
       add(parent, toggle({ label, get: () => params()[key], set: (v) => set({ [key]: v }) }));
     const group = (title: string): HTMLElement => {
@@ -53,13 +72,56 @@ export class PhotoPanel {
       return g;
     };
 
-    this.body.append(el('p', 'mp-hint-line', {}, ['WASD/QE fly · drag to look · click Pick focus then tap subject']));
+    this.body.append(
+      el('p', 'mp-hint-line', {}, [
+        'WASD/QE fly · drag to look · click Pick focus then tap subject',
+      ]),
+    );
 
     const lens = group('Lens');
-    add(lens, slider({ label: 'Focal length', min: 0, max: 1, step: 0.001, get: () => params().focalLength, set: (v) => set({ focalLength: v }), format: formatFocal, toSlider: focalToSlider, fromSlider: focalFromSlider }));
-    add(lens, slider({ label: 'Aperture', min: 0, max: APERTURE_STEPS, step: 1, get: () => params().aperture, set: (v) => set({ aperture: v }), format: formatAperture, toSlider: apertureToIndex, fromSlider: apertureFromIndex }));
+    add(
+      lens,
+      slider({
+        label: 'Focal length',
+        min: 0,
+        max: 1,
+        step: 0.001,
+        get: () => params().focalLength,
+        set: (v) => set({ focalLength: v }),
+        format: formatFocal,
+        toSlider: focalToSlider,
+        fromSlider: focalFromSlider,
+      }),
+    );
+    add(
+      lens,
+      slider({
+        label: 'Aperture',
+        min: 0,
+        max: APERTURE_STEPS,
+        step: 1,
+        get: () => params().aperture,
+        set: (v) => set({ aperture: v }),
+        format: formatAperture,
+        toSlider: apertureToIndex,
+        fromSlider: apertureFromIndex,
+      }),
+    );
     flag(lens, 'Depth of field', 'dof');
-    add(lens, slider({ label: 'Focus distance', min: 0, max: 1, step: 0.001, get: () => clampFocus(params().focusDistance), set: (v) => set({ focusDistance: v }), format: formatDistance, toSlider: focusToSlider, fromSlider: focusFromSlider }));
+    add(
+      lens,
+      slider({
+        label: 'Focus distance',
+        min: 0,
+        max: 1,
+        step: 0.001,
+        get: () => clampFocus(params().focusDistance),
+        set: (v) => set({ focusDistance: v }),
+        format: formatDistance,
+        toSlider: focusToSlider,
+        fromSlider: focusFromSlider,
+      }),
+    );
     lens.append(el('div', 'mp-actions', {}, [button('Pick focus', '', () => a.armFocusPick())]));
     num(lens, 'Roll', 'roll', -45, 45, 0.5, formatDegrees);
 
@@ -73,7 +135,10 @@ export class PhotoPanel {
       light,
       chips({
         label: 'Film look',
-        options: (Object.keys(FILM_LOOK_LABELS) as FilmLook[]).map((k) => ({ value: k, label: FILM_LOOK_LABELS[k] })),
+        options: (Object.keys(FILM_LOOK_LABELS) as FilmLook[]).map((k) => ({
+          value: k,
+          label: FILM_LOOK_LABELS[k],
+        })),
         get: () => params().look,
         set: (v) => set({ look: v as FilmLook }),
       }),
@@ -100,13 +165,24 @@ export class PhotoPanel {
       }),
       this.captureRow,
     ]);
-    this.head = el('button', 'mp-photo-head', { type: 'button', 'aria-expanded': 'true', 'aria-controls': 'mp-photo-body' }, [
-      el('span', 'mp-h2', {}, ['Photo mode']),
-      el('span', 'mp-chevron', { 'aria-hidden': 'true' }),
-    ]);
+    this.head = el(
+      'button',
+      'mp-photo-head',
+      { type: 'button', 'aria-expanded': 'true', 'aria-controls': 'mp-photo-body' },
+      [
+        el('span', 'mp-h2', {}, ['Photo mode']),
+        el('span', 'mp-chevron', { 'aria-hidden': 'true' }),
+      ],
+    );
     this.body.id = 'mp-photo-body';
-    this.head.addEventListener('click', () => this.setCollapsed(this.root.classList.toggle('is-collapsed') ? true : false));
-    this.root = el('aside', 'mp-photo', { hidden: '', 'aria-label': 'Photo controls' }, [this.head, this.body, footer]);
+    this.head.addEventListener('click', () =>
+      this.setCollapsed(this.root.classList.toggle('is-collapsed') ? true : false),
+    );
+    this.root = el('aside', 'mp-photo', { hidden: '', 'aria-label': 'Photo controls' }, [
+      this.head,
+      this.body,
+      footer,
+    ]);
     this.buildCaptureButtons();
   }
 

@@ -23,13 +23,18 @@ export const DEFAULT_BINDINGS: KeyBindings = {
 };
 
 export function isTouchDevice(): boolean {
-  return typeof window !== 'undefined' && (navigator.maxTouchPoints > 0 || 'ontouchstart' in window);
+  return (
+    typeof window !== 'undefined' && (navigator.maxTouchPoints > 0 || 'ontouchstart' in window)
+  );
 }
 
 /** iPad Safari reports itself as Macintosh; touch points disambiguate. */
 export function isLikelyIPad(): boolean {
   if (typeof navigator === 'undefined') return false;
-  return /iPad/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+  return (
+    /iPad/.test(navigator.userAgent) ||
+    (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1)
+  );
 }
 
 export function defaultSettings(): UserSettings {

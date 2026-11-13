@@ -488,7 +488,7 @@ body.ui-hidden .mp-ui {
   height: 100dvh;
 }
 .mp-main-inner {
-  max-width: 70em;
+  max-width: 76em;
   min-height: 100%;
   margin: 0 auto;
   display: flex;
@@ -503,7 +503,7 @@ body.ui-hidden .mp-ui {
 }
 .mp-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(18em, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(14.5em, 100%), 1fr));
   gap: 1.25em;
   flex: 1;
   align-content: start;

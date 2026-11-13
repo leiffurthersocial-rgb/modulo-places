@@ -34,7 +34,11 @@ export function slider(o: SliderOpts): Control {
     step: String(o.step),
   });
   const out = el('output', 'mp-value', { for: id });
-  const row = el('div', 'mp-row mp-row-slider', {}, [el('label', 'mp-label', { for: id }, [o.label]), out, input]);
+  const row = el('div', 'mp-row mp-row-slider', {}, [
+    el('label', 'mp-label', { for: id }, [o.label]),
+    out,
+    input,
+  ]);
   const toS = o.toSlider ?? ((v: number) => v);
   const fromS = o.fromSlider ?? ((v: number) => v);
   input.addEventListener('input', () => {
@@ -63,7 +67,10 @@ export interface ToggleOpts {
 export function toggle(o: ToggleOpts): Control {
   const id = nextId();
   const input = el('input', 'mp-switch', { type: 'checkbox', role: 'switch', id });
-  const row = el('div', 'mp-row mp-row-toggle', {}, [el('label', 'mp-label', { for: id }, [o.label]), input]);
+  const row = el('div', 'mp-row mp-row-toggle', {}, [
+    el('label', 'mp-label', { for: id }, [o.label]),
+    input,
+  ]);
   input.addEventListener('change', () => o.set(input.checked));
   const sync = (): void => {
     input.checked = o.get();
@@ -86,7 +93,10 @@ export function select(o: SelectOpts): Control {
   const id = nextId();
   const input = el('select', 'mp-select', { id });
   for (const opt of o.options) input.append(el('option', '', { value: opt.value }, [opt.label]));
-  const row = el('div', 'mp-row mp-row-select', {}, [el('label', 'mp-label', { for: id }, [o.label]), input]);
+  const row = el('div', 'mp-row mp-row-select', {}, [
+    el('label', 'mp-label', { for: id }, [o.label]),
+    input,
+  ]);
   input.addEventListener('change', () => o.set(input.value));
   const sync = (): void => {
     input.value = o.get();
