@@ -541,6 +541,30 @@
     "key": "polyhaven:dark_autumn_forest",
     "fetchedAt": "2026-11-13"
   },
+  "polyhaven:dead_tree_trunk": {
+    "source": "polyhaven",
+    "id": "dead_tree_trunk",
+    "name": "Dead Tree Trunk",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/dead_tree_trunk",
+    "key": "polyhaven:dead_tree_trunk",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:dry_branches_medium_01": {
+    "source": "polyhaven",
+    "id": "dry_branches_medium_01",
+    "name": "Dry Branches Medium 01",
+    "authors": [
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/dry_branches_medium_01",
+    "key": "polyhaven:dry_branches_medium_01",
+    "fetchedAt": "2026-11-13"
+  },
   "polyhaven:dry_river_pebbles": {
     "source": "polyhaven",
     "id": "dry_river_pebbles",
@@ -575,6 +599,32 @@
     "license": "CC0-1.0",
     "url": "https://polyhaven.com/a/epping_forest_02",
     "key": "polyhaven:epping_forest_02",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:fern_02": {
+    "source": "polyhaven",
+    "id": "fern_02",
+    "name": "Fern 02",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/fern_02",
+    "key": "polyhaven:fern_02",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:fir_sapling": {
+    "source": "polyhaven",
+    "id": "fir_sapling",
+    "name": "Fir Sapling",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/fir_sapling",
+    "key": "polyhaven:fir_sapling",
     "fetchedAt": "2026-11-13"
   },
   "polyhaven:fir_tree_01": {
@@ -723,6 +773,19 @@
     "license": "CC0-1.0",
     "url": "https://polyhaven.com/a/golf_course_sunrise",
     "key": "polyhaven:golf_course_sunrise",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:grass_medium_01": {
+    "source": "polyhaven",
+    "id": "grass_medium_01",
+    "name": "Grass Medium 01",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/grass_medium_01",
+    "key": "polyhaven:grass_medium_01",
     "fetchedAt": "2026-11-13"
   },
   "polyhaven:green_sanctuary": {
@@ -907,6 +970,18 @@
     "key": "polyhaven:monks_forest",
     "fetchedAt": "2026-11-13"
   },
+  "polyhaven:moss_01": {
+    "source": "polyhaven",
+    "id": "moss_01",
+    "name": "Moss 01",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/moss_01",
+    "key": "polyhaven:moss_01",
+    "fetchedAt": "2026-11-13"
+  },
   "polyhaven:mossy_forest": {
     "source": "polyhaven",
     "id": "mossy_forest",
@@ -942,6 +1017,19 @@
     "license": "CC0-1.0",
     "url": "https://polyhaven.com/a/nature_reserve_forest",
     "key": "polyhaven:nature_reserve_forest",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:nettle_plant": {
+    "source": "polyhaven",
+    "id": "nettle_plant",
+    "name": "Nettle Plant",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/nettle_plant",
+    "key": "polyhaven:nettle_plant",
     "fetchedAt": "2026-11-13"
   },
   "polyhaven:niederwihl_forest": {
@@ -991,6 +1079,44 @@
     "license": "CC0-1.0",
     "url": "https://polyhaven.com/a/pine_bark",
     "key": "polyhaven:pine_bark",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:pine_roots": {
+    "source": "polyhaven",
+    "id": "pine_roots",
+    "name": "Pine Roots",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/pine_roots",
+    "key": "polyhaven:pine_roots",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:pine_sapling_small": {
+    "source": "polyhaven",
+    "id": "pine_sapling_small",
+    "name": "Pine Sapling Small",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/pine_sapling_small",
+    "key": "polyhaven:pine_sapling_small",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:pine_tree_01": {
+    "source": "polyhaven",
+    "id": "pine_tree_01",
+    "name": "Pine Tree 01",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/pine_tree_01",
+    "key": "polyhaven:pine_tree_01",
     "fetchedAt": "2026-11-13"
   },
   "polyhaven:raked_dirt": {
@@ -1043,6 +1169,30 @@
     "key": "polyhaven:river_walk_2",
     "fetchedAt": "2026-11-13"
   },
+  "polyhaven:rock_07": {
+    "source": "polyhaven",
+    "id": "rock_07",
+    "name": "Rock 07",
+    "authors": [
+      "Jenelle van Heerden"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/rock_07",
+    "key": "polyhaven:rock_07",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:rock_09": {
+    "source": "polyhaven",
+    "id": "rock_09",
+    "name": "Rock 09",
+    "authors": [
+      "Jenelle van Heerden"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/rock_09",
+    "key": "polyhaven:rock_09",
+    "fetchedAt": "2026-11-13"
+  },
   "polyhaven:rock_boulder_dry": {
     "source": "polyhaven",
     "id": "rock_boulder_dry",
@@ -1054,6 +1204,42 @@
     "license": "CC0-1.0",
     "url": "https://polyhaven.com/a/rock_boulder_dry",
     "key": "polyhaven:rock_boulder_dry",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:rock_face_01": {
+    "source": "polyhaven",
+    "id": "rock_face_01",
+    "name": "Rock Face 01",
+    "authors": [
+      "Dario Barresi"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/rock_face_01",
+    "key": "polyhaven:rock_face_01",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:rock_moss_set_01": {
+    "source": "polyhaven",
+    "id": "rock_moss_set_01",
+    "name": "Rock Moss Set 01",
+    "authors": [
+      "Kless Gyzen"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/rock_moss_set_01",
+    "key": "polyhaven:rock_moss_set_01",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:rock_moss_set_02": {
+    "source": "polyhaven",
+    "id": "rock_moss_set_02",
+    "name": "Rock Moss Set 02",
+    "authors": [
+      "Kless Gyzen"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/rock_moss_set_02",
+    "key": "polyhaven:rock_moss_set_02",
     "fetchedAt": "2026-11-13"
   },
   "polyhaven:rock_path": {
@@ -1117,6 +1303,30 @@
     "key": "polyhaven:shady_patch",
     "fetchedAt": "2026-11-13"
   },
+  "polyhaven:shrub_02": {
+    "source": "polyhaven",
+    "id": "shrub_02",
+    "name": "Shrub 02",
+    "authors": [
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/shrub_02",
+    "key": "polyhaven:shrub_02",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:shrub_03": {
+    "source": "polyhaven",
+    "id": "shrub_03",
+    "name": "Shrub 03",
+    "authors": [
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/shrub_03",
+    "key": "polyhaven:shrub_03",
+    "fetchedAt": "2026-11-13"
+  },
   "polyhaven:spruit_dawn": {
     "source": "polyhaven",
     "id": "spruit_dawn",
@@ -1177,6 +1387,42 @@
     "key": "polyhaven:tree_bark_03",
     "fetchedAt": "2026-11-13"
   },
+  "polyhaven:tree_small_02": {
+    "source": "polyhaven",
+    "id": "tree_small_02",
+    "name": "Tree Small 02",
+    "authors": [
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/tree_small_02",
+    "key": "polyhaven:tree_small_02",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:tree_stump_01": {
+    "source": "polyhaven",
+    "id": "tree_stump_01",
+    "name": "Tree Stump 01",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/tree_stump_01",
+    "key": "polyhaven:tree_stump_01",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:tree_stump_02": {
+    "source": "polyhaven",
+    "id": "tree_stump_02",
+    "name": "Tree Stump 02",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/tree_stump_02",
+    "key": "polyhaven:tree_stump_02",
+    "fetchedAt": "2026-11-13"
+  },
   "polyhaven:treetop_balcony": {
     "source": "polyhaven",
     "id": "treetop_balcony",
@@ -1188,6 +1434,19 @@
     "license": "CC0-1.0",
     "url": "https://polyhaven.com/a/treetop_balcony",
     "key": "polyhaven:treetop_balcony",
+    "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:weed_plant_02": {
+    "source": "polyhaven",
+    "id": "weed_plant_02",
+    "name": "Weed Plant 02",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/weed_plant_02",
+    "key": "polyhaven:weed_plant_02",
     "fetchedAt": "2026-11-13"
   },
   "polyhaven:xanderklinge": {
