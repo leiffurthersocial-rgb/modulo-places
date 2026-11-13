@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { PRESET_ORDER } from '../../data/quality-presets';
 import { SCENES } from '../../scenes';
 import { UI } from '../../ui/UI';
-import { DebugOverlay, FrameTimer } from '../debug/DebugOverlay';
+import { DebugOverlay, estimateMemory, FrameTimer } from '../debug/DebugOverlay';
 import { InputManager } from '../input/InputManager';
 import { capture, PhotoMode } from '../photo/PhotoMode';
 import { dofFromLens, maxCaptureScale } from '../photo/lens';
@@ -578,6 +578,10 @@ export class App {
       visibleInstances: rt.scatter.stats.visibleInstances,
       geometries: info.memory.geometries,
       textures: info.memory.textures,
+      memoryMB: Object.fromEntries(
+        Object.entries(estimateMemory(this.scene)).map(([k, v]) => [k, +(v / 1048576).toFixed(1)]),
+      ),
+      buffer: this.pipeline.bufferSize,
     };
     window.__shotReady = true;
   }
