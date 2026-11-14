@@ -41,7 +41,7 @@ export function generateHeightfield(def: TerrainDef, seed: number): Heightfield 
       h += 0.35 * n.noise(x * 0.35, z * 0.35) + 0.08 * n.noise(x * 1.7, z * 1.7);
       // Rise toward the edges: a natural bowl so the soft boundary sits against slopes.
       const r = Math.hypot(x, z) / (size / 2);
-      h += def.height * 0.9 * smoothstep(0.62, 1.0, r) ** 1.5;
+      h += def.height * 0.55 * smoothstep(0.7, 1.0, r) ** 1.5;
       for (const fl of def.flatten ?? []) {
         const d = Math.hypot(x - fl.x, z - fl.z);
         const w = 1 - smoothstep(fl.radius * 0.5, fl.radius, d);
