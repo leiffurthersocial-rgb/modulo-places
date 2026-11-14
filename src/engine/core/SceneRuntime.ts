@@ -94,6 +94,7 @@ export class SceneRuntime {
               createTriplanarMaterial(key, maps, {
                 scale: mo.scale,
                 tint: mo.tint,
+                brightness: mo.brightness,
                 roughness: mo.roughness,
                 side: mo.doubleSided ? THREE.DoubleSide : THREE.FrontSide,
                 snow: (d.snowCover ?? 0) > 0,

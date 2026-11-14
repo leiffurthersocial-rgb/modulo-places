@@ -14,6 +14,8 @@ export interface TriplanarOptions {
   scale: number;
   /** Multiplies the albedo (sRGB hex), e.g. to warm or darken a texture. */
   tint?: string;
+  /** Albedo multiplier (> 1 brightens; tint alone can only darken). */
+  brightness?: number;
   /** Multiplies roughness from the ARM map. */
   roughness?: number;
   side?: THREE.Side;
@@ -81,7 +83,7 @@ export function createTriplanarMaterial(
     tTriA: { value: maps.armMap },
     uTriScale: { value: 1 / o.scale },
     uTriSharp: { value: o.sharpness ?? 6 },
-    uTriTint: { value: new THREE.Color(o.tint ?? '#ffffff') },
+    uTriTint: { value: new THREE.Color(o.tint ?? '#ffffff').multiplyScalar(o.brightness ?? 1) },
     uTriRough: { value: o.roughness ?? 1 },
   };
   mat.onBeforeCompile = (shader) => {

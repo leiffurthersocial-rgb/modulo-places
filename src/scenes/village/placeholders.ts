@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { mergeVertices } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { Noise2D } from '../../engine/core/random';
 import { patchMaterial } from '../../engine/render/materials';
+import { sceneMaterial } from '../../engine/render/sceneMaterials';
 import { registerPlaceholder, type Species, type SpeciesPart } from '../../engine/scatter/species';
 
 // ---------------------------------------------------------------------------------------------
@@ -88,11 +89,18 @@ const P = {
 // Mesh builder: positions + normals + vertex colours + indices
 // ---------------------------------------------------------------------------------------------
 
+/** Surface material class of a triangle (library PBR materials, or `main` = vertex-coloured fallback). */
+type Tag = 'main' | 'plaster' | 'wood' | 'roof' | 'stone' | 'rock' | 'gravel';
+
 class MB {
   p: number[] = [];
   n: number[] = [];
   c: number[] = [];
   i: number[] = [];
+  /** Material tag per triangle (parallel to `i`). */
+  tg: Tag[] = [];
+  /** Tag applied to triangles emitted from now on. */
+  tag: Tag = 'main';
   rnd: () => number;
   constructor(seed = 1) {
     this.rnd = prng(seed * 7919 + 13);
@@ -102,6 +110,10 @@ class MB {
   }
   get empty(): boolean {
     return this.i.length === 0;
+  }
+  private pushTris(...idx: number[]): void {
+    for (const k of idx) this.i.push(k);
+    for (let t = 0; t < idx.length; t += 3) this.tg.push(this.tag);
   }
   v(p: V3, n: V3, c: RGB): number {
     const k = this.p.length / 3;
@@ -129,7 +141,7 @@ class MB {
     this.v(q[1], n, cols[1]!);
     this.v(q[2], n, cols[2]!);
     this.v(q[3], n, cols[3]!);
-    this.i.push(k, k + 1, k + 2, k, k + 2, k + 3);
+    this.pushTris(k, k + 1, k + 2, k, k + 2, k + 3);
   }
   tri(a: V3, b: V3, c: V3, col: RGB, hint?: V3): void {
     let n = cross(sub(b, a), sub(c, a));
@@ -144,7 +156,7 @@ class MB {
     const k = this.v(q[0], n, col);
     this.v(q[1], n, col);
     this.v(q[2], n, col);
-    this.i.push(k, k + 1, k + 2);
+    this.pushTris(k, k + 1, k + 2);
   }
   /** Smooth-shaded quad with explicit per-vertex normals (winding follows the average normal). */
   sq(ps: [V3, V3, V3, V3], ns: [V3, V3, V3, V3], cols: [RGB, RGB, RGB, RGB]): void {
@@ -154,7 +166,7 @@ class MB {
     const order = dot(n, navg) >= 0 ? [0, 1, 2, 3] : [0, 3, 2, 1];
     const k = this.p.length / 3;
     for (const o of order) this.v(ps[o]!, ns[o]!, cols[o]!);
-    this.i.push(k, k + 1, k + 2, k, k + 2, k + 3);
+    this.pushTris(k, k + 1, k + 2, k, k + 2, k + 3);
   }
   /** Axis-aligned box. `skip` bits: 1 +x, 2 -x, 4 +y, 8 -y, 16 +z, 32 -z. */
   box(
@@ -319,18 +331,55 @@ class MB {
         c,
       );
     }
-    for (let i = 0; i < idx.count; i++) this.i.push(base + idx.getX(i));
+    for (let i = 0; i < idx.count; i += 3)
+      this.pushTris(base + idx.getX(i), base + idx.getX(i + 1), base + idx.getX(i + 2));
     g.dispose();
   }
   geo(): THREE.BufferGeometry {
+    return this.build(this.i);
+  }
+  /** One geometry per material tag (vertices compacted per group). Untagged builders yield `main` only. */
+  split(): Map<Tag, THREE.BufferGeometry> {
+    const out = new Map<Tag, THREE.BufferGeometry>();
+    if (this.tg.length * 3 !== this.i.length) {
+      if (!this.empty) out.set('main', this.build(this.i));
+      return out;
+    }
+    const groups = new Map<Tag, number[]>();
+    for (let t = 0; t < this.tg.length; t++) {
+      const tag = this.tg[t]!;
+      let arr = groups.get(tag);
+      if (!arr) groups.set(tag, (arr = []));
+      arr.push(this.i[t * 3]!, this.i[t * 3 + 1]!, this.i[t * 3 + 2]!);
+    }
+    for (const [tag, idx] of groups) out.set(tag, this.build(idx));
+    return out;
+  }
+  private build(idx: number[]): THREE.BufferGeometry {
+    const remap = new Map<number, number>();
+    const p: number[] = [];
+    const n: number[] = [];
+    const c: number[] = [];
+    const ii: number[] = [];
+    for (const o of idx) {
+      let k = remap.get(o);
+      if (k === undefined) {
+        k = p.length / 3;
+        remap.set(o, k);
+        p.push(this.p[o * 3]!, this.p[o * 3 + 1]!, this.p[o * 3 + 2]!);
+        n.push(this.n[o * 3]!, this.n[o * 3 + 1]!, this.n[o * 3 + 2]!);
+        c.push(this.c[o * 3]!, this.c[o * 3 + 1]!, this.c[o * 3 + 2]!);
+      }
+      ii.push(k);
+    }
     const g = new THREE.BufferGeometry();
-    g.setAttribute('position', new THREE.Float32BufferAttribute(this.p, 3));
-    g.setAttribute('normal', new THREE.Float32BufferAttribute(this.n, 3));
-    g.setAttribute('color', new THREE.Float32BufferAttribute(this.c, 3));
+    g.setAttribute('position', new THREE.Float32BufferAttribute(p, 3));
+    g.setAttribute('normal', new THREE.Float32BufferAttribute(n, 3));
+    g.setAttribute('color', new THREE.Float32BufferAttribute(c, 3));
     g.setIndex(
-      this.p.length / 3 > 65535
-        ? new THREE.Uint32BufferAttribute(this.i, 1)
-        : new THREE.Uint16BufferAttribute(this.i, 1),
+      p.length / 3 > 65535
+        ? new THREE.Uint32BufferAttribute(ii, 1)
+        : new THREE.Uint16BufferAttribute(ii, 1),
     );
     g.computeBoundingSphere();
     return g;
@@ -342,6 +391,14 @@ class MB {
 // ---------------------------------------------------------------------------------------------
 
 type Mat = 'main' | 'glow' | 'water' | 'leaf';
+const LIB_KEY: Record<Exclude<Tag, 'main'>, string> = {
+  plaster: 'village/plaster',
+  wood: 'village/wood-planks',
+  roof: 'village/roof-tiles',
+  stone: 'village/stone-paving',
+  rock: 'forest/rock',
+  gravel: 'village/gravel-path',
+};
 interface Built {
   mb: MB;
   mat: Mat;
@@ -409,18 +466,26 @@ function finish(key: string, cfg: Cfg, variants: Built[][][]): Species {
     owned.push(mat);
     return mat;
   };
+  // Library (triplanar PBR) materials are owned by the scene runtime: never added to `owned`.
+  const tagMat = (t: Tag): THREE.Material =>
+    t === 'main' ? matFor('main') : sceneMaterial(LIB_KEY[t], matFor('main'));
   const out: SpeciesPart[][][] = variants.map((lods) =>
     lods.map((parts) =>
       parts
         .filter((b) => !b.mb.empty)
-        .map((b) => {
-          const geometry = b.mb.geo();
-          owned.push(geometry);
-          return {
-            geometry,
-            material: matFor(b.mat),
-            castShadow: b.shadow ?? (b.mat !== 'glow' && b.mat !== 'water'),
-          };
+        .flatMap((b): SpeciesPart[] => {
+          const castShadow = b.shadow ?? (b.mat !== 'glow' && b.mat !== 'water');
+          if (b.mat !== 'main') {
+            const geometry = b.mb.geo();
+            owned.push(geometry);
+            return [{ geometry, material: matFor(b.mat), castShadow }];
+          }
+          const res: SpeciesPart[] = [];
+          for (const [tag, geometry] of b.mb.split()) {
+            owned.push(geometry);
+            res.push({ geometry, material: tagMat(tag), castShadow });
+          }
+          return res;
         }),
     ),
   );
@@ -470,6 +535,8 @@ function addRoof(mb: MB, r: RoofP, detail: number): void {
     const dz = (roofY(r, x, zq + d) - roofY(r, x, zq - d)) / (2 * d);
     return norm([-dx, 1, -dz]);
   };
+  const rt: Tag = r.thatch ? 'main' : 'roof';
+  mb.tag = rt;
   for (const side of [-1, 1]) {
     for (let j = 0; j < nz; j++) {
       const z0 = side * r.Wh * (j / nz);
@@ -497,6 +564,7 @@ function addRoof(mb: MB, r: RoofP, detail: number): void {
       }
     }
   }
+  mb.tag = r.thatch ? 'main' : 'wood';
   // Underside (coarse) + perimeter skirt.
   const ux = Math.max(2, Math.round((2 * r.Lh) / 1.6));
   const uz = Math.max(2, Math.round((2 * r.Wh) / 1.6));
@@ -516,6 +584,7 @@ function addRoof(mb: MB, r: RoofP, detail: number): void {
       );
     }
   }
+  mb.tag = rt;
   const sk = Math.max(r.cell, 0.4);
   const nxs = Math.max(2, Math.round((2 * r.Lh) / sk));
   const nzs = Math.max(2, Math.round((2 * r.Wh) / sk));
@@ -618,6 +687,10 @@ interface HouseP {
   seed: number;
   shoji: boolean;
   steps: boolean;
+  /** Material of the wall volume (plaster houses, timber storehouse/shrine). */
+  wallMat: Tag;
+  /** Painted (vermilion) posts keep the vertex-coloured material. */
+  painted?: boolean;
 }
 
 function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
@@ -630,7 +703,9 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
   const bw = L / nb;
   const ovF = p.ov;
   const deckD = p.veranda ? ovF - 0.15 : 0;
+  const postTag: Tag = p.painted ? 'main' : 'wood';
 
+  mb.tag = 'stone';
   // Foundation.
   if (p.platform) {
     mb.box(
@@ -710,7 +785,9 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
   }
 
   // Core volume (plaster) with charred dado and timber frame.
+  mb.tag = p.wallMat;
   mb.box(-L / 2, fy - 0.05, -D / 2, L / 2, wt, D / 2, p.wall, 0.03, 8);
+  mb.tag = 'main';
   if (lod < 2) {
     const dh = fy + 0.95;
     mb.box(
@@ -736,6 +813,7 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
       8 | 4 | 1,
     );
     mb.box(L / 2, fy - 0.05, -D / 2 - 0.03, L / 2 + 0.03, dh, D / 2 + 0.03, p.dado, 0.1, 8 | 4 | 2);
+    mb.tag = postTag;
     // Top plate (nuki) all round.
     mb.box(
       -L / 2 - 0.06,
@@ -775,6 +853,7 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
   // Front facade.
   const zf = D / 2;
   const bayX = (k: number): number => -L / 2 + (k + 0.5) * bw;
+  mb.tag = postTag;
   for (let k = 0; k <= nb && lod < 2; k++) {
     mb.box(
       -L / 2 + k * bw - 0.07,
@@ -801,7 +880,8 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
       8,
     );
   for (let k = 0; k < nb; k++) {
-    const cx = bayX(k);
+    const cx = bayX(k);    mb.tag = 'wood';
+
     const x0 = cx - bw / 2 + 0.07;
     const x1 = cx + bw / 2 - 0.07;
     const solid = k === nb - 1 && p.shoji;
@@ -809,6 +889,7 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
     if (!p.shoji && !isDoor) continue;
     if (isDoor) {
       const dw = Math.min(bw - 0.3, 1.15);
+      mb.tag = 'wood';
       mb.box(
         cx - dw / 2,
         fy,
@@ -820,6 +901,7 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
         0.08,
         8,
       );
+      mb.tag = 'main';
       if (lod === 0) {
         for (let s = 0; s < 5; s++) {
           const xa = cx - dw / 2 + (dw * s) / 5;
@@ -872,6 +954,7 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
           P.paper,
           [0, 0, 1],
         );
+        mb.tag = 'main';
         for (let s = 1; s < 4; s++) {
           const xa = cx - 0.33 + (0.66 * s) / 4;
           mb.quad(
@@ -903,6 +986,7 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
       const zz = zf + 0.035 + s * 0.028;
       const yb = fy + 0.5;
       const yt = fy + 1.95;
+      mb.tag = 'wood';
       mb.box(xa, fy + 0.1, zz - 0.01, xa + pw, yb, zz + 0.012, P.timber, 0.08, 8 | 4);
       gl.quad(
         [xa, yb, zz + 0.012],
@@ -912,6 +996,7 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
         P.paper,
         [0, 0, 1],
       );
+      mb.tag = 'main';
       if (lod === 0) {
         const bar = (a0: number, b0: number, a1: number, b1: number): void =>
           mb.quad(
@@ -933,6 +1018,7 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
           bar(xa, yb + ((yt - yb) * q) / 4 - t / 2, xa + pw, yb + ((yt - yb) * q) / 4 + t / 2);
       }
     }
+    mb.tag = postTag;
     // Lintel
     mb.box(x0 - 0.02, fy + 1.97, zf - 0.01, x1 + 0.02, fy + 2.12, zf + 0.09, p.post, 0.06, 8);
   }
@@ -940,6 +1026,7 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
   // Side-wall lattice windows (mushiko-mado).
   if (lod < 2 && p.shoji) {
     for (const sx of [-1, 1]) {
+      mb.tag = 'wood';
       const x = sx * (L / 2);
       mb.box(
         sx > 0 ? x : x - 0.05,
@@ -960,6 +1047,7 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
         P.paper,
         [sx, 0, 0],
       );
+      mb.tag = 'main';
       if (lod === 0)
         for (let s = 1; s < 6; s++) {
           const z = -0.42 + (0.84 * s) / 6;
@@ -978,7 +1066,9 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
   // Veranda (engawa)
   if (p.veranda) {
     const zD = zf + deckD;
+    mb.tag = 'wood';
     mb.box(-L / 2 - 0.1, fy - 0.16, zf, L / 2 + 0.1, fy, zD, P.timberLight, 0.08, 8);
+    mb.tag = 'main';
     if (lod === 0) {
       for (let s = 1; s < 8; s++) {
         const z = zf + (deckD * s) / 8;
@@ -991,6 +1081,7 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
           [0, 1, 0],
         );
       }
+      mb.tag = 'stone';
       // Stone feet
       for (let k = 0; k <= nb; k++)
         mb.box(
@@ -1003,7 +1094,11 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
           mixc(P.stoneDark, P.moss, 0.15),
           0.1,
         );
-    } else mb.box(-L / 2, -0.9, zD - 0.3, L / 2, fy - 0.16, zD - 0.1, P.stoneDark, 0.05);
+    } else {
+      mb.tag = 'stone';
+      mb.box(-L / 2, -0.9, zD - 0.3, L / 2, fy - 0.16, zD - 0.1, P.stoneDark, 0.05);
+    }
+    mb.tag = postTag;
     // Outer posts + eave girder.
     if (lod < 2) {
       for (let k = 0; k <= nb; k++)
@@ -1021,6 +1116,7 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
       mb.box(-L / 2 - 0.1, wt - 0.34, zD - 0.42, L / 2 + 0.1, wt - 0.1, zD - 0.18, p.post, 0.05, 8);
     }
   }
+  mb.tag = 'stone';
   if (p.steps && lod < 2) {
     const dz = p.veranda ? zf + deckD : zf;
     const sx = p.door >= 0 ? bayX(p.door) : 0;
@@ -1062,6 +1158,7 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
     const nzI = 10;
     for (const sx of [-1, 1]) {
       const x = sx * (L / 2);
+      mb.tag = p.wallMat;
       for (let j = 0; j < nzI; j++) {
         const z0 = -D / 2 + (D * j) / nzI;
         const z1 = -D / 2 + (D * (j + 1)) / nzI;
@@ -1077,6 +1174,7 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
         );
       }
       if (lod < 2) {
+        mb.tag = postTag;
         // Timber frame in the gable: king post + collar beam.
         const yr = roofY(roof, x, 0) - t;
         mb.box(
@@ -1108,6 +1206,7 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
 
   // Hanging paper lanterns under the front eave.
   if (p.lanterns > 0 && p.veranda && lod < 2) {
+    mb.tag = 'main';
     const zD = zf + deckD - 0.3;
     for (let k = 0; k < p.lanterns; k++) {
       const x = k === 0 ? -L / 2 + 0.55 : L / 2 - 0.55;
@@ -1168,6 +1267,7 @@ function buildTorii(lod: 0 | 1 | 2): MB {
 
 function buildStairs(lod: 0 | 1 | 2, steps = 10, rise = 0.16, run = 0.42, w = 3.0): MB {
   const mb = new MB(21);
+  mb.tag = 'stone';
   const cheek = 0.42;
   for (let k = 0; k < steps; k++) {
     const z0 = -(k + 1) * run;
@@ -1199,6 +1299,7 @@ function buildStairs(lod: 0 | 1 | 2, steps = 10, rise = 0.16, run = 0.42, w = 3.
 
 function buildStoneLantern(variant: 0 | 1, lod: 0 | 1 | 2): { stone: MB; glow: MB } {
   const mb = new MB(31 + variant);
+  mb.tag = 'stone';
   const gl = new MB(131 + variant);
   const seg = lod === 0 ? 8 : 6;
   const sc = variant === 0 ? 1 : 0.8;
@@ -1244,19 +1345,24 @@ function buildStoneLantern(variant: 0 | 1, lod: 0 | 1 | 2): { stone: MB; glow: M
 
 function buildLanternPost(variant: 0 | 1, lod: 0 | 1 | 2): { mb: MB; gl: MB } {
   const mb = new MB(41 + variant);
+  mb.tag = 'stone';
   const gl = new MB(141 + variant);
   const seg = lod === 0 ? 7 : 5;
   mb.box(-0.2, -0.3, -0.2, 0.2, 0.18, 0.2, P.stone, 0.08);
+  mb.tag = 'wood';
   mb.tube([0, 0.1, 0], [0, 2.95, 0], 0.075, 0.06, seg, P.timber, { caps: true });
   mb.box(-0.06, 2.55, -0.06, 0.78, 2.66, 0.06, P.timber, 0.05);
   mb.box(-0.14, 2.93, -0.14, 0.14, 3.0, 0.14, P.timberDark, 0.05);
+  mb.tag = 'main';
   const x = 0.7;
   mb.tube([x, 2.55, 0], [x, 2.38, 0], 0.01, 0.01, 3, P.black);
   mb.cyl(x, 2.34, 0, 0.1, 0.1, 0.04, 8, P.black);
   gl.ell(x, 2.1, 0, 0.19, 0.25, 0.19, 10, 6, shade(P.red, 1.1), P.paper);
   mb.cyl(x, 1.82, 0, 0.1, 0.1, 0.04, 8, P.black);
   if (variant === 1) {
+    mb.tag = 'wood';
     mb.box(-0.78, 2.55, -0.06, 0.06, 2.66, 0.06, P.timber, 0.05);
+    mb.tag = 'main';
     mb.tube([-0.7, 2.55, 0], [-0.7, 2.38, 0], 0.01, 0.01, 3, P.black);
     mb.cyl(-0.7, 2.34, 0, 0.1, 0.1, 0.04, 8, P.black);
     gl.ell(-0.7, 2.1, 0, 0.19, 0.25, 0.19, 10, 6, shade(P.red, 1.1), P.paper);
@@ -1270,11 +1376,14 @@ function buildLanternString(lod: 0 | 1 | 2): { mb: MB; gl: MB } {
   const gl = new MB(151);
   const half = 5.6;
   for (const s of [-1, 1]) {
+    mb.tag = 'wood';
     mb.tube([s * half, -0.2, 0], [s * half, 3.5, 0], 0.09, 0.07, lod === 0 ? 7 : 5, P.timber, {
       caps: true,
     });
+    mb.tag = 'stone';
     mb.box(s * half - 0.35, -0.35, -0.35, s * half + 0.35, 0.15, 0.35, P.stone, 0.08);
   }
+  mb.tag = 'main';
   const sag = 0.55;
   const top = 3.35;
   const pts: V3[] = [];
@@ -1299,9 +1408,12 @@ function buildLanternString(lod: 0 | 1 | 2): { mb: MB; gl: MB } {
 
 function buildWell(lod: 0 | 1 | 2): MB {
   const mb = new MB(61);
+  mb.tag = 'stone';
   const seg = lod === 0 ? 12 : 8;
   mb.cyl(0, -0.3, 0, 0.78, 0.74, 1.12, seg, mixc(P.stone, P.moss, 0.15), true, P.stoneDark);
+  mb.tag = 'main';
   mb.cyl(0, 0.72, 0, 0.62, 0.62, 0.05, seg, P.black, true);
+  mb.tag = 'wood';
   for (const s of [-1, 1])
     mb.box(s * 0.74 - 0.07, 0.7, -0.07, s * 0.74 + 0.07, 2.35, 0.07, P.timber, 0.08);
   mb.box(-0.86, 2.2, -0.08, 0.86, 2.36, 0.08, P.timberDark, 0.05);
@@ -1323,6 +1435,7 @@ function buildWell(lod: 0 | 1 | 2): MB {
     under: P.timberDark,
   };
   addRoof(mb, r, 0);
+  mb.tag = 'wood';
   mb.box(-0.8, 2.36, -0.04, 0.8, 2.5, 0.04, P.timberDark, 0.05);
   // Bucket + rope
   mb.tube([0, 2.3, 0], [0, 1.55, 0], 0.012, 0.012, 3, P.timberLight);
@@ -1342,7 +1455,9 @@ function buildFirewood(lod: 0 | 1 | 2): MB {
       const y = 0.1 + r * 0.19;
       const rad = 0.075 + mb.rnd() * 0.02;
       const col = mixc(rgb('#5a4130'), rgb('#7b5b3f'), mb.rnd());
+      mb.tag = 'wood';
       mb.tube([x, y, -logLen / 2], [x, y, logLen / 2], rad, rad, seg, col, { caps: false });
+      mb.tag = 'main';
       const endC = mixc(rgb('#c9a36b'), rgb('#a98450'), mb.rnd());
       const disc = (z: number, flip: number): void => {
         mb.tri([x, y, z], [x + rad, y, z], [x, y + rad, z], endC, [0, 0, flip]);
@@ -1354,11 +1469,13 @@ function buildFirewood(lod: 0 | 1 | 2): MB {
       disc(-logLen / 2 - 0.003, -1);
     }
   }
+  mb.tag = 'wood';
   for (const s of [-1, 1]) {
     mb.box(s * 1.65 - 0.06, 0, -0.55, s * 1.65 + 0.06, 1.45, -0.43, P.timber, 0.08);
     mb.box(s * 1.65 - 0.06, 0, 0.43, s * 1.65 + 0.06, 1.45, 0.55, P.timber, 0.08);
   }
   // Lean-to cover
+  mb.tag = 'roof';
   mb.quad(
     [-1.85, 1.5, -0.7],
     [1.85, 1.5, -0.7],
@@ -1367,6 +1484,7 @@ function buildFirewood(lod: 0 | 1 | 2): MB {
     P.tile,
     [0, 1, 0],
   );
+  mb.tag = 'wood';
   mb.quad(
     [-1.85, 1.46, -0.7],
     [1.85, 1.46, -0.7],
@@ -1375,6 +1493,7 @@ function buildFirewood(lod: 0 | 1 | 2): MB {
     P.timberDark,
     [0, -1, 0],
   );
+  mb.tag = 'roof';
   mb.quad(
     [-1.85, 1.5, 0.75],
     [1.85, 1.5, 0.75],
@@ -1388,6 +1507,7 @@ function buildFirewood(lod: 0 | 1 | 2): MB {
 
 function buildBridge(lod: 0 | 1 | 2): MB {
   const mb = new MB(81);
+  mb.tag = 'wood';
   const Lb = 5.6;
   const w = 1.7;
   const n = lod === 0 ? 16 : 8;
@@ -1433,6 +1553,7 @@ function buildBridge(lod: 0 | 1 | 2): MB {
     }
     for (let i = 0; i < 8; i++) mb.tube(rail[i]!, rail[i + 1]!, 0.025, 0.025, 4, P.timberLight);
   }
+  mb.tag = 'stone';
   mb.box(-Lb / 2 - 0.2, -0.5, -w / 2 - 0.1, -Lb / 2 + 0.2, 0.0, w / 2 + 0.1, P.stone, 0.08);
   mb.box(Lb / 2 - 0.2, -0.5, -w / 2 - 0.1, Lb / 2 + 0.2, 0.0, w / 2 + 0.1, P.stone, 0.08);
   return mb;
@@ -1442,6 +1563,7 @@ function buildShrineExtras(mb: MB, gl: MB, p: HouseP, lod: 0 | 1 | 2): void {
   const zD = p.D / 2 + p.ov - 0.15;
   const fy = p.fy;
   // Front steps.
+  mb.tag = 'stone';
   for (let s = 0; s < 4; s++) {
     mb.box(
       -1.4,
@@ -1455,13 +1577,16 @@ function buildShrineExtras(mb: MB, gl: MB, p: HouseP, lod: 0 | 1 | 2): void {
       0,
     );
   }
+  mb.tag = 'main';
   // Rope with bell, offering box.
   const zr = zD + 0.12;
   mb.tube([0.0, fy + 2.55, zr], [0.0, fy + 1.35, zr + 0.1], 0.03, 0.04, 5, P.red);
   mb.tube([0.12, fy + 2.55, zr], [0.12, fy + 1.35, zr + 0.1], 0.03, 0.04, 5, P.plasterWhite);
   mb.ell(0.06, fy + 2.62, zr, 0.15, 0.13, 0.15, 8, 6, rgb('#b89a3a'));
   if (lod < 2) {
+    mb.tag = 'wood';
     mb.box(-0.9, fy - 0.3, zD + 0.55, 0.9, fy + 0.5, zD + 1.1, P.timber, 0.06, 8);
+    mb.tag = 'main';
     for (let s = 0; s < 8; s++) {
       const xa = -0.9 + (1.8 * s) / 8;
       mb.quad(
@@ -1540,6 +1665,7 @@ function buildPaddy(rice: boolean, lod: 0 | 1 | 2): { mb: MB; water: MB; leaf: M
   mb.box(-hx - bt, -1.3, hz - 0.02, hx + bt, bh, hz + bt, P.soil, 0.1, 8);
   mb.box(-hx - bt, -2.4, -hz, -hx + 0.02, bh, hz, P.soil, 0.1, 8 | 2);
   mb.box(hx - 0.02, -1.3, -hz, hx + bt, bh, hz, P.soil, 0.1, 8);
+  mb.tag = 'stone';
   mb.box(
     -hx - bt - 0.04,
     -2.4,
@@ -1551,6 +1677,7 @@ function buildPaddy(rice: boolean, lod: 0 | 1 | 2): { mb: MB; water: MB; leaf: M
     0.12,
     8 | 4 | 1 | 16 | 32,
   );
+  mb.tag = 'main';
   for (const [x0, z0, x1, z1] of [
     [-hx - bt, -hz - bt, hx + bt, -hz + 0.02],
     [-hx - bt, hz - 0.02, hx + bt, hz + bt],
@@ -1615,6 +1742,7 @@ function buildPond(lod: 0 | 1 | 2): { mb: MB; water: MB } {
       [0, 1, 0],
     );
   }
+  mb.tag = 'rock';
   // Rim stones.
   const nst = lod === 0 ? 22 : 12;
   for (let i = 0; i < nst; i++) {
@@ -1635,6 +1763,7 @@ function buildPond(lod: 0 | 1 | 2): { mb: MB; water: MB } {
       (y, n) => mixc(shade(col, 0.85 + y * 0.3 + n * 0.2), P.moss, y > 0.7 ? 0.3 : 0),
     );
   }
+  mb.tag = 'main';
   // Lily pads.
   if (lod === 0) {
     for (let i = 0; i < 6; i++) {
@@ -1667,10 +1796,12 @@ function buildGravel(lod: 0 | 1 | 2): MB {
   const nz = Math.round(D / cell);
   const h = (z: number): number => (lod === 0 ? 0.022 * Math.sin((z / 0.17) * Math.PI) : 0);
   // Edge curb stones.
+  mb.tag = 'stone';
   mb.box(-W / 2 - 0.2, -0.3, -D / 2 - 0.2, W / 2 + 0.2, 0.06, -D / 2, P.stoneDark, 0.1, 8);
   mb.box(-W / 2 - 0.2, -0.3, D / 2, W / 2 + 0.2, 0.06, D / 2 + 0.2, P.stoneDark, 0.1, 8);
   mb.box(-W / 2 - 0.2, -0.3, -D / 2, -W / 2, 0.06, D / 2, P.stoneDark, 0.1, 8);
   mb.box(W / 2, -0.3, -D / 2, W / 2 + 0.2, 0.06, D / 2, P.stoneDark, 0.1, 8);
+  mb.tag = 'gravel';
   for (let j = 0; j < nz; j++) {
     const z0 = -D / 2 + (D * j) / nz;
     const z1 = -D / 2 + (D * (j + 1)) / nz;
@@ -1701,6 +1832,7 @@ function buildGravel(lod: 0 | 1 | 2): MB {
 
 function buildGardenRock(variant: number, lod: 0 | 1 | 2): MB {
   const mb = new MB(121 + variant);
+  mb.tag = 'rock';
   const sizes: [number, number, number][] = [
     [0.85, 0.7, 0.7],
     [0.6, 0.45, 0.5],
@@ -1728,6 +1860,7 @@ function buildGardenRock(variant: number, lod: 0 | 1 | 2): MB {
 
 function buildSteppingStones(lod: 0 | 1 | 2): MB {
   const mb = new MB(131);
+  mb.tag = 'stone';
   const pts: [number, number, number][] = [
     [-3.0, 0.1, 0.35],
     [-2.0, -0.3, 0.3],
@@ -1778,6 +1911,7 @@ function buildFence(variant: number, lod: 0 | 1 | 2): MB {
     }
   } else {
     // Low wooden rail fence.
+    mb.tag = 'wood';
     for (let k = 0; k <= 2; k++)
       mb.box(
         -Lf / 2 + (Lf * k) / 2 - 0.06,
@@ -1797,9 +1931,12 @@ function buildFence(variant: number, lod: 0 | 1 | 2): MB {
 
 function buildGardenWall(lod: 0 | 1 | 2): MB {
   const mb = new MB(151);
+  mb.tag = 'stone';
   const Lw = 4;
   mb.box(-Lw / 2, -0.4, -0.22, Lw / 2, 0.3, 0.22, P.stone, 0.06);
+  mb.tag = 'plaster';
   mb.box(-Lw / 2 + 0.02, 0.3, -0.17, Lw / 2 - 0.02, 1.45, 0.17, P.plaster, 0.04, 8);
+  mb.tag = 'wood';
   if (lod === 0) {
     for (let k = 0; k <= 2; k++)
       mb.box(
@@ -1813,6 +1950,7 @@ function buildGardenWall(lod: 0 | 1 | 2): MB {
         0.08,
       );
   }
+  mb.tag = 'roof';
   // Tile cap (gable section)
   const y0 = 1.45;
   for (const s of [-1, 1]) {
@@ -2011,6 +2149,7 @@ const HOUSE_A: HouseP = {
   seed: 1,
   shoji: true,
   steps: true,
+  wallMat: 'plaster',
 };
 const HOUSE_B: HouseP = {
   ...HOUSE_A,
@@ -2060,6 +2199,7 @@ const KURA: HouseP = {
   seed: 4,
   steps: false,
   shoji: false,
+  wallMat: 'wood',
 };
 const SHRINE: HouseP = {
   ...HOUSE_A,
@@ -2083,6 +2223,8 @@ const SHRINE: HouseP = {
   seed: 7,
   shoji: false,
   steps: false,
+  wallMat: 'wood',
+  painted: true,
 };
 
 function houseSpecies(key: string, p: HouseP): Species {
@@ -2105,6 +2247,7 @@ function shrineSpecies(): Species {
     // Doors: lattice panels on the front.
     const zf = SHRINE.D / 2;
     const fy = SHRINE.fy;
+    b.main.tag = 'main';
     b.main.box(
       -SHRINE.L / 2 + 0.3,
       fy,

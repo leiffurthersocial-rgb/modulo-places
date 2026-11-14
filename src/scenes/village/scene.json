@@ -3,6 +3,35 @@
   "name": "Japanese Village",
   "description": "A hillside village of timber houses, rice terraces, a shrine stair and a bamboo grove.",
   "seed": 20261113,
+  "materials": {
+    "village/wood-planks": {
+      "scale": 1.2,
+      "tint": "#8aa6f0",
+      "roughness": 0.95
+    },
+    "village/roof-tiles": {
+      "scale": 1.5,
+      "tint": "#9aa0aa"
+    },
+    "village/plaster": {
+      "scale": 2,
+      "tint": "#f4efe6",
+      "roughness": 1,
+      "brightness": 1.75
+    },
+    "village/stone-paving": {
+      "scale": 1.5,
+      "tint": "#b4b8be"
+    },
+    "village/gravel-path": {
+      "scale": 1.5,
+      "tint": "#d6cfc0"
+    },
+    "forest/rock": {
+      "scale": 3,
+      "tint": "#c8c3ba"
+    }
+  },
   "terrain": {
     "size": 230,
     "resolution": 257,
@@ -17,7 +46,7 @@
     "layers": [
       {
         "id": "ground",
-        "material": "village/moss-ground",
+        "material": "forest/moss",
         "color": "#56703a",
         "roughness": 0.95,
         "slope": [0, 30],
@@ -7071,8 +7100,8 @@
       "ambient": {
         "sky": "#a8c4e6",
         "ground": "#5a4c3a",
-        "intensity": 0.65,
-        "ibl": 0.3
+        "intensity": 0.95,
+        "ibl": 0.6
       },
       "fog": {
         "color": "#b8cde0",
@@ -7082,8 +7111,8 @@
         "sunScatter": 0.15
       },
       "post": {
-        "exposure": -0.75,
-        "contrast": 0.2,
+        "exposure": -1.0,
+        "contrast": 0.16,
         "saturation": 0.2,
         "temperature": 0.02,
         "tint": 0,
