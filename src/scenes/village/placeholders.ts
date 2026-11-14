@@ -880,7 +880,8 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
       8,
     );
   for (let k = 0; k < nb; k++) {
-    const cx = bayX(k);    mb.tag = 'wood';
+    const cx = bayX(k);
+    mb.tag = 'wood';
 
     const x0 = cx - bw / 2 + 0.07;
     const x1 = cx + bw / 2 - 0.07;

@@ -467,6 +467,19 @@
     "key": "polyhaven:aerial_rocks_04",
     "fetchedAt": "2026-11-13"
   },
+  "polyhaven:anthurium_botany_01": {
+    "source": "polyhaven",
+    "id": "anthurium_botany_01",
+    "name": "Anthurium Botany 01",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/anthurium_botany_01",
+    "key": "polyhaven:anthurium_botany_01",
+    "fetchedAt": "2026-11-14"
+  },
   "polyhaven:approaching_storm": {
     "source": "polyhaven",
     "id": "approaching_storm",
@@ -561,6 +574,19 @@
     "license": "CC0-1.0",
     "url": "https://polyhaven.com/a/brown_planks_04",
     "key": "polyhaven:brown_planks_04",
+    "fetchedAt": "2026-11-14"
+  },
+  "polyhaven:calathea_orbifolia_01": {
+    "source": "polyhaven",
+    "id": "calathea_orbifolia_01",
+    "name": "Calathea Orbifolia 01",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/calathea_orbifolia_01",
+    "key": "polyhaven:calathea_orbifolia_01",
     "fetchedAt": "2026-11-14"
   },
   "polyhaven:clean_pebbles": {

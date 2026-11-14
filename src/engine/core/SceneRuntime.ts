@@ -8,6 +8,7 @@ import { findHdriSun, Sky } from '../atmosphere/sky';
 import { LightShafts } from '../atmosphere/LightShafts';
 import { bakeImpostor, type Impostor } from '../scatter/impostor/Impostor';
 import { buildProceduralSpecies } from '../scatter/proceduralSpecies';
+import { tropicalSpecies } from '../scatter/tropical';
 import { type Species, speciesFromGltf } from '../scatter/species';
 import type { TerrainLayerMaps } from '../terrain/terrainMaterial';
 import { Creek } from '../water/Creek';
@@ -215,25 +216,38 @@ export class SceneRuntime {
   private async loadModelSpecies(renderer: THREE.WebGLRenderer, progress: Progress): Promise<void> {
     if (!this.assets) return;
     const msaa0 = this.quality.aa === 'msaa' || this.quality.aa === 'msaa+smaa';
-    // Procedural species (conifers, logs).
-    const procRules = this.def.scatter.filter((r) => /^(conifer|log):/.test(r.mesh));
-    for (const meshId of [...new Set(procRules.map((r) => r.mesh))]) {
-      const rule = procRules.find((r) => r.mesh === meshId)!;
-      const sp = await buildProceduralSpecies(meshId, this.assets, {
-        tier: this.quality.textureTier as Tier,
-        anisotropy: this.quality.anisotropy,
-        alphaToCoverage: msaa0,
-        wind: rule.wind ?? 0,
-        flutter: rule.flutter ?? 0,
-        snow: (this.def.snowCover ?? 0) > 0,
-        barks: {
-          fir: 'forest/bark-knotted',
-          pine: 'forest/bark-pine',
-          log: 'forest/bark',
-          moss: 'forest/moss',
-          ...(this.def.barks ?? {}),
-        },
-      });
+    // Procedural species (conifers, broadleaf trees, logs) — referenced by scatter rules or props.
+    const PROC = /^(conifer|log|broadleaf|tropical):/;
+    const procRules = this.def.scatter.filter((r) => PROC.test(r.mesh));
+    const procIds = new Set([
+      ...procRules.map((r) => r.mesh),
+      ...this.def.props.map((p) => p.mesh).filter((m) => PROC.test(m)),
+    ]);
+    for (const meshId of procIds) {
+      const rule = procRules.find((r) => r.mesh === meshId) ?? { wind: 0.3, flutter: 0.03 };
+      const sp = meshId.startsWith('tropical:')
+        ? await tropicalSpecies(meshId, this.assets, {
+            tier: this.quality.textureTier as Tier,
+            anisotropy: this.quality.anisotropy,
+            alphaToCoverage: msaa0,
+            wind: rule.wind ?? 0.15,
+            flutter: rule.flutter ?? 0.04,
+          })
+        : await buildProceduralSpecies(meshId, this.assets, {
+            tier: this.quality.textureTier as Tier,
+            anisotropy: this.quality.anisotropy,
+            alphaToCoverage: msaa0,
+            wind: rule.wind ?? 0,
+            flutter: rule.flutter ?? 0,
+            snow: (this.def.snowCover ?? 0) > 0,
+            barks: {
+              fir: 'forest/bark-knotted',
+              pine: 'forest/bark-pine',
+              log: 'forest/bark',
+              moss: 'forest/moss',
+              ...(this.def.barks ?? {}),
+            },
+          });
       if (!sp) continue;
       if (
         procRules.some((r) => r.mesh === meshId && r.impostor) &&

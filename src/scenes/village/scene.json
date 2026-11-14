@@ -4035,7 +4035,7 @@
     },
     {
       "id": "maples",
-      "mesh": "village:maple",
+      "mesh": "broadleaf:maple",
       "density": 0.45,
       "minDistance": 9,
       "scale": [0.9, 1.35],
@@ -4045,10 +4045,10 @@
       "castShadow": true,
       "collision": "cylinder",
       "collisionRadius": 0.3,
-      "lods": [28, 65, 130],
+      "lods": [18, 40, 85],
       "colorVariation": 0.1,
       "wind": 0.2,
-      "flutter": 0.03,
+      "flutter": 0.05,
       "masks": [
         {
           "type": "slope",
@@ -4513,14 +4513,15 @@
       "cluster": {
         "frequency": 0.05,
         "strength": 0.5
-      }
+      },
+      "impostor": true
     },
     {
       "id": "bamboo",
-      "mesh": "village:bamboo",
-      "density": 14,
-      "minDistance": 1.7,
-      "scale": [0.85, 1.25],
+      "mesh": "tropical:bamboo",
+      "density": 1.75,
+      "minDistance": 2.5,
+      "scale": [0.8, 1.2],
       "tilt": 1.5,
       "sink": 0.1,
       "detail": false,

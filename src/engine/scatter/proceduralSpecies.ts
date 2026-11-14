@@ -1,9 +1,11 @@
 // Procedural species (DECISIONS D-031): conifers and saplings built from scanned bark + branch-card
 // atlases baked from real twig scans, and fallen logs. Scatter rules reference them as
-//   "conifer:fir" | "conifer:pine" | "conifer:fir-sapling" | "conifer:pine-sapling" | "log:<bark>"
+//   "conifer:fir" | "conifer:pine" | "conifer:fir-sapling" | "conifer:pine-sapling" | "log:<bark>" |
+//   "broadleaf:maple|deciduous|jungle-giant|jungle-canopy"
 import * as THREE from 'three';
 import type { AssetLoader, Tier } from '../assets/AssetLoader';
 import { patchMaterial } from '../render/materials';
+import { buildBroadleaf, createBroadleafMaterials, type BroadleafKind } from './broadleaf';
 import { buildConifer, buildLog, createConiferMaterials, type BuiltModel } from './conifer';
 import type { Species } from './species';
 
@@ -25,6 +27,14 @@ const HEIGHTS: Record<string, number[]> = {
   pine: [20, 23.5, 27],
   'fir-sapling': [1.6, 2.5, 3.6],
   'pine-sapling': [1.5, 2.4, 3.4],
+};
+
+/** Broadleaf variant heights (m): 'broadleaf:<kind>'. */
+const BROADLEAF_HEIGHTS: Record<BroadleafKind, number[]> = {
+  maple: [4.5, 6, 7.5],
+  deciduous: [9, 11.5, 14],
+  'jungle-giant': [26, 30, 34],
+  'jungle-canopy': [15.5, 18.5, 21.5],
 };
 
 function toSpecies(
@@ -84,6 +94,40 @@ export async function buildProceduralSpecies(
     const variants = heights.map((h, v) =>
       ([0, 1, 2] as const).map((lod) =>
         buildConifer({ kind: base, height: h, seed: 101 + v * 977, lod, sapling }, mats),
+      ),
+    );
+    return toSpecies(variants, [mats.bark, mats.foliage]);
+  }
+  if (kind === 'broadleaf') {
+    if (!(name in BROADLEAF_HEIGHTS)) return null;
+    const bk = name as BroadleafKind;
+    const jungle = bk.startsWith('jungle');
+    const atlas = bk === 'maple' ? 'maple' : 'broadleaf';
+    const [bark0, foliage] = await Promise.all([
+      jungle ? assets.material('jungle/bark-tropical', o.tier, o.anisotropy) : null,
+      assets.foliage(atlas, o.anisotropy),
+    ]);
+    const bark = bark0 ?? (await assets.material('forest/bark', o.tier, o.anisotropy));
+    if (!bark || !foliage) return null;
+    const mats = createBroadleafMaterials({ bark, ...foliage }, o.alphaToCoverage);
+    const heights = BROADLEAF_HEIGHTS[bk];
+    const windHeight = Math.max(...heights);
+    patchMaterial(mats.bark, {
+      wind: o.wind,
+      windHeight,
+      key: `broadleaf-bark-${bk}`,
+      snow: o.snow,
+    });
+    patchMaterial(mats.foliage, {
+      wind: o.wind,
+      windHeight,
+      flutter: o.flutter,
+      key: `broadleaf-foliage-${bk}`,
+      snow: o.snow,
+    });
+    const variants = heights.map((h, v) =>
+      ([0, 1, 2] as const).map((lod) =>
+        buildBroadleaf({ kind: bk, height: h, seed: 211 + v * 1301, lod }, mats),
       ),
     );
     return toSpecies(variants, [mats.bark, mats.foliage]);

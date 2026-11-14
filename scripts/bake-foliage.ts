@@ -47,8 +47,19 @@ const norm = (a: V3): V3 => {
 };
 
 interface Species {
-  id: 'fir' | 'pine';
+  id: 'fir' | 'pine' | 'broadleaf' | 'maple';
   gltf: string;
+  /** Material-name suffix of the cut-out card primitive in the scan. */
+  prim: string;
+  /** Recolour the baked albedo (maple: green -> autumn red/orange, luminance preserved). */
+  tint?: 'maple';
+  /** Candidate patch half-extents are scaled by this when picking (default 1). */
+  seedBase: number;
+  /** Min radial distance (m) of a tip candidate from the trunk axis, and lateral/height slab (m). */
+  rMin?: number;
+  slab?: number;
+  /** Erode the trusted-colour mask by N px (kills dark cut-out fringes on leaves). */
+  erode?: number;
   /** Height band (fraction of the twig y-range) to look for outer branch tips in. */
   band: [number, number];
   /** Patch half extents (m): across, along, thickness; and tip-sector half-angle (deg). */
@@ -62,6 +73,8 @@ interface Species {
 const SPECIES: Species[] = [
   {
     id: 'fir',
+    prim: '_twig',
+    seedBase: 1337,
     gain: 1.1,
     gltf: '.asset-cache/polyhaven/models/fir_tree_01/2k/fir_tree_01_2k.gltf',
     band: [0.25, 0.5],
@@ -71,12 +84,43 @@ const SPECIES: Species[] = [
   },
   {
     id: 'pine',
+    prim: '_twig',
+    seedBase: 4242,
     gain: 1.4,
     gltf: '.asset-cache/polyhaven/models/pine_tree_01/2k/pine_tree_01_2k.gltf',
     band: [0.4, 0.7],
     across: 0.65,
     along: 0.85,
     thick: 0.5,
+  },
+  {
+    id: 'broadleaf',
+    prim: '_leaves',
+    seedBase: 777,
+    gain: 1.25,
+    gltf: '.asset-cache/polyhaven/models/tree_small_02/2k/tree_small_02_2k.gltf',
+    band: [0.35, 0.75],
+    across: 0.4,
+    along: 0.45,
+    thick: 0.32,
+    rMin: 0.35,
+    slab: 0.5,
+    erode: 2,
+  },
+  {
+    id: 'maple',
+    prim: '_leaves',
+    tint: 'maple',
+    seedBase: 777, // same patches as 'broadleaf', recoloured
+    gain: 1.25,
+    gltf: '.asset-cache/polyhaven/models/tree_small_02/2k/tree_small_02_2k.gltf',
+    band: [0.35, 0.75],
+    across: 0.4,
+    along: 0.45,
+    thick: 0.32,
+    rMin: 0.35,
+    slab: 0.5,
+    erode: 2,
   },
 ];
 
@@ -89,12 +133,12 @@ interface Twig {
   normal: Uint8Array;
 }
 
-async function loadTwig(file: string): Promise<Twig> {
+async function loadTwig(file: string, sp: Species): Promise<Twig> {
   const io = new NodeIO().registerExtensions(ALL_EXTENSIONS);
   const doc = await io.read(join(ROOT, file));
   const mesh = doc.getRoot().listMeshes()[0]!;
-  const prim = mesh.listPrimitives().find((p) => p.getMaterial()?.getName().endsWith('_twig'));
-  if (!prim) throw new Error('no twig primitive in ' + file);
+  const prim = mesh.listPrimitives().find((p) => p.getMaterial()?.getName().endsWith(sp.prim));
+  if (!prim) throw new Error('no ' + sp.prim + ' primitive in ' + file);
   const mat = prim.getMaterial()!;
   const arr = (n: string) => prim.getAttribute(n)!.getArray()!;
   return {
@@ -229,9 +273,9 @@ function pickPatch(
   const cand: { r: number; i: number }[] = [];
   for (let i = 0; i < comp.count; i++) {
     const p = cen(i);
-    if (Math.abs(p[1] - y0) > 0.6) continue;
+    if (Math.abs(p[1] - y0) > (sp.slab ?? 0.6)) continue;
     const r = p[0] * dir[0] + p[2] * dir[2];
-    if (r < 0.5) continue;
+    if (r < (sp.rMin ?? 0.5)) continue;
     const lateral = Math.abs(p[0] * -dir[2] + p[2] * dir[0]);
     if (lateral > 0.6) continue;
     cand.push({ r, i });
@@ -468,6 +512,72 @@ function dilate(img: Img, mask: Uint8Array, iterations: number): void {
   }
 }
 
+/** Green leaf -> red/orange maple foliage. Luminance (shading, veins) is kept; hue varies per leaf
+ * (value noise at leaf scale) from crimson through red-orange to amber, saturation rises, veins and
+ * stems keep a lighter, slightly yellower tone. */
+function mapleTint(img: Img, seed: number): void {
+  const hash = (x: number, y: number): number => {
+    let h = (x * 374761393 + y * 668265263 + seed * 144665) | 0;
+    h = Math.imul(h ^ (h >>> 13), 1274126177);
+    return ((h ^ (h >>> 16)) >>> 0) / 4294967295;
+  };
+  const noise = (x: number, y: number, cell: number): number => {
+    const gx = x / cell;
+    const gy = y / cell;
+    const x0 = Math.floor(gx);
+    const y0 = Math.floor(gy);
+    const fx = gx - x0;
+    const fy = gy - y0;
+    const sx = fx * fx * (3 - 2 * fx);
+    const sy = fy * fy * (3 - 2 * fy);
+    const a = hash(x0, y0) * (1 - sx) + hash(x0 + 1, y0) * sx;
+    const b = hash(x0, y0 + 1) * (1 - sx) + hash(x0 + 1, y0 + 1) * sx;
+    return a * (1 - sy) + b * sy;
+  };
+  // sRGB (0..1) palette: deep crimson -> red -> red-orange -> amber, picked per leaf/branch by noise.
+  const pal: V3[] = [
+    [0.5, 0.07, 0.09],
+    [0.68, 0.1, 0.08],
+    [0.8, 0.22, 0.07],
+    [0.82, 0.4, 0.1],
+  ];
+  const lum = (r: number, g: number, b: number): number => 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  let lsum = 0;
+  let cnt = 0;
+  for (let i = 0; i < img.w * img.h; i++)
+    if (img.d[i * 4 + 3]! > 200) {
+      lsum += lum(img.d[i * 4]! / 255, img.d[i * 4 + 1]! / 255, img.d[i * 4 + 2]! / 255);
+      cnt++;
+    }
+  const lAvg = lsum / Math.max(1, cnt);
+  for (let y = 0; y < img.h; y++)
+    for (let x = 0; x < img.w; x++) {
+      const o = (y * img.w + x) * 4;
+      const r = img.d[o]! / 255;
+      const g = img.d[o + 1]! / 255;
+      const b = img.d[o + 2]! / 255;
+      const l0 = lum(r, g, b);
+      const n = Math.min(
+        0.999,
+        Math.max(0, 0.5 * noise(x, y, 70) + 0.3 * noise(x, y, 260) + 0.2 * noise(x, y, 24)),
+      );
+      const f = Math.min(2.999, Math.max(0, (n - 0.2) / 0.6) * 3);
+      const i0 = Math.floor(f);
+      const t = f - i0;
+      const c0 = pal[i0]!;
+      const c1 = pal[Math.min(3, i0 + 1)]!;
+      // Shade from the scan luminance (leaf blade shading, veins), gamma-ish so darks stay rich.
+      const sh = Math.min(1.45, Math.max(0.3, Math.pow(l0 / lAvg, 0.9)));
+      // Veins/stems are lighter and yellower than the blade: tint toward amber.
+      const vein = Math.max(0, Math.min(1, (g - b) / Math.max(0.05, g + b + r) - 0.15) * 2) * 0.5;
+      for (let k = 0; k < 3; k++) {
+        const base = c0[k]! * (1 - t) + c1[k]! * t;
+        const v = base * sh * (1 - vein) + (pal[3]![k]! * 1.1 + 0.05) * vein * Math.min(1.2, sh);
+        img.d[o + k] = Math.max(0, Math.min(255, v * 255));
+      }
+    }
+}
+
 /** Density x connectedness of a tile's coverage: rewards full sprays, punishes fragments. */
 function patchScore(img: Img, x0: number, y0: number, x1: number, y1: number): number {
   const C = 8;
@@ -599,7 +709,7 @@ async function bakeSpecies(
   tmp: Map<string, Uint8Array>,
 ): Promise<FoliageEntry | null> {
   console.log(`[${sp.id}] loading scan…`);
-  const t = await loadTwig(sp.gltf);
+  const t = await loadTwig(sp.gltf, sp);
   const comp = components(t);
   console.log(`[${sp.id}] ${t.idx.length / 3} tris, ${comp.count} cards`);
   let ymin = Infinity;
@@ -609,7 +719,7 @@ async function bakeSpecies(
     ymax = Math.max(ymax, comp.centroid[i * 3 + 1]!);
   }
 
-  const rng = new Rng(sp.id === 'fir' ? 1337 : 4242);
+  const rng = new Rng(sp.seedBase);
   const N = 4;
   const M = 14; // candidates; the best N by coverage score go into the atlas
   const cands: { score: number; alb: Img; nor: Img; box: [number, number, number, number] }[] = [];
@@ -674,11 +784,20 @@ async function bakeSpecies(
         y1 = Math.max(y1, y);
       }
     }
+    for (let e = 0; e < (sp.erode ?? 0); e++) {
+      const src = Uint8Array.from(mask);
+      for (let y = 1; y < TILE - 1; y++)
+        for (let x = 1; x < TILE - 1; x++) {
+          const i = y * TILE + x;
+          if (src[i] && !(src[i - 1] && src[i + 1] && src[i - TILE] && src[i + TILE])) mask[i] = 0;
+        }
+    }
     dilate(alb, mask, 24);
     dilate(nor, mask, 24);
     thickenAlpha(alb);
     for (let i = 0; i < TILE * TILE; i++)
       for (let c = 0; c < 3; c++) alb.d[i * 4 + c] = Math.min(255, alb.d[i * 4 + c]! * sp.gain);
+    if (sp.tint === 'maple') mapleTint(alb, sp.seedBase);
     // Renormalise normals.
     for (let i = 0; i < TILE * TILE; i++) {
       const nx = (nor.d[i * 4]! / 255) * 2 - 1;

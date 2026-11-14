@@ -64,7 +64,8 @@ export class LightShafts {
           vUv = uv;
           vStrength = aParams.w;
           // Beam axis points from the ground spot up toward the sun.
-          vec3 axis = normalize(uSunDir);
+          // Low suns would make near-horizontal beams that read as flat panels; keep them steep.
+          vec3 axis = normalize(vec3(uSunDir.x, max(uSunDir.y, 0.55), uSunDir.z));
           vec3 toCam = normalize(cameraPosition - aOffset);
           vec3 side = normalize(cross(axis, toCam));
           vec3 p = aOffset + axis * position.y * aParams.y + side * position.x * aParams.x;
@@ -90,7 +91,10 @@ export class LightShafts {
           float forward = 0.35 + 1.8 * pow(max(dot(V, normalize(uSunDir)), 0.0), 3.0);
           float d = length(vWorld - cameraPosition);
           float near = smoothstep(1.5, 6.0, d); // never a flat card in your face
-          float a = core * along * n * forward * near * vStrength * uStrength;
+          // Looking along a beam collapses its billboard into a bright bar; fade those out.
+          vec3 ax = normalize(vec3(uSunDir.x, max(uSunDir.y, 0.55), uSunDir.z));
+          float sideOn = 1.0 - smoothstep(0.35, 0.75, abs(dot(V, ax)));
+          float a = core * along * n * forward * near * sideOn * vStrength * uStrength;
           // Fog: shafts are light scattered by the same medium; distant ones dissolve into fog.
           a *= 1.0 - 0.7 * heightFogAmount(cameraPosition, vWorld);
           gl_FragColor = vec4(uSunColor * a, 1.0);
@@ -144,11 +148,13 @@ export class LightShafts {
       this.cell.set(cx, cz);
       this.reseed(cx, cz);
     }
-    const sunUp = THREE.MathUtils.smoothstep(sunDir.y, 0.02, 0.12);
+    // Low suns: beams would have to be near-horizontal (they read as panels), so fade them;
+    // the fog's sun in-scattering carries the low-sun glow instead.
+    const sunUp = THREE.MathUtils.smoothstep(sunDir.y, 0.12, 0.4);
     const s = strength * sunUp;
     this.uniforms.uSunDir.value.copy(sunDir);
     this.uniforms.uSunColor.value.copy(sunColor);
-    this.uniforms.uStrength.value = s * 0.9;
+    this.uniforms.uStrength.value = s * 0.6;
     this.mesh.visible = s > 0.01;
   }
 
