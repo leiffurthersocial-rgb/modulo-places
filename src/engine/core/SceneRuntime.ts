@@ -336,7 +336,8 @@ export class SceneRuntime {
     this.sun.intensity = s.sunIntensity * THREE.MathUtils.smoothstep(s.sunDir.y, -0.02, 0.06);
     this.hemi.color.copy(s.ambSky);
     this.hemi.groundColor.copy(s.ambGround);
-    this.hemi.intensity = s.ambIntensity * 0.55;
+    this.hemi.intensity = s.ambIntensity * 0.4;
+    scene.environmentIntensity = s.ibl;
     sharedUniforms.uFogColor.value.copy(s.fogColor);
     sharedUniforms.uFogDensity.value = s.fogDensity;
     sharedUniforms.uFogHeightFalloff.value = s.fogFalloff;
@@ -365,7 +366,6 @@ export class SceneRuntime {
       const prev = this.envRT;
       this.envRT = pmrem.fromScene(this.envScene, 0, 0.1, 200);
       scene.environment = this.envRT.texture;
-      scene.environmentIntensity = 0.55;
       prev?.dispose();
     }
     void renderer;

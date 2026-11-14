@@ -116,7 +116,7 @@
       "impostor": true,
       "wind": 0.35,
       "flutter": 0.02,
-      "lods": [22, 55, 130],
+      "lods": [18, 40, 85],
       "colorVariation": 0.08,
       "masks": [
         {
@@ -157,7 +157,7 @@
       "impostor": true,
       "wind": 0.35,
       "flutter": 0.02,
-      "lods": [22, 55, 130],
+      "lods": [18, 40, 85],
       "colorVariation": 0.08,
       "masks": [
         {
@@ -186,7 +186,7 @@
       "impostor": true,
       "wind": 0.3,
       "flutter": 0.04,
-      "lods": [22, 55, 130],
+      "lods": [18, 40, 85],
       "masks": [
         {
           "type": "layer",
@@ -212,8 +212,8 @@
       "wind": 0.12,
       "flutter": 0.02,
       "castShadow": true,
-      "lods": [15, 35],
-      "cullDistance": 90,
+      "lods": [10, 25],
+      "cullDistance": 70,
       "masks": [
         {
           "type": "slope",
@@ -241,8 +241,8 @@
       "wind": 0.12,
       "flutter": 0.02,
       "castShadow": true,
-      "lods": [15, 35],
-      "cullDistance": 80,
+      "lods": [10, 25],
+      "cullDistance": 65,
       "masks": [
         {
           "type": "slope",
@@ -259,7 +259,7 @@
     {
       "id": "rocks-a",
       "mesh": "model:forest/rocks-moss-a",
-      "density": 1.2,
+      "density": 0.8,
       "minDistance": 3,
       "scale": [0.7, 1.6],
       "tilt": 15,
@@ -267,8 +267,8 @@
       "sink": 0.12,
       "detail": false,
       "castShadow": true,
-      "lods": [18, 45],
-      "cullDistance": 140,
+      "lods": [15, 35],
+      "cullDistance": 110,
       "masks": [
         {
           "type": "layer",
@@ -285,7 +285,7 @@
     {
       "id": "rocks-b",
       "mesh": "model:forest/rocks-moss-b",
-      "density": 1.2,
+      "density": 0.8,
       "minDistance": 3,
       "scale": [0.7, 1.6],
       "tilt": 15,
@@ -293,8 +293,8 @@
       "sink": 0.12,
       "detail": false,
       "castShadow": true,
-      "lods": [18, 45],
-      "cullDistance": 140,
+      "lods": [15, 35],
+      "cullDistance": 110,
       "masks": [
         {
           "type": "layer",
@@ -319,7 +319,7 @@
       "detail": false,
       "castShadow": true,
       "collision": "sphere",
-      "lods": [25, 70],
+      "lods": [25, 60],
       "masks": [
         {
           "type": "layer",
@@ -340,8 +340,8 @@
       "sink": 0.2,
       "detail": false,
       "castShadow": true,
-      "lods": [20, 50],
-      "cullDistance": 120,
+      "lods": [15, 35],
+      "cullDistance": 100,
       "masks": [
         {
           "type": "layer",
@@ -362,8 +362,8 @@
       "sink": 0.2,
       "detail": false,
       "castShadow": true,
-      "lods": [20, 50],
-      "cullDistance": 120,
+      "lods": [15, 35],
+      "cullDistance": 100,
       "masks": [
         {
           "type": "layer",
@@ -402,8 +402,8 @@
       "sink": 0.1,
       "detail": false,
       "castShadow": true,
-      "lods": [20, 50],
-      "cullDistance": 120,
+      "lods": [15, 40],
+      "cullDistance": 100,
       "masks": [
         {
           "type": "slope",
@@ -426,8 +426,8 @@
       "sink": 0.05,
       "detail": false,
       "castShadow": true,
-      "lods": [15, 40],
-      "cullDistance": 90,
+      "lods": [12, 30],
+      "cullDistance": 70,
       "masks": [
         {
           "type": "layer",
@@ -446,28 +446,8 @@
       "sink": 0.05,
       "detail": false,
       "castShadow": true,
-      "lods": [15, 40],
-      "cullDistance": 90,
-      "masks": [
-        {
-          "type": "layer",
-          "layer": "path",
-          "max": 0.35,
-          "soft": 0.15
-        }
-      ]
-    },
-    {
-      "id": "pine-roots",
-      "mesh": "model:forest/pine-roots",
-      "density": 0.25,
-      "minDistance": 8,
-      "scale": [0.8, 1.2],
-      "sink": 0.05,
-      "detail": false,
-      "castShadow": true,
-      "lods": [15, 40],
-      "cullDistance": 80,
+      "lods": [12, 30],
+      "cullDistance": 70,
       "masks": [
         {
           "type": "layer",
@@ -487,8 +467,8 @@
       "wind": 0.05,
       "flutter": 0.02,
       "castShadow": true,
-      "lods": [10, 24],
-      "cullDistance": 55,
+      "lods": [7, 18],
+      "cullDistance": 40,
       "colorVariation": 0.15,
       "masks": [
         {
@@ -523,8 +503,8 @@
       "wind": 0.08,
       "flutter": 0.03,
       "castShadow": true,
-      "lods": [12, 30],
-      "cullDistance": 75,
+      "lods": [8, 20],
+      "cullDistance": 60,
       "masks": [
         {
           "type": "layer",
@@ -547,8 +527,8 @@
       "wind": 0.08,
       "flutter": 0.03,
       "castShadow": true,
-      "lods": [12, 30],
-      "cullDistance": 75,
+      "lods": [8, 20],
+      "cullDistance": 60,
       "masks": [
         {
           "type": "layer",
@@ -567,8 +547,8 @@
       "wind": 0.06,
       "flutter": 0.03,
       "castShadow": false,
-      "lods": [10, 22],
-      "cullDistance": 45,
+      "lods": [6, 15],
+      "cullDistance": 35,
       "masks": [
         {
           "type": "layer",
@@ -597,8 +577,8 @@
       "wind": 0.05,
       "flutter": 0.02,
       "castShadow": false,
-      "lods": [10, 22],
-      "cullDistance": 45,
+      "lods": [6, 15],
+      "cullDistance": 35,
       "masks": [
         {
           "type": "layer",
@@ -617,8 +597,8 @@
       "wind": 0.06,
       "flutter": 0.02,
       "castShadow": false,
-      "lods": [8, 18],
-      "cullDistance": 32,
+      "lods": [6, 14],
+      "cullDistance": 28,
       "masks": [
         {
           "type": "noise",
@@ -647,8 +627,8 @@
       "scale": [0.7, 1.4],
       "alignToNormal": 1,
       "castShadow": false,
-      "lods": [10, 25],
-      "cullDistance": 45,
+      "lods": [8, 20],
+      "cullDistance": 35,
       "masks": [
         {
           "type": "layer",
@@ -666,8 +646,8 @@
       "scale": [0.7, 1.3],
       "alignToNormal": 1,
       "castShadow": true,
-      "lods": [10, 25],
-      "cullDistance": 40,
+      "lods": [6, 15],
+      "cullDistance": 30,
       "masks": [
         {
           "type": "layer",
@@ -732,23 +712,25 @@
       "ambient": {
         "sky": "#b8c4d0",
         "ground": "#4a4a40",
-        "intensity": 0.8
+        "intensity": 0.8,
+        "ibl": 0.45
       },
       "fog": {
         "color": "#c3c8c9",
-        "density": 0.038,
-        "heightFalloff": 0.12,
-        "baseHeight": -3,
+        "density": 0.042,
+        "heightFalloff": 0.05,
+        "baseHeight": 0,
         "sunScatter": 0.7
       },
       "post": {
         "exposure": 0.3,
         "contrast": -0.03,
-        "saturation": -0.1,
+        "saturation": 0.0,
         "temperature": 0.05,
         "tint": 0,
         "bloom": 0.8,
-        "vignette": 0.3
+        "vignette": 0.3,
+        "shafts": 0.8
       },
       "particles": ["mist", "pollen"]
     },
@@ -773,23 +755,25 @@
       "ambient": {
         "sky": "#a9c3e0",
         "ground": "#4c4a3c",
-        "intensity": 0.9
+        "intensity": 0.6,
+        "ibl": 0.3
       },
       "fog": {
-        "color": "#b3c3d1",
-        "density": 0.007,
-        "heightFalloff": 0.05,
+        "color": "#a9b8c2",
+        "density": 0.0035,
+        "heightFalloff": 0.04,
         "baseHeight": 0,
-        "sunScatter": 0.25
+        "sunScatter": 0.15
       },
       "post": {
-        "exposure": -0.1,
-        "contrast": 0.05,
-        "saturation": 0.0,
+        "exposure": -0.55,
+        "contrast": 0.1,
+        "saturation": 0.15,
         "temperature": 0,
         "tint": 0,
         "bloom": 0.4,
-        "vignette": 0.25
+        "vignette": 0.25,
+        "shafts": 0.1
       },
       "particles": ["pollen", "leaves"]
     },
@@ -814,7 +798,8 @@
       "ambient": {
         "sky": "#7d86ad",
         "ground": "#4a3a2e",
-        "intensity": 0.75
+        "intensity": 0.6,
+        "ibl": 0.35
       },
       "fog": {
         "color": "#a08680",
@@ -824,13 +809,14 @@
         "sunScatter": 0.85
       },
       "post": {
-        "exposure": 0.45,
+        "exposure": 0.1,
         "contrast": 0.08,
         "saturation": 0.1,
         "temperature": 0.25,
         "tint": 0.05,
         "bloom": 1.0,
-        "vignette": 0.35
+        "vignette": 0.35,
+        "shafts": 1.3
       },
       "particles": ["dust", "leaves"]
     }

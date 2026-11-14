@@ -234,6 +234,7 @@ export class Viewport {
       vignette: m.vignette,
       grain: 0,
       chromaticAberration: 0,
+      shafts: 1,
       look: FILM_LOOKS.neutral,
       dof: { enabled: false, focusDistance: 10, focusRange: 5, bokehScale: 2 },
       lensFx: true,

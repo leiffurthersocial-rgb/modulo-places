@@ -221,37 +221,37 @@
   "forest/fir-sapling": {
    "source": "polyhaven",
    "id": "fir_sapling",
-   "file": "/pack/models/forest-fir-sapling.9bdc792e.glb",
-   "bytes": 1834440,
+   "file": "/pack/models/forest-fir-sapling.42c65802.glb",
+   "bytes": 1843688,
    "lods": 3,
    "triangles": [
-    11581,
-    3154,
-    698
+    11471,
+    3354,
+    897
    ]
   },
   "forest/pine-sapling": {
    "source": "polyhaven",
    "id": "pine_sapling_small",
-   "file": "/pack/models/forest-pine-sapling.96f984b8.glb",
-   "bytes": 1806724,
+   "file": "/pack/models/forest-pine-sapling.bccd3030.glb",
+   "bytes": 1868876,
    "lods": 3,
    "triangles": [
-    11714,
-    3569,
-    947
+    11000,
+    3778,
+    933
    ]
   },
   "forest/broadleaf": {
    "source": "polyhaven",
    "id": "tree_small_02",
-   "file": "/pack/models/forest-broadleaf.6223a07d.glb",
-   "bytes": 3200552,
+   "file": "/pack/models/forest-broadleaf.5de45e1d.glb",
+   "bytes": 2741144,
    "lods": 3,
    "triangles": [
-    39926,
-    12215,
-    3947
+    42723,
+    13919,
+    2126
    ]
   },
   "forest/rocks-moss-a": {
@@ -281,11 +281,11 @@
   "forest/boulder": {
    "source": "polyhaven",
    "id": "boulder_01",
-   "file": "/pack/models/forest-boulder.fb4a5edb.glb",
-   "bytes": 1715780,
+   "file": "/pack/models/forest-boulder.5bd1e5bc.glb",
+   "bytes": 961580,
    "lods": 3,
    "triangles": [
-    54122,
+    15950,
     4416,
     1965
    ]
@@ -377,85 +377,85 @@
   "forest/fern": {
    "source": "polyhaven",
    "id": "fern_02",
-   "file": "/pack/models/forest-fern.98d613bd.glb",
-   "bytes": 441676,
+   "file": "/pack/models/forest-fern.799aa529.glb",
+   "bytes": 415528,
    "lods": 3,
    "triangles": [
-    3998,
-    1198,
-    318
+    3504,
+    832,
+    131
    ]
   },
   "forest/shrub-a": {
    "source": "polyhaven",
    "id": "shrub_02",
-   "file": "/pack/models/forest-shrub-a.b6ae156b.glb",
-   "bytes": 714460,
+   "file": "/pack/models/forest-shrub-a.255f5a53.glb",
+   "bytes": 624760,
    "lods": 3,
    "triangles": [
-    8995,
-    2631,
-    718
+    7650,
+    1926,
+    563
    ]
   },
   "forest/shrub-b": {
    "source": "polyhaven",
    "id": "shrub_03",
-   "file": "/pack/models/forest-shrub-b.2f3a068f.glb",
-   "bytes": 681980,
+   "file": "/pack/models/forest-shrub-b.7f1baef0.glb",
+   "bytes": 664456,
    "lods": 3,
    "triangles": [
-    6996,
-    2092,
-    554
+    7043,
+    2409,
+    599
    ]
   },
   "forest/nettle": {
    "source": "polyhaven",
    "id": "nettle_plant",
-   "file": "/pack/models/forest-nettle.ecd71657.glb",
-   "bytes": 700140,
+   "file": "/pack/models/forest-nettle.b1dac4db.glb",
+   "bytes": 612680,
    "lods": 3,
    "triangles": [
-    4993,
-    1633,
-    1612
+    2808,
+    809,
+    506
    ]
   },
   "forest/weeds": {
    "source": "polyhaven",
    "id": "weed_plant_02",
-   "file": "/pack/models/forest-weeds.36192f99.glb",
-   "bytes": 692168,
+   "file": "/pack/models/forest-weeds.219799c4.glb",
+   "bytes": 637272,
    "lods": 3,
    "triangles": [
-    3996,
-    1197,
-    461
+    2170,
+    370,
+    19
    ]
   },
   "forest/grass": {
    "source": "polyhaven",
    "id": "grass_medium_01",
-   "file": "/pack/models/forest-grass.e265d571.glb",
-   "bytes": 806444,
+   "file": "/pack/models/forest-grass.899b2d3e.glb",
+   "bytes": 762404,
    "lods": 3,
    "triangles": [
-    2514,
-    759,
-    193
+    3108,
+    1292,
+    332
    ]
   },
   "forest/moss-clump": {
    "source": "polyhaven",
    "id": "moss_01",
-   "file": "/pack/models/forest-moss-clump.0f13848b.glb",
-   "bytes": 381200,
+   "file": "/pack/models/forest-moss-clump.cae74b66.glb",
+   "bytes": 366636,
    "lods": 3,
    "triangles": [
     204,
-    98,
-    50
+    63,
+    41
    ]
   },
   "forest/branches": {

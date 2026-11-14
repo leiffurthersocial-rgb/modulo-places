@@ -13,7 +13,7 @@ import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, extname, join } from 'node:path';
-import { NodeIO, type Document } from '@gltf-transform/core';
+import { NodeIO, type Document, type Primitive } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import {
   cloneDocument,
@@ -23,7 +23,6 @@ import {
   mergeDocuments,
   prune,
   resample,
-  simplify,
   textureCompress,
   unpartition,
   weld,
@@ -172,19 +171,108 @@ async function processMaterials(p: Picks): Promise<void> {
   }
 }
 
-function sloppySimplify(d: Document, ratio: number): void {
+const FOLIAGE_RE = /leaf|leaves|needle|twig|foliage|grass|fern|nettle|weed|frond|shrub|moss/i;
+
+function isFoliagePrim(prim: Primitive): boolean {
+  const m = prim.getMaterial();
+  return !!m && (m.getAlphaMode() !== 'OPAQUE' || FOLIAGE_RE.test(m.getName()));
+}
+
+function readPositions(prim: Primitive): Float32Array {
+  const pos = prim.getAttribute('POSITION')!;
+  const out = new Float32Array(pos.getCount() * 3);
+  const v: number[] = [];
+  for (let i = 0; i < pos.getCount(); i++) out.set(pos.getElement(i, v), i * 3);
+  return out;
+}
+
+function setIndices(prim: Primitive, idx: Uint32Array): void {
+  const vc = prim.getAttribute('POSITION')!.getCount();
+  prim.getIndices()!.setArray(vc > 65535 ? new Uint32Array(idx) : Uint16Array.from(idx));
+}
+
+/**
+ * Foliage LOD: keep a deterministic subset of whole cards (connected components) and enlarge the
+ * survivors around their own centre so the canopy keeps its coverage. Edge-collapse simplification
+ * turns cards into slivers instead (bare-pole trees).
+ */
+function decimateCards(prim: Primitive, keep: number): void {
+  const idxAcc = prim.getIndices();
+  const posAcc = prim.getAttribute('POSITION');
+  if (!idxAcc || !posAcc || keep >= 1) return;
+  const idx = idxAcc.getArray()!;
+  const nv = posAcc.getCount();
+  const parent = new Int32Array(nv);
+  for (let i = 0; i < nv; i++) parent[i] = i;
+  const find = (x: number): number => {
+    while (parent[x] !== x) {
+      parent[x] = parent[parent[x]!]!;
+      x = parent[x]!;
+    }
+    return x;
+  };
+  for (let i = 0; i < idx.length; i += 3) {
+    const a = find(idx[i]!);
+    parent[find(idx[i + 1]!)] = a;
+    parent[find(idx[i + 2]!)] = a;
+  }
+  const hash = (x: number) => (Math.imul(x ^ 0x9e3779b9, 2654435761) >>> 0) / 4294967296;
+  const kept: number[] = [];
+  for (let i = 0; i < idx.length; i += 3)
+    if (hash(find(idx[i]!)) < keep) kept.push(idx[i]!, idx[i + 1]!, idx[i + 2]!);
+  if (kept.length === 0) kept.push(idx[0]!, idx[1]!, idx[2]!);
+  // Enlarge kept components about their centroid.
+  const s = Math.min(2.2, 1 / Math.sqrt(Math.max(keep, 1e-4)));
+  const pos = readPositions(prim);
+  const sum = new Map<number, [number, number, number, number]>();
+  const used = new Uint8Array(nv);
+  for (const v of kept) used[v] = 1;
+  for (let v = 0; v < nv; v++) {
+    if (!used[v]) continue;
+    const r = find(v);
+    const e = sum.get(r) ?? [0, 0, 0, 0];
+    e[0] += pos[v * 3]!;
+    e[1] += pos[v * 3 + 1]!;
+    e[2] += pos[v * 3 + 2]!;
+    e[3]++;
+    sum.set(r, e);
+  }
+  const out = [0, 0, 0];
+  for (let v = 0; v < nv; v++) {
+    if (!used[v]) continue;
+    const e = sum.get(find(v))!;
+    for (let k = 0; k < 3; k++) {
+      const c = e[k]! / e[3]!;
+      out[k] = c + (pos[v * 3 + k]! - c) * s;
+    }
+    posAcc.setElement(v, out);
+  }
+  setIndices(prim, Uint32Array.from(kept));
+}
+
+function simplifyPrim(prim: Primitive, ratio: number, err: number): void {
+  const idxAcc = prim.getIndices();
+  if (!idxAcc || !prim.getAttribute('POSITION') || ratio >= 1) return;
+  const indices = Uint32Array.from(idxAcc.getArray()!);
+  const pos = readPositions(prim);
+  const target = Math.max(3, Math.floor((indices.length * ratio) / 3) * 3);
+  let [out] = MeshoptSimplifier.simplify(indices, pos, 3, target, err, ['Prune']);
+  // UV seams can stall the seam-preserving simplifier; fall back to the sloppy one.
+  if (out.length > target * 1.5)
+    [out] = MeshoptSimplifier.simplifySloppy(indices, pos, 3, null, target, 0.05);
+  setIndices(prim, out);
+}
+
+/** Reduce every primitive to `ratio` of its triangles (foliage by card decimation). */
+function reduceDoc(d: Document, ratio: number, err: number): void {
+  if (ratio >= 1) return;
+  const seen = new Set<Primitive>();
   for (const mesh of d.getRoot().listMeshes()) {
     for (const prim of mesh.listPrimitives()) {
-      const idx = prim.getIndices();
-      const pos = prim.getAttribute('POSITION');
-      if (!idx || !pos) continue;
-      const positions = new Float32Array(pos.getCount() * 3);
-      const v: number[] = [];
-      for (let i = 0; i < pos.getCount(); i++) positions.set(pos.getElement(i, v), i * 3);
-      const indices = Uint32Array.from(idx.getArray()!);
-      const target = Math.max(3, Math.floor((indices.length * ratio) / 3) * 3);
-      const [out] = MeshoptSimplifier.simplifySloppy(indices, positions, 3, null, target, 0.05);
-      idx.setArray(pos.getCount() > 65535 ? new Uint32Array(out) : Uint16Array.from(out));
+      if (seen.has(prim)) continue;
+      seen.add(prim);
+      if (isFoliagePrim(prim)) decimateCards(prim, ratio);
+      else simplifyPrim(prim, ratio, err);
       compactPrimitive(prim);
     }
   }
@@ -197,6 +285,10 @@ async function processModels(p: Picks): Promise<void> {
     .registerExtensions(ALL_EXTENSIONS)
     .registerDependencies({ 'meshopt.encoder': MeshoptEncoder });
   for (const [key, m] of Object.entries(p.models ?? {})) {
+    const onlyModel = process.argv.includes('--model')
+      ? process.argv[process.argv.indexOf('--model') + 1]
+      : undefined;
+    if (onlyModel && onlyModel !== key) continue;
     if (manifest.models[key]?.id === m.id && !process.argv.includes('--force')) {
       console.log(`  · model ${key} already processed`);
       continue;
@@ -210,7 +302,11 @@ async function processModels(p: Picks): Promise<void> {
   }
 }
 
-async function processModel(io: NodeIO, key: string, m: NonNullable<Picks['models']>[string]): Promise<void> {
+async function processModel(
+  io: NodeIO,
+  key: string,
+  m: NonNullable<Picks['models']>[string],
+): Promise<void> {
   {
     const src = await polyhavenModel(m.id, '2k');
     const doc: Document = await io.read(src);
@@ -233,33 +329,13 @@ async function processModel(io: NodeIO, key: string, m: NonNullable<Picks['model
     const targets = [lod0Target, lod0Target * 0.3, lod0Target * 0.08];
     const baseScene = doc.getRoot().listScenes()[0]!;
     const baseNodes = baseScene.listChildren();
-    if (lod0Target < srcTris) {
-      await doc.transform(
-        simplify({
-          simplifier: MeshoptSimplifier,
-          ratio: lod0Target / srcTris,
-          error: 0.05,
-          lockBorder: false,
-        }),
-      );
-    }
+    if (lod0Target < srcTris) reduceDoc(doc, lod0Target / srcTris, 0.05);
     const lod0 = doc.createNode('LOD0');
     for (const n of baseNodes) lod0.addChild(n);
     baseScene.addChild(lod0);
     for (let li = 1; li < targets.length; li++) {
       const lodDoc = cloneDocument(pristine);
-      await lodDoc.transform(
-        simplify({
-          simplifier: MeshoptSimplifier,
-          ratio: targets[li]! / srcTris,
-          error: 0.08 * li,
-          lockBorder: false,
-        }),
-      );
-      // Scans with many UV seams stall the seam-preserving simplifier; fall back to the sloppy one
-      // (ignores attribute seams; fine at far LOD distances).
-      const got = countTris(lodDoc);
-      if (got > targets[li]! * 1.5) sloppySimplify(lodDoc, targets[li]! / got);
+      reduceDoc(lodDoc, targets[li]! / srcTris, 0.08 * li);
       const lodScene = lodDoc.getRoot().listScenes()[0]!;
       const map = mergeDocuments(doc, lodDoc);
       const merged = map.get(lodScene) as typeof baseScene;
@@ -296,7 +372,9 @@ async function processModel(io: NodeIO, key: string, m: NonNullable<Picks['model
       glb = await io.writeBinary(compressed);
     } catch (e) {
       // Some scans carry attribute layouts the meshopt encoder rejects; ship uncompressed instead.
-      console.warn(`  ! model ${key}: meshopt failed (${(e as Error).message}); writing uncompressed`);
+      console.warn(
+        `  ! model ${key}: meshopt failed (${(e as Error).message}); writing uncompressed`,
+      );
       glb = await io.writeBinary(doc);
     }
     manifest.models[key] = {

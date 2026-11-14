@@ -107,7 +107,9 @@ export class Sky {
         vec3 slot(sampler2D t, float rot, float w, float k, vec3 d, vec3 fallback) {
           if (w <= 0.0) return fallback;
           vec3 h = texture(t, eqUv(rotY(d, -rot))).rgb * k;
-          return mix(fallback, h, w);
+          // Only the HDRI's sky: below the horizon its photographed ground would float in the
+          // distance, so fade to the analytic ground (which the horizon fog band then covers).
+          return mix(fallback, h, w * smoothstep(-0.05, 0.04, d.y));
         }
         void main() {
           vec3 d = normalize(vDir);

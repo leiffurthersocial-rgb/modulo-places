@@ -2,6 +2,28 @@
 
 Newest first. Each entry: decision · why · source (only pages actually opened; see RESEARCH.md).
 
+## 2026-11-14 — M3 forest
+
+### D-031 Scanned conifers are not usable as-is; trees become procedural with baked branch cards
+Poly Haven's fir/pine scans carry 400k–800k needle cards per tree (5–17 triangles each). Every real-time budget (≈15k triangles per tree) either turns them into slivers (edge collapse) or leaves 0.4% of cards (decimation). The result is bare poles. Plan, as studios do with scans: bake branch-card textures from patches of the real twig scans, and generate trunks (scanned bark) + branch cards procedurally (≈5–8k triangles at LOD0). This is in progress. Until it lands, trees use the processed scans.
+
+### D-030 Foliage-aware LODs
+Foliage primitives (alpha-masked or named leaves/twigs/fern/grass/…) are reduced by keeping a deterministic subset of whole cards, enlarged ≤ 2.2× around their centres. Solid primitives use meshoptimizer `simplify` with a sloppy fallback for scans with many UV seams. This applies to saplings, ferns, grass, shrubs, nettles and weeds. Some decimated models trip meshopt's vertex encoder; those ship uncompressed (≈1.8 MB each) until investigated.
+
+### D-029 Tuning against measured reference photos
+15 Commons photos (5 per mood; licences in scratch REFERENCES.md, to be moved into the repo with the M3 review) give numeric targets:
+
+| Mood | Mean luminance | Fog / haze | Other |
+|---|---|---|---|
+| Midday | ≈75–90 | ≈15% at 40 m | p5 shadows ≈5–18 |
+| Dawn mist | ≈105–115 | 50% at 15–20 m, 90% at 50–60 m | — |
+| Dusk | ≈35–50 | — | strongest shafts |
+
+The first midday render measured mean 145, p5 86 and green saturation 0.08, all far too washed out. The fix is per-mood IBL strength, less hemisphere fill, less midday fog, lower exposure, and a per-mood shaft strength (midday ≈ none).
+
+### D-028 Per-instance LOD/culling instead of cell buckets
+32/64 m cell buckets gave 1,120 draw calls and 5.9 M scatter triangles at the forest spawn. Coarse cells also made LOD selection coarse: a whole cell went LOD0. Instances are now re-batched on the CPU when the camera moves ≥ 0.75 m or turns ≥ 4°. Each gets distance culling, a test against a frustum widened by 35% (it also keeps all instances within 12 m for shadows behind the camera) and its own LOD. The result is 267 draws and 1.0 M triangles at the same spot. Draw calls are now parts × LODs × variants per rule.
+
 ## 2026-11-13 — M2 asset pipeline
 
 ### D-027 Half-resolution normals on the 2k tier

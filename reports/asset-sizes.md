@@ -1,6 +1,6 @@
 # Asset size report
 
-Generated 2026-11-13T19:07:17.071Z
+Generated 2026-11-13T19:19:10.382Z
 
 ## Materials (download per material, all three maps)
 
@@ -22,12 +22,12 @@ Generated 2026-11-13T19:07:17.071Z
 |---|---|---|
 | forest/fir | 4249 KB | 43169 / 10788 / 3522 |
 | forest/pine | 6605 KB | 45066 / 13402 / 3565 |
-| forest/fir-sapling | 1791 KB | 11581 / 3154 / 698 |
-| forest/pine-sapling | 1764 KB | 11714 / 3569 / 947 |
-| forest/broadleaf | 3126 KB | 39926 / 12215 / 3947 |
+| forest/fir-sapling | 1800 KB | 11471 / 3354 / 897 |
+| forest/pine-sapling | 1825 KB | 11000 / 3778 / 933 |
+| forest/broadleaf | 2677 KB | 42723 / 13919 / 2126 |
 | forest/rocks-moss-a | 823 KB | 23989 / 7194 / 1916 |
 | forest/rocks-moss-b | 902 KB | 23994 / 7188 / 1916 |
-| forest/boulder | 1676 KB | 54122 / 4416 / 1965 |
+| forest/boulder | 939 KB | 15950 / 4416 / 1965 |
 | forest/rock-07 | 646 KB | 8000 / 2400 / 640 |
 | forest/rock-09 | 629 KB | 8000 / 2400 / 640 |
 | forest/rock-face | 906 KB | 13998 / 4197 / 1119 |
@@ -35,13 +35,13 @@ Generated 2026-11-13T19:07:17.071Z
 | forest/stump-a | 892 KB | 7993 / 2397 / 639 |
 | forest/stump-b | 869 KB | 7988 / 2398 / 637 |
 | forest/pine-roots | 1695 KB | 11976 / 3596 / 1036 |
-| forest/fern | 431 KB | 3998 / 1198 / 318 |
-| forest/shrub-a | 698 KB | 8995 / 2631 / 718 |
-| forest/shrub-b | 666 KB | 6996 / 2092 / 554 |
-| forest/nettle | 684 KB | 4993 / 1633 / 1612 |
-| forest/weeds | 676 KB | 3996 / 1197 / 461 |
-| forest/grass | 788 KB | 2514 / 759 / 193 |
-| forest/moss-clump | 372 KB | 204 / 98 / 50 |
+| forest/fern | 406 KB | 3504 / 832 / 131 |
+| forest/shrub-a | 610 KB | 7650 / 1926 / 563 |
+| forest/shrub-b | 649 KB | 7043 / 2409 / 599 |
+| forest/nettle | 598 KB | 2808 / 809 / 506 |
+| forest/weeds | 622 KB | 2170 / 370 / 19 |
+| forest/grass | 745 KB | 3108 / 1292 / 332 |
+| forest/moss-clump | 358 KB | 204 / 63 / 41 |
 | forest/branches | 841 KB | 3169 / 879 / 328 |
 
 ## HDRIs

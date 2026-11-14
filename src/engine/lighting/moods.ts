@@ -14,6 +14,7 @@ export interface MoodState {
   ambSky: THREE.Color;
   ambGround: THREE.Color;
   ambIntensity: number;
+  ibl: number;
   fogColor: THREE.Color;
   fogDensity: number;
   fogFalloff: number;
@@ -26,6 +27,7 @@ export interface MoodState {
   tint: number;
   bloom: number;
   vignette: number;
+  shafts: number;
 }
 
 const c = (hex: string) => new THREE.Color(hex);
@@ -54,6 +56,7 @@ export function moodToState(m: MoodDef): MoodState {
     ambSky: c(m.ambient.sky),
     ambGround: c(m.ambient.ground),
     ambIntensity: m.ambient.intensity,
+    ibl: m.ambient.ibl ?? 0.5,
     fogColor: c(m.fog.color),
     fogDensity: m.fog.density,
     fogFalloff: m.fog.heightFalloff,
@@ -66,6 +69,7 @@ export function moodToState(m: MoodDef): MoodState {
     tint: m.post.tint,
     bloom: m.post.bloom,
     vignette: m.post.vignette,
+    shafts: m.post.shafts ?? 1,
   };
 }
 
@@ -82,6 +86,7 @@ export function lerpMood(a: MoodState, b: MoodState, t: number, out: MoodState):
   out.ambSky.copy(a.ambSky).lerp(b.ambSky, t);
   out.ambGround.copy(a.ambGround).lerp(b.ambGround, t);
   out.ambIntensity = l(a.ambIntensity, b.ambIntensity);
+  out.ibl = l(a.ibl, b.ibl);
   out.fogColor.copy(a.fogColor).lerp(b.fogColor, t);
   out.fogDensity = Math.exp(
     l(Math.log(Math.max(a.fogDensity, 1e-6)), Math.log(Math.max(b.fogDensity, 1e-6))),
@@ -96,6 +101,7 @@ export function lerpMood(a: MoodState, b: MoodState, t: number, out: MoodState):
   out.tint = l(a.tint, b.tint);
   out.bloom = l(a.bloom, b.bloom);
   out.vignette = l(a.vignette, b.vignette);
+  out.shafts = l(a.shafts, b.shafts);
   return out;
 }
 

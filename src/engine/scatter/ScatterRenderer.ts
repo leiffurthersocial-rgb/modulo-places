@@ -1,31 +1,34 @@
-// Turns ScatterResults into InstancedMeshes grouped by spatial cell (and species variant). Each
-// bucket owns one instance-matrix/colour buffer shared by all of its LOD meshes, so switching LOD
-// only toggles which (lazily created) meshes are visible — no buffer re-upload. Three's per-object
-// frustum culling then works per cell (DECISIONS D-007 / D-018).
+// Instanced scatter rendering with per-instance LOD and culling.
+//
+// For every rule × variant × LOD there is one set of InstancedMeshes (one per material part). When
+// the camera moves or turns enough, each instance is distance-culled, tested against a widened
+// view frustum and assigned an LOD; its precomputed matrix is copied into that LOD's buffer.
+// Draw calls are therefore parts × LODs × variants per rule — independent of instance count and
+// of how the instances are spread (DECISIONS D-028, replacing the cell buckets of D-018).
 import * as THREE from 'three';
 import type { QualitySettings, ScatterRuleDef } from '../types';
 import { STRIDE, type ScatterResult } from './scatter';
 import { disposeSpecies, placeholderSpecies, type Species, type SpeciesPart } from './species';
 
-const CELL = 32;
-
-interface Bucket {
-  count: number;
+interface LodBatch {
+  meshes: THREE.InstancedMesh[];
   matrices: THREE.InstancedBufferAttribute;
   colors: THREE.InstancedBufferAttribute;
-  sphere: THREE.Sphere;
-  /** lodMeshes[lod] = meshes for that LOD's parts (created on first use). */
-  lodMeshes: (THREE.InstancedMesh[] | undefined)[];
-  lod: number;
-  variant: number;
+  count: number;
 }
 
 interface Group {
   rule: ScatterRuleDef;
   species: Species;
   lodDistances: number[];
-  buckets: Bucket[];
-  count: number;
+  n: number;
+  pos: Float32Array; // bounding-sphere centre per instance
+  radius: Float32Array; // bounding radius per instance (m)
+  matrices: Float32Array; // 16 per instance
+  colors: Float32Array; // 3 per instance
+  variant: Uint8Array;
+  /** batches[variant][lod] */
+  batches: (LodBatch | undefined)[][];
 }
 
 export interface ScatterStats {
@@ -37,12 +40,19 @@ export interface ScatterStats {
 
 export type SpeciesResolver = (meshId: string) => Species | null;
 
+const _frustum = new THREE.Frustum();
+const _proj = new THREE.Matrix4();
+const _wideCam = new THREE.PerspectiveCamera();
+const _sphere = new THREE.Sphere();
+const _dir = new THREE.Vector3();
+
 export class ScatterRenderer {
   readonly root = new THREE.Group();
   private groups: Group[] = [];
   private speciesCache = new Map<string, Species>();
   private quality: QualitySettings;
-  private lastCam = new THREE.Vector3(Infinity, 0, 0);
+  private lastPos = new THREE.Vector3(Infinity, 0, 0);
+  private lastDir = new THREE.Vector3();
   readonly stats: ScatterStats = { instances: 0, visibleInstances: 0, meshes: 0, visibleMeshes: 0 };
 
   constructor(
@@ -76,126 +86,172 @@ export class ScatterRenderer {
       const sp = this.species(r.rule.mesh);
       const nVar = sp.variants.length;
       const lodCount = sp.variants[0]!.length + (sp.impostor ? 1 : 0);
-      const buckets = new Map<string, number[]>();
-      for (let i = 0; i < r.count; i++) {
-        const x = r.data[i * STRIDE]!;
-        const z = r.data[i * STRIDE + 2]!;
-        const v = Math.min(nVar - 1, Math.floor(r.data[i * STRIDE + 7]! * nVar));
-        const k = `${Math.floor(x / CELL)},${Math.floor(z / CELL)},${v}`;
-        let b = buckets.get(k);
-        if (!b) buckets.set(k, (b = []));
-        b.push(i);
-      }
-      const defaults = [25, 60, 120, 400];
-      const group: Group = {
+      const n = r.count;
+      const g: Group = {
         rule: r.rule,
         species: sp,
-        lodDistances: (r.rule.lods ?? defaults).slice(0, Math.max(0, lodCount - 1)),
-        buckets: [],
-        count: r.count,
+        lodDistances: (r.rule.lods ?? [25, 60, 120, 400]).slice(0, Math.max(0, lodCount - 1)),
+        n,
+        pos: new Float32Array(n * 3),
+        radius: new Float32Array(n),
+        matrices: new Float32Array(n * 16),
+        colors: new Float32Array(n * 3),
+        variant: new Uint8Array(n),
+        batches: sp.variants.map(() => []),
       };
       const base = new THREE.Color(r.rule.color ?? '#ffffff');
       const variation = r.rule.colorVariation ?? 0.1;
-      for (const [key, idx] of buckets) {
-        const variant = Number(key.split(',')[2]);
-        const matrices = new THREE.InstancedBufferAttribute(new Float32Array(idx.length * 16), 16);
-        const colors = new THREE.InstancedBufferAttribute(new Float32Array(idx.length * 3), 3);
-        const box = new THREE.Box3();
-        idx.forEach((src, j) => {
-          const d = r.data.subarray(src * STRIDE, src * STRIDE + STRIDE);
-          p.set(d[0]!, d[1]!, d[2]!);
-          e.set(d[5]!, d[3]!, d[6]!, 'YXZ');
-          q.setFromEuler(e);
-          s.setScalar(d[4]!);
-          m.compose(p, q, s);
-          m.toArray(matrices.array, j * 16);
-          const v = (d[7]! * 7.31) % 1; // decorrelate from the variant choice
-          color.copy(base).multiplyScalar(1 - variation + v * variation * 2);
-          color.toArray(colors.array, j * 3);
-          box.expandByPoint(p);
-          box.expandByPoint(p.clone().setY(p.y + sp.height * d[4]!));
-        });
-        box.expandByScalar(sp.radius * (r.rule.scale[1] ?? 1));
-        const sphere = box.getBoundingSphere(new THREE.Sphere());
-        group.buckets.push({
-          count: idx.length,
-          matrices,
-          colors,
-          sphere,
-          lodMeshes: [],
-          lod: -1,
-          variant,
-        });
+      const extent = Math.max(sp.height, sp.radius * 2);
+      for (let i = 0; i < n; i++) {
+        const d = r.data.subarray(i * STRIDE, i * STRIDE + STRIDE);
+        p.set(d[0]!, d[1]!, d[2]!);
+        e.set(d[5]!, d[3]!, d[6]!, 'YXZ');
+        q.setFromEuler(e);
+        s.setScalar(d[4]!);
+        m.compose(p, q, s);
+        m.toArray(g.matrices, i * 16);
+        const v = (d[7]! * 7.31) % 1; // decorrelate tint from the variant choice
+        color.copy(base).multiplyScalar(1 - variation + v * variation * 2);
+        color.toArray(g.colors, i * 3);
+        g.pos[i * 3] = d[0]!;
+        g.pos[i * 3 + 1] = d[1]! + sp.height * d[4]! * 0.5;
+        g.pos[i * 3 + 2] = d[2]!;
+        g.radius[i] = extent * 0.6 * d[4]!;
+        g.variant[i] = Math.min(nVar - 1, Math.floor(d[7]! * nVar));
       }
-      this.groups.push(group);
+      this.groups.push(g);
     }
-    this.lastCam.set(Infinity, 0, 0);
-    this.stats.instances = this.groups.reduce((a, g) => a + g.count, 0);
-    this.stats.meshes = this.groups.reduce((a, g) => a + g.buckets.length, 0);
+    this.lastPos.set(Infinity, 0, 0);
+    this.stats.instances = this.groups.reduce((a, g) => a + g.n, 0);
   }
 
-  private meshesFor(g: Group, b: Bucket, lod: number): THREE.InstancedMesh[] {
-    let list = b.lodMeshes[lod];
-    if (list) return list;
-    const geoLods = g.species.variants[b.variant]!;
-    const parts: SpeciesPart[] =
-      lod < geoLods.length ? geoLods[lod]! : (g.species.impostor ?? geoLods[geoLods.length - 1]!);
-    list = parts.map((part) => {
-      const mesh = new THREE.InstancedMesh(part.geometry, part.material, b.count);
-      mesh.instanceMatrix = b.matrices;
-      mesh.instanceColor = b.colors;
-      mesh.boundingSphere = b.sphere;
-      mesh.castShadow = (g.rule.castShadow ?? false) && part.castShadow && lod < geoLods.length;
+  private batch(g: Group, variant: number, lod: number): LodBatch {
+    const existing = g.batches[variant]![lod];
+    if (existing) return existing;
+    let cap = 0;
+    for (let i = 0; i < g.n; i++) if (g.variant[i] === variant) cap++;
+    cap = Math.max(1, cap);
+    const matrices = new THREE.InstancedBufferAttribute(new Float32Array(cap * 16), 16);
+    const colors = new THREE.InstancedBufferAttribute(new Float32Array(cap * 3), 3);
+    matrices.setUsage(THREE.DynamicDrawUsage);
+    colors.setUsage(THREE.DynamicDrawUsage);
+    const geoLods = g.species.variants[variant]!;
+    const isImpostor = lod >= geoLods.length;
+    const parts: SpeciesPart[] = isImpostor
+      ? (g.species.impostor ?? geoLods[geoLods.length - 1]!)
+      : geoLods[lod]!;
+    const meshes = parts.map((part) => {
+      const mesh = new THREE.InstancedMesh(part.geometry, part.material, cap);
+      mesh.instanceMatrix = matrices;
+      mesh.instanceColor = colors;
+      mesh.frustumCulled = false; // culled per instance in update()
+      mesh.castShadow = (g.rule.castShadow ?? false) && part.castShadow && !isImpostor;
       mesh.receiveShadow = true;
-      mesh.name = `scatter:${g.rule.id}:v${b.variant}:lod${lod}`;
+      mesh.name = `scatter:${g.rule.id}:v${variant}:lod${lod}`;
+      mesh.count = 0;
       mesh.visible = false;
       this.root.add(mesh);
       return mesh;
     });
-    b.lodMeshes[lod] = list;
-    return list;
+    const b: LodBatch = { meshes, matrices, colors, count: 0 };
+    g.batches[variant]![lod] = b;
+    return b;
   }
 
   setQuality(q: QualitySettings): void {
     this.quality = q;
-    this.lastCam.set(Infinity, 0, 0);
+    this.lastPos.set(Infinity, 0, 0);
   }
 
-  /** LOD + distance culling per bucket; skipped if the camera barely moved. */
+  /** Re-batch when the camera moved > 0.75 m or turned > ~4°, or when forced. */
   update(camera: THREE.Camera, force = false): void {
-    const cam = camera.position;
-    if (!force && cam.distanceToSquared(this.lastCam) < 0.25) return;
-    this.lastCam.copy(cam);
+    const cam = camera as THREE.PerspectiveCamera;
+    cam.getWorldDirection(_dir);
+    if (
+      !force &&
+      cam.position.distanceToSquared(this.lastPos) < 0.56 &&
+      _dir.dot(this.lastDir) > 0.9975
+    )
+      return;
+    this.lastPos.copy(cam.position);
+    this.lastDir.copy(_dir);
+
+    // Widened frustum: the margin absorbs small turns between updates and keeps nearby
+    // off-screen shadow casters (their shadows can still fall into view).
+    _wideCam.copy(cam);
+    _wideCam.fov = Math.min(170, cam.fov * 1.35);
+    _wideCam.aspect = cam.aspect * 1.15;
+    _wideCam.clearViewOffset();
+    _wideCam.updateProjectionMatrix();
+    _wideCam.updateMatrixWorld();
+    _proj.multiplyMatrices(_wideCam.projectionMatrix, _wideCam.matrixWorldInverse);
+    _frustum.setFromProjectionMatrix(_proj);
+
     const q = this.quality;
     const ddScale = q.drawDistance / 160;
+    const cx = cam.position.x;
+    const cy = cam.position.y;
+    const cz = cam.position.z;
+    const nearKeep2 = 12 * 12; // always keep very close instances (shadows behind the camera)
     let visInst = 0;
     let visMesh = 0;
+    let meshes = 0;
     for (const g of this.groups) {
       const cull = Math.min(q.drawDistance, (g.rule.cullDistance ?? 1e9) * ddScale);
+      const cull2 = cull * cull;
       const maxLod = g.species.variants[0]!.length - 1 + (g.species.impostor ? 1 : 0);
-      for (const b of g.buckets) {
-        const d = Math.max(0, cam.distanceTo(b.sphere.center) - b.sphere.radius);
-        const visible = d < cull;
-        let lod = -1;
-        if (visible) {
-          const ld = d / q.lodBias;
-          lod = 0;
-          while (lod < g.lodDistances.length && ld > g.lodDistances[lod]!) lod++;
-          lod = Math.min(lod, maxLod);
+      const lodD2 = g.lodDistances.map((d) => (d * q.lodBias) ** 2);
+      for (const vb of g.batches) for (const b of vb) if (b) b.count = 0;
+      for (let i = 0; i < g.n; i++) {
+        const x = g.pos[i * 3]!;
+        const y = g.pos[i * 3 + 1]!;
+        const z = g.pos[i * 3 + 2]!;
+        const dx = x - cx;
+        const dy = y - cy;
+        const dz = z - cz;
+        const d2 = dx * dx + dy * dy + dz * dz;
+        if (d2 > cull2) continue;
+        if (d2 > nearKeep2) {
+          _sphere.center.set(x, y, z);
+          _sphere.radius = g.radius[i]!;
+          if (!_frustum.intersectsSphere(_sphere)) continue;
         }
-        if (lod !== b.lod) {
-          if (b.lod >= 0) for (const mesh of b.lodMeshes[b.lod] ?? []) mesh.visible = false;
-          if (lod >= 0) for (const mesh of this.meshesFor(g, b, lod)) mesh.visible = true;
-          b.lod = lod;
-        }
-        if (visible) {
-          visMesh += b.lodMeshes[lod]?.length ?? 0;
-          visInst += b.count;
+        let lod = 0;
+        while (lod < lodD2.length && d2 > lodD2[lod]!) lod++;
+        if (lod > maxLod) lod = maxLod;
+        const b = this.batch(g, g.variant[i]!, lod);
+        (b.matrices.array as Float32Array).set(
+          g.matrices.subarray(i * 16, i * 16 + 16),
+          b.count * 16,
+        );
+        (b.colors.array as Float32Array).set(g.colors.subarray(i * 3, i * 3 + 3), b.count * 3);
+        b.count++;
+        visInst++;
+      }
+      for (const vb of g.batches) {
+        for (const b of vb) {
+          if (!b) continue;
+          meshes += b.meshes.length;
+          const on = b.count > 0;
+          for (const mesh of b.meshes) {
+            mesh.count = b.count;
+            mesh.visible = on;
+          }
+          if (on) {
+            visMesh += b.meshes.length;
+            b.matrices.clearUpdateRanges();
+            b.matrices.addUpdateRange(0, b.count * 16);
+            b.matrices.needsUpdate = true;
+            b.colors.clearUpdateRanges();
+            b.colors.addUpdateRange(0, b.count * 3);
+            b.colors.needsUpdate = true;
+          }
         }
       }
     }
     this.stats.visibleInstances = visInst;
     this.stats.visibleMeshes = visMesh;
+    this.stats.meshes = meshes;
   }
 
   /** Instances of a rule, for collision proxies. */
@@ -221,13 +277,12 @@ export class ScatterRenderer {
 
   private clearInstances(): void {
     for (const g of this.groups) {
-      for (const b of g.buckets) {
-        for (const list of b.lodMeshes) for (const mesh of list ?? []) this.root.remove(mesh);
-        // Shared geometry/material belong to the species; instance buffers are freed with the
-        // meshes' WebGL attributes when the attribute objects are garbage collected — dispose
-        // explicitly via a throwaway mesh so WebGL buffers are released now.
-        const anyMesh = b.lodMeshes.find((l) => l && l.length > 0)?.[0];
-        anyMesh?.dispose();
+      for (const vb of g.batches) {
+        for (const b of vb) {
+          if (!b) continue;
+          for (const mesh of b.meshes) this.root.remove(mesh);
+          b.meshes[0]?.dispose(); // releases the shared instance buffers' GL objects
+        }
       }
     }
     this.groups = [];

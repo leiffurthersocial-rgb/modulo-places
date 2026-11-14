@@ -398,6 +398,7 @@ export class App {
       vignette: ph ? ph.vignette : (m?.vignette ?? 0.3),
       grain: ph ? ph.grain : q.lensFx ? 0.06 : 0,
       chromaticAberration: ph?.chromaticAberration ?? 0,
+      shafts: m?.shafts ?? 1,
       look: FILM_LOOKS[ph?.look ?? 'neutral'],
       dof: { enabled: !!ph?.dof, focusDistance: ph?.focusDistance ?? 10, ...lens },
       lensFx: forCapture || liveLensFx,

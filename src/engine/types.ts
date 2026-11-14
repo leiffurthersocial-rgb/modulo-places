@@ -119,7 +119,8 @@ export interface MoodDef {
     /** Angular disc size in degrees (visual only). */
     discSize?: number;
   };
-  ambient: { sky: ColorHex; ground: ColorHex; intensity: number };
+  /** ibl = environment-map (sky IBL) strength; default 0.5. */
+  ambient: { sky: ColorHex; ground: ColorHex; intensity: number; ibl?: number };
   fog: {
     color: ColorHex;
     /** Exponential density at height 0. */
@@ -139,6 +140,8 @@ export interface MoodDef {
     tint: number; // -1 (green) .. 1 (magenta)
     bloom: number; // intensity
     vignette: number; // 0..1
+    /** Light-shaft strength multiplier (0 = none, 1 = default); quality decides if shafts exist. */
+    shafts?: number;
   };
   /** Optional per-mood particle preset id ('mist', 'rain', 'snow', 'pollen', ...). */
   particles?: string[];
@@ -226,6 +229,8 @@ export interface ScatterRuleDef {
   collision?: 'none' | 'cylinder' | 'sphere';
   /** Collision radius at scale 1 (m); defaults to a fraction of the species footprint. */
   collisionRadius?: number;
+  /** Spatial bucket size (m) for culling/batching; default 64 for long-LOD rules, else 32. */
+  cell?: number;
   /** Bake a camera-facing impostor as the farthest LOD (trees). */
   impostor?: boolean;
   /** Main-bend wind amplitude (m at top) and leaf flutter for model species. */

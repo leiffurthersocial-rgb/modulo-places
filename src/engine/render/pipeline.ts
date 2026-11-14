@@ -37,6 +37,8 @@ export interface GradeInputs {
   vignette: number;
   grain: number;
   chromaticAberration: number;
+  /** Light-shaft strength (mood). */
+  shafts: number;
   look: LookParams;
   dof: { enabled: boolean; focusDistance: number; focusRange: number; bokehScale: number };
   /** Lens effects (vignette, grain, CA) — false while rendering capture tiles. */
@@ -274,6 +276,10 @@ export class RenderPipeline {
     e.vignette.darkness = vig;
     e.vignette.blendMode.opacity.value = g.lensFx ? 1 : 0;
     if (e.bloom) e.bloom.intensity = g.bloom;
+    if (e.rays) {
+      e.rays.godRaysMaterial.exposure = 0.6 * g.shafts;
+      e.rays.blendMode.opacity.value = g.shafts > 0.01 ? 1 : 0;
+    }
     if (e.noise) e.noise.blendMode.opacity.value = g.grain * 0.35;
     if (e.ca) e.ca.offset.set(g.chromaticAberration * 0.004, g.chromaticAberration * 0.004);
     if (e.dof) {
