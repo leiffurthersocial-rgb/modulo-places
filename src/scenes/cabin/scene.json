@@ -1,131 +1,965 @@
 {
   "id": "cabin",
-  "name": "Snowy Mountain Cabin (greybox)",
+  "name": "Snowy Mountain Cabin",
   "description": "Deep snow, pines and a lit window at blue hour.",
   "seed": 20261113,
   "terrain": {
-    "size": 220,
-    "resolution": 257,
+    "size": 230,
+    "resolution": 321,
     "source": {
       "type": "procedural"
     },
-    "height": 14,
-    "baseFrequency": 0.008,
+    "height": 34,
+    "baseFrequency": 0.0045,
     "octaves": 5,
-    "warp": 25,
+    "warp": 20,
     "flatten": [
       {
-        "x": 0,
-        "z": 30,
-        "radius": 14
+        "x": 0.0,
+        "z": -8.0,
+        "radius": 30,
+        "height": 0.4
+      },
+      {
+        "x": -38.0,
+        "z": 12.0,
+        "radius": 15,
+        "height": 3.2
+      }
+    ],
+    "paths": [
+      {
+        "points": [
+          [9, 47],
+          [6, 35],
+          [1.5, 24],
+          [-1.5, 13],
+          [0.4, 3],
+          [0, -2.2]
+        ],
+        "width": 1.5,
+        "layer": "trodden",
+        "smoothing": 1.0
+      },
+      {
+        "points": [
+          [-0.8, 8.5],
+          [-4.5, 2.2],
+          [-8.5, -2.2],
+          [-9.2, -4.6]
+        ],
+        "width": 1.2,
+        "layer": "trodden",
+        "smoothing": 1.0
+      },
+      {
+        "points": [
+          [3.4, -2.6],
+          [7.5, -6.5],
+          [11.5, -10.5],
+          [14.2, -11.8]
+        ],
+        "width": 1.1,
+        "layer": "trodden",
+        "smoothing": 1.0
       }
     ],
     "layers": [
       {
-        "id": "litter",
-        "material": "forest-litter",
-        "color": "#5e5034",
-        "roughness": 0.95,
-        "slope": [0, 24],
-        "noise": 0.6
-      },
-      {
-        "id": "moss",
-        "material": "forest-moss",
-        "color": "#4a5f2e",
-        "roughness": 0.9,
-        "slope": [0, 20],
-        "noise": 0.9
-      },
-      {
-        "id": "dirt",
-        "material": "forest-dirt",
-        "color": "#5a4632",
+        "id": "snow",
+        "material": "cabin/snow",
+        "scale": 3.0,
+        "surface": "snow",
+        "color": "#e9eff6",
         "roughness": 0.92,
-        "slope": [14, 40]
+        "slope": [0, 36],
+        "noise": 0.3
+      },
+      {
+        "id": "trodden",
+        "material": "cabin/trodden-snow",
+        "scale": 2.4,
+        "surface": "snow",
+        "color": "#b9c6d6",
+        "roughness": 0.85,
+        "slope": [88, 90]
+      },
+      {
+        "id": "snow-rock",
+        "material": "cabin/snow-rock",
+        "scale": 4.0,
+        "triplanar": true,
+        "surface": "rock",
+        "color": "#aeb5be",
+        "roughness": 0.8,
+        "slope": [30, 52],
+        "noise": 0.5
       },
       {
         "id": "rock",
-        "material": "forest-rock",
-        "color": "#6f6c65",
-        "roughness": 0.8,
-        "slope": [32, 90]
+        "material": "cabin/rock",
+        "scale": 5.0,
+        "triplanar": true,
+        "surface": "rock",
+        "color": "#5c5f66",
+        "roughness": 0.78,
+        "slope": [46, 90]
       }
     ]
   },
   "scatter": [
     {
-      "id": "conifers",
-      "mesh": "tree",
+      "id": "fir",
+      "mesh": "conifer:fir",
       "density": 2.2,
-      "minDistance": 4.5,
-      "scale": [0.8, 1.5],
-      "tilt": 3,
-      "sink": 0.2,
+      "minDistance": 4.8,
+      "scale": [0.8, 1.2],
+      "tilt": 2,
+      "sink": 0.3,
       "detail": false,
       "castShadow": true,
       "collision": "cylinder",
-      "lods": [30, 70, 130],
-      "color": "#ffffff",
-      "colorVariation": 0.12,
+      "collisionRadius": 0.35,
+      "impostor": true,
+      "wind": 0.3,
+      "flutter": 0.02,
+      "lods": [18, 40, 85],
+      "colorVariation": 0.08,
       "masks": [
         {
           "type": "slope",
-          "max": 34,
+          "max": 40,
           "soft": 4
+        },
+        {
+          "type": "layer",
+          "layer": "trodden",
+          "max": 0.35,
+          "soft": 0.15
         },
         {
           "type": "exclude",
           "x": 0,
-          "z": 30,
-          "radius": 7,
-          "soft": 3
+          "z": -8,
+          "radius": 17.0,
+          "soft": 8
+        },
+        {
+          "type": "exclude",
+          "x": -9,
+          "z": -4,
+          "radius": 9.0,
+          "soft": 5
+        },
+        {
+          "type": "exclude",
+          "x": 2,
+          "z": 12,
+          "radius": 8.0,
+          "soft": 6
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 26,
+          "radius": 5.5,
+          "soft": 5
+        },
+        {
+          "type": "exclude",
+          "x": 8,
+          "z": 40,
+          "radius": 4.5,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": -38.0,
+          "z": 12.0,
+          "radius": 10.0,
+          "soft": 5
+        },
+        {
+          "type": "exclude",
+          "x": 5.5,
+          "z": 29.0,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4.84,
+          "z": 24.55,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4.18,
+          "z": 20.1,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.52,
+          "z": 15.65,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.85,
+          "z": 11.2,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.19,
+          "z": 6.74,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.53,
+          "z": 2.29,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.87,
+          "z": -2.16,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.21,
+          "z": -6.61,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.5,
+          "z": 9.0,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -2.47,
+          "z": 4.62,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.44,
+          "z": 0.24,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.41,
+          "z": -4.14,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.6,
+          "z": 0.3,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.36,
+          "z": -4.03,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.0,
+          "z": 0.6,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -6.7,
+          "z": -3.0,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -9.4,
+          "z": -6.6,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -6.0,
+          "z": 27.0,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.62,
+          "z": 22.72,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.24,
+          "z": 18.43,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.86,
+          "z": 14.15,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.47,
+          "z": 9.87,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.91,
+          "z": 5.59,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.29,
+          "z": 1.3,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.67,
+          "z": -2.98,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.0,
+          "z": 6.0,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.91,
+          "z": 1.63,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.82,
+          "z": -2.73,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.27,
+          "z": -7.1,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.37,
+          "z": -11.46,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -2.46,
+          "z": -15.83,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.55,
+          "z": -20.19,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.64,
+          "z": -24.56,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -5.73,
+          "z": -28.93,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 9.0,
+          "z": 47.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 7.5,
+          "z": 41.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 6.0,
+          "z": 35.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 6.0,
+          "z": 35.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.75,
+          "z": 29.5,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 24.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 24.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.0,
+          "z": 18.5,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.5,
+          "z": 13.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.5,
+          "z": 13.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.55,
+          "z": 8.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.4,
+          "z": 3.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.4,
+          "z": 3.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.0,
+          "z": -2.2,
+          "radius": 3.2,
+          "soft": 1.5
         }
       ],
       "cluster": {
-        "frequency": 0.03,
+        "frequency": 0.025,
         "strength": 0.5
       }
     },
     {
-      "id": "broadleaf",
-      "mesh": "broadleaf",
-      "density": 0.9,
-      "minDistance": 6,
-      "scale": [0.8, 1.3],
-      "tilt": 4,
-      "sink": 0.2,
+      "id": "pine",
+      "mesh": "conifer:pine",
+      "density": 1.2,
+      "minDistance": 5.5,
+      "scale": [0.8, 1.2],
+      "tilt": 2,
+      "sink": 0.3,
       "detail": false,
       "castShadow": true,
       "collision": "cylinder",
-      "lods": [30, 70, 130],
-      "colorVariation": 0.15,
+      "collisionRadius": 0.3,
+      "impostor": true,
+      "wind": 0.3,
+      "flutter": 0.02,
+      "lods": [18, 40, 85],
+      "colorVariation": 0.08,
       "masks": [
         {
           "type": "slope",
-          "max": 26,
+          "max": 40,
           "soft": 4
+        },
+        {
+          "type": "layer",
+          "layer": "trodden",
+          "max": 0.35,
+          "soft": 0.15
         },
         {
           "type": "exclude",
           "x": 0,
-          "z": 30,
-          "radius": 8,
-          "soft": 3
+          "z": -8,
+          "radius": 17.0,
+          "soft": 8
+        },
+        {
+          "type": "exclude",
+          "x": -9,
+          "z": -4,
+          "radius": 9.0,
+          "soft": 5
+        },
+        {
+          "type": "exclude",
+          "x": 2,
+          "z": 12,
+          "radius": 8.0,
+          "soft": 6
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 26,
+          "radius": 5.5,
+          "soft": 5
+        },
+        {
+          "type": "exclude",
+          "x": 8,
+          "z": 40,
+          "radius": 4.5,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": -38.0,
+          "z": 12.0,
+          "radius": 10.0,
+          "soft": 5
+        },
+        {
+          "type": "exclude",
+          "x": 5.5,
+          "z": 29.0,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4.84,
+          "z": 24.55,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4.18,
+          "z": 20.1,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.52,
+          "z": 15.65,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.85,
+          "z": 11.2,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.19,
+          "z": 6.74,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.53,
+          "z": 2.29,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.87,
+          "z": -2.16,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.21,
+          "z": -6.61,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.5,
+          "z": 9.0,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -2.47,
+          "z": 4.62,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.44,
+          "z": 0.24,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.41,
+          "z": -4.14,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.6,
+          "z": 0.3,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.36,
+          "z": -4.03,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.0,
+          "z": 0.6,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -6.7,
+          "z": -3.0,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -9.4,
+          "z": -6.6,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -6.0,
+          "z": 27.0,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.62,
+          "z": 22.72,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.24,
+          "z": 18.43,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.86,
+          "z": 14.15,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.47,
+          "z": 9.87,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.91,
+          "z": 5.59,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.29,
+          "z": 1.3,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.67,
+          "z": -2.98,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.0,
+          "z": 6.0,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.91,
+          "z": 1.63,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.82,
+          "z": -2.73,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.27,
+          "z": -7.1,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.37,
+          "z": -11.46,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -2.46,
+          "z": -15.83,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.55,
+          "z": -20.19,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.64,
+          "z": -24.56,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -5.73,
+          "z": -28.93,
+          "radius": 2.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 9.0,
+          "z": 47.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 7.5,
+          "z": 41.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 6.0,
+          "z": 35.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 6.0,
+          "z": 35.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.75,
+          "z": 29.5,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 24.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 24.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.0,
+          "z": 18.5,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.5,
+          "z": 13.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.5,
+          "z": 13.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.55,
+          "z": 8.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.4,
+          "z": 3.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.4,
+          "z": 3.0,
+          "radius": 3.2,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.0,
+          "z": -2.2,
+          "radius": 3.2,
+          "soft": 1.5
         }
-      ]
+      ],
+      "cluster": {
+        "frequency": 0.025,
+        "strength": 0.5
+      }
     },
     {
-      "id": "bushes",
-      "mesh": "bush",
-      "density": 8,
-      "minDistance": 1.4,
-      "scale": [0.6, 1.4],
-      "alignToNormal": 0.5,
+      "id": "fir-sapling",
+      "mesh": "conifer:fir-sapling",
+      "density": 1.6,
+      "minDistance": 2.4,
+      "scale": [0.7, 1.3],
+      "tilt": 4,
+      "wind": 0.12,
+      "flutter": 0.02,
       "castShadow": true,
-      "lods": [18, 45],
-      "cullDistance": 110,
-      "colorVariation": 0.2,
+      "lods": [10, 25],
+      "cullDistance": 70,
       "masks": [
         {
           "type": "slope",
@@ -133,10 +967,1453 @@
           "soft": 4
         },
         {
+          "type": "layer",
+          "layer": "trodden",
+          "max": 0.35,
+          "soft": 0.15
+        },
+        {
           "type": "exclude",
           "x": 0,
-          "z": 34,
+          "z": -8,
+          "radius": 14.45,
+          "soft": 8
+        },
+        {
+          "type": "exclude",
+          "x": -9,
+          "z": -4,
+          "radius": 7.6499999999999995,
+          "soft": 5
+        },
+        {
+          "type": "exclude",
+          "x": 2,
+          "z": 12,
+          "radius": 6.8,
+          "soft": 6
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 26,
+          "radius": 4.675,
+          "soft": 5
+        },
+        {
+          "type": "exclude",
+          "x": 8,
+          "z": 40,
+          "radius": 3.8249999999999997,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": -38.0,
+          "z": 12.0,
+          "radius": 8.5,
+          "soft": 5
+        },
+        {
+          "type": "exclude",
+          "x": 5.5,
+          "z": 29.0,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4.84,
+          "z": 24.55,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4.18,
+          "z": 20.1,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.52,
+          "z": 15.65,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.85,
+          "z": 11.2,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.19,
+          "z": 6.74,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.53,
+          "z": 2.29,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.87,
+          "z": -2.16,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.21,
+          "z": -6.61,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.5,
+          "z": 9.0,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -2.47,
+          "z": 4.62,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.44,
+          "z": 0.24,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.41,
+          "z": -4.14,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.6,
+          "z": 0.3,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.36,
+          "z": -4.03,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.0,
+          "z": 0.6,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -6.7,
+          "z": -3.0,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -9.4,
+          "z": -6.6,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -6.0,
+          "z": 27.0,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.62,
+          "z": 22.72,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.24,
+          "z": 18.43,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.86,
+          "z": 14.15,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.47,
+          "z": 9.87,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.91,
+          "z": 5.59,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.29,
+          "z": 1.3,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.67,
+          "z": -2.98,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.0,
+          "z": 6.0,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.91,
+          "z": 1.63,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.82,
+          "z": -2.73,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.27,
+          "z": -7.1,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.37,
+          "z": -11.46,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -2.46,
+          "z": -15.83,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.55,
+          "z": -20.19,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.64,
+          "z": -24.56,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -5.73,
+          "z": -28.93,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 9.0,
+          "z": 47.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 7.5,
+          "z": 41.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 6.0,
+          "z": 35.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 6.0,
+          "z": 35.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.75,
+          "z": 29.5,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 24.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 24.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.0,
+          "z": 18.5,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.5,
+          "z": 13.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.5,
+          "z": 13.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.55,
+          "z": 8.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.4,
+          "z": 3.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.4,
+          "z": 3.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.0,
+          "z": -2.2,
+          "radius": 2.0,
+          "soft": 1.5
+        }
+      ],
+      "cluster": {
+        "frequency": 0.05,
+        "strength": 0.6
+      },
+      "impostor": false
+    },
+    {
+      "id": "pine-sapling",
+      "mesh": "conifer:pine-sapling",
+      "density": 1.0,
+      "minDistance": 2.4,
+      "scale": [0.7, 1.3],
+      "tilt": 4,
+      "wind": 0.12,
+      "flutter": 0.02,
+      "castShadow": true,
+      "lods": [10, 25],
+      "cullDistance": 65,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 32,
+          "soft": 4
+        },
+        {
+          "type": "layer",
+          "layer": "trodden",
+          "max": 0.35,
+          "soft": 0.15
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -8,
+          "radius": 14.45,
+          "soft": 8
+        },
+        {
+          "type": "exclude",
+          "x": -9,
+          "z": -4,
+          "radius": 7.6499999999999995,
+          "soft": 5
+        },
+        {
+          "type": "exclude",
+          "x": 2,
+          "z": 12,
+          "radius": 6.8,
+          "soft": 6
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 26,
+          "radius": 4.675,
+          "soft": 5
+        },
+        {
+          "type": "exclude",
+          "x": 8,
+          "z": 40,
+          "radius": 3.8249999999999997,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": -38.0,
+          "z": 12.0,
+          "radius": 8.5,
+          "soft": 5
+        },
+        {
+          "type": "exclude",
+          "x": 5.5,
+          "z": 29.0,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4.84,
+          "z": 24.55,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4.18,
+          "z": 20.1,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.52,
+          "z": 15.65,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.85,
+          "z": 11.2,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.19,
+          "z": 6.74,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.53,
+          "z": 2.29,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.87,
+          "z": -2.16,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.21,
+          "z": -6.61,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.5,
+          "z": 9.0,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -2.47,
+          "z": 4.62,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.44,
+          "z": 0.24,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.41,
+          "z": -4.14,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.6,
+          "z": 0.3,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.36,
+          "z": -4.03,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.0,
+          "z": 0.6,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -6.7,
+          "z": -3.0,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -9.4,
+          "z": -6.6,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -6.0,
+          "z": 27.0,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.62,
+          "z": 22.72,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.24,
+          "z": 18.43,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.86,
+          "z": 14.15,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.47,
+          "z": 9.87,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.91,
+          "z": 5.59,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.29,
+          "z": 1.3,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.67,
+          "z": -2.98,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.0,
+          "z": 6.0,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.91,
+          "z": 1.63,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.82,
+          "z": -2.73,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.27,
+          "z": -7.1,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.37,
+          "z": -11.46,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -2.46,
+          "z": -15.83,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.55,
+          "z": -20.19,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.64,
+          "z": -24.56,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -5.73,
+          "z": -28.93,
+          "radius": 1.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 9.0,
+          "z": 47.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 7.5,
+          "z": 41.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 6.0,
+          "z": 35.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 6.0,
+          "z": 35.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.75,
+          "z": 29.5,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 24.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 24.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.0,
+          "z": 18.5,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.5,
+          "z": 13.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.5,
+          "z": 13.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.55,
+          "z": 8.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.4,
+          "z": 3.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.4,
+          "z": 3.0,
+          "radius": 2.0,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.0,
+          "z": -2.2,
+          "radius": 2.0,
+          "soft": 1.5
+        }
+      ],
+      "cluster": {
+        "frequency": 0.05,
+        "strength": 0.6
+      },
+      "impostor": false
+    },
+    {
+      "id": "backdrop",
+      "mesh": "conifer:fir",
+      "density": 2.8,
+      "minDistance": 5,
+      "scale": [0.9, 1.3],
+      "sink": 0.3,
+      "detail": false,
+      "castShadow": false,
+      "impostor": true,
+      "wind": 0.3,
+      "lods": [1, 2, 3],
+      "cell": 64,
+      "masks": [
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 0,
+          "radius": 96,
+          "soft": 6
+        },
+        {
+          "type": "slope",
+          "max": 50,
+          "soft": 4
+        }
+      ]
+    },
+    {
+      "id": "boulders",
+      "mesh": "cabin:snowrock",
+      "density": 0.22,
+      "minDistance": 10,
+      "scale": [1.0, 2.4],
+      "tilt": 8,
+      "sink": 0.35,
+      "detail": false,
+      "castShadow": true,
+      "collision": "sphere",
+      "lods": [25, 60],
+      "cullDistance": 130,
+      "colorVariation": 0.06,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "trodden",
+          "max": 0.35,
+          "soft": 0.15
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -8,
+          "radius": 12,
+          "soft": 6
+        },
+        {
+          "type": "exclude",
+          "x": 2,
+          "z": 14,
           "radius": 4,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 7,
+          "z": 32,
+          "radius": 4,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 5.5,
+          "z": 29.0,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4.91,
+          "z": 25.04,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4.32,
+          "z": 21.09,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.74,
+          "z": 17.13,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.15,
+          "z": 13.17,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.56,
+          "z": 9.22,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.97,
+          "z": 5.26,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.38,
+          "z": 1.3,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.5,
+          "z": 9.0,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -2.58,
+          "z": 5.11,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.67,
+          "z": 1.21,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.75,
+          "z": -2.68,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.16,
+          "z": -6.57,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.6,
+          "z": 0.3,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.5,
+          "z": -3.55,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.0,
+          "z": 0.6,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -6.4,
+          "z": -2.6,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -8.8,
+          "z": -5.8,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -6.0,
+          "z": 27.0,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.77,
+          "z": 23.19,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.54,
+          "z": 19.39,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -2.32,
+          "z": 15.58,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.09,
+          "z": 11.77,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.14,
+          "z": 7.97,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.37,
+          "z": 4.16,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.6,
+          "z": 0.35,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.0,
+          "z": 6.0,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.03,
+          "z": 2.12,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.06,
+          "z": -1.76,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.09,
+          "z": -5.64,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.88,
+          "z": -9.52,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.85,
+          "z": -13.4,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -2.82,
+          "z": -17.28,
+          "radius": 3.6,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.79,
+          "z": -21.16,
+          "radius": 3.6,
+          "soft": 1.5
+        }
+      ],
+      "cluster": {
+        "frequency": 0.03,
+        "strength": 0.6
+      }
+    },
+    {
+      "id": "rocks",
+      "mesh": "cabin:snowrock",
+      "density": 1.0,
+      "minDistance": 3.2,
+      "scale": [0.3, 0.75],
+      "tilt": 14,
+      "alignToNormal": 0.6,
+      "sink": 0.1,
+      "detail": true,
+      "castShadow": true,
+      "lods": [14, 32],
+      "cullDistance": 70,
+      "colorVariation": 0.06,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "trodden",
+          "max": 0.35,
+          "soft": 0.15
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -8,
+          "radius": 11,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": 2,
+          "z": 14,
+          "radius": 3,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 7,
+          "z": 32,
+          "radius": 3,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 5.5,
+          "z": 29.0,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4.91,
+          "z": 25.04,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4.32,
+          "z": 21.09,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.74,
+          "z": 17.13,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.5,
+          "z": 9.0,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -2.58,
+          "z": 5.11,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.67,
+          "z": 1.21,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.75,
+          "z": -2.68,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.6,
+          "z": 0.3,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.5,
+          "z": -3.55,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.0,
+          "z": 0.6,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -6.4,
+          "z": -2.6,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -8.8,
+          "z": -5.8,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -6.0,
+          "z": 27.0,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.77,
+          "z": 23.19,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.54,
+          "z": 19.39,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -2.32,
+          "z": 15.58,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.0,
+          "z": 6.0,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.03,
+          "z": 2.12,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.06,
+          "z": -1.76,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.09,
+          "z": -5.64,
+          "radius": 1.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 9.0,
+          "z": 47.0,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 8.25,
+          "z": 44.0,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 7.5,
+          "z": 41.0,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 6.75,
+          "z": 38.0,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 6.0,
+          "z": 35.0,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 6.0,
+          "z": 35.0,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4.5,
+          "z": 31.33,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.0,
+          "z": 27.67,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 24.0,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 24.0,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.5,
+          "z": 20.33,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.5,
+          "z": 16.67,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.5,
+          "z": 13.0,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.5,
+          "z": 13.0,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.87,
+          "z": 9.67,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.23,
+          "z": 6.33,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.4,
+          "z": 3.0,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.4,
+          "z": 3.0,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.0,
+          "z": -2.2,
+          "radius": 1.8,
           "soft": 1.5
         }
       ],
@@ -146,332 +2423,923 @@
       }
     },
     {
-      "id": "rocks",
-      "mesh": "rock",
-      "density": 3,
-      "minDistance": 2,
-      "scale": [0.4, 1.6],
-      "tilt": 20,
-      "alignToNormal": 0.8,
-      "sink": 0.15,
-      "detail": false,
-      "castShadow": true,
-      "lods": [20, 50],
-      "cullDistance": 130,
-      "colorVariation": 0.12,
-      "cluster": {
-        "frequency": 0.04,
-        "strength": 0.6
-      },
+      "id": "drifts",
+      "mesh": "cabin:drift",
+      "density": 2.2,
+      "minDistance": 3.0,
+      "scale": [0.9, 2.2],
+      "sink": 0.08,
+      "detail": true,
+      "castShadow": false,
+      "lods": [20, 45],
+      "cullDistance": 85,
+      "colorVariation": 0.03,
       "masks": [
         {
-          "type": "exclude",
-          "x": 0,
-          "z": 34,
-          "radius": 2.5,
-          "soft": 1.5
-        }
-      ]
-    },
-    {
-      "id": "boulders",
-      "mesh": "boulder",
-      "density": 0.25,
-      "minDistance": 10,
-      "scale": [1.8, 3.5],
-      "tilt": 15,
-      "sink": 0.6,
-      "detail": false,
-      "castShadow": true,
-      "collision": "sphere",
-      "lods": [30, 80],
-      "colorVariation": 0.1
-    },
-    {
-      "id": "logs",
-      "mesh": "log",
-      "density": 0.35,
-      "minDistance": 7,
-      "scale": [0.7, 1.3],
-      "alignToNormal": 1,
-      "sink": 0.05,
-      "detail": false,
-      "castShadow": true,
-      "lods": [25],
-      "cullDistance": 110,
-      "masks": [
-        {
-          "type": "slope",
-          "max": 18
+          "type": "layer",
+          "layer": "trodden",
+          "max": 0.35,
+          "soft": 0.15
         },
         {
           "type": "exclude",
           "x": 0,
-          "z": 30,
-          "radius": 8
-        }
-      ]
-    },
-    {
-      "id": "stumps",
-      "mesh": "stump",
-      "density": 0.4,
-      "minDistance": 5,
-      "scale": [0.7, 1.3],
-      "sink": 0.05,
-      "detail": false,
-      "castShadow": true,
-      "cullDistance": 90
-    },
-    {
-      "id": "ferns",
-      "mesh": "fern",
-      "density": 40,
-      "minDistance": 0.6,
-      "scale": [0.6, 1.5],
-      "alignToNormal": 0.6,
-      "lods": [12, 28],
-      "cullDistance": 55,
-      "colorVariation": 0.2,
-      "masks": [
+          "z": -8,
+          "radius": 8.5,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": -9,
+          "z": -5,
+          "radius": 4.5,
+          "soft": 2
+        },
         {
           "type": "slope",
           "max": 30,
-          "soft": 4
-        },
-        {
-          "type": "noise",
-          "frequency": 0.04,
-          "threshold": 0.45,
-          "soft": 0.1
+          "soft": 6
         },
         {
           "type": "exclude",
-          "x": 0,
-          "z": 34,
-          "radius": 2.5,
+          "x": 5.5,
+          "z": 29.0,
+          "radius": 1.8,
           "soft": 1.5
-        }
-      ]
-    },
-    {
-      "id": "grass",
-      "mesh": "grass",
-      "density": 360,
-      "minDistance": 0,
-      "scale": [0.6, 1.4],
-      "alignToNormal": 0.7,
-      "lods": [10, 22],
-      "cullDistance": 38,
-      "colorVariation": 0.2,
-      "masks": [
-        {
-          "type": "slope",
-          "max": 28,
-          "soft": 4
-        },
-        {
-          "type": "noise",
-          "frequency": 0.03,
-          "threshold": 0.4,
-          "soft": 0.12,
-          "seedOffset": 3
         },
         {
           "type": "exclude",
-          "x": 0,
-          "z": 34,
-          "radius": 2.5,
+          "x": 5.06,
+          "z": 26.03,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4.62,
+          "z": 23.07,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4.18,
+          "z": 20.1,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.74,
+          "z": 17.13,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.29,
+          "z": 14.16,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.85,
+          "z": 11.2,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.41,
+          "z": 8.23,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.5,
+          "z": 9.0,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -2.81,
+          "z": 6.08,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -2.13,
+          "z": 3.16,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.44,
+          "z": 0.24,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.75,
+          "z": -2.68,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.06,
+          "z": -5.6,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.6,
+          "z": 0.3,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.78,
+          "z": -2.58,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.05,
+          "z": -5.47,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.0,
+          "z": 0.6,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -5.8,
+          "z": -1.8,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -7.6,
+          "z": -4.2,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -9.4,
+          "z": -6.6,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -6.0,
+          "z": 27.0,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -5.08,
+          "z": 24.14,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -4.16,
+          "z": 21.29,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -3.24,
+          "z": 18.43,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -2.32,
+          "z": 15.58,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.39,
+          "z": 12.72,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.47,
+          "z": 9.87,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.45,
+          "z": 7.01,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.0,
+          "z": 6.0,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.27,
+          "z": 3.09,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.54,
+          "z": 0.18,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.82,
+          "z": -2.73,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.09,
+          "z": -5.64,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.64,
+          "z": -8.55,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.37,
+          "z": -11.46,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -2.09,
+          "z": -14.37,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 9.0,
+          "z": 47.0,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 8.25,
+          "z": 44.0,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 7.5,
+          "z": 41.0,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 6.75,
+          "z": 38.0,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 6.0,
+          "z": 35.0,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 6.0,
+          "z": 35.0,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4.5,
+          "z": 31.33,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3.0,
+          "z": 27.67,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 24.0,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 24.0,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.5,
+          "z": 20.33,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.5,
+          "z": 16.67,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.5,
+          "z": 13.0,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -1.5,
+          "z": 13.0,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.87,
+          "z": 9.67,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -0.23,
+          "z": 6.33,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.4,
+          "z": 3.0,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.4,
+          "z": 3.0,
+          "radius": 2.4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.0,
+          "z": -2.2,
+          "radius": 2.4,
           "soft": 1.5
         }
       ],
       "cluster": {
-        "frequency": 0.08,
-        "strength": 0.5
+        "frequency": 0.06,
+        "strength": 0.7
       }
     },
     {
-      "id": "pebbles",
-      "mesh": "pebble",
-      "density": 80,
-      "minDistance": 0.25,
-      "scale": [0.5, 2],
-      "tilt": 30,
-      "alignToNormal": 1,
-      "lods": [8],
-      "cullDistance": 25,
-      "colorVariation": 0.2,
+      "id": "shrubs",
+      "mesh": "cabin:shrub",
+      "density": 3.0,
+      "minDistance": 2.2,
+      "scale": [0.7, 1.4],
+      "sink": 0.05,
+      "detail": true,
+      "castShadow": true,
+      "lods": [10, 25],
+      "cullDistance": 55,
+      "colorVariation": 0.1,
       "masks": [
+        {
+          "type": "layer",
+          "layer": "trodden",
+          "max": 0.35,
+          "soft": 0.15
+        },
+        {
+          "type": "slope",
+          "max": 34,
+          "soft": 4
+        },
         {
           "type": "exclude",
           "x": 0,
-          "z": 34,
-          "radius": 2.5,
-          "soft": 1.5
+          "z": -8,
+          "radius": 17,
+          "soft": 6
+        },
+        {
+          "type": "exclude",
+          "x": 2,
+          "z": 14,
+          "radius": 9,
+          "soft": 5
+        },
+        {
+          "type": "exclude",
+          "x": 7,
+          "z": 32,
+          "radius": 5,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": -38.0,
+          "z": 12.0,
+          "radius": 5,
+          "soft": 3
+        }
+      ],
+      "cluster": {
+        "frequency": 0.05,
+        "strength": 0.7
+      }
+    },
+    {
+      "id": "snowlogs",
+      "mesh": "cabin:snowlog",
+      "density": 0.35,
+      "minDistance": 8,
+      "scale": [0.8, 1.2],
+      "alignToNormal": 1,
+      "sink": 0.1,
+      "detail": false,
+      "castShadow": true,
+      "lods": [18, 40],
+      "cullDistance": 90,
+      "collision": "none",
+      "colorVariation": 0.06,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 22,
+          "soft": 4
+        },
+        {
+          "type": "layer",
+          "layer": "trodden",
+          "max": 0.35,
+          "soft": 0.15
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -8,
+          "radius": 18,
+          "soft": 6
+        },
+        {
+          "type": "exclude",
+          "x": 2,
+          "z": 14,
+          "radius": 8,
+          "soft": 4
         }
       ]
     }
   ],
-  "props": [],
+  "props": [
+    {
+      "id": "cabin",
+      "mesh": "cabin:house",
+      "position": [0.0, 0, -8.0],
+      "rotation": [0, 0, 0],
+      "collision": "box"
+    },
+    {
+      "id": "woodpile",
+      "mesh": "cabin:woodpile",
+      "position": [-9.4, 0, -6.6],
+      "rotation": [0, 6, 0],
+      "collision": "box"
+    },
+    {
+      "id": "chop-block",
+      "mesh": "cabin:chopblock",
+      "position": [-5.2, 0, -2.0],
+      "rotation": [0, 0, 0],
+      "collision": "cylinder"
+    },
+    {
+      "id": "shed",
+      "mesh": "cabin:shed",
+      "position": [14.5, 0, -13.5],
+      "rotation": [0, -42, 0],
+      "collision": "box"
+    },
+    {
+      "id": "fence-1",
+      "mesh": "cabin:fence",
+      "position": [6.94, 0, -1.07],
+      "rotation": [0, -72.8, 0],
+      "collision": "box"
+    },
+    {
+      "id": "fence-2",
+      "mesh": "cabin:fence",
+      "position": [7.81, 0, 1.8],
+      "rotation": [0, -73.7, 0],
+      "collision": "box"
+    },
+    {
+      "id": "fence-3",
+      "mesh": "cabin:fence",
+      "position": [8.39, 0, 4.73],
+      "rotation": [0, -83.8, 0],
+      "collision": "box"
+    },
+    {
+      "id": "drift-1",
+      "mesh": "cabin:drift",
+      "position": [-4.4, 0, -4.6],
+      "rotation": [0, 10, 0],
+      "scale": 1.2
+    },
+    {
+      "id": "drift-2",
+      "mesh": "cabin:drift",
+      "position": [4.6, 0, -4.4],
+      "rotation": [0, 70, 0],
+      "scale": 1.3
+    },
+    {
+      "id": "drift-3",
+      "mesh": "cabin:drift",
+      "position": [-5.6, 0, -9.0],
+      "rotation": [0, 30, 0],
+      "scale": 1.7
+    },
+    {
+      "id": "drift-4",
+      "mesh": "cabin:drift",
+      "position": [0, 0, -13.6],
+      "rotation": [0, 0, 0],
+      "scale": 2.4
+    },
+    {
+      "id": "drift-5",
+      "mesh": "cabin:drift",
+      "position": [-3.5, 0, -13.2],
+      "rotation": [0, 90, 0],
+      "scale": 1.8
+    },
+    {
+      "id": "drift-6",
+      "mesh": "cabin:drift",
+      "position": [5.8, 0, -12.4],
+      "rotation": [0, 40, 0],
+      "scale": 1.6
+    },
+    {
+      "id": "drift-7",
+      "mesh": "cabin:drift",
+      "position": [-12.4, 0, -6.0],
+      "rotation": [0, 120, 0],
+      "scale": 1.5
+    },
+    {
+      "id": "drift-8",
+      "mesh": "cabin:drift",
+      "position": [-9.6, 0, -8.6],
+      "rotation": [0, 0, 0],
+      "scale": 1.6
+    },
+    {
+      "id": "drift-9",
+      "mesh": "cabin:drift",
+      "position": [13.0, 0, -12.0],
+      "rotation": [0, 20, 0],
+      "scale": 1.3
+    },
+    {
+      "id": "drift-10",
+      "mesh": "cabin:drift",
+      "position": [16.4, 0, -14.8],
+      "rotation": [0, 50, 0],
+      "scale": 1.5
+    },
+    {
+      "id": "drift-11",
+      "mesh": "cabin:drift",
+      "position": [-2.4, 0, -2.1],
+      "rotation": [0, 0, 0],
+      "scale": 0.8
+    },
+    {
+      "id": "drift-12",
+      "mesh": "cabin:drift",
+      "position": [2.5, 0, -2.0],
+      "rotation": [0, 80, 0],
+      "scale": 0.8
+    },
+    {
+      "id": "drift-13",
+      "mesh": "cabin:drift",
+      "position": [8.0, 0, -6.5],
+      "rotation": [0, 15, 0],
+      "scale": 1.5
+    },
+    {
+      "id": "drift-14",
+      "mesh": "cabin:drift",
+      "position": [-7.6, 0, -4.2],
+      "rotation": [0, 0, 0],
+      "scale": 0.9
+    },
+    {
+      "id": "hollow-rock-1",
+      "mesh": "cabin:snowrock",
+      "position": [-29.53, -0.15, 15.58],
+      "rotation": [0, 0, 0]
+    },
+    {
+      "id": "hollow-rock-2",
+      "mesh": "cabin:snowrock",
+      "position": [-33.27, -0.15, 21.25],
+      "rotation": [0, 47, 0],
+      "scale": 1.45
+    },
+    {
+      "id": "hollow-rock-3",
+      "mesh": "cabin:snowrock",
+      "position": [-39.7, -0.15, 19.42],
+      "rotation": [0, 94, 0],
+      "scale": 1.9
+    },
+    {
+      "id": "hollow-rock-4",
+      "mesh": "cabin:snowrock",
+      "position": [-46.08, -0.15, 18.11],
+      "rotation": [0, 141, 0],
+      "scale": 1.225
+    },
+    {
+      "id": "hollow-rock-5",
+      "mesh": "cabin:snowrock",
+      "position": [-47.54, -0.15, 11.51],
+      "rotation": [0, 188, 0],
+      "scale": 1.675
+    },
+    {
+      "id": "hollow-rock-6",
+      "mesh": "cabin:snowrock",
+      "position": [-43.71, -0.15, 6.69],
+      "rotation": [0, 235, 0]
+    },
+    {
+      "id": "hollow-rock-7",
+      "mesh": "cabin:snowrock",
+      "position": [-39.32, -0.15, 1.37],
+      "rotation": [0, 282, 0],
+      "scale": 1.45
+    },
+    {
+      "id": "hollow-rock-8",
+      "mesh": "cabin:snowrock",
+      "position": [-33.33, -0.15, 4.79],
+      "rotation": [0, 329, 0],
+      "scale": 1.9
+    },
+    {
+      "id": "hollow-rock-9",
+      "mesh": "cabin:snowrock",
+      "position": [-29.87, -0.15, 9.5],
+      "rotation": [0, 376, 0],
+      "scale": 1.225
+    }
+  ],
   "spawn": {
-    "position": [0, 0, 34],
-    "yaw": 0
+    "position": [5.5, 0, 29],
+    "yaw": 0.148
   },
   "bounds": {
-    "walkRadius": 92,
+    "walkRadius": 95,
     "photoHalfExtent": 108,
     "photoMaxHeight": 70
   },
-  "defaultMood": "blue-hour",
   "moods": [
     {
+      "sky": {
+        "zenith": "#1c3768",
+        "horizon": "#9fb3d8",
+        "ground": "#34415e",
+        "stars": 0.3
+      },
+      "sun": {
+        "azimuth": 255,
+        "elevation": -1.5,
+        "color": "#ff9a6e",
+        "intensity": 0.5,
+        "discSize": 0.6
+      },
+      "ambient": {
+        "sky": "#6a8fd0",
+        "ground": "#3d4d70",
+        "intensity": 1.1,
+        "ibl": 0.6
+      },
+      "fog": {
+        "color": "#6d88b8",
+        "density": 0.005,
+        "heightFalloff": 0.05,
+        "baseHeight": 0,
+        "sunScatter": 0.1
+      },
+      "post": {
+        "exposure": 0.0,
+        "contrast": 0.14,
+        "saturation": 0.1,
+        "temperature": -0.2,
+        "tint": 0.0,
+        "bloom": 1.3,
+        "vignette": 0.35,
+        "nightLights": 1,
+        "shafts": 0
+      },
+      "particles": ["snow"],
+      "audio": "cabin-blue-hour",
       "id": "blue-hour",
-      "name": "Blue hour",
+      "name": "Blue hour"
+    },
+    {
       "sky": {
-        "zenith": "#4a7ab5",
-        "horizon": "#bcd0df",
-        "ground": "#5a5a50"
+        "zenith": "#2f6dbd",
+        "horizon": "#bcd8ee",
+        "ground": "#dde7f1"
       },
       "sun": {
-        "azimuth": 200,
-        "elevation": 58,
-        "color": "#fff3e2",
-        "intensity": 4.2,
+        "azimuth": 165,
+        "elevation": 33,
+        "color": "#fff3e0",
+        "intensity": 5.2,
         "discSize": 0.55
       },
       "ambient": {
-        "sky": "#a9c3e0",
-        "ground": "#4c4a3c",
-        "intensity": 0.9
+        "sky": "#a3c3ea",
+        "ground": "#c9d7e7",
+        "intensity": 1.1,
+        "ibl": 0.5
       },
       "fog": {
-        "color": "#b3c3d1",
-        "density": 0.008,
-        "heightFalloff": 0.05,
+        "color": "#bfd3e6",
+        "density": 0.0022,
+        "heightFalloff": 0.04,
         "baseHeight": 0,
-        "sunScatter": 0.2
+        "sunScatter": 0.15
       },
       "post": {
-        "exposure": -0.1,
-        "contrast": 0.05,
-        "saturation": 0.0,
-        "temperature": 0,
-        "tint": 0,
-        "bloom": 0.4,
-        "vignette": 0.25
+        "exposure": -0.3,
+        "contrast": 0.12,
+        "saturation": 0.05,
+        "temperature": 0.0,
+        "tint": 0.0,
+        "bloom": 0.25,
+        "vignette": 0.2,
+        "nightLights": 0,
+        "shafts": 0.3
       },
-      "particles": ["pollen"],
-      "audio": "cabin-blue-hour"
-    },
-    {
+      "audio": "cabin-midday",
       "id": "midday",
-      "name": "Midday",
-      "sky": {
-        "zenith": "#4a7ab5",
-        "horizon": "#bcd0df",
-        "ground": "#5a5a50"
-      },
-      "sun": {
-        "azimuth": 200,
-        "elevation": 58,
-        "color": "#fff3e2",
-        "intensity": 4.2,
-        "discSize": 0.55
-      },
-      "ambient": {
-        "sky": "#a9c3e0",
-        "ground": "#4c4a3c",
-        "intensity": 0.9
-      },
-      "fog": {
-        "color": "#b3c3d1",
-        "density": 0.008,
-        "heightFalloff": 0.05,
-        "baseHeight": 0,
-        "sunScatter": 0.2
-      },
-      "post": {
-        "exposure": -0.1,
-        "contrast": 0.05,
-        "saturation": 0.0,
-        "temperature": 0,
-        "tint": 0,
-        "bloom": 0.4,
-        "vignette": 0.25
-      },
-      "particles": ["pollen"],
-      "audio": "cabin-midday"
+      "name": "Midday"
     },
     {
-      "id": "aurora-night",
-      "name": "Aurora night",
       "sky": {
-        "zenith": "#4a7ab5",
-        "horizon": "#bcd0df",
-        "ground": "#5a5a50"
+        "zenith": "#040a1e",
+        "horizon": "#12254c",
+        "ground": "#0a1226",
+        "aurora": 1,
+        "stars": 1
       },
       "sun": {
-        "azimuth": 200,
-        "elevation": 58,
-        "color": "#fff3e2",
-        "intensity": 4.2,
-        "discSize": 0.55
+        "azimuth": 205,
+        "elevation": 52,
+        "color": "#a9c1ff",
+        "intensity": 0.7,
+        "discSize": 1.2
       },
       "ambient": {
-        "sky": "#a9c3e0",
-        "ground": "#4c4a3c",
-        "intensity": 0.9
+        "sky": "#3b5c9c",
+        "ground": "#1d2944",
+        "intensity": 0.6,
+        "ibl": 0.4
       },
       "fog": {
-        "color": "#b3c3d1",
-        "density": 0.008,
+        "color": "#17294f",
+        "density": 0.004,
         "heightFalloff": 0.05,
         "baseHeight": 0,
-        "sunScatter": 0.2
+        "sunScatter": 0.05
       },
       "post": {
-        "exposure": -0.1,
-        "contrast": 0.05,
-        "saturation": 0.0,
-        "temperature": 0,
-        "tint": 0,
-        "bloom": 0.4,
-        "vignette": 0.25
+        "exposure": 0.0,
+        "contrast": 0.14,
+        "saturation": 0.1,
+        "temperature": -0.15,
+        "tint": -0.1,
+        "bloom": 1.0,
+        "vignette": 0.35,
+        "nightLights": 1,
+        "shafts": 0
       },
-      "particles": ["pollen"],
-      "audio": "cabin-aurora-night"
+      "particles": ["snow"],
+      "audio": "cabin-aurora-night",
+      "id": "aurora-night",
+      "name": "Aurora night"
     }
   ],
+  "defaultMood": "blue-hour",
   "cameras": [
     {
       "id": "spawn",
-      "position": [0, 1.65, 34],
-      "target": [0, 1.5, 0]
+      "position": [5.5, 1.65, 29],
+      "target": [0, 2.8, -8]
     },
     {
-      "id": "glade",
-      "position": [6, 1.6, 24],
-      "target": [-20, 1.5, 40]
+      "id": "cabin-front",
+      "position": [-3.5, 1.65, 9.0],
+      "target": [0.5, 2.9, -8],
+      "fov": 50
     },
     {
-      "id": "low-grass",
-      "position": [-14, 0.45, 10],
-      "target": [-30, 0.6, -10]
+      "id": "porch",
+      "position": [1.6, 1.65, 0.3],
+      "target": [-0.2, 1.7, -6.0]
     },
     {
-      "id": "ridge",
-      "position": [40, 2.5, -40],
-      "target": [0, 2, 0]
+      "id": "woodpile",
+      "position": [-4.0, 1.65, 0.6],
+      "target": [-9.4, 1.0, -6.6]
     },
     {
-      "id": "into-sun",
-      "position": [-10, 1.65, 0],
-      "target": [30, 4, -20]
+      "id": "treeline",
+      "position": [-6, 1.65, 27],
+      "target": [4, 3.0, -4]
     },
     {
-      "id": "aerial",
-      "position": [0, 40, 90],
-      "target": [0, 0, 0]
+      "id": "sky",
+      "position": [3, 0.9, 6],
+      "target": [-6, 38, -30]
     }
   ]
 }
