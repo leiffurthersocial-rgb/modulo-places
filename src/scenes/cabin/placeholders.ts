@@ -1,10 +1,12 @@
-// Greybox species for the Snowy Mountain Cabin scene (registered before the scene loads).
-// Everything is procedural: vertex-coloured low-poly meshes with LOD chains. Real models and
-// textures replace these later; the ids (`cabin:*`) stay stable so scene.json keeps working.
+// Procedural species for the Snowy Mountain Cabin scene (registered before the scene loads).
+// Low-poly meshes with LOD chains, split per material: PBR parts use the scene's triplanar material
+// library (scene.json `materials`; world-space, no UVs) and fall back to vertex-coloured standard
+// materials when a pack material is unavailable. The ids (`cabin:*`) stay stable.
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { Noise2D, Rng } from '../../engine/core/random';
 import { patchMaterial } from '../../engine/render/materials';
+import { sceneMaterial } from '../../engine/render/sceneMaterials';
 import { registerPlaceholder, type Species, type SpeciesPart } from '../../engine/scatter/species';
 
 type V3 = [number, number, number];
@@ -158,13 +160,16 @@ interface PartSpec {
   shadow?: boolean;
 }
 
+/** Library materials are owned by the scene runtime; species must not dispose them. */
+const libraryUsed = new Set<THREE.Material>();
+
 function makeSpecies(variants: PartSpec[][][], height: number, radius: number): Species {
   const owned = new Set<Geo | THREE.Material>();
   const out: SpeciesPart[][][] = variants.map((lods) =>
     lods.map((parts) =>
       parts.map((p) => {
         owned.add(p.geo);
-        owned.add(p.mat);
+        if (!libraryUsed.has(p.mat)) owned.add(p.mat);
         return { geometry: p.geo, material: p.mat, castShadow: p.shadow ?? true };
       }),
     ),
@@ -172,13 +177,94 @@ function makeSpecies(variants: PartSpec[][][], height: number, radius: number): 
   return { variants: out, height, radius, owned: [...owned] };
 }
 
-/** Collect pieces of two material classes. */
-class Parts {
-  main: Geo[] = [];
-  glow: Geo[] = [];
-  mainMerged(): Geo {
-    return merge(this.main);
+type Kind = 'log' | 'plank' | 'snow' | 'stone' | 'bark' | 'dark';
+const KINDS: Kind[] = ['log', 'plank', 'stone', 'bark', 'snow', 'dark'];
+/** Pack material per kind; `dark` (iron, trim, cut wood, tinted bits) keeps vertex colours. */
+const KIND_LIB: Record<Exclude<Kind, 'dark'>, string> = {
+  log: 'cabin/log-wood',
+  plank: 'cabin/cabin-planks',
+  stone: 'cabin/rock',
+  bark: 'forest/bark',
+  snow: 'cabin/snow',
+};
+
+/** Per-species material set: library material when available, else a vertex-coloured fallback. */
+class MatSet {
+  private cache = new Map<Kind, THREE.Material>();
+  constructor(
+    private tag: string,
+    private rough = 0.9,
+  ) {}
+  get(kind: Kind): THREE.Material {
+    let m = this.cache.get(kind);
+    if (!m) {
+      const fb = stdMat(`cabin-${this.tag}-${kind}`, this.rough);
+      m = kind === 'dark' ? fb : sceneMaterial(KIND_LIB[kind], fb);
+      if (m !== fb) {
+        fb.dispose();
+        libraryUsed.add(m);
+      }
+      this.cache.set(kind, m);
+    }
+    return m;
   }
+}
+
+/** Geometry pieces bucketed by material kind (plus emissive glass). */
+class Parts {
+  b: Record<Kind, Geo[]> = { log: [], plank: [], stone: [], bark: [], snow: [], dark: [] };
+  glow: Geo[] = [];
+  add(kind: Kind, g: Geo): void {
+    this.b[kind].push(g);
+  }
+  /** One merged PartSpec per non-empty kind. */
+  specs(mats: MatSet, shadow = true): PartSpec[] {
+    const out: PartSpec[] = [];
+    for (const k of KINDS)
+      if (this.b[k].length) out.push({ geo: merge(this.b[k]), mat: mats.get(k), shadow });
+    return out;
+  }
+}
+
+/** Split a painted geometry by face: `test(nx, ny, nz)` true -> second geometry. */
+function splitFaces(g: Geo, test: (nx: number, ny: number, nz: number) => boolean): [Geo, Geo] {
+  const geo = g.index ? g.toNonIndexed() : g;
+  const pos = geo.attributes.position as THREE.BufferAttribute;
+  const nor = geo.attributes.normal as THREE.BufferAttribute;
+  const col3 = geo.attributes.color as THREE.BufferAttribute;
+  const sides: number[] = [];
+  const caps: number[] = [];
+  for (let t = 0; t < pos.count; t += 3) {
+    (test(nor.getX(t), nor.getY(t), nor.getZ(t)) ? caps : sides).push(t, t + 1, t + 2);
+  }
+  const pick = (ids: number[]): Geo => {
+    const o = new THREE.BufferGeometry();
+    for (const [name, a] of [
+      ['position', pos],
+      ['normal', nor],
+      ['color', col3],
+    ] as [string, THREE.BufferAttribute][]) {
+      const arr = new Float32Array(ids.length * 3);
+      ids.forEach((id, i) => {
+        arr[i * 3] = a.getX(id);
+        arr[i * 3 + 1] = a.getY(id);
+        arr[i * 3 + 2] = a.getZ(id);
+      });
+      o.setAttribute(name, new THREE.BufferAttribute(arr, 3));
+    }
+    return o;
+  };
+  return [pick(sides), pick(caps)];
+}
+
+/** Round log with pale cut ends: sides get the log texture, ends keep vertex-coloured end grain. */
+function addLog(P: Parts, kind: Kind, g: Geo, ai: 0 | 1 | 2): void {
+  const [sides, caps] = splitFaces(
+    g,
+    (nx, ny, nz) => Math.abs(ai === 0 ? nx : ai === 1 ? ny : nz) > 0.7,
+  );
+  P.add(kind, sides);
+  if (caps.attributes.position!.count) P.add('dark', caps);
 }
 
 // --- log walls ----------------------------------------------------------------------------------
@@ -253,7 +339,7 @@ const PITCH = (40 * Math.PI) / 180;
 const RIDGE_Y = WALL_TOP + (D / 2) * Math.tan(PITCH);
 const PORCH_Z = D / 2 + 2.1; // outer edge of the porch
 
-function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
+function buildHouse(lod: 0 | 1): Parts {
   const rng = new Rng(77);
   const P = new Parts();
   const seg = lod === 0 ? 10 : 6;
@@ -278,7 +364,7 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
       [-hz, backOpen],
     ] as [number, Opening[]][]) {
       for (const [a, b] of cutRanges(-hx - ext, hx + ext, y, LOG_R, open))
-        P.main.push(logPiece('x', plane, a, b, y, LOG_R, seg, rng));
+        addLog(P, 'log', logPiece('x', plane, a, b, y, LOG_R, seg, rng), 0);
     }
   }
   // Side walls continue up into the gable, shortening as the roof closes in.
@@ -292,7 +378,7 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
       [-hx, [] as Opening[]],
     ] as [number, Opening[]][]) {
       for (const [a, b] of cutRanges(-half, half, y, LOG_R, open))
-        P.main.push(logPiece('z', plane, a, b, y, LOG_R, seg, rng));
+        addLog(P, 'log', logPiece('z', plane, a, b, y, LOG_R, seg, rng), 2);
     }
   }
 
@@ -305,7 +391,7 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
         const mid = a + w / 2;
         const sz: V3 = axis === 'x' ? [w - 0.02, h, 0.62] : [0.62, h, w - 0.02];
         const pos: V3 = axis === 'x' ? [mid, y, plane] : [plane, y, mid];
-        P.main.push(flat(boxG(sz, pos), STONE[rng.int(0, STONE.length - 1)]!, rng, 0.12, 0.08));
+        P.add('stone', flat(boxG(sz, pos), STONE[rng.int(0, STONE.length - 1)]!, rng, 0.12, 0.08));
         a += w;
       }
     };
@@ -319,13 +405,14 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
       stoneRow('z', -hx, D + 0.4, y, h);
     }
   } else {
-    P.main.push(flat(boxG([W + 0.5, 0.9, D + 0.5], [0, BASE_Y - 0.4, 0]), STONE[0]!, rng));
+    P.add('stone', flat(boxG([W + 0.5, 0.9, D + 0.5], [0, BASE_Y - 0.4, 0]), STONE[0]!, rng));
   }
 
   // Door (front, centred) with plank detail and trim.
   const dz = hz - 0.02;
   for (let i = 0; i < 4; i++)
-    P.main.push(
+    P.add(
+      'plank',
       flat(
         boxG([0.24, 2.0, 0.09], [-0.375 + i * 0.25, BASE_Y + 1.0, dz]),
         i % 2 ? '#52331f' : '#4a2e1c',
@@ -333,13 +420,13 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
         0.1,
       ),
     );
-  P.main.push(flat(boxG([0.9, 0.08, 0.1], [0, BASE_Y + 0.5, dz + 0.01]), IRON, rng, 0));
-  P.main.push(flat(boxG([0.9, 0.08, 0.1], [0, BASE_Y + 1.6, dz + 0.01]), IRON, rng, 0));
-  P.main.push(flat(boxG([0.06, 0.2, 0.08], [0.35, BASE_Y + 1.0, dz + 0.08]), IRON, rng, 0));
+  P.add('dark', flat(boxG([0.9, 0.08, 0.1], [0, BASE_Y + 0.5, dz + 0.01]), IRON, rng, 0));
+  P.add('dark', flat(boxG([0.9, 0.08, 0.1], [0, BASE_Y + 1.6, dz + 0.01]), IRON, rng, 0));
+  P.add('dark', flat(boxG([0.06, 0.2, 0.08], [0.35, BASE_Y + 1.0, dz + 0.08]), IRON, rng, 0));
   // door frame
-  P.main.push(flat(boxG([0.1, 2.2, 0.18], [-0.58, BASE_Y + 1.05, hz + 0.04]), DARK_WOOD, rng));
-  P.main.push(flat(boxG([0.1, 2.2, 0.18], [0.58, BASE_Y + 1.05, hz + 0.04]), DARK_WOOD, rng));
-  P.main.push(flat(boxG([1.26, 0.12, 0.18], [0, BASE_Y + 2.1, hz + 0.04]), DARK_WOOD, rng));
+  P.add('plank', flat(boxG([0.1, 2.2, 0.18], [-0.58, BASE_Y + 1.05, hz + 0.04]), DARK_WOOD, rng));
+  P.add('plank', flat(boxG([0.1, 2.2, 0.18], [0.58, BASE_Y + 1.05, hz + 0.04]), DARK_WOOD, rng));
+  P.add('plank', flat(boxG([1.26, 0.12, 0.18], [0, BASE_Y + 2.1, hz + 0.04]), DARK_WOOD, rng));
 
   // Windows: dark trim, sill, glowing pane and muntins.
   const window3 = (
@@ -361,12 +448,12 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
       axis === 'z' ? [sa, sy, so] : [so, sy, sa];
     P.glow.push(boxG(sz(w, h, 0.05), at(0, ym, 0)));
     const t = 0.09;
-    P.main.push(flat(boxG(sz(w + 0.2, t, 0.16), at(0, y1 + t / 2, 0.05)), DARK_WOOD, rng));
-    P.main.push(flat(boxG(sz(w + 0.28, 0.1, 0.26), at(0, y0 - 0.05, 0.1)), PLANK[1]!, rng));
-    P.main.push(flat(boxG(sz(t, h, 0.16), at(-w / 2 - t / 2 + 0.0, ym, 0.05)), DARK_WOOD, rng));
-    P.main.push(flat(boxG(sz(t, h, 0.16), at(w / 2 + t / 2, ym, 0.05)), DARK_WOOD, rng));
-    P.main.push(flat(boxG(sz(0.05, h, 0.09), at(0, ym, 0.03)), DARK_WOOD, rng));
-    P.main.push(flat(boxG(sz(w, 0.05, 0.09), at(0, ym, 0.03)), DARK_WOOD, rng));
+    P.add('plank', flat(boxG(sz(w + 0.2, t, 0.16), at(0, y1 + t / 2, 0.05)), DARK_WOOD, rng));
+    P.add('plank', flat(boxG(sz(w + 0.28, 0.1, 0.26), at(0, y0 - 0.05, 0.1)), PLANK[1]!, rng));
+    P.add('plank', flat(boxG(sz(t, h, 0.16), at(-w / 2 - t / 2 + 0.0, ym, 0.05)), DARK_WOOD, rng));
+    P.add('plank', flat(boxG(sz(t, h, 0.16), at(w / 2 + t / 2, ym, 0.05)), DARK_WOOD, rng));
+    P.add('plank', flat(boxG(sz(0.05, h, 0.09), at(0, ym, 0.03)), DARK_WOOD, rng));
+    P.add('plank', flat(boxG(sz(w, 0.05, 0.09), at(0, ym, 0.03)), DARK_WOOD, rng));
   };
   window3('z', hz, 1, 1.85, 2.85, 1.15, 2.05);
   window3('z', hz, 1, -2.85, -1.85, 1.15, 2.05);
@@ -381,7 +468,8 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
     const pw = 0.17;
     for (let i = 0; i * pw < 5.4; i++) {
       const x = -2.7 + pw / 2 + i * pw;
-      P.main.push(
+      P.add(
+        'plank',
         flat(
           boxG([pw - 0.02, 0.1, deckLen], [x, deckTop - 0.05, deckZ0 + deckLen / 2]),
           PLANK[rng.int(0, 3)]!,
@@ -391,27 +479,32 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
       );
     }
   } else {
-    P.main.push(
+    P.add(
+      'plank',
       flat(boxG([5.4, 0.1, deckLen], [0, deckTop - 0.05, deckZ0 + deckLen / 2]), PLANK[0]!, rng),
     );
   }
-  P.main.push(flat(boxG([5.4, 0.5, 0.14], [0, deckTop - 0.3, PORCH_Z - 0.05]), PLANK[3]!, rng));
-  P.main.push(
+  P.add('plank', flat(boxG([5.4, 0.5, 0.14], [0, deckTop - 0.3, PORCH_Z - 0.05]), PLANK[3]!, rng));
+  P.add(
+    'plank',
     flat(boxG([0.14, 0.5, deckLen], [-2.7, deckTop - 0.3, deckZ0 + deckLen / 2]), PLANK[3]!, rng),
   );
-  P.main.push(
+  P.add(
+    'plank',
     flat(boxG([0.14, 0.5, deckLen], [2.7, deckTop - 0.3, deckZ0 + deckLen / 2]), PLANK[3]!, rng),
   );
   // steps
   for (let i = 0; i < 2; i++) {
-    P.main.push(
+    P.add(
+      'plank',
       flat(
         boxG([1.7, 0.1, 0.34], [0, deckTop - 0.22 - i * 0.2, PORCH_Z + 0.2 + i * 0.32]),
         PLANK[2]!,
         rng,
       ),
     );
-    P.main.push(
+    P.add(
+      'plank',
       flat(
         boxG([1.7, 0.16, 0.06], [0, deckTop - 0.3 - i * 0.2, PORCH_Z + 0.35 + i * 0.32]),
         PLANK[3]!,
@@ -424,14 +517,15 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
   const postTop = 2.62;
   const postZ = PORCH_Z - 0.2;
   for (const x of postX)
-    P.main.push(
+    P.add(
+      'log',
       flat(
         boxG([0.17, postTop - deckTop, 0.17], [x, (postTop + deckTop) / 2, postZ]),
         LOG_COLORS[1]!,
         rng,
       ),
     );
-  P.main.push(flat(boxG([5.5, 0.2, 0.2], [0, postTop + 0.05, postZ]), LOG_COLORS[3]!, rng));
+  P.add('log', flat(boxG([5.5, 0.2, 0.2], [0, postTop + 0.05, postZ]), LOG_COLORS[3]!, rng));
   // railing
   const rails: [number, number][] = [
     [-2.55, -1.05],
@@ -439,23 +533,26 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
   ];
   for (const [a, b] of rails) {
     const mid = (a + b) / 2;
-    P.main.push(flat(boxG([b - a, 0.07, 0.07], [mid, 1.35, postZ]), PLANK[0]!, rng));
-    P.main.push(flat(boxG([b - a, 0.06, 0.06], [mid, 0.92, postZ]), PLANK[0]!, rng));
+    P.add('plank', flat(boxG([b - a, 0.07, 0.07], [mid, 1.35, postZ]), PLANK[0]!, rng));
+    P.add('plank', flat(boxG([b - a, 0.06, 0.06], [mid, 0.92, postZ]), PLANK[0]!, rng));
     if (lod === 0)
       for (let k = 1; k <= 3; k++)
-        P.main.push(
+        P.add(
+          'plank',
           flat(boxG([0.05, 0.9, 0.05], [a + ((b - a) * k) / 4, 0.9, postZ]), PLANK[1]!, rng),
         );
   }
   for (const x of [-2.55, 2.55]) {
-    P.main.push(
+    P.add(
+      'plank',
       flat(
         boxG([0.07, 0.07, deckLen - 0.2], [x, 1.35, deckZ0 + 0.1 + (deckLen - 0.2) / 2]),
         PLANK[0]!,
         rng,
       ),
     );
-    P.main.push(
+    P.add(
+      'plank',
       flat(
         boxG([0.06, 0.06, deckLen - 0.2], [x, 0.92, deckZ0 + 0.1 + (deckLen - 0.2) / 2]),
         PLANK[0]!,
@@ -465,10 +562,10 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
   }
   // porch lantern (glows at night)
   P.glow.push(boxG([0.2, 0.3, 0.2], [1.05, 2.1, postZ - 0.28]));
-  P.main.push(flat(boxG([0.26, 0.05, 0.26], [1.05, 2.28, postZ - 0.28]), IRON, rng, 0));
-  P.main.push(flat(boxG([0.26, 0.05, 0.26], [1.05, 1.94, postZ - 0.28]), IRON, rng, 0));
-  P.main.push(flat(boxG([0.04, 0.3, 0.04], [1.05, 2.43, postZ - 0.28]), IRON, rng, 0));
-  P.main.push(flat(boxG([0.04, 0.04, 0.3], [1.05, 2.5, postZ - 0.12]), IRON, rng, 0));
+  P.add('dark', flat(boxG([0.26, 0.05, 0.26], [1.05, 2.28, postZ - 0.28]), IRON, rng, 0));
+  P.add('dark', flat(boxG([0.26, 0.05, 0.26], [1.05, 1.94, postZ - 0.28]), IRON, rng, 0));
+  P.add('dark', flat(boxG([0.04, 0.3, 0.04], [1.05, 2.43, postZ - 0.28]), IRON, rng, 0));
+  P.add('dark', flat(boxG([0.04, 0.04, 0.3], [1.05, 2.5, postZ - 0.12]), IRON, rng, 0));
 
   // --- roof: boards + thick snow -----------------------------------------------------------------
   const tanP = Math.tan(PITCH);
@@ -512,8 +609,8 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
   const yEB = WALL_TOP - 0.62 * tanP;
   const roofBoard = (z1: number, y1: number) =>
     flat(slab(0, RIDGE_Y, z1, y1, roofW, boardT, -boardT / 2, 0), '#5a4330', rng, 0.1);
-  P.main.push(roofBoard(eaveF, yEF));
-  P.main.push(roofBoard(eaveB, yEB));
+  P.add('plank', roofBoard(eaveF, yEF));
+  P.add('plank', roofBoard(eaveB, yEB));
 
   // Snow on the main planes: lumpy chunks along x + eave roll.
   const chunks = lod === 0 ? 5 : 2;
@@ -532,7 +629,8 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
         -roofW / 2 + w * (k + 0.5),
         0.4,
       );
-      P.main.push(
+      P.add(
+        'snow',
         paint(g, (p, n) => {
           const k2 = 1 - 0.03 * noise.noise(p.x * 1.3, p.z * 1.7) - (n.y < 0.2 ? 0.06 : 0);
           const c = col(n.y < 0.5 ? SNOW_SHADE : SNOW);
@@ -549,7 +647,7 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
     [eaveB - 0.34, yEB - 0.14],
   ] as [number, number][]) {
     const g = cylG(0.26, 0.26, roofW + 0.5, lod === 0 ? 8 : 5, 'x', [0, y + 0.1, z]);
-    P.main.push(flat(g, SNOW, rng, 0.02, 0.02));
+    P.add('snow', flat(g, SNOW, rng, 0.02, 0.02));
   }
   {
     const g = new THREE.CylinderGeometry(0.5, 0.58, roofW + 0.5, lod === 0 ? 10 : 6).rotateZ(
@@ -557,7 +655,7 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
     );
     g.scale(1, 0.62, 1);
     g.translate(0, RIDGE_Y + 0.12, 0);
-    P.main.push(flat(g, SNOW, rng, 0.02, 0.02));
+    P.add('snow', flat(g, SNOW, rng, 0.02, 0.02));
   }
   // Porch roof: flatter skirt continuing from the front eave, with its own snow.
   {
@@ -567,11 +665,12 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
     const z1 = PORCH_Z + 0.25;
     const y1 = y0 - (z1 - z0) * Math.tan(skirtPitch);
     const sw = 5.9;
-    P.main.push(flat(slab(z0, y0, z1, y1, sw, boardT, -boardT / 2, 0), '#5a4330', rng, 0.1));
+    P.add('plank', flat(slab(z0, y0, z1, y1, sw, boardT, -boardT / 2, 0), '#5a4330', rng, 0.1));
     for (let k = 0; k < (lod === 0 ? 3 : 1); k++) {
       const w = sw / (lod === 0 ? 3 : 1);
       const t = 0.34 * (0.85 + rng.next() * 0.4);
-      P.main.push(
+      P.add(
+        'snow',
         paint(
           slab(z0, y0, z1, y1, w + 0.02, t, t / 2 + 0.01, -sw / 2 + w * (k + 0.5), 0.25),
           (p, n) => {
@@ -582,7 +681,8 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
         ),
       );
     }
-    P.main.push(
+    P.add(
+      'snow',
       flat(cylG(0.2, 0.2, sw + 0.4, 6, 'x', [0, y1 - 0.0, z1 + 0.22]), SNOW, rng, 0.02, 0.02),
     );
     // icicles
@@ -591,7 +691,10 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
         const x = -2.8 + k * 0.43 + rng.next() * 0.15;
         const len = 0.18 + rng.next() * 0.34;
         const g = new THREE.ConeGeometry(0.035, len, 5).rotateX(Math.PI);
-        P.main.push(flat(place(g, [x, y1 - 0.2 - len / 2, z1 + 0.34]), '#d4e8f6', rng, 0.04, 0.02));
+        P.add(
+          'dark',
+          flat(place(g, [x, y1 - 0.2 - len / 2, z1 + 0.34]), '#d4e8f6', rng, 0.04, 0.02),
+        );
       }
     }
   }
@@ -613,7 +716,8 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
       for (let b = 0; b < nb; b++) {
         const w = sx / nb;
         const off = (i % 2) * 0.05;
-        P.main.push(
+        P.add(
+          'stone',
           flat(
             boxG(
               [w - 0.015, rowH - 0.02, sz + (rng.next() - 0.5) * 0.04],
@@ -628,38 +732,38 @@ function buildHouse(lod: 0 | 1): { main: Geo; glow: Geo } {
       }
     }
     if (lod === 1) {
-      P.main.push(flat(boxG([1.5, 2.6, 1.7], [cx, 1.2, cz]), STONE[0]!, rng));
-      P.main.push(flat(boxG([1.05, topY - 2.5, 1.25], [cx, (topY + 2.5) / 2, cz]), STONE[1]!, rng));
+      P.add('stone', flat(boxG([1.5, 2.6, 1.7], [cx, 1.2, cz]), STONE[0]!, rng));
+      P.add(
+        'stone',
+        flat(boxG([1.05, topY - 2.5, 1.25], [cx, (topY + 2.5) / 2, cz]), STONE[1]!, rng),
+      );
     }
     void rows;
     // shoulder (snow ledge) where the hearth narrows + cap
-    P.main.push(flat(boxG([1.6, 0.16, 1.8], [cx, 2.55, cz]), SNOW, rng, 0.02, 0.02));
-    P.main.push(flat(boxG([1.35, 0.18, 1.55], [cx, topY + 0.08, cz]), STONE[3]!, rng));
-    P.main.push(flat(boxG([1.2, 0.22, 1.4], [cx, topY + 0.28, cz]), SNOW, rng, 0.02, 0.02));
-    P.main.push(flat(boxG([0.55, 0.2, 0.55], [cx, topY + 0.12, cz]), IRON, rng, 0));
+    P.add('snow', flat(boxG([1.6, 0.16, 1.8], [cx, 2.55, cz]), SNOW, rng, 0.02, 0.02));
+    P.add('stone', flat(boxG([1.35, 0.18, 1.55], [cx, topY + 0.08, cz]), STONE[3]!, rng));
+    P.add('snow', flat(boxG([1.2, 0.22, 1.4], [cx, topY + 0.28, cz]), SNOW, rng, 0.02, 0.02));
+    P.add('dark', flat(boxG([0.55, 0.2, 0.55], [cx, topY + 0.12, cz]), IRON, rng, 0));
   }
 
-  return { main: P.mainMerged(), glow: merge(P.glow) };
+  return P;
 }
 
 function houseSpecies(): Species {
-  const mat = stdMat('cabin-house', 0.88);
+  const mats = new MatSet('house', 0.88);
   const glow = glowMat();
   const lods = ([0, 1] as const).map((l) => {
-    const { main, glow: gl } = buildHouse(l);
-    return [
-      { geo: main, mat },
-      { geo: gl, mat: glow, shadow: false },
-    ] as PartSpec[];
+    const P = buildHouse(l);
+    return [...P.specs(mats), { geo: merge(P.glow), mat: glow, shadow: false }] as PartSpec[];
   });
   return makeSpecies([lods], RIDGE_Y + 1.6, 5);
 }
 
 // --- woodpile under a lean-to ---------------------------------------------------------------------
 
-function buildWoodpile(lod: 0 | 1): Geo {
+function buildWoodpile(lod: 0 | 1): Parts {
   const rng = new Rng(311);
-  const g: Geo[] = [];
+  const g = new Parts();
   const Wd = 3.4;
   const Dp = 1.6;
   const H = 1.9;
@@ -672,10 +776,11 @@ function buildWoodpile(lod: 0 | 1): Geo {
     [-Wd / 2, Dp / 2, hf],
     [Wd / 2, Dp / 2, hf],
   ] as V3[])
-    g.push(flat(boxG([0.14, h, 0.14], [x, h / 2, z]), LOG_COLORS[1]!, rng));
+    g.add('plank', flat(boxG([0.14, h, 0.14], [x, h / 2, z]), LOG_COLORS[1]!, rng));
   // back wall boards
   for (let i = 0; i < 9; i++)
-    g.push(
+    g.add(
+      'plank',
       flat(
         boxG(
           [Wd / 9 - 0.01, hb - 0.2, 0.05],
@@ -687,25 +792,27 @@ function buildWoodpile(lod: 0 | 1): Geo {
       ),
     );
   // floor pallet
-  g.push(flat(boxG([Wd - 0.1, 0.12, Dp - 0.1], [0, 0.06, 0]), '#5b4a37', rng));
+  g.add('plank', flat(boxG([Wd - 0.1, 0.12, Dp - 0.1], [0, 0.06, 0]), '#5b4a37', rng));
   // roof: tilted boards + snow slab
   const slope = Math.atan2(hb - hf, Dp);
   const roofL = Math.hypot(Dp, hb - hf) + 0.9;
   const roof = new THREE.BoxGeometry(Wd + 0.8, 0.09, roofL);
   roof.rotateX(slope);
   roof.translate(0, (hb + hf) / 2 + 0.06, 0.2);
-  g.push(flat(roof, '#4e3b2a', rng));
+  g.add('plank', flat(roof, '#4e3b2a', rng));
   const snow = new THREE.BoxGeometry(Wd + 0.95, 0.3, roofL + 0.1);
   snow.rotateX(slope);
   snow.translate(0, (hb + hf) / 2 + 0.26, 0.22);
-  g.push(
+  g.add(
+    'snow',
     paint(snow, (p, n) => {
       const c = col(n.y < 0.5 ? SNOW_SHADE : SNOW);
       const k = 1 - 0.03 * noise.noise(p.x * 1.2, p.z * 1.4);
       return [c[0] * k, c[1] * k, c[2] * k];
     }),
   );
-  g.push(
+  g.add(
+    'snow',
     flat(cylG(0.18, 0.18, Wd + 1.0, 6, 'x', [0, hf - 0.12, Dp / 2 + 0.62]), SNOW, rng, 0.02, 0.02),
   );
   // stacked split logs, end-grain facing +z
@@ -726,11 +833,14 @@ function buildWoodpile(lod: 0 | 1): Geo {
         const geo = cylG(rr, rr, len, seg, 'z', [x, y, -0.04 - (rng.next() - 0.5) * 0.06]);
         const base = col(['#8f6a45', '#7b5a3a', '#a2784c', '#6a4a30'][rng.int(0, 3)]!);
         const cut = col('#d8b680');
-        g.push(
+        addLog(
+          g,
+          'bark',
           paint(geo, (_p, n) => {
             const c2 = Math.abs(n.z) > 0.7 ? cut : base;
             return [c2[0], c2[1], c2[2]];
           }),
+          2,
         );
       }
     }
@@ -741,28 +851,31 @@ function buildWoodpile(lod: 0 | 1): Geo {
         0.1 + Math.floor(i / 3) * 0.17,
         Dp / 2 + 0.22,
       ]);
-      g.push(flat(geo, '#8c6a46', rng, 0.1));
+      g.add('bark', flat(geo, '#8c6a46', rng, 0.1));
     }
   } else {
-    g.push(flat(boxG([Wd - 0.2, 1.5, Dp - 0.2], [0, 0.85, 0]), '#8c6a46', rng));
+    g.add('bark', flat(boxG([Wd - 0.2, 1.5, Dp - 0.2], [0, 0.85, 0]), '#8c6a46', rng));
   }
   void H;
-  return merge(g);
+  return g;
 }
 
 // --- split-rail fence (one 3 m section; place several) -------------------------------------------
 
-function buildFence(lod: 0 | 1): Geo {
+function buildFence(lod: 0 | 1): Parts {
   const rng = new Rng(613);
-  const g: Geo[] = [];
+  const g = new Parts();
   const L = 3.0;
   const seg = lod === 0 ? 6 : 4;
   const snowCap = (x: number, y: number, rx: number, ry: number, rz: number) => {
     const s = lump([rx, ry, rz], lod === 0 ? 1 : 0, 0.18, 2, 5 + Math.floor(x * 7), [x, y, 0]);
-    g.push(paint(s, () => col(SNOW)));
+    g.add(
+      'snow',
+      paint(s, () => col(SNOW)),
+    );
   };
   for (const x of [-L / 2, L / 2]) {
-    g.push(flat(cylG(0.075, 0.09, 1.55, seg, 'y', [x, 0.45, 0]), LOG_COLORS[3]!, rng, 0.1));
+    g.add('plank', flat(cylG(0.075, 0.09, 1.55, seg, 'y', [x, 0.45, 0]), LOG_COLORS[3]!, rng, 0.1));
     // crossed leaning posts (the classic split-rail X)
     snowCap(x, 1.24, 0.17, 0.1, 0.17);
   }
@@ -773,30 +886,31 @@ function buildFence(lod: 0 | 1): Geo {
   ] as [number, number][]) {
     const rail = cylG(0.055, 0.055, L + 0.5, seg, 'x', [0, y, 0.0]);
     rail.rotateZ(ang);
-    g.push(flat(rail, LOG_COLORS[rng.int(0, 4)]!, rng, 0.1));
+    g.add('plank', flat(rail, LOG_COLORS[rng.int(0, 4)]!, rng, 0.1));
     if (y > 1) {
       snowCap(-0.7, y + 0.07, 0.65, 0.07, 0.11);
       snowCap(0.75, y + 0.07, 0.55, 0.06, 0.1);
     }
   }
-  return merge(g);
+  return g;
 }
 
 // --- small tool shed / outhouse ----------------------------------------------------------------
 
-function buildShed(lod: 0 | 1): Geo {
+function buildShed(lod: 0 | 1): Parts {
   const rng = new Rng(907);
-  const g: Geo[] = [];
+  const g = new Parts();
   const w = 1.7;
   const d = 1.5;
   const hf = 2.35; // front height
   const hb = 2.0;
-  g.push(flat(boxG([w + 0.3, 0.3, d + 0.3], [0, 0.0, 0]), STONE[0]!, rng));
+  g.add('stone', flat(boxG([w + 0.3, 0.3, d + 0.3], [0, 0.0, 0]), STONE[0]!, rng));
   const planks = lod === 0 ? 8 : 1;
   for (let i = 0; i < planks; i++) {
     const pw = w / planks;
     const x = -w / 2 + pw * (i + 0.5);
-    g.push(
+    g.add(
+      'plank',
       flat(
         boxG([pw - 0.01, hf - 0.1, 0.07], [x, (hf - 0.1) / 2 + 0.15, d / 2]),
         PLANK[i % 4]!,
@@ -804,7 +918,8 @@ function buildShed(lod: 0 | 1): Geo {
         0.1,
       ),
     ); // front
-    g.push(
+    g.add(
+      'plank',
       flat(
         boxG([pw - 0.01, hb - 0.1, 0.07], [x, (hb - 0.1) / 2 + 0.15, -d / 2]),
         PLANK[(i + 1) % 4]!,
@@ -818,7 +933,8 @@ function buildShed(lod: 0 | 1): Geo {
     const z = -d / 2 + pd * (i + 0.5);
     const hh = hb + ((hf - hb) * (z + d / 2)) / d;
     for (const sx of [-1, 1])
-      g.push(
+      g.add(
+        'plank',
         flat(
           boxG([0.07, hh - 0.1, pd - 0.01], [sx * (w / 2), (hh - 0.1) / 2 + 0.15, z]),
           PLANK[(i + 2) % 4]!,
@@ -828,59 +944,70 @@ function buildShed(lod: 0 | 1): Geo {
       );
   }
   // door (front, slightly darker) + latch + little moon-ish vent
-  g.push(flat(boxG([0.8, 1.7, 0.08], [0.0, 1.0, d / 2 + 0.05]), '#503520', rng, 0.05));
-  g.push(flat(boxG([0.07, 0.2, 0.09], [0.28, 1.0, d / 2 + 0.11]), IRON, rng, 0));
-  g.push(flat(boxG([0.3, 0.2, 0.09], [0.0, 1.65, d / 2 + 0.1]), DARK_WOOD, rng, 0));
+  g.add('plank', flat(boxG([0.8, 1.7, 0.08], [0.0, 1.0, d / 2 + 0.05]), '#503520', rng, 0.05));
+  g.add('dark', flat(boxG([0.07, 0.2, 0.09], [0.28, 1.0, d / 2 + 0.11]), IRON, rng, 0));
+  g.add('plank', flat(boxG([0.3, 0.2, 0.09], [0.0, 1.65, d / 2 + 0.1]), DARK_WOOD, rng, 0));
   // mono-pitch roof + thick snow
   const slope = Math.atan2(hf - hb, d);
   const roofL = Math.hypot(d, hf - hb) + 0.5;
   const roof = new THREE.BoxGeometry(w + 0.5, 0.08, roofL);
   roof.rotateX(slope);
   roof.translate(0, (hf + hb) / 2 + 0.25, 0.08);
-  g.push(flat(roof, '#4e3b2a', rng));
+  g.add('plank', flat(roof, '#4e3b2a', rng));
   const snow = new THREE.BoxGeometry(w + 0.6, 0.36, roofL + 0.1);
   snow.rotateX(slope);
   snow.translate(0, (hf + hb) / 2 + 0.47, 0.1);
-  g.push(paint(snow, (_p, n) => col(n.y < 0.5 ? SNOW_SHADE : SNOW)));
-  g.push(
+  g.add(
+    'snow',
+    paint(snow, (_p, n) => col(n.y < 0.5 ? SNOW_SHADE : SNOW)),
+  );
+  g.add(
+    'snow',
     flat(cylG(0.2, 0.2, w + 0.7, 6, 'x', [0, hf - 0.02, d / 2 + 0.36]), SNOW, rng, 0.02, 0.02),
   );
-  return merge(g);
+  return g;
 }
 
 // --- chopping block with axe ----------------------------------------------------------------------
 
-function buildChopBlock(lod: 0 | 1): Geo {
+function buildChopBlock(lod: 0 | 1): Parts {
   const rng = new Rng(1201);
-  const g: Geo[] = [];
+  const g = new Parts();
   const seg = lod === 0 ? 10 : 6;
   const block = cylG(0.34, 0.4, 0.55, seg, 'y', [0, 0.27, 0]);
   const bc = col('#7a5a3a');
   const cut = col('#cdaa74');
-  g.push(
+  addLog(
+    g,
+    'bark',
     paint(block, (_p, n) => {
       const c = n.y > 0.7 ? cut : bc;
       return [c[0], c[1], c[2]];
     }),
+    1,
   );
-  g.push(flat(lump([0.4, 0.07, 0.38], 1, 0.12, 2, 3, [0.02, 0.57, 0.0]), SNOW, rng, 0.02, 0.02));
+  g.add(
+    'snow',
+    flat(lump([0.4, 0.07, 0.38], 1, 0.12, 2, 3, [0.02, 0.57, 0.0]), SNOW, rng, 0.02, 0.02),
+  );
   // axe stuck in the block
-  g.push(
+  g.add(
+    'dark',
     flat(
       place(new THREE.CylinderGeometry(0.025, 0.03, 0.8, 5), [0.12, 0.88, 0.0], [0, 0, -0.35]),
       '#6a4b2c',
       rng,
     ),
   );
-  g.push(flat(boxG([0.18, 0.12, 0.04], [0.02, 1.2, 0.0], [0, 0, -0.35]), IRON, rng, 0));
+  g.add('dark', flat(boxG([0.18, 0.12, 0.04], [0.02, 1.2, 0.0], [0, 0, -0.35]), IRON, rng, 0));
   // split logs lying around
   for (let i = 0; i < 4; i++) {
     const a = i * 1.7;
     const geo = cylG(0.09, 0.09, 0.4, 6, 'x', [Math.cos(a) * 0.75, 0.09, Math.sin(a) * 0.7]);
     geo.rotateY(a);
-    g.push(flat(geo, '#8c6a46', rng, 0.12));
+    g.add('bark', flat(geo, '#8c6a46', rng, 0.12));
   }
-  return merge(g);
+  return g;
 }
 
 // --- rocks, drifts, shrubs, fallen logs -------------------------------------------------------------
@@ -905,14 +1032,21 @@ function snowRock(detail: number, seed: number, sx: number, sy: number, sz: numb
 }
 
 function rockSpecies(): Species {
-  const mat = stdMat('cabin-snowrock', 0.85);
+  const mats = new MatSet('snowrock', 0.85);
   const shapes: [number, number, number, number][] = [
     [21, 1.35, 0.85, 1.0],
     [37, 1.0, 1.0, 1.15],
     [53, 1.25, 0.7, 0.9],
   ];
   const variants = shapes.map(([seed, sx, sy, sz]) =>
-    [3, 2, 1].map((d) => [{ geo: snowRock(d, seed, sx, sy, sz), mat }] as PartSpec[]),
+    [3, 2, 1].map((d) => {
+      // Triplanar materials carry no per-vertex snow, so the up-facing facets become a snow part.
+      const [rock, cap] = splitFaces(snowRock(d, seed, sx, sy, sz), (_x, y) => y > 0.68);
+      const P = new Parts();
+      P.add('stone', rock);
+      P.add('snow', cap);
+      return P.specs(mats);
+    }),
   );
   return makeSpecies(variants, 1.0, 1.4);
 }
@@ -929,7 +1063,7 @@ function driftGeo(detail: number, seed: number, rx: number, rz: number): Geo {
 }
 
 function driftSpecies(): Species {
-  const mat = stdMat('cabin-drift', 0.95);
+  const mat = new MatSet('drift', 0.95).get('snow');
   const shapes: [number, number, number][] = [
     [5, 1.5, 1.0],
     [9, 1.2, 1.1],
@@ -975,37 +1109,41 @@ function shrubSpecies(): Species {
   return makeSpecies(variants, 0.9, 1.0);
 }
 
-function snowLogGeo(len: number, r: number, seg: number, seed: number): Geo {
+function snowLogGeo(len: number, r: number, seg: number, seed: number): Parts {
   const rng = new Rng(seed);
-  const parts: Geo[] = [];
+  const parts = new Parts();
   const log = cylG(r, r * 1.08, len, seg, 'x', [0, r * 0.9, 0]);
   const bc = col('#5f4630');
   const cut = col('#b99a6c');
-  parts.push(
+  addLog(
+    parts,
+    'bark',
     paint(log, (p, n) => {
       const c = Math.abs(n.x) > 0.7 ? cut : bc;
       const k = 1 + 0.12 * noise.noise(p.x * 2, p.z * 4);
       return [c[0] * k, c[1] * k, c[2] * k];
     }),
+    0,
   );
   const cap = lump([len * 0.46, r * 0.5, r * 0.85], seg > 5 ? 1 : 0, 0.15, 1.5, seed, [
     (rng.next() - 0.5) * 0.3,
     r * 1.6,
     0,
   ]);
-  parts.push(paint(cap, () => col(SNOW)));
-  return merge(parts);
+  parts.add(
+    'snow',
+    paint(cap, () => col(SNOW)),
+  );
+  return parts;
 }
 
 function snowLogSpecies(): Species {
-  const mat = stdMat('cabin-snowlog', 0.9);
+  const mats = new MatSet('snowlog', 0.9);
   const variants = [
     [4.5, 0.26, 3],
     [6.5, 0.32, 8],
     [3.2, 0.22, 12],
-  ].map(([len, r, s]) =>
-    [10, 6].map((seg, i) => [{ geo: snowLogGeo(len!, r!, seg, s! + i), mat }] as PartSpec[]),
-  );
+  ].map(([len, r, s]) => [10, 6].map((seg, i) => snowLogGeo(len!, r!, seg, s! + i).specs(mats)));
   return makeSpecies(variants, 0.9, 3);
 }
 
@@ -1013,13 +1151,13 @@ function snowLogSpecies(): Species {
 
 function simpleSpecies(
   key: string,
-  builder: (lod: 0 | 1) => Geo,
+  builder: (lod: 0 | 1) => Parts,
   height: number,
   radius: number,
   rough = 0.9,
 ): Species {
-  const mat = stdMat(key, rough);
-  const lods = ([0, 1] as const).map((l) => [{ geo: builder(l), mat }] as PartSpec[]);
+  const mats = new MatSet(key, rough);
+  const lods = ([0, 1] as const).map((l) => builder(l).specs(mats));
   return makeSpecies([lods], height, radius);
 }
 

@@ -3,6 +3,14 @@
   "name": "Snowy Mountain Cabin",
   "description": "Deep snow, pines and a lit window at blue hour.",
   "seed": 20261113,
+  "snowCover": 0.8,
+  "materials": {
+    "cabin/log-wood": { "scale": 1.2, "tint": "#e2d8cc" },
+    "cabin/cabin-planks": { "scale": 1.0, "tint": "#e6dccf" },
+    "cabin/rock": { "scale": 3, "tint": "#c4ccdc" },
+    "cabin/snow": { "scale": 2.5 },
+    "forest/bark": { "scale": 0.8 }
+  },
   "terrain": {
     "size": 230,
     "resolution": 321,
@@ -3209,7 +3217,7 @@
         "sunScatter": 0.1
       },
       "post": {
-        "exposure": 0.0,
+        "exposure": 0.35,
         "contrast": 0.14,
         "saturation": 0.1,
         "temperature": -0.2,
@@ -3243,7 +3251,7 @@
         "sky": "#a3c3ea",
         "ground": "#c9d7e7",
         "intensity": 1.1,
-        "ibl": 0.5
+        "ibl": 0.75
       },
       "fog": {
         "color": "#bfd3e6",
@@ -3253,7 +3261,7 @@
         "sunScatter": 0.15
       },
       "post": {
-        "exposure": -0.3,
+        "exposure": 0.45,
         "contrast": 0.12,
         "saturation": 0.05,
         "temperature": 0.0,
@@ -3298,7 +3306,7 @@
         "sunScatter": 0.05
       },
       "post": {
-        "exposure": 0.0,
+        "exposure": 0.3,
         "contrast": 0.14,
         "saturation": 0.1,
         "temperature": -0.15,
