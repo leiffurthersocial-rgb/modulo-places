@@ -84,7 +84,7 @@
         "material": "forest/dirt-path",
         "color": "#5a4632",
         "roughness": 0.92,
-        "slope": [26, 34],
+        "slope": [88, 90],
         "scale": 2.4,
         "surface": "dirt"
       },
@@ -135,6 +135,12 @@
           "layer": "moss",
           "max": 0.85,
           "soft": 0.1
+        },
+        {
+          "type": "layer",
+          "layer": "moss",
+          "max": 0.92,
+          "soft": 0.04
         }
       ],
       "cluster": {
@@ -170,6 +176,12 @@
           "layer": "path",
           "max": 0.35,
           "soft": 0.15
+        },
+        {
+          "type": "layer",
+          "layer": "moss",
+          "max": 0.92,
+          "soft": 0.04
         }
       ]
     },
@@ -224,6 +236,12 @@
           "layer": "path",
           "max": 0.35,
           "soft": 0.15
+        },
+        {
+          "type": "layer",
+          "layer": "moss",
+          "max": 0.92,
+          "soft": 0.04
         }
       ],
       "cluster": {
@@ -253,6 +271,12 @@
           "layer": "path",
           "max": 0.35,
           "soft": 0.15
+        },
+        {
+          "type": "layer",
+          "layer": "moss",
+          "max": 0.92,
+          "soft": 0.04
         }
       ]
     },
@@ -376,9 +400,9 @@
     {
       "id": "rock-faces",
       "mesh": "model:forest/rock-face",
-      "density": 0.4,
+      "density": 0.25,
       "minDistance": 10,
-      "scale": [0.8, 1.5],
+      "scale": [0.5, 1.0],
       "alignToNormal": 0.9,
       "sink": 0.8,
       "detail": false,
@@ -387,8 +411,20 @@
       "masks": [
         {
           "type": "slope",
-          "min": 24,
+          "min": 30,
           "soft": 4
+        },
+        {
+          "type": "layer",
+          "layer": "moss",
+          "max": 0.3,
+          "soft": 0.1
+        },
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.3,
+          "soft": 0.1
         }
       ]
     },
@@ -409,6 +445,12 @@
           "layer": "path",
           "max": 0.35,
           "soft": 0.15
+        },
+        {
+          "type": "layer",
+          "layer": "moss",
+          "max": 0.92,
+          "soft": 0.04
         }
       ]
     },
@@ -429,6 +471,12 @@
           "layer": "path",
           "max": 0.35,
           "soft": 0.15
+        },
+        {
+          "type": "layer",
+          "layer": "moss",
+          "max": 0.92,
+          "soft": 0.04
         }
       ]
     },
@@ -486,6 +534,12 @@
           "layer": "path",
           "max": 0.35,
           "soft": 0.15
+        },
+        {
+          "type": "layer",
+          "layer": "moss",
+          "max": 0.92,
+          "soft": 0.04
         }
       ],
       "cluster": {
@@ -510,6 +564,12 @@
           "layer": "path",
           "max": 0.35,
           "soft": 0.15
+        },
+        {
+          "type": "layer",
+          "layer": "moss",
+          "max": 0.92,
+          "soft": 0.04
         }
       ]
     },

@@ -87,7 +87,9 @@ vec3 tNormal(sampler2D t, vec3 wp, vec3 wn, float scale, float tri) {
 const GLSL_LAYERS = /* glsl */ `
   vec3 tWn = normalize(vTNormal);
   vec2 sUv = (vTWorld.xz / uTerrainSize + 0.5) * (uSplatRes - 1.0) / uSplatRes + 0.5 / uSplatRes;
-  vec4 splat = texture(tSplat, sUv);
+  // Jitter the lookup by ~0.6 texel so the splat grid never shows as steps.
+  vec2 jit = (vec2(tNoise(vTWorld.xz * 1.7), tNoise(vTWorld.zx * 1.7 + 7.3)) - 0.5) * (1.2 / uSplatRes);
+  vec4 splat = texture(tSplat, sUv + jit);
   // Layer samples (anti-tiling only on the large flat ground layers 0..2).
   vec4 c0 = tSample(tC0, vTWorld, tWn, uScale.x, uTriplanar.x, 1.0);
   vec4 c1 = tSample(tC1, vTWorld, tWn, uScale.y, uTriplanar.y, 1.0);
@@ -100,7 +102,7 @@ const GLSL_LAYERS = /* glsl */ `
   // Height-based blend: AO (cavity) acts as a height proxy so moss fills cracks and rock tops poke out.
   vec4 h = splat * 1.6 + vec4(a0.r, a1.r, a2.r, a3.r) * 0.6;
   float hMax = max(max(h.x, h.y), max(h.z, h.w));
-  vec4 w = max(h - (hMax - 0.25), 0.0) * step(0.002, splat);
+  vec4 w = max(h - (hMax - 0.45), 0.0) * step(0.002, splat);
   w /= max(w.x + w.y + w.z + w.w, 1e-4);
   vec3 tAlbedo = c0.rgb * w.x + c1.rgb * w.y + c2.rgb * w.z + c3.rgb * w.w;
   vec3 tArm = a0.rgb * w.x + a1.rgb * w.y + a2.rgb * w.z + a3.rgb * w.w;

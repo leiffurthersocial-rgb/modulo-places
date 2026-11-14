@@ -364,7 +364,11 @@ export class SceneRuntime {
     if (this.envAge > (this.moods.blending || this.sky.fading ? 0.4 : Infinity) || !this.envRT) {
       this.envAge = 0;
       const prev = this.envRT;
+      // Forest-interior HDRIs light the scene but are not shown as the visible sky (wrong scale /
+      // resolution for a backdrop); the env capture sees them.
+      this.sky.uniforms.uHdriVisible.value = 1;
       this.envRT = pmrem.fromScene(this.envScene, 0, 0.1, 200);
+      this.sky.uniforms.uHdriVisible.value = 0;
       scene.environment = this.envRT.texture;
       prev?.dispose();
     }

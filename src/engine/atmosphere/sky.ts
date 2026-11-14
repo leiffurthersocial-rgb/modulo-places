@@ -57,6 +57,8 @@ export class Sky {
     uHdriWeightB: { value: 0 },
     uHdriIntensityA: { value: 1 },
     uHdriIntensityB: { value: 1 },
+    /** 0 = HDRI only lights the scene (via the env capture), 1 = HDRI also visible as background. */
+    uHdriVisible: { value: 0 },
   };
   private fade = { t: 1, dur: 1 };
 
@@ -88,7 +90,7 @@ export class Sky {
         uniform vec3 uZenith, uHorizon, uGround, uSunDir, uSunColor;
         uniform float uSunDisc, uSunIntensity, uHorizonFog;
         uniform sampler2D tHdriA, tHdriB;
-        uniform float uHdriRotA, uHdriRotB, uHdriMix, uHdriWeightA, uHdriWeightB, uHdriIntensityA, uHdriIntensityB;
+        uniform float uHdriVisible, uHdriRotA, uHdriRotB, uHdriMix, uHdriWeightA, uHdriWeightB, uHdriIntensityA, uHdriIntensityB;
         varying vec3 vDir;
         ${FOG_GLSL}
         vec3 rotY(vec3 d, float a) { float c = cos(a), s = sin(a); return vec3(d.x * c + d.z * s, d.y, -d.x * s + d.z * c); }
@@ -107,9 +109,10 @@ export class Sky {
         vec3 slot(sampler2D t, float rot, float w, float k, vec3 d, vec3 fallback) {
           if (w <= 0.0) return fallback;
           vec3 h = texture(t, eqUv(rotY(d, -rot))).rgb * k;
-          // Only the HDRI's sky: below the horizon its photographed ground would float in the
-          // distance, so fade to the analytic ground (which the horizon fog band then covers).
-          return mix(fallback, h, w * smoothstep(-0.05, 0.04, d.y));
+          // Only the HDRI's upper sky: near and below the horizon a photographed panorama shows its
+          // own trunks/ground at the wrong scale and resolution (a smeared wall). Our trees, the
+          // backdrop impostor ring and the fog own the horizon; the analytic gradient fills in.
+          return mix(fallback, h, w * uHdriVisible * smoothstep(-0.05, 0.04, d.y));
         }
         void main() {
           vec3 d = normalize(vDir);

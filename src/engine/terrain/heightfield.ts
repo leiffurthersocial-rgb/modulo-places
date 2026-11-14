@@ -76,12 +76,15 @@ function carve(hf: Heightfield, def: TerrainDef): void {
         const x = -size / 2 + ix * step;
         const z = -size / 2 + iz * step;
         const { d, t } = distToPolyline(pts, x, z);
-        const bank = w * 1.8;
-        if (d > bank) continue;
+        if (d > w * 2.2) continue;
         const k = Math.min(prof.length - 1, Math.round(t * (prof.length - 1)));
-        const bed = prof[k]! - def.creek.depth;
+        // Natural variation along the stream: pools, riffles, wider and narrower reaches.
+        const vary = Math.sin(t * 37.0) * 0.5 + Math.sin(t * 13.7 + 1.3) * 0.5;
+        const bed = prof[k]! - def.creek.depth * (0.75 + 0.35 * vary);
+        const wLocal = w * (0.8 + 0.3 * Math.sin(t * 23.0 + 0.7));
         // Smooth U-shaped channel: full depth in the middle, blending out over the banks.
-        const u = smoothstep(w * 0.25, bank, d);
+        const bank = wLocal * 1.8;
+        const u = smoothstep(wLocal * 0.25, bank, d);
         const i = iz * res + ix;
         heights[i] = Math.min(heights[i]!, bed * (1 - u) + heights[i]! * u);
       }

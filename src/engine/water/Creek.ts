@@ -138,12 +138,12 @@ vWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;`,
   float ndv = clamp(dot(vdir, upV), 0.0, 1.0);
   float fres = pow(1.0 - ndv, 3.0);
   float depthF = 1.0 - edge * edge; // 1 centre (deeper), 0 at the bank
-  float baseA = mix(0.05, 0.22, depthF);
+  float baseA = mix(0.22, 0.78, depthF); // forest creeks read dark: tannin-stained, shaded
   float a = mix(baseA, 0.92, fres);
   a *= smoothstep(1.0, 0.82, edge);
   // Deeper centre = darker green-brown, shallows lighter tan-green.
-  vec3 deep = vec3(0.025, 0.07, 0.04);
-  vec3 shallow = vec3(0.16, 0.17, 0.09);
+  vec3 deep = vec3(0.010, 0.026, 0.018);
+  vec3 shallow = vec3(0.07, 0.075, 0.045);
   vec3 col = mix(shallow, deep, depthF);
   if (uQ > 1.5) {
     // Cheap refraction stand-in: green tint + darkening of the bed in the channel centre.
@@ -226,8 +226,13 @@ export class Creek {
         uv.set([u, s.s], i * 2);
         aSlope[i] = slope[r]!;
         aTan.set([s.tx, s.tz], i * 2);
-        bedPos.set([x, o.groundHeight(x, z) + 0.015, z], i * 3);
-        bedUv.set([(u * ribbonW) / BED_TILE, s.s / BED_TILE], i * 2);
+        // The pebble bed only spans the wetted channel and always stays under the water surface,
+        // so it never cuts through the banks (the terrain and ribbon triangulate differently).
+        const bOff = off * 0.55;
+        const bx = s.x - s.tz * bOff;
+        const bz = s.z + s.tx * bOff;
+        bedPos.set([bx, Math.min(o.groundHeight(bx, bz) + 0.04, y - 0.03), bz], i * 3);
+        bedUv.set([(u * ribbonW * 0.55) / BED_TILE, s.s / BED_TILE], i * 2);
       }
     }
     const index = ribbonIndices(rows, COLS);
