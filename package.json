@@ -17,7 +17,8 @@
     "e2e": "playwright test --trace off",
     "postinstall": "patch-package && node scripts/copy-vendor.mjs",
     "assets:fetch": "NODE_USE_ENV_PROXY=1 NODE_NO_WARNINGS=1 tsx scripts/fetch-assets.ts",
-    "assets:process": "NODE_USE_ENV_PROXY=1 NODE_NO_WARNINGS=1 tsx scripts/process-assets.ts"
+    "assets:process": "NODE_USE_ENV_PROXY=1 NODE_NO_WARNINGS=1 tsx scripts/process-assets.ts",
+    "assets:bake-foliage": "NODE_OPTIONS=--max-old-space-size=12000 NODE_NO_WARNINGS=1 tsx scripts/bake-foliage.ts"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "^0.21.0",
