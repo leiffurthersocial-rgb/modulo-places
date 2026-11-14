@@ -567,6 +567,23 @@ function maxCoord(m: MeshBuf, axis: 0 | 1 | 2): number {
   return mx;
 }
 
+/** Zero-length normals (e.g. at a tapered trunk tip) become NaN in the shader and, through bloom,
+ * black out the whole frame. Point them up instead. */
+export function repairNormals(g: THREE.BufferGeometry): THREE.BufferGeometry {
+  const n = g.getAttribute('normal') as THREE.BufferAttribute | undefined;
+  if (!n) return g;
+  for (let i = 0; i < n.count; i++) {
+    const x = n.getX(i);
+    const y = n.getY(i);
+    const z = n.getZ(i);
+    const l = Math.hypot(x, y, z);
+    if (!(l > 1e-6)) n.setXYZ(i, 0, 1, 0);
+    else if (Math.abs(l - 1) > 1e-3) n.setXYZ(i, x / l, y / l, z / l);
+  }
+  n.needsUpdate = true;
+  return g;
+}
+
 export function buildConifer(p: ConiferParams, m: ConiferMaterials): BuiltModel {
   const H = p.height;
   const sapling = p.sapling ?? H < 4.5;
@@ -615,8 +632,8 @@ export function buildConifer(p: ConiferParams, m: ConiferMaterials): BuiltModel 
 
   return {
     parts: [
-      { geometry: trunk.mesh.toGeometry(), material: m.bark },
-      { geometry: foliage.mesh.toGeometry(), material: m.foliage },
+      { geometry: repairNormals(trunk.mesh.toGeometry()), material: m.bark },
+      { geometry: repairNormals(foliage.mesh.toGeometry()), material: m.foliage },
     ],
     height: H,
     radius,
@@ -834,7 +851,7 @@ export function buildLog(
     radius = Math.max(radius, Math.abs(m.pos[i]!));
     hmax = Math.max(hmax, m.pos[i + 1]!);
   }
-  return { parts: [{ geometry: m.toGeometry(true), material: mat }], height: hmax, radius };
+  return { parts: [{ geometry: repairNormals(m.toGeometry(true)), material: mat }], height: hmax, radius };
 }
 
 function mossBlendMaterial(

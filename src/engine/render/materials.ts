@@ -84,6 +84,8 @@ export function installFogChunks(): void {
   vec3 fogView = normalize(vFogWorldPos - cameraPosition);
   float fogF = heightFogAmount(cameraPosition, vFogWorldPos);
   gl_FragColor.rgb = mix(gl_FragColor.rgb, heightFogColor(fogView), fogF);
+  // Guard: one NaN/Inf pixel would spread through bloom's blur chain and black out the frame.
+  if (any(isnan(gl_FragColor)) || any(isinf(gl_FragColor))) gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
 #endif`;
 }
 

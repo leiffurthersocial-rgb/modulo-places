@@ -254,6 +254,8 @@ export interface PropDef {
 }
 
 export interface SceneDef {
+  /** Bark material keys for procedural trees/logs (fir, pine, log, moss). */
+  barks?: Partial<Record<'fir' | 'pine' | 'log' | 'moss', string>>;
   id: string;
   name: string;
   description: string;

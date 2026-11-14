@@ -6,6 +6,7 @@ import { AssetLoader, loadPackManifest, type Tier } from '../assets/AssetLoader'
 import { ParticleField, type ParticlePreset } from '../atmosphere/particles/Particles';
 import { findHdriSun, Sky } from '../atmosphere/sky';
 import { bakeImpostor, type Impostor } from '../scatter/impostor/Impostor';
+import { buildProceduralSpecies } from '../scatter/proceduralSpecies';
 import { type Species, speciesFromGltf } from '../scatter/species';
 import type { TerrainLayerMaps } from '../terrain/terrainMaterial';
 import { Creek } from '../water/Creek';
@@ -175,6 +176,29 @@ export class SceneRuntime {
   /** Load every model referenced by scatter rules ("model:<pack key>") and build species. */
   private async loadModelSpecies(renderer: THREE.WebGLRenderer, progress: Progress): Promise<void> {
     if (!this.assets) return;
+    const msaa0 = this.quality.aa === 'msaa' || this.quality.aa === 'msaa+smaa';
+    // Procedural species (conifers, logs).
+    const procRules = this.def.scatter.filter((r) => /^(conifer|log):/.test(r.mesh));
+    for (const meshId of [...new Set(procRules.map((r) => r.mesh))]) {
+      const rule = procRules.find((r) => r.mesh === meshId)!;
+      const sp = await buildProceduralSpecies(meshId, this.assets, {
+        tier: this.quality.textureTier as Tier,
+        anisotropy: this.quality.anisotropy,
+        alphaToCoverage: msaa0,
+        wind: rule.wind ?? 0,
+        flutter: rule.flutter ?? 0,
+        barks: { fir: 'forest/bark-knotted', pine: 'forest/bark-pine', log: 'forest/bark', moss: 'forest/moss', ...(this.def.barks ?? {}) },
+      });
+      if (!sp) continue;
+      if (procRules.some((r) => r.mesh === meshId && r.impostor) && this.quality.drawDistance > 60) {
+        const src = new THREE.Group();
+        for (const part of sp.variants[0]![0]!) src.add(new THREE.Mesh(part.geometry, part.material));
+        const imp = bakeImpostor(renderer, src, { views: 12, resolution: this.quality.textureTier >= 2048 ? 512 : 256 });
+        this.impostors.push(imp);
+        sp.impostor = [{ geometry: imp.geometry, material: imp.material, castShadow: false }];
+      }
+      this.modelSpecies.set(meshId, sp);
+    }
     const rules = this.def.scatter.filter((r) => r.mesh.startsWith('model:'));
     const keys = [...new Set(rules.map((r) => r.mesh))];
     let done = 0;

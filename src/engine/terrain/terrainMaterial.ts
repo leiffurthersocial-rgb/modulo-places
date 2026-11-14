@@ -147,7 +147,7 @@ export function createTerrainMaterial(o: TerrainMaterialOptions): THREE.MeshStan
       .replace('#include <map_fragment>', GLSL_LAYERS)
       .replace(
         '#include <roughnessmap_fragment>',
-        'float roughnessFactor = mix(clamp(tArm.g, 0.04, 1.0), 0.16, vWet * 0.85);',
+        'float roughnessFactor = mix(mix(0.6, 1.0, tArm.g), 0.16, vWet * 0.85); // natural ground is very rough; wet banks gloss up',
       )
       .replace('#include <metalnessmap_fragment>', 'float metalnessFactor = 0.0;')
       .replace(

@@ -103,10 +103,10 @@
   "scatter": [
     {
       "id": "fir",
-      "mesh": "model:forest/fir",
+      "mesh": "conifer:fir",
       "density": 1.4,
       "minDistance": 5.5,
-      "scale": [0.75, 1.15],
+      "scale": [0.8, 1.15],
       "tilt": 2,
       "sink": 0.3,
       "detail": false,
@@ -141,6 +141,48 @@
           "layer": "moss",
           "max": 0.92,
           "soft": 0.04
+        },
+        {
+          "type": "exclude",
+          "x": -6,
+          "z": 60,
+          "radius": 4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 4,
+          "radius": 4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 18,
+          "z": -2,
+          "radius": 4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -20,
+          "z": 20,
+          "radius": 4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -10,
+          "z": 30,
+          "radius": 4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 16,
+          "z": -30,
+          "radius": 4,
+          "soft": 1.5
         }
       ],
       "cluster": {
@@ -150,10 +192,10 @@
     },
     {
       "id": "pine",
-      "mesh": "model:forest/pine",
+      "mesh": "conifer:pine",
       "density": 0.7,
       "minDistance": 6,
-      "scale": [0.7, 1.1],
+      "scale": [0.8, 1.15],
       "tilt": 2,
       "sink": 0.3,
       "detail": false,
@@ -182,6 +224,48 @@
           "layer": "moss",
           "max": 0.92,
           "soft": 0.04
+        },
+        {
+          "type": "exclude",
+          "x": -6,
+          "z": 60,
+          "radius": 4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 4,
+          "radius": 4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 18,
+          "z": -2,
+          "radius": 4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -20,
+          "z": 20,
+          "radius": 4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -10,
+          "z": 30,
+          "radius": 4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 16,
+          "z": -30,
+          "radius": 4,
+          "soft": 1.5
         }
       ]
     },
@@ -211,15 +295,57 @@
           "layer": "path",
           "max": 0.35,
           "soft": 0.15
+        },
+        {
+          "type": "exclude",
+          "x": -6,
+          "z": 60,
+          "radius": 4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 4,
+          "radius": 4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 18,
+          "z": -2,
+          "radius": 4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -20,
+          "z": 20,
+          "radius": 4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -10,
+          "z": 30,
+          "radius": 4,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 16,
+          "z": -30,
+          "radius": 4,
+          "soft": 1.5
         }
       ]
     },
     {
       "id": "fir-sapling",
-      "mesh": "model:forest/fir-sapling",
+      "mesh": "conifer:fir-sapling",
       "density": 1.6,
       "minDistance": 2.5,
-      "scale": [0.6, 1.3],
+      "scale": [0.7, 1.3],
       "tilt": 4,
       "wind": 0.12,
       "flutter": 0.02,
@@ -242,19 +368,62 @@
           "layer": "moss",
           "max": 0.92,
           "soft": 0.04
+        },
+        {
+          "type": "exclude",
+          "x": -6,
+          "z": 60,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 4,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 18,
+          "z": -2,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -20,
+          "z": 20,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -10,
+          "z": 30,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 16,
+          "z": -30,
+          "radius": 2.5,
+          "soft": 1.5
         }
       ],
       "cluster": {
         "frequency": 0.05,
         "strength": 0.6
-      }
+      },
+      "impostor": false
     },
     {
       "id": "pine-sapling",
-      "mesh": "model:forest/pine-sapling",
+      "mesh": "conifer:pine-sapling",
       "density": 1.0,
       "minDistance": 2.5,
-      "scale": [0.6, 1.3],
+      "scale": [0.7, 1.3],
       "tilt": 4,
       "wind": 0.12,
       "flutter": 0.02,
@@ -277,8 +446,51 @@
           "layer": "moss",
           "max": 0.92,
           "soft": 0.04
+        },
+        {
+          "type": "exclude",
+          "x": -6,
+          "z": 60,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 4,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 18,
+          "z": -2,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -20,
+          "z": 20,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -10,
+          "z": 30,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 16,
+          "z": -30,
+          "radius": 2.5,
+          "soft": 1.5
         }
-      ]
+      ],
+      "impostor": false
     },
     {
       "id": "rocks-a",
@@ -299,6 +511,48 @@
           "layer": "path",
           "max": 0.35,
           "soft": 0.15
+        },
+        {
+          "type": "exclude",
+          "x": -6,
+          "z": 60,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 4,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 18,
+          "z": -2,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -20,
+          "z": 20,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -10,
+          "z": 30,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 16,
+          "z": -30,
+          "radius": 2.5,
+          "soft": 1.5
         }
       ],
       "cluster": {
@@ -325,6 +579,48 @@
           "layer": "path",
           "max": 0.35,
           "soft": 0.15
+        },
+        {
+          "type": "exclude",
+          "x": -6,
+          "z": 60,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 4,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 18,
+          "z": -2,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -20,
+          "z": 20,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -10,
+          "z": 30,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 16,
+          "z": -30,
+          "radius": 2.5,
+          "soft": 1.5
         }
       ],
       "cluster": {
@@ -350,6 +646,48 @@
           "layer": "path",
           "max": 0.35,
           "soft": 0.15
+        },
+        {
+          "type": "exclude",
+          "x": -6,
+          "z": 60,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 4,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 18,
+          "z": -2,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -20,
+          "z": 20,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -10,
+          "z": 30,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 16,
+          "z": -30,
+          "radius": 2.5,
+          "soft": 1.5
         }
       ]
     },
@@ -372,6 +710,48 @@
           "layer": "path",
           "max": 0.35,
           "soft": 0.15
+        },
+        {
+          "type": "exclude",
+          "x": -6,
+          "z": 60,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 4,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 18,
+          "z": -2,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -20,
+          "z": 20,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -10,
+          "z": 30,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 16,
+          "z": -30,
+          "radius": 2.5,
+          "soft": 1.5
         }
       ]
     },
@@ -394,37 +774,48 @@
           "layer": "path",
           "max": 0.35,
           "soft": 0.15
-        }
-      ]
-    },
-    {
-      "id": "rock-faces",
-      "mesh": "model:forest/rock-face",
-      "density": 0.25,
-      "minDistance": 10,
-      "scale": [0.5, 1.0],
-      "alignToNormal": 0.9,
-      "sink": 0.8,
-      "detail": false,
-      "castShadow": true,
-      "lods": [30, 80],
-      "masks": [
-        {
-          "type": "slope",
-          "min": 30,
-          "soft": 4
         },
         {
-          "type": "layer",
-          "layer": "moss",
-          "max": 0.3,
-          "soft": 0.1
+          "type": "exclude",
+          "x": -6,
+          "z": 60,
+          "radius": 2.5,
+          "soft": 1.5
         },
         {
-          "type": "layer",
-          "layer": "path",
-          "max": 0.3,
-          "soft": 0.1
+          "type": "exclude",
+          "x": 0,
+          "z": 4,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 18,
+          "z": -2,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -20,
+          "z": 20,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -10,
+          "z": 30,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 16,
+          "z": -30,
+          "radius": 2.5,
+          "soft": 1.5
         }
       ]
     },
@@ -451,6 +842,48 @@
           "layer": "moss",
           "max": 0.92,
           "soft": 0.04
+        },
+        {
+          "type": "exclude",
+          "x": -6,
+          "z": 60,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 4,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 18,
+          "z": -2,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -20,
+          "z": 20,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -10,
+          "z": 30,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 16,
+          "z": -30,
+          "radius": 2.5,
+          "soft": 1.5
         }
       ]
     },
@@ -477,6 +910,48 @@
           "layer": "moss",
           "max": 0.92,
           "soft": 0.04
+        },
+        {
+          "type": "exclude",
+          "x": -6,
+          "z": 60,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 4,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 18,
+          "z": -2,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -20,
+          "z": 20,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -10,
+          "z": 30,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 16,
+          "z": -30,
+          "radius": 2.5,
+          "soft": 1.5
         }
       ]
     },
@@ -540,6 +1015,48 @@
           "layer": "moss",
           "max": 0.92,
           "soft": 0.04
+        },
+        {
+          "type": "exclude",
+          "x": -6,
+          "z": 60,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 4,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 18,
+          "z": -2,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -20,
+          "z": 20,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -10,
+          "z": 30,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 16,
+          "z": -30,
+          "radius": 2.5,
+          "soft": 1.5
         }
       ],
       "cluster": {
@@ -570,6 +1087,48 @@
           "layer": "moss",
           "max": 0.92,
           "soft": 0.04
+        },
+        {
+          "type": "exclude",
+          "x": -6,
+          "z": 60,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 4,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 18,
+          "z": -2,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -20,
+          "z": 20,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -10,
+          "z": 30,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 16,
+          "z": -30,
+          "radius": 2.5,
+          "soft": 1.5
         }
       ]
     },
@@ -715,7 +1274,7 @@
     },
     {
       "id": "backdrop",
-      "mesh": "model:forest/fir",
+      "mesh": "conifer:fir",
       "density": 2.6,
       "minDistance": 5,
       "scale": [0.9, 1.3],
@@ -737,6 +1296,80 @@
         {
           "type": "slope",
           "max": 48
+        }
+      ]
+    },
+    {
+      "id": "logs",
+      "mesh": "log:oak",
+      "density": 0.3,
+      "minDistance": 9,
+      "scale": [0.8, 1.2],
+      "alignToNormal": 1,
+      "sink": 0.12,
+      "detail": false,
+      "castShadow": true,
+      "lods": [15, 40],
+      "cullDistance": 100,
+      "collision": "none",
+      "masks": [
+        {
+          "type": "slope",
+          "max": 20
+        },
+        {
+          "type": "layer",
+          "layer": "path",
+          "max": 0.35,
+          "soft": 0.15
+        },
+        {
+          "type": "layer",
+          "layer": "moss",
+          "max": 0.92,
+          "soft": 0.04
+        },
+        {
+          "type": "exclude",
+          "x": -6,
+          "z": 60,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 4,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 18,
+          "z": -2,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -20,
+          "z": 20,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": -10,
+          "z": 30,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 16,
+          "z": -30,
+          "radius": 2.5,
+          "soft": 1.5
         }
       ]
     }
@@ -774,8 +1407,8 @@
       "ambient": {
         "sky": "#b8c4d0",
         "ground": "#4a4a40",
-        "intensity": 0.8,
-        "ibl": 0.45
+        "intensity": 0.55,
+        "ibl": 0.25
       },
       "fog": {
         "color": "#a4abad",
@@ -785,9 +1418,9 @@
         "sunScatter": 0.7
       },
       "post": {
-        "exposure": -0.25,
+        "exposure": 0.25,
         "contrast": -0.03,
-        "saturation": 0.0,
+        "saturation": 0.1,
         "temperature": 0.05,
         "tint": 0,
         "bloom": 0.8,
@@ -818,7 +1451,7 @@
         "sky": "#a9c3e0",
         "ground": "#4c4a3c",
         "intensity": 0.6,
-        "ibl": 0.3
+        "ibl": 0.2
       },
       "fog": {
         "color": "#a9b8c2",
@@ -828,9 +1461,9 @@
         "sunScatter": 0.15
       },
       "post": {
-        "exposure": -0.9,
-        "contrast": 0.1,
-        "saturation": 0.15,
+        "exposure": 0.95,
+        "contrast": 0.18,
+        "saturation": 0.25,
         "temperature": 0,
         "tint": 0,
         "bloom": 0.4,
@@ -871,9 +1504,9 @@
         "sunScatter": 0.85
       },
       "post": {
-        "exposure": -0.55,
+        "exposure": -0.15,
         "contrast": 0.08,
-        "saturation": 0.1,
+        "saturation": 0.12,
         "temperature": 0.25,
         "tint": 0.05,
         "bloom": 1.0,
