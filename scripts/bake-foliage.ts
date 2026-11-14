@@ -29,7 +29,8 @@ const argv = process.argv.slice(2);
 const only = argv.includes('--only') ? argv[argv.indexOf('--only') + 1] : undefined;
 const pngOnly = argv.includes('--png-only');
 
-const TILE = 512; // atlas tile (2x2 grid -> 1024^2)
+// Atlas tile; 1024 → 2048² atlas (1024² was visibly soft on cards 3–5 m away). Override: --tile 512
+const TILE = argv.includes('--tile') ? Number(argv[argv.indexOf('--tile') + 1]) : 1024;
 const SS = 2; // supersampling in the bake render
 const MARGIN = 10; // px between patch and tile edge (room for colour dilation)
 

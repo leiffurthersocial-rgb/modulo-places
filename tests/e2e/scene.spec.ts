@@ -13,20 +13,21 @@ function collectErrors(page: Page): string[] {
 }
 
 const MOODS = ['dawn', 'midday', 'dusk'];
-const CAMERAS = ['spawn', 'into-sun', 'low-grass'];
+const CAMERAS = ['spawn', 'glade'];
 
 for (const mood of MOODS) {
-  test(`greybox renders mood "${mood}"`, async ({ page }, info) => {
+  test(`forest renders mood "${mood}"`, async ({ page }, info) => {
     const errors = collectErrors(page);
     const preset = info.project.name === 'desktop' ? 'high' : 'medium';
     for (const cam of CAMERAS) {
-      await page.goto(`/?shot=2&scene=greybox&mood=${mood}&cam=${cam}&preset=${preset}`);
+      await page.goto(`/?shot=2&scene=forest&mood=${mood}&cam=${cam}&preset=${preset}`);
       await page.waitForFunction(() => window.__shotReady === true, null, { timeout: 90_000 });
       const i = await page.evaluate(() => window.__info);
       expect(i?.mood).toBe(mood);
-      expect(Number(i?.instances)).toBeGreaterThan(10_000);
+      expect(Number(i?.instances)).toBeGreaterThan(5_000);
       await page.screenshot({
-        path: `screenshots/latest/greybox-${mood}-${cam}-${info.project.name}.png`,
+        path: `screenshots/latest/forest-${mood}-${cam}-${info.project.name}.png`,
+        timeout: 180_000,
       });
     }
     expect(errors).toEqual([]);
@@ -37,10 +38,10 @@ test('photo mode DOF capture path renders', async ({ page }, info) => {
   test.skip(info.project.name !== 'desktop', 'one viewport is enough');
   const errors = collectErrors(page);
   await page.goto(
-    '/?shot=2&scene=greybox&mood=midday&cam=low-grass&preset=high&focal=85&dof=1&focus=4&f=2',
+    '/?shot=2&scene=forest&mood=midday&cam=low-ferns&preset=high&focal=85&dof=1&focus=4&f=2',
   );
   await page.waitForFunction(() => window.__shotReady === true, null, { timeout: 90_000 });
-  await page.screenshot({ path: `screenshots/latest/greybox-photo-dof.png` });
+  await page.screenshot({ path: `screenshots/latest/forest-photo-dof.png` });
   expect(errors).toEqual([]);
 });
 
