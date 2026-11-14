@@ -1,5 +1,17 @@
 [
   {
+    "name": "Gravel 043",
+    "role": "ambientcg · ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Gravel043"
+  },
+  {
+    "name": "Ground 037",
+    "role": "ambientcg · ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Ground037"
+  },
+  {
     "name": "Ground 086",
     "role": "ambientcg · ambientCG (Lennart Demes)",
     "license": "CC0-1.0",
@@ -18,16 +30,40 @@
     "url": "https://polyhaven.com/a/aerial_rocks_04"
   },
   {
+    "name": "Approaching Storm",
+    "role": "polyhaven · Greg Zaal",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/approaching_storm"
+  },
+  {
     "name": "Boulder 01",
     "role": "polyhaven · Rico Cilliers",
     "license": "CC0-1.0",
     "url": "https://polyhaven.com/a/boulder_01"
   },
   {
+    "name": "Brown Mud 02",
+    "role": "polyhaven · Rob Tuytel",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/brown_mud_02"
+  },
+  {
     "name": "Brown Mud Leaves 01",
     "role": "polyhaven · Rob Tuytel",
     "license": "CC0-1.0",
     "url": "https://polyhaven.com/a/brown_mud_leaves_01"
+  },
+  {
+    "name": "Brown Planks 04",
+    "role": "polyhaven · Rob Tuytel",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/brown_planks_04"
+  },
+  {
+    "name": "Cobblestone Floor 04",
+    "role": "polyhaven · Rob Tuytel",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/cobblestone_floor_04"
   },
   {
     "name": "Dead Tree Trunk",
@@ -66,16 +102,52 @@
     "url": "https://polyhaven.com/a/grass_medium_01"
   },
   {
+    "name": "Grey Roof Tiles",
+    "role": "polyhaven · Rob Tuytel",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/grey_roof_tiles"
+  },
+  {
+    "name": "Japanese Cedar Planks",
+    "role": "polyhaven · Charlotte Baglioni, Rico Cilliers",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/japanese_cedar_planks"
+  },
+  {
     "name": "Jolcham Oak Bark 01",
     "role": "polyhaven · Charlotte Baglioni",
     "license": "CC0-1.0",
     "url": "https://polyhaven.com/a/jolcham_oak_bark_01"
   },
   {
+    "name": "Kloofendal Overcast",
+    "role": "polyhaven · Greg Zaal",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/kloofendal_overcast"
+  },
+  {
+    "name": "Kloppenheim 02",
+    "role": "polyhaven · Greg Zaal",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/kloppenheim_02"
+  },
+  {
     "name": "Knotted Pine Bark",
     "role": "polyhaven · Dimitrios Savva",
     "license": "CC0-1.0",
     "url": "https://polyhaven.com/a/knotted_pine_bark"
+  },
+  {
+    "name": "Large Sandstone Blocks 01",
+    "role": "polyhaven · Rob Tuytel",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/large_sandstone_blocks_01"
+  },
+  {
+    "name": "Leafy Grass",
+    "role": "polyhaven · Charlotte Baglioni",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/leafy_grass"
   },
   {
     "name": "Misty Pines",
@@ -90,10 +162,22 @@
     "url": "https://polyhaven.com/a/moss_01"
   },
   {
+    "name": "Mossy Stone Wall",
+    "role": "polyhaven · Amal Kumar",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/mossy_stone_wall"
+  },
+  {
     "name": "Nettle Plant",
     "role": "polyhaven · Rob Tuytel, Rico Cilliers",
     "license": "CC0-1.0",
     "url": "https://polyhaven.com/a/nettle_plant"
+  },
+  {
+    "name": "Palm Bark",
+    "role": "polyhaven · Charlotte Baglioni",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/palm_bark"
   },
   {
     "name": "Pfälzer Forest 01",
@@ -126,6 +210,18 @@
     "url": "https://polyhaven.com/a/pine_tree_01"
   },
   {
+    "name": "Qwantani Dusk 2",
+    "role": "polyhaven · Greg Zaal, Jarod Guest",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/qwantani_dusk_2"
+  },
+  {
+    "name": "Rainforest Trail",
+    "role": "polyhaven · Dimitrios Savva, Jarod Guest",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/rainforest_trail"
+  },
+  {
     "name": "River Small Rocks",
     "role": "polyhaven · Rob Tuytel, Rico Cilliers",
     "license": "CC0-1.0",
@@ -150,6 +246,12 @@
     "url": "https://polyhaven.com/a/rock_face_01"
   },
   {
+    "name": "Rock Face 03",
+    "role": "polyhaven · Dario Barresi, Rico Cilliers",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/rock_face_03"
+  },
+  {
     "name": "Rock Moss Set 01",
     "role": "polyhaven · Kless Gyzen",
     "license": "CC0-1.0",
@@ -172,6 +274,24 @@
     "role": "polyhaven · Rico Cilliers",
     "license": "CC0-1.0",
     "url": "https://polyhaven.com/a/shrub_03"
+  },
+  {
+    "name": "Snow 02",
+    "role": "polyhaven · Rob Tuytel",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/snow_02"
+  },
+  {
+    "name": "Snow Floor",
+    "role": "polyhaven · eye-candy.xyz",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/snow_floor"
+  },
+  {
+    "name": "Snowy Hillside",
+    "role": "polyhaven · Andreas Mischok",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/snowy_hillside"
   },
   {
     "name": "Sunset Forest",
@@ -202,5 +322,29 @@
     "role": "polyhaven · Rob Tuytel, Rico Cilliers",
     "license": "CC0-1.0",
     "url": "https://polyhaven.com/a/weed_plant_02"
+  },
+  {
+    "name": "White Plaster Rough 01",
+    "role": "polyhaven · Rob Tuytel",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/white_plaster_rough_01"
+  },
+  {
+    "name": "Winter Lake 01",
+    "role": "polyhaven · Sergej Majboroda",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/winter_lake_01"
+  },
+  {
+    "name": "Wood Trunk Wall",
+    "role": "polyhaven · Amal Kumar",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/wood_trunk_wall"
+  },
+  {
+    "name": "Xiequ Yuan",
+    "role": "polyhaven · Greg Zaal",
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/xiequ_yuan"
   }
 ]

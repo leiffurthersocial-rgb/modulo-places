@@ -1,6 +1,6 @@
 # Asset size report
 
-Generated 2026-11-13T19:19:10.382Z
+Generated 2026-11-14T11:13:00.021Z
 
 ## Materials (download per material, all three maps)
 
@@ -14,7 +14,23 @@ Generated 2026-11-13T19:19:10.382Z
 | forest/creek-bed | 495 KB | 1814 KB | 3108 KB | — |
 | forest/bark | 493 KB | 1808 KB | 3067 KB | — |
 | forest/rock | 498 KB | 1828 KB | 3177 KB | — |
-| **total** | 3928 KB | 14451 KB | 24798 KB | 24798 KB |
+| village/moss-ground | 492 KB | 1823 KB | 3181 KB | — |
+| village/gravel-path | 484 KB | 1802 KB | 3139 KB | — |
+| village/roof-tiles | 470 KB | 1749 KB | 2881 KB | — |
+| village/wood-planks | 418 KB | 1611 KB | 2696 KB | — |
+| village/plaster | 435 KB | 1598 KB | 2883 KB | — |
+| village/stone-paving | 493 KB | 1799 KB | 3095 KB | — |
+| jungle/jungle-floor | 491 KB | 1804 KB | 3134 KB | — |
+| jungle/mud | 489 KB | 1792 KB | 3014 KB | — |
+| jungle/mossy-stone | 479 KB | 1759 KB | 2910 KB | — |
+| jungle/jungle-stone | 489 KB | 1792 KB | 3054 KB | — |
+| jungle/bark-tropical | 467 KB | 1728 KB | 2794 KB | — |
+| cabin/snow | 441 KB | 1648 KB | 2533 KB | — |
+| cabin/trodden-snow | 458 KB | 1721 KB | 2860 KB | — |
+| cabin/rock | 479 KB | 1766 KB | 2955 KB | — |
+| cabin/log-wood | 455 KB | 1678 KB | 2589 KB | — |
+| cabin/cabin-planks | 411 KB | 1573 KB | 2332 KB | — |
+| **total** | 11380 KB | 42093 KB | 70850 KB | 70850 KB |
 
 ## Models
 
@@ -51,6 +67,15 @@ Generated 2026-11-13T19:19:10.382Z
 | forest/dawn | 8642 KB |
 | forest/midday | 9312 KB |
 | forest/dusk | 8930 KB |
+| village/lantern-dusk | 7847 KB |
+| village/rainy-morning | 7692 KB |
+| village/midday | 7690 KB |
+| jungle/midday | 9402 KB |
+| jungle/storm | 7804 KB |
+| jungle/golden-hour | 8930 KB |
+| cabin/blue-hour | 7315 KB |
+| cabin/midday | 7780 KB |
+| cabin/aurora-night | 8474 KB |
 
 ## Audio
 

@@ -191,6 +191,390 @@
      "bytes": 3253515
     }
    }
+  },
+  "village/moss-ground": {
+   "source": "polyhaven",
+   "id": "leafy_grass",
+   "tiers": {
+    "512": {
+     "color": "/pack/materials/village/moss-ground/512/color.6fa90378.ktx2",
+     "normal": "/pack/materials/village/moss-ground/512/normal.e4b9c944.ktx2",
+     "arm": "/pack/materials/village/moss-ground/512/arm.d8d6ea63.ktx2",
+     "bytes": 503969
+    },
+    "1024": {
+     "color": "/pack/materials/village/moss-ground/1024/color.5fd22853.ktx2",
+     "normal": "/pack/materials/village/moss-ground/1024/normal.c8dba3c8.ktx2",
+     "arm": "/pack/materials/village/moss-ground/1024/arm.395ef953.ktx2",
+     "bytes": 1866569
+    },
+    "2048": {
+     "color": "/pack/materials/village/moss-ground/2048/color.9b732412.ktx2",
+     "normal": "/pack/materials/village/moss-ground/2048/normal.c8dba3c8.ktx2",
+     "arm": "/pack/materials/village/moss-ground/2048/arm.287b8cc7.ktx2",
+     "bytes": 3257700
+    }
+   }
+  },
+  "village/gravel-path": {
+   "source": "ambientcg",
+   "id": "Gravel043",
+   "tiers": {
+    "512": {
+     "color": "/pack/materials/village/gravel-path/512/color.30d2bfe0.ktx2",
+     "normal": "/pack/materials/village/gravel-path/512/normal.493ef452.ktx2",
+     "arm": "/pack/materials/village/gravel-path/512/arm.c91fcedd.ktx2",
+     "bytes": 495878
+    },
+    "1024": {
+     "color": "/pack/materials/village/gravel-path/1024/color.22644481.ktx2",
+     "normal": "/pack/materials/village/gravel-path/1024/normal.a77bfe71.ktx2",
+     "arm": "/pack/materials/village/gravel-path/1024/arm.13377596.ktx2",
+     "bytes": 1845150
+    },
+    "2048": {
+     "color": "/pack/materials/village/gravel-path/2048/color.b7ca7509.ktx2",
+     "normal": "/pack/materials/village/gravel-path/2048/normal.a77bfe71.ktx2",
+     "arm": "/pack/materials/village/gravel-path/2048/arm.603bf713.ktx2",
+     "bytes": 3214138
+    }
+   }
+  },
+  "village/roof-tiles": {
+   "source": "polyhaven",
+   "id": "grey_roof_tiles",
+   "tiers": {
+    "512": {
+     "color": "/pack/materials/village/roof-tiles/512/color.c04bac57.ktx2",
+     "normal": "/pack/materials/village/roof-tiles/512/normal.7f1346f4.ktx2",
+     "arm": "/pack/materials/village/roof-tiles/512/arm.fbb543a5.ktx2",
+     "bytes": 481431
+    },
+    "1024": {
+     "color": "/pack/materials/village/roof-tiles/1024/color.47e9ec2c.ktx2",
+     "normal": "/pack/materials/village/roof-tiles/1024/normal.7670fb32.ktx2",
+     "arm": "/pack/materials/village/roof-tiles/1024/arm.c2f1943b.ktx2",
+     "bytes": 1790518
+    },
+    "2048": {
+     "color": "/pack/materials/village/roof-tiles/2048/color.b349c0f6.ktx2",
+     "normal": "/pack/materials/village/roof-tiles/2048/normal.7670fb32.ktx2",
+     "arm": "/pack/materials/village/roof-tiles/2048/arm.ae6d27b8.ktx2",
+     "bytes": 2949996
+    }
+   }
+  },
+  "village/wood-planks": {
+   "source": "polyhaven",
+   "id": "japanese_cedar_planks",
+   "tiers": {
+    "512": {
+     "color": "/pack/materials/village/wood-planks/512/color.5eece193.ktx2",
+     "normal": "/pack/materials/village/wood-planks/512/normal.fcc6eeb8.ktx2",
+     "arm": "/pack/materials/village/wood-planks/512/arm.a7460998.ktx2",
+     "bytes": 428044
+    },
+    "1024": {
+     "color": "/pack/materials/village/wood-planks/1024/color.676d641f.ktx2",
+     "normal": "/pack/materials/village/wood-planks/1024/normal.d89da210.ktx2",
+     "arm": "/pack/materials/village/wood-planks/1024/arm.24aca649.ktx2",
+     "bytes": 1649372
+    },
+    "2048": {
+     "color": "/pack/materials/village/wood-planks/2048/color.22c63134.ktx2",
+     "normal": "/pack/materials/village/wood-planks/2048/normal.d89da210.ktx2",
+     "arm": "/pack/materials/village/wood-planks/2048/arm.7d48d548.ktx2",
+     "bytes": 2760921
+    }
+   }
+  },
+  "village/plaster": {
+   "source": "polyhaven",
+   "id": "white_plaster_rough_01",
+   "tiers": {
+    "512": {
+     "color": "/pack/materials/village/plaster/512/color.8173620e.ktx2",
+     "normal": "/pack/materials/village/plaster/512/normal.1a36f58e.ktx2",
+     "arm": "/pack/materials/village/plaster/512/arm.b8a77d15.ktx2",
+     "bytes": 445519
+    },
+    "1024": {
+     "color": "/pack/materials/village/plaster/1024/color.b6bc5c35.ktx2",
+     "normal": "/pack/materials/village/plaster/1024/normal.54387ee8.ktx2",
+     "arm": "/pack/materials/village/plaster/1024/arm.45a2911a.ktx2",
+     "bytes": 1636606
+    },
+    "2048": {
+     "color": "/pack/materials/village/plaster/2048/color.0cc06604.ktx2",
+     "normal": "/pack/materials/village/plaster/2048/normal.54387ee8.ktx2",
+     "arm": "/pack/materials/village/plaster/2048/arm.968dfee2.ktx2",
+     "bytes": 2952537
+    }
+   }
+  },
+  "village/stone-paving": {
+   "source": "polyhaven",
+   "id": "cobblestone_floor_04",
+   "tiers": {
+    "512": {
+     "color": "/pack/materials/village/stone-paving/512/color.3a4ffe14.ktx2",
+     "normal": "/pack/materials/village/stone-paving/512/normal.9fadb7fa.ktx2",
+     "arm": "/pack/materials/village/stone-paving/512/arm.99ac2cb8.ktx2",
+     "bytes": 504444
+    },
+    "1024": {
+     "color": "/pack/materials/village/stone-paving/1024/color.cfd52808.ktx2",
+     "normal": "/pack/materials/village/stone-paving/1024/normal.19d8b92e.ktx2",
+     "arm": "/pack/materials/village/stone-paving/1024/arm.5009a51d.ktx2",
+     "bytes": 1842595
+    },
+    "2048": {
+     "color": "/pack/materials/village/stone-paving/2048/color.ff0545f8.ktx2",
+     "normal": "/pack/materials/village/stone-paving/2048/normal.19d8b92e.ktx2",
+     "arm": "/pack/materials/village/stone-paving/2048/arm.d987f13f.ktx2",
+     "bytes": 3169612
+    }
+   }
+  },
+  "jungle/jungle-floor": {
+   "source": "ambientcg",
+   "id": "Ground037",
+   "tiers": {
+    "512": {
+     "color": "/pack/materials/jungle/jungle-floor/512/color.b2427bf6.ktx2",
+     "normal": "/pack/materials/jungle/jungle-floor/512/normal.6f5a1b3d.ktx2",
+     "arm": "/pack/materials/jungle/jungle-floor/512/arm.36c70f34.ktx2",
+     "bytes": 502560
+    },
+    "1024": {
+     "color": "/pack/materials/jungle/jungle-floor/1024/color.c3a4d1f8.ktx2",
+     "normal": "/pack/materials/jungle/jungle-floor/1024/normal.0ee354f9.ktx2",
+     "arm": "/pack/materials/jungle/jungle-floor/1024/arm.7e12296a.ktx2",
+     "bytes": 1846996
+    },
+    "2048": {
+     "color": "/pack/materials/jungle/jungle-floor/2048/color.6c314854.ktx2",
+     "normal": "/pack/materials/jungle/jungle-floor/2048/normal.0ee354f9.ktx2",
+     "arm": "/pack/materials/jungle/jungle-floor/2048/arm.466e7756.ktx2",
+     "bytes": 3208821
+    }
+   }
+  },
+  "jungle/mud": {
+   "source": "polyhaven",
+   "id": "brown_mud_02",
+   "tiers": {
+    "512": {
+     "color": "/pack/materials/jungle/mud/512/color.b2410dad.ktx2",
+     "normal": "/pack/materials/jungle/mud/512/normal.55f6b8b4.ktx2",
+     "arm": "/pack/materials/jungle/mud/512/arm.26e39d67.ktx2",
+     "bytes": 500531
+    },
+    "1024": {
+     "color": "/pack/materials/jungle/mud/1024/color.aa271ad4.ktx2",
+     "normal": "/pack/materials/jungle/mud/1024/normal.9ba42fe9.ktx2",
+     "arm": "/pack/materials/jungle/mud/1024/arm.51f44820.ktx2",
+     "bytes": 1834642
+    },
+    "2048": {
+     "color": "/pack/materials/jungle/mud/2048/color.79a6652a.ktx2",
+     "normal": "/pack/materials/jungle/mud/2048/normal.9ba42fe9.ktx2",
+     "arm": "/pack/materials/jungle/mud/2048/arm.0b409a4b.ktx2",
+     "bytes": 3086758
+    }
+   }
+  },
+  "jungle/mossy-stone": {
+   "source": "polyhaven",
+   "id": "mossy_stone_wall",
+   "tiers": {
+    "512": {
+     "color": "/pack/materials/jungle/mossy-stone/512/color.d79862cb.ktx2",
+     "normal": "/pack/materials/jungle/mossy-stone/512/normal.1266d9b8.ktx2",
+     "arm": "/pack/materials/jungle/mossy-stone/512/arm.10d7e7b4.ktx2",
+     "bytes": 490376
+    },
+    "1024": {
+     "color": "/pack/materials/jungle/mossy-stone/1024/color.fb279b37.ktx2",
+     "normal": "/pack/materials/jungle/mossy-stone/1024/normal.586ff0c5.ktx2",
+     "arm": "/pack/materials/jungle/mossy-stone/1024/arm.2f685340.ktx2",
+     "bytes": 1801133
+    },
+    "2048": {
+     "color": "/pack/materials/jungle/mossy-stone/2048/color.b0476263.ktx2",
+     "normal": "/pack/materials/jungle/mossy-stone/2048/normal.586ff0c5.ktx2",
+     "arm": "/pack/materials/jungle/mossy-stone/2048/arm.a4830d74.ktx2",
+     "bytes": 2979639
+    }
+   }
+  },
+  "jungle/jungle-stone": {
+   "source": "polyhaven",
+   "id": "large_sandstone_blocks_01",
+   "tiers": {
+    "512": {
+     "color": "/pack/materials/jungle/jungle-stone/512/color.b4f16da2.ktx2",
+     "normal": "/pack/materials/jungle/jungle-stone/512/normal.4bd0dce7.ktx2",
+     "arm": "/pack/materials/jungle/jungle-stone/512/arm.8028f526.ktx2",
+     "bytes": 500745
+    },
+    "1024": {
+     "color": "/pack/materials/jungle/jungle-stone/1024/color.3ffb8946.ktx2",
+     "normal": "/pack/materials/jungle/jungle-stone/1024/normal.566fe731.ktx2",
+     "arm": "/pack/materials/jungle/jungle-stone/1024/arm.404151bf.ktx2",
+     "bytes": 1835084
+    },
+    "2048": {
+     "color": "/pack/materials/jungle/jungle-stone/2048/color.b9278a12.ktx2",
+     "normal": "/pack/materials/jungle/jungle-stone/2048/normal.566fe731.ktx2",
+     "arm": "/pack/materials/jungle/jungle-stone/2048/arm.33d99cdc.ktx2",
+     "bytes": 3127234
+    }
+   }
+  },
+  "jungle/bark-tropical": {
+   "source": "polyhaven",
+   "id": "palm_bark",
+   "tiers": {
+    "512": {
+     "color": "/pack/materials/jungle/bark-tropical/512/color.2a281468.ktx2",
+     "normal": "/pack/materials/jungle/bark-tropical/512/normal.7be4dea6.ktx2",
+     "arm": "/pack/materials/jungle/bark-tropical/512/arm.5a74456e.ktx2",
+     "bytes": 478439
+    },
+    "1024": {
+     "color": "/pack/materials/jungle/bark-tropical/1024/color.2bf1cef7.ktx2",
+     "normal": "/pack/materials/jungle/bark-tropical/1024/normal.f5069a6f.ktx2",
+     "arm": "/pack/materials/jungle/bark-tropical/1024/arm.a7dd3150.ktx2",
+     "bytes": 1769625
+    },
+    "2048": {
+     "color": "/pack/materials/jungle/bark-tropical/2048/color.a0dfc1c5.ktx2",
+     "normal": "/pack/materials/jungle/bark-tropical/2048/normal.f5069a6f.ktx2",
+     "arm": "/pack/materials/jungle/bark-tropical/2048/arm.d17532c6.ktx2",
+     "bytes": 2860804
+    }
+   }
+  },
+  "cabin/snow": {
+   "source": "polyhaven",
+   "id": "snow_02",
+   "tiers": {
+    "512": {
+     "color": "/pack/materials/cabin/snow/512/color.65044830.ktx2",
+     "normal": "/pack/materials/cabin/snow/512/normal.992f6584.ktx2",
+     "arm": "/pack/materials/cabin/snow/512/arm.e6e48e7b.ktx2",
+     "bytes": 452091
+    },
+    "1024": {
+     "color": "/pack/materials/cabin/snow/1024/color.f35e6f0f.ktx2",
+     "normal": "/pack/materials/cabin/snow/1024/normal.5fe15f40.ktx2",
+     "arm": "/pack/materials/cabin/snow/1024/arm.4e4587f5.ktx2",
+     "bytes": 1687198
+    },
+    "2048": {
+     "color": "/pack/materials/cabin/snow/2048/color.7f7f6bff.ktx2",
+     "normal": "/pack/materials/cabin/snow/2048/normal.5fe15f40.ktx2",
+     "arm": "/pack/materials/cabin/snow/2048/arm.033ade26.ktx2",
+     "bytes": 2594128
+    }
+   }
+  },
+  "cabin/trodden-snow": {
+   "source": "polyhaven",
+   "id": "snow_floor",
+   "tiers": {
+    "512": {
+     "color": "/pack/materials/cabin/trodden-snow/512/color.0eea097a.ktx2",
+     "normal": "/pack/materials/cabin/trodden-snow/512/normal.5fe7a8a8.ktx2",
+     "arm": "/pack/materials/cabin/trodden-snow/512/arm.24303171.ktx2",
+     "bytes": 468887
+    },
+    "1024": {
+     "color": "/pack/materials/cabin/trodden-snow/1024/color.0d936c2d.ktx2",
+     "normal": "/pack/materials/cabin/trodden-snow/1024/normal.effc7280.ktx2",
+     "arm": "/pack/materials/cabin/trodden-snow/1024/arm.bd084215.ktx2",
+     "bytes": 1762791
+    },
+    "2048": {
+     "color": "/pack/materials/cabin/trodden-snow/2048/color.70ae025a.ktx2",
+     "normal": "/pack/materials/cabin/trodden-snow/2048/normal.effc7280.ktx2",
+     "arm": "/pack/materials/cabin/trodden-snow/2048/arm.66f90043.ktx2",
+     "bytes": 2928717
+    }
+   }
+  },
+  "cabin/rock": {
+   "source": "polyhaven",
+   "id": "rock_face_03",
+   "tiers": {
+    "512": {
+     "color": "/pack/materials/cabin/rock/512/color.79353012.ktx2",
+     "normal": "/pack/materials/cabin/rock/512/normal.e715ad03.ktx2",
+     "arm": "/pack/materials/cabin/rock/512/arm.a1dc9ed3.ktx2",
+     "bytes": 490725
+    },
+    "1024": {
+     "color": "/pack/materials/cabin/rock/1024/color.c5460315.ktx2",
+     "normal": "/pack/materials/cabin/rock/1024/normal.13e65679.ktx2",
+     "arm": "/pack/materials/cabin/rock/1024/arm.3352b0a4.ktx2",
+     "bytes": 1808574
+    },
+    "2048": {
+     "color": "/pack/materials/cabin/rock/2048/color.e7084bd0.ktx2",
+     "normal": "/pack/materials/cabin/rock/2048/normal.13e65679.ktx2",
+     "arm": "/pack/materials/cabin/rock/2048/arm.f53e4a81.ktx2",
+     "bytes": 3026102
+    }
+   }
+  },
+  "cabin/log-wood": {
+   "source": "polyhaven",
+   "id": "wood_trunk_wall",
+   "tiers": {
+    "512": {
+     "color": "/pack/materials/cabin/log-wood/512/color.8e1bd8f2.ktx2",
+     "normal": "/pack/materials/cabin/log-wood/512/normal.6db37ea2.ktx2",
+     "arm": "/pack/materials/cabin/log-wood/512/arm.6ec01c79.ktx2",
+     "bytes": 466228
+    },
+    "1024": {
+     "color": "/pack/materials/cabin/log-wood/1024/color.cdc1b2e7.ktx2",
+     "normal": "/pack/materials/cabin/log-wood/1024/normal.20e00984.ktx2",
+     "arm": "/pack/materials/cabin/log-wood/1024/arm.00c7cfa1.ktx2",
+     "bytes": 1717843
+    },
+    "2048": {
+     "color": "/pack/materials/cabin/log-wood/2048/color.4f997179.ktx2",
+     "normal": "/pack/materials/cabin/log-wood/2048/normal.20e00984.ktx2",
+     "arm": "/pack/materials/cabin/log-wood/2048/arm.8e6cc2ee.ktx2",
+     "bytes": 2651401
+    }
+   }
+  },
+  "cabin/cabin-planks": {
+   "source": "polyhaven",
+   "id": "brown_planks_04",
+   "tiers": {
+    "512": {
+     "color": "/pack/materials/cabin/cabin-planks/512/color.167dfe89.ktx2",
+     "normal": "/pack/materials/cabin/cabin-planks/512/normal.e9e21073.ktx2",
+     "arm": "/pack/materials/cabin/cabin-planks/512/arm.deb8669a.ktx2",
+     "bytes": 420875
+    },
+    "1024": {
+     "color": "/pack/materials/cabin/cabin-planks/1024/color.78fde1ab.ktx2",
+     "normal": "/pack/materials/cabin/cabin-planks/1024/normal.46b2556d.ktx2",
+     "arm": "/pack/materials/cabin/cabin-planks/1024/arm.6395e266.ktx2",
+     "bytes": 1610629
+    },
+    "2048": {
+     "color": "/pack/materials/cabin/cabin-planks/2048/color.eefd0c15.ktx2",
+     "normal": "/pack/materials/cabin/cabin-planks/2048/normal.46b2556d.ktx2",
+     "arm": "/pack/materials/cabin/cabin-planks/2048/arm.dd12fb3c.ktx2",
+     "bytes": 2388137
+    }
+   }
   }
  },
  "models": {
@@ -492,6 +876,69 @@
    "1k": "/pack/hdris/forest-dusk-1k.189502ad.hdr",
    "2k": "/pack/hdris/forest-dusk-2k.17a84a9a.hdr",
    "bytes": 9144807
+  },
+  "village/lantern-dusk": {
+   "source": "polyhaven",
+   "id": "qwantani_dusk_2",
+   "1k": "/pack/hdris/village-lantern-dusk-1k.67f51d0f.hdr",
+   "2k": "/pack/hdris/village-lantern-dusk-2k.7094cf52.hdr",
+   "bytes": 8034994
+  },
+  "village/rainy-morning": {
+   "source": "polyhaven",
+   "id": "kloofendal_overcast",
+   "1k": "/pack/hdris/village-rainy-morning-1k.9b3f50a2.hdr",
+   "2k": "/pack/hdris/village-rainy-morning-2k.32941541.hdr",
+   "bytes": 7876442
+  },
+  "village/midday": {
+   "source": "polyhaven",
+   "id": "xiequ_yuan",
+   "1k": "/pack/hdris/village-midday-1k.71437877.hdr",
+   "2k": "/pack/hdris/village-midday-2k.024ac37c.hdr",
+   "bytes": 7874229
+  },
+  "jungle/midday": {
+   "source": "polyhaven",
+   "id": "rainforest_trail",
+   "1k": "/pack/hdris/jungle-midday-1k.f6032130.hdr",
+   "2k": "/pack/hdris/jungle-midday-2k.2e90cae8.hdr",
+   "bytes": 9627451
+  },
+  "jungle/storm": {
+   "source": "polyhaven",
+   "id": "approaching_storm",
+   "1k": "/pack/hdris/jungle-storm-1k.916c1e15.hdr",
+   "2k": "/pack/hdris/jungle-storm-2k.bfa680c1.hdr",
+   "bytes": 7991289
+  },
+  "jungle/golden-hour": {
+   "source": "polyhaven",
+   "id": "sunset_forest",
+   "1k": "/pack/hdris/jungle-golden-hour-1k.189502ad.hdr",
+   "2k": "/pack/hdris/jungle-golden-hour-2k.17a84a9a.hdr",
+   "bytes": 9144807
+  },
+  "cabin/blue-hour": {
+   "source": "polyhaven",
+   "id": "winter_lake_01",
+   "1k": "/pack/hdris/cabin-blue-hour-1k.e1659635.hdr",
+   "2k": "/pack/hdris/cabin-blue-hour-2k.f6f43bfe.hdr",
+   "bytes": 7490630
+  },
+  "cabin/midday": {
+   "source": "polyhaven",
+   "id": "snowy_hillside",
+   "1k": "/pack/hdris/cabin-midday-1k.461b5d76.hdr",
+   "2k": "/pack/hdris/cabin-midday-2k.a850cef2.hdr",
+   "bytes": 7966462
+  },
+  "cabin/aurora-night": {
+   "source": "polyhaven",
+   "id": "kloppenheim_02",
+   "1k": "/pack/hdris/cabin-aurora-night-1k.04d23c6b.hdr",
+   "2k": "/pack/hdris/cabin-aurora-night-2k.c119c42e.hdr",
+   "bytes": 8677083
   }
  },
  "audio": {},
