@@ -320,35 +320,59 @@ export class SceneRuntime {
   private propColliders: { def: import('../types').PropDef; box: THREE.Box3 }[] = [];
   private buildProps(): void {
     this.propRoot.name = 'props';
+    // Props sharing a mesh are drawn as one InstancedMesh per part and per PROP_CELL grid cell:
+    // the jungle repeats blocks, rubble and roots dozens of times, and one Mesh per prop part cost
+    // hundreds of draw calls. Cells keep frustum culling meaningful (one batch per area, not per map).
+    const PROP_CELL = 40;
+    const batches = new Map<string, { mesh: string; matrices: THREE.Matrix4[] }>();
+    const pos = new THREE.Vector3();
+    const quat = new THREE.Quaternion();
+    const scl = new THREE.Vector3();
+    const local = new THREE.Box3();
     for (const pd of this.def.props) {
-      const sp = this.scatter.species(pd.mesh);
-      const g = new THREE.Group();
-      g.name = `prop:${pd.id}`;
-      for (const part of sp.variants[0]![0]!) {
-        const m = new THREE.Mesh(part.geometry, part.material);
-        m.castShadow = part.castShadow;
-        m.receiveShadow = true;
-        g.add(m);
-      }
+      const parts = this.scatter.species(pd.mesh).variants[0]![0]!;
       const [x, y, z] = pd.position;
-      g.position.set(x, sampleHeight(this.hf, x, z) + y, z);
+      pos.set(x, sampleHeight(this.hf, x, z) + y, z);
       const sc = pd.scale ?? 1;
-      if (typeof sc === 'number') g.scale.setScalar(sc);
-      else g.scale.set(sc[0], sc[1], sc[2]);
-      g.updateMatrixWorld(true);
+      if (typeof sc === 'number') scl.setScalar(sc);
+      else scl.set(sc[0], sc[1], sc[2]);
       // Collision box measured before rotation (true half-extents), then rotated by yaw.
-      const unrotated = new THREE.Box3().setFromObject(g);
+      local.makeEmpty();
+      for (const part of parts) {
+        if (!part.geometry.boundingBox) part.geometry.computeBoundingBox();
+        local.union(part.geometry.boundingBox!);
+      }
+      const unrotated = local
+        .clone()
+        .applyMatrix4(new THREE.Matrix4().compose(pos, quat.identity(), scl));
       const r = pd.rotation ?? [0, 0, 0];
-      g.rotation.set(
-        THREE.MathUtils.degToRad(r[0]),
-        THREE.MathUtils.degToRad(r[1]),
-        THREE.MathUtils.degToRad(r[2]),
+      quat.setFromEuler(
+        new THREE.Euler(
+          THREE.MathUtils.degToRad(r[0]),
+          THREE.MathUtils.degToRad(r[1]),
+          THREE.MathUtils.degToRad(r[2]),
+        ),
       );
-      if (pd.color) for (const c of g.children) (c as THREE.Mesh).userData.tint = pd.color;
-      g.updateMatrixWorld(true);
-      this.propRoot.add(g);
+      const key = `${pd.mesh}@${Math.floor(x / PROP_CELL)},${Math.floor(z / PROP_CELL)}`;
+      let b = batches.get(key);
+      if (!b) batches.set(key, (b = { mesh: pd.mesh, matrices: [] }));
+      b.matrices.push(new THREE.Matrix4().compose(pos, quat, scl));
       if (pd.collision && pd.collision !== 'none')
         this.propColliders.push({ def: pd, box: unrotated });
+    }
+    for (const [key, b] of batches) {
+      const parts = this.scatter.species(b.mesh).variants[0]![0]!;
+      for (const part of parts) {
+        if (!part.material.visible) continue; // invisible collider-only props
+        const m = new THREE.InstancedMesh(part.geometry, part.material, b.matrices.length);
+        b.matrices.forEach((mx, i) => m.setMatrixAt(i, mx));
+        m.instanceMatrix.needsUpdate = true;
+        m.computeBoundingSphere();
+        m.castShadow = part.castShadow;
+        m.receiveShadow = true;
+        m.name = `prop:${key}`;
+        this.propRoot.add(m);
+      }
     }
     this.root.add(this.propRoot);
   }
