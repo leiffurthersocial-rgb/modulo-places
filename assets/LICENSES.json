@@ -107,6 +107,18 @@
     "key": "ambientcg:Gravel042",
     "fetchedAt": "2026-11-13"
   },
+  "ambientcg:Gravel043": {
+    "source": "ambientcg",
+    "id": "Gravel043",
+    "name": "Gravel 043",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://ambientcg.com/view?id=Gravel043",
+    "key": "ambientcg:Gravel043",
+    "fetchedAt": "2026-11-14"
+  },
   "ambientcg:Ground001": {
     "source": "ambientcg",
     "id": "Ground001",
@@ -455,6 +467,18 @@
     "key": "polyhaven:aerial_rocks_04",
     "fetchedAt": "2026-11-13"
   },
+  "polyhaven:approaching_storm": {
+    "source": "polyhaven",
+    "id": "approaching_storm",
+    "name": "Approaching Storm",
+    "authors": [
+      "Greg Zaal"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/approaching_storm",
+    "key": "polyhaven:approaching_storm",
+    "fetchedAt": "2026-11-14"
+  },
   "polyhaven:autumn_forest_04": {
     "source": "polyhaven",
     "id": "autumn_forest_04",
@@ -503,6 +527,18 @@
     "key": "polyhaven:boulder_01",
     "fetchedAt": "2026-11-13"
   },
+  "polyhaven:brown_mud_02": {
+    "source": "polyhaven",
+    "id": "brown_mud_02",
+    "name": "Brown Mud 02",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/brown_mud_02",
+    "key": "polyhaven:brown_mud_02",
+    "fetchedAt": "2026-11-14"
+  },
   "polyhaven:brown_mud_leaves_01": {
     "source": "polyhaven",
     "id": "brown_mud_leaves_01",
@@ -514,6 +550,18 @@
     "url": "https://polyhaven.com/a/brown_mud_leaves_01",
     "key": "polyhaven:brown_mud_leaves_01",
     "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:brown_planks_04": {
+    "source": "polyhaven",
+    "id": "brown_planks_04",
+    "name": "Brown Planks 04",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/brown_planks_04",
+    "key": "polyhaven:brown_planks_04",
+    "fetchedAt": "2026-11-14"
   },
   "polyhaven:clean_pebbles": {
     "source": "polyhaven",
@@ -527,6 +575,18 @@
     "url": "https://polyhaven.com/a/clean_pebbles",
     "key": "polyhaven:clean_pebbles",
     "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:cobblestone_floor_04": {
+    "source": "polyhaven",
+    "id": "cobblestone_floor_04",
+    "name": "Cobblestone Floor 04",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/cobblestone_floor_04",
+    "key": "polyhaven:cobblestone_floor_04",
+    "fetchedAt": "2026-11-14"
   },
   "polyhaven:dark_autumn_forest": {
     "source": "polyhaven",
@@ -800,6 +860,18 @@
     "key": "polyhaven:green_sanctuary",
     "fetchedAt": "2026-11-13"
   },
+  "polyhaven:grey_roof_tiles": {
+    "source": "polyhaven",
+    "id": "grey_roof_tiles",
+    "name": "Grey Roof Tiles",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/grey_roof_tiles",
+    "key": "polyhaven:grey_roof_tiles",
+    "fetchedAt": "2026-11-14"
+  },
   "polyhaven:hochsal_forest": {
     "source": "polyhaven",
     "id": "hochsal_forest",
@@ -823,6 +895,19 @@
     "url": "https://polyhaven.com/a/japanese_cedar_bark",
     "key": "polyhaven:japanese_cedar_bark",
     "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:japanese_cedar_planks": {
+    "source": "polyhaven",
+    "id": "japanese_cedar_planks",
+    "name": "Japanese Cedar Planks",
+    "authors": [
+      "Charlotte Baglioni",
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/japanese_cedar_planks",
+    "key": "polyhaven:japanese_cedar_planks",
+    "fetchedAt": "2026-11-14"
   },
   "polyhaven:jolcham_oak_bark_01": {
     "source": "polyhaven",
@@ -861,6 +946,30 @@
     "key": "polyhaven:kloofendal_misty_morning",
     "fetchedAt": "2026-11-13"
   },
+  "polyhaven:kloofendal_overcast": {
+    "source": "polyhaven",
+    "id": "kloofendal_overcast",
+    "name": "Kloofendal Overcast",
+    "authors": [
+      "Greg Zaal"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/kloofendal_overcast",
+    "key": "polyhaven:kloofendal_overcast",
+    "fetchedAt": "2026-11-14"
+  },
+  "polyhaven:kloppenheim_02": {
+    "source": "polyhaven",
+    "id": "kloppenheim_02",
+    "name": "Kloppenheim 02",
+    "authors": [
+      "Greg Zaal"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/kloppenheim_02",
+    "key": "polyhaven:kloppenheim_02",
+    "fetchedAt": "2026-11-14"
+  },
   "polyhaven:knotted_pine_bark": {
     "source": "polyhaven",
     "id": "knotted_pine_bark",
@@ -873,6 +982,18 @@
     "key": "polyhaven:knotted_pine_bark",
     "fetchedAt": "2026-11-13"
   },
+  "polyhaven:large_sandstone_blocks_01": {
+    "source": "polyhaven",
+    "id": "large_sandstone_blocks_01",
+    "name": "Large Sandstone Blocks 01",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/large_sandstone_blocks_01",
+    "key": "polyhaven:large_sandstone_blocks_01",
+    "fetchedAt": "2026-11-14"
+  },
   "polyhaven:lauter_waterfall": {
     "source": "polyhaven",
     "id": "lauter_waterfall",
@@ -884,6 +1005,18 @@
     "url": "https://polyhaven.com/a/lauter_waterfall",
     "key": "polyhaven:lauter_waterfall",
     "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:leafy_grass": {
+    "source": "polyhaven",
+    "id": "leafy_grass",
+    "name": "Leafy Grass",
+    "authors": [
+      "Charlotte Baglioni"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/leafy_grass",
+    "key": "polyhaven:leafy_grass",
+    "fetchedAt": "2026-11-14"
   },
   "polyhaven:leaves_forest_ground": {
     "source": "polyhaven",
@@ -1006,6 +1139,18 @@
     "key": "polyhaven:mossy_rock",
     "fetchedAt": "2026-11-13"
   },
+  "polyhaven:mossy_stone_wall": {
+    "source": "polyhaven",
+    "id": "mossy_stone_wall",
+    "name": "Mossy Stone Wall",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/mossy_stone_wall",
+    "key": "polyhaven:mossy_stone_wall",
+    "fetchedAt": "2026-11-14"
+  },
   "polyhaven:nature_reserve_forest": {
     "source": "polyhaven",
     "id": "nature_reserve_forest",
@@ -1056,6 +1201,18 @@
     "url": "https://polyhaven.com/a/nqweba_dawn",
     "key": "polyhaven:nqweba_dawn",
     "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:palm_bark": {
+    "source": "polyhaven",
+    "id": "palm_bark",
+    "name": "Palm Bark",
+    "authors": [
+      "Charlotte Baglioni"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/palm_bark",
+    "key": "polyhaven:palm_bark",
+    "fetchedAt": "2026-11-14"
   },
   "polyhaven:phalzer_forest_01": {
     "source": "polyhaven",
@@ -1118,6 +1275,32 @@
     "url": "https://polyhaven.com/a/pine_tree_01",
     "key": "polyhaven:pine_tree_01",
     "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:qwantani_dusk_2": {
+    "source": "polyhaven",
+    "id": "qwantani_dusk_2",
+    "name": "Qwantani Dusk 2",
+    "authors": [
+      "Greg Zaal",
+      "Jarod Guest"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/qwantani_dusk_2",
+    "key": "polyhaven:qwantani_dusk_2",
+    "fetchedAt": "2026-11-14"
+  },
+  "polyhaven:rainforest_trail": {
+    "source": "polyhaven",
+    "id": "rainforest_trail",
+    "name": "Rainforest Trail",
+    "authors": [
+      "Dimitrios Savva",
+      "Jarod Guest"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/rainforest_trail",
+    "key": "polyhaven:rainforest_trail",
+    "fetchedAt": "2026-11-14"
   },
   "polyhaven:raked_dirt": {
     "source": "polyhaven",
@@ -1217,6 +1400,19 @@
     "url": "https://polyhaven.com/a/rock_face_01",
     "key": "polyhaven:rock_face_01",
     "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:rock_face_03": {
+    "source": "polyhaven",
+    "id": "rock_face_03",
+    "name": "Rock Face 03",
+    "authors": [
+      "Dario Barresi",
+      "Rico Cilliers"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/rock_face_03",
+    "key": "polyhaven:rock_face_03",
+    "fetchedAt": "2026-11-14"
   },
   "polyhaven:rock_moss_set_01": {
     "source": "polyhaven",
@@ -1326,6 +1522,42 @@
     "url": "https://polyhaven.com/a/shrub_03",
     "key": "polyhaven:shrub_03",
     "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:snow_02": {
+    "source": "polyhaven",
+    "id": "snow_02",
+    "name": "Snow 02",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/snow_02",
+    "key": "polyhaven:snow_02",
+    "fetchedAt": "2026-11-14"
+  },
+  "polyhaven:snow_floor": {
+    "source": "polyhaven",
+    "id": "snow_floor",
+    "name": "Snow Floor",
+    "authors": [
+      "eye-candy.xyz"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/snow_floor",
+    "key": "polyhaven:snow_floor",
+    "fetchedAt": "2026-11-14"
+  },
+  "polyhaven:snowy_hillside": {
+    "source": "polyhaven",
+    "id": "snowy_hillside",
+    "name": "Snowy Hillside",
+    "authors": [
+      "Andreas Mischok"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/snowy_hillside",
+    "key": "polyhaven:snowy_hillside",
+    "fetchedAt": "2026-11-14"
   },
   "polyhaven:spruit_dawn": {
     "source": "polyhaven",
@@ -1449,6 +1681,42 @@
     "key": "polyhaven:weed_plant_02",
     "fetchedAt": "2026-11-13"
   },
+  "polyhaven:white_plaster_rough_01": {
+    "source": "polyhaven",
+    "id": "white_plaster_rough_01",
+    "name": "White Plaster Rough 01",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/white_plaster_rough_01",
+    "key": "polyhaven:white_plaster_rough_01",
+    "fetchedAt": "2026-11-14"
+  },
+  "polyhaven:winter_lake_01": {
+    "source": "polyhaven",
+    "id": "winter_lake_01",
+    "name": "Winter Lake 01",
+    "authors": [
+      "Sergej Majboroda"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/winter_lake_01",
+    "key": "polyhaven:winter_lake_01",
+    "fetchedAt": "2026-11-14"
+  },
+  "polyhaven:wood_trunk_wall": {
+    "source": "polyhaven",
+    "id": "wood_trunk_wall",
+    "name": "Wood Trunk Wall",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/wood_trunk_wall",
+    "key": "polyhaven:wood_trunk_wall",
+    "fetchedAt": "2026-11-14"
+  },
   "polyhaven:xanderklinge": {
     "source": "polyhaven",
     "id": "xanderklinge",
@@ -1460,5 +1728,17 @@
     "url": "https://polyhaven.com/a/xanderklinge",
     "key": "polyhaven:xanderklinge",
     "fetchedAt": "2026-11-13"
+  },
+  "polyhaven:xiequ_yuan": {
+    "source": "polyhaven",
+    "id": "xiequ_yuan",
+    "name": "Xiequ Yuan",
+    "authors": [
+      "Greg Zaal"
+    ],
+    "license": "CC0-1.0",
+    "url": "https://polyhaven.com/a/xiequ_yuan",
+    "key": "polyhaven:xiequ_yuan",
+    "fetchedAt": "2026-11-14"
   }
 }
