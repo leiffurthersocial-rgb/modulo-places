@@ -7,6 +7,7 @@ import * as THREE from 'three';
 import { mergeVertices } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { Noise2D, Rng, smoothstep } from '../../engine/core/random';
 import { patchMaterial } from '../../engine/render/materials';
+import { sceneMaterial } from '../../engine/render/sceneMaterials';
 import { registerPlaceholder, type Species } from '../../engine/scatter/species';
 
 // ---------------------------------------------------------------------------------------------
@@ -600,13 +601,134 @@ interface PartDef {
   shadow?: boolean;
 }
 
+// ---------------------------------------------------------------------------------------------
+// Scene-library (triplanar PBR) materials + geometry splitting
+// ---------------------------------------------------------------------------------------------
+
+/** Library materials are owned by the scene runtime: never dispose them from a species. */
+const LIB = new WeakSet<THREE.Material>();
+
+/**
+ * Triplanar pack material `libKey` (declared in scene.json `materials`), or a vertex-coloured
+ * fallback when the pack/scene does not provide it. With wind > 0 the library material is cloned
+ * so the vegetation still bends (the clone is owned by the species, the textures stay shared).
+ */
+function triMat(libKey: string, name: string, o: MatOpts = {}): THREE.Material {
+  const fallback = mat(name, o);
+  const lib = sceneMaterial(libKey, fallback);
+  if (lib === fallback) return fallback;
+  fallback.dispose();
+  if (!o.wind && !o.double) {
+    LIB.add(lib);
+    return lib;
+  }
+  const m = lib.clone();
+  if (o.double) m.side = THREE.DoubleSide;
+  m.onBeforeCompile = lib.onBeforeCompile;
+  m.customProgramCacheKey = lib.customProgramCacheKey;
+  return patchMaterial(m, {
+    key: `jungle-${name}-tri`,
+    wind: o.wind,
+    windHeight: o.windHeight,
+    flutter: o.flutter,
+  });
+}
+
+interface MossRule {
+  /** Triangles whose upward normal is above this are mossy (top faces). */
+  up?: number;
+  /** Triangles whose vertex colour is this much greener than red are mossy. */
+  green?: number;
+  /** Triangles above this height are mossy (weathered upper courses). */
+  yMin?: number;
+}
+
+/** Splits a coloured, indexed geometry into plain-stone and mossy triangles (shared vertex buffers). */
+function splitMoss(g: THREE.BufferGeometry, rule: MossRule = {}): [PartGeo, PartGeo] {
+  const up = rule.up ?? 0.82;
+  const green = rule.green ?? 1.12;
+  const yMin = rule.yMin ?? Infinity;
+  const pos = g.attributes.position as THREE.BufferAttribute;
+  const nor = g.attributes.normal as THREE.BufferAttribute;
+  const colA = g.attributes.color as THREE.BufferAttribute;
+  const idx = g.index!;
+  const a: number[] = [];
+  const m: number[] = [];
+  for (let k = 0; k < idx.count; k += 3) {
+    const i0 = idx.getX(k);
+    const i1 = idx.getX(k + 1);
+    const i2 = idx.getX(k + 2);
+    const ny = (nor.getY(i0) + nor.getY(i1) + nor.getY(i2)) / 3;
+    const r = colA.getX(i0) + colA.getX(i1) + colA.getX(i2);
+    const gr = colA.getY(i0) + colA.getY(i1) + colA.getY(i2);
+    const y = (pos.getY(i0) + pos.getY(i1) + pos.getY(i2)) / 3;
+    const mossy = ny > up || gr > r * green || y > yMin;
+    (mossy ? m : a).push(i0, i1, i2);
+  }
+  const make = (ix: number[]): PartGeo => {
+    if (ix.length === 0) return null;
+    const out = new THREE.BufferGeometry();
+    for (const [name, attr] of Object.entries(g.attributes)) out.setAttribute(name, attr);
+    out.setIndex(ix);
+    out.boundingSphere = g.boundingSphere?.clone() ?? null;
+    out.boundingBox = g.boundingBox?.clone() ?? null;
+    return out;
+  };
+  return [make(a), make(m)];
+}
+type PartGeo = THREE.BufferGeometry | null;
+
+/** Stone parts of a ruin geometry: plain sandstone + mossy stone, using the same split for every LOD. */
+function stoneParts(
+  g: THREE.BufferGeometry,
+  st: THREE.Material,
+  mo: THREE.Material,
+  rule?: MossRule,
+): PartDef[] {
+  const [a, m] = splitMoss(g, rule);
+  const out: PartDef[] = [];
+  if (a) out.push({ geo: a, material: st });
+  if (m) out.push({ geo: m, material: mo });
+  return out;
+}
+
+interface StoneMats {
+  st: THREE.Material;
+  mo: THREE.Material;
+}
+function stoneMats(name: string): StoneMats {
+  return {
+    st: triMat('jungle/jungle-stone', `${name}-stone`, { rough: 0.94 }),
+    mo: triMat('jungle/mossy-stone', `${name}-moss`, { rough: 0.94 }),
+  };
+}
+
+/** Ruin species: every variant/LOD is split into stone + mossy parts. */
+function ruin(
+  name: string,
+  variants: THREE.BufferGeometry[][],
+  height: number,
+  radius: number,
+  rule?: MossRule,
+  mossOnly = false,
+): Species {
+  const { st, mo } = stoneMats(name);
+  return assemble(
+    variants.map((v) =>
+      v.map((lod) => (mossOnly ? [{ geo: lod, material: mo }] : stoneParts(lod, st, mo, rule))),
+    ),
+    height,
+    radius,
+  );
+}
+
 function assemble(variants: PartDef[][][], height: number, radius: number): Species {
   const owned = new Set<THREE.BufferGeometry | THREE.Material>();
   for (const v of variants)
     for (const l of v)
       for (const p of l) {
         owned.add(p.geo);
-        owned.add(p.material);
+        if (!LIB.has(p.material)) owned.add(p.material);
       }
   return {
     variants: variants.map((v) =>
@@ -897,7 +1019,7 @@ function buildCanopyTrees(
 ): Species {
   const H = height;
   const wind = kind === GIANT ? 0.55 : 0.4;
-  const barkM = mat(`${key}-bark`, {
+  const barkM = triMat(kind === GIANT ? 'forest/bark' : 'jungle/bark-tropical', `${key}-bark`, {
     rough: 0.95,
     double: true,
     wind,
@@ -1018,7 +1140,7 @@ function palm(
 
 function buildPalm(): Species {
   const wind = 0.5;
-  const tm = mat('palm-trunk', {
+  const tm = triMat('jungle/bark-tropical', 'palm-trunk', {
     rough: 0.9,
     double: true,
     wind,
@@ -1085,7 +1207,7 @@ function treeFern(
 
 function buildTreeFern(): Species {
   const wind = 0.15;
-  const tm = mat('treefern-trunk', {
+  const tm = triMat('jungle/bark-tropical', 'treefern-trunk', {
     rough: 0.95,
     double: true,
     wind,
@@ -1164,7 +1286,7 @@ function sapling(
 
 function buildSapling(): Species {
   const wind = 0.25;
-  const tm = mat('sapling-trunk', {
+  const tm = triMat('jungle/bark-tropical', 'sapling-trunk', {
     rough: 0.95,
     double: true,
     wind,
@@ -2237,52 +2359,53 @@ function colliderGeo(): THREE.BufferGeometry {
 // Registry
 // ---------------------------------------------------------------------------------------------
 
-function stoneMat(key: string): THREE.MeshStandardMaterial {
-  return mat(key, { rough: 0.94 });
-}
-
 function boulderSpecies(): Species {
-  const m = stoneMat('boulder');
-  return simple(
-    m,
-    [301, 302, 303].map((s) => [boulderGeo(s, 3), boulderGeo(s, 2), boulderGeo(s, 1)]),
+  const st = triMat('forest/rock', 'boulder-rock', { rough: 0.94 });
+  const mo = triMat('jungle/mossy-stone', 'boulder-moss', { rough: 0.94 });
+  return assemble(
+    [301, 302, 303].map((s) =>
+      [boulderGeo(s, 3), boulderGeo(s, 2), boulderGeo(s, 1)].map((g) =>
+        stoneParts(g, st, mo, { up: 0.55, green: 1.05 }),
+      ),
+    ),
     1.4,
     1.4,
   );
 }
 
 export const JUNGLE_SPECIES: Record<string, () => Species> = {
-  'jungle:temple': () => simple(stoneMat('temple'), [[templeGeo()]], 18, 18),
+  'jungle:temple': () => ruin('temple', [[templeGeo()]], 18, 18, { up: 0.9, yMin: 10.5 }),
   'jungle:temple-growth': () =>
     simple(mat('temple-growth', { rough: 0.85, double: true }), [[templeGrowthGeo()]], 18, 18),
   'jungle:collider': () => simple(mat('collider', { invisible: true }), [[colliderGeo()]], 1, 0.5),
-  'jungle:pillar': () => simple(stoneMat('pillar'), [[pillarGeo(5, 'full')]], 5.2, 0.9),
-  'jungle:pillar-broken': () => simple(stoneMat('pillar'), [[pillarGeo(6, 'broken')]], 3.4, 0.9),
-  'jungle:pillar-stump': () => simple(stoneMat('pillar'), [[pillarGeo(8, 'stump')]], 1.2, 0.9),
-  'jungle:pillar-fallen': () => simple(stoneMat('pillar'), [[fallenPillarGeo(9)]], 1, 3.2),
-  'jungle:wall': () => simple(stoneMat('wall'), [[wallGeo(21, 8, 3.4, 1.2)]], 3.4, 4.2),
-  'jungle:wall-b': () => simple(stoneMat('wall'), [[wallGeo(22, 6, 2.6, 0.7)]], 2.6, 3.2),
-  'jungle:wall-low': () => simple(stoneMat('wall'), [[wallGeo(23, 7, 1.2, 0.5)]], 1.2, 3.6),
+  'jungle:pillar': () => ruin('pillar', [[pillarGeo(5, 'full')]], 5.2, 0.9, { yMin: 3.4 }),
+  'jungle:pillar-broken': () => ruin('pillar', [[pillarGeo(6, 'broken')]], 3.4, 0.9),
+  'jungle:pillar-stump': () => ruin('pillar', [[pillarGeo(8, 'stump')]], 1.2, 0.9),
+  'jungle:pillar-fallen': () => ruin('pillar', [[fallenPillarGeo(9)]], 1, 3.2, undefined, true),
+  'jungle:wall': () => ruin('wall', [[wallGeo(21, 8, 3.4, 1.2)]], 3.4, 4.2, { yMin: 1.6 }),
+  'jungle:wall-b': () => ruin('wall', [[wallGeo(22, 6, 2.6, 0.7)]], 2.6, 3.2, { yMin: 1.4 }),
+  'jungle:wall-low': () => ruin('wall', [[wallGeo(23, 7, 1.2, 0.5)]], 1.2, 3.6, { yMin: 0.6 }),
   'jungle:block': () =>
-    simple(
-      stoneMat('block'),
+    ruin(
+      'block',
       [71, 72, 73].map((s) => [blockGeo(s)]),
       1,
       1,
     ),
-  'jungle:rubble': () => simple(stoneMat('rubble'), [[rubbleGeo(31)], [rubbleGeo(32)]], 1.2, 1.8),
+  'jungle:rubble': () => ruin('rubble', [[rubbleGeo(31)], [rubbleGeo(32)]], 1.2, 1.8, { up: 0.5 }),
   'jungle:slab': () =>
-    simple(
-      stoneMat('slab'),
+    ruin(
+      'slab',
       [81, 82, 83, 84].map((s) => [slabGeo(s, 0), slabGeo(s, 1)]),
       0.2,
       1,
+      { up: 0.7 },
     ),
-  'jungle:stele': () => simple(stoneMat('stele'), [[steleGeo(91)]], 3.3, 0.8),
-  'jungle:guardian': () => simple(stoneMat('guardian'), [[guardianGeo()]], 3.4, 1.0),
+  'jungle:stele': () => ruin('stele', [[steleGeo(91)]], 3.3, 0.8, { yMin: 2.9 }),
+  'jungle:guardian': () => ruin('guardian', [[guardianGeo()]], 3.4, 1.0, { yMin: 3.0 }),
   'jungle:root-spread': () =>
     simple(
-      mat('root', { rough: 0.95, double: true, translucent: false }),
+      triMat('jungle/bark-tropical', 'root', { rough: 0.95, double: true, translucent: false }),
       [11, 12, 13, 14].map((s) => [rootSpread(s, 0), rootSpread(s, 1)]),
       0.5,
       5,
@@ -2290,7 +2413,7 @@ export const JUNGLE_SPECIES: Record<string, () => Species> = {
   'jungle:boulder': boulderSpecies,
   'jungle:log': () =>
     simple(
-      mat('log', { rough: 0.95 }),
+      triMat('forest/bark', 'log', { rough: 0.95 }),
       [
         [logGeo(5, 7, 0), logGeo(5, 7, 1)],
         [logGeo(6, 10, 0), logGeo(6, 10, 1)],
