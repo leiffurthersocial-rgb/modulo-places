@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { AssetLoader, loadPackManifest, type Tier } from '../assets/AssetLoader';
 import { ParticleField, type ParticlePreset } from '../atmosphere/particles/Particles';
 import { findHdriSun, Sky } from '../atmosphere/sky';
+import { LightShafts } from '../atmosphere/LightShafts';
 import { bakeImpostor, type Impostor } from '../scatter/impostor/Impostor';
 import { buildProceduralSpecies } from '../scatter/proceduralSpecies';
 import { type Species, speciesFromGltf } from '../scatter/species';
@@ -55,6 +56,7 @@ export class SceneRuntime {
   assets: AssetLoader | null = null;
   particles: ParticleField | null = null;
   creek: Creek | null = null;
+  shafts: LightShafts | null = null;
   private modelSpecies = new Map<string, Species>();
   private impostors: Impostor[] = [];
   private hdris = new Map<string, Promise<{ tex: THREE.DataTexture; sunAz: number } | null>>();
@@ -153,6 +155,12 @@ export class SceneRuntime {
     this.scatter = new ScatterRenderer(q, (id) => this.modelSpecies.get(id) ?? null);
     this.rescatter();
     this.root.add(this.scatter.root);
+
+    // Card light shafts (Medium and up; High/Ultra also get the radial blur pass).
+    if (q.lightShafts !== 'off' && d.moods.some((m) => (m.post.shafts ?? 1) > 0.05)) {
+      this.shafts = new LightShafts((x, z) => sampleHeight(this.hf, x, z), d.shaftHeight ?? 18);
+      this.root.add(this.shafts.mesh);
+    }
 
     // Atmosphere particles: every preset any mood uses; intensities follow the mood.
     const presets = new Set<ParticlePreset>();
@@ -528,6 +536,8 @@ export class SceneRuntime {
       sharedUniforms.uWindDir.value,
       sharedUniforms.uWindStrength.value,
     );
+    const ms = this.moods.state;
+    this.shafts?.update(camera, ms.sunDir, ms.sunColor, ms.shafts);
     this.updateShadowFrustum(camera);
   }
 
@@ -588,6 +598,7 @@ export class SceneRuntime {
     this.scatter?.dispose();
     this.particles?.dispose();
     this.creek?.dispose();
+    this.shafts?.dispose();
     for (const imp of this.impostors) imp.dispose();
     clearSceneMaterials();
     this.assets?.dispose();
