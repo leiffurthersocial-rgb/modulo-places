@@ -147,6 +147,8 @@ export class SceneRuntime {
       this.root.add(this.particles.root);
     }
 
+    this.buildProps();
+
     progress(0.75, 'Building collision');
     await nextFrame();
     this.world = new this.R.World({ x: 0, y: -9.81, z: 0 });
@@ -248,7 +250,54 @@ export class SceneRuntime {
     this.scatter.build(this.results);
   }
 
+  /** Hand-placed props (houses, lanterns, cabin, …): LOD0 of their species, one mesh per part. */
+  private propRoot = new THREE.Group();
+  private propColliders: { def: import('../types').PropDef; box: THREE.Box3 }[] = [];
+  private buildProps(): void {
+    this.propRoot.name = 'props';
+    for (const pd of this.def.props) {
+      const sp = this.scatter.species(pd.mesh);
+      const g = new THREE.Group();
+      g.name = `prop:${pd.id}`;
+      for (const part of sp.variants[0]![0]!) {
+        const m = new THREE.Mesh(part.geometry, part.material);
+        m.castShadow = part.castShadow;
+        m.receiveShadow = true;
+        g.add(m);
+      }
+      const [x, y, z] = pd.position;
+      g.position.set(x, sampleHeight(this.hf, x, z) + y, z);
+      const sc = pd.scale ?? 1;
+      if (typeof sc === 'number') g.scale.setScalar(sc);
+      else g.scale.set(sc[0], sc[1], sc[2]);
+      g.updateMatrixWorld(true);
+      // Collision box measured before rotation (true half-extents), then rotated by yaw.
+      const unrotated = new THREE.Box3().setFromObject(g);
+      const r = pd.rotation ?? [0, 0, 0];
+      g.rotation.set(THREE.MathUtils.degToRad(r[0]), THREE.MathUtils.degToRad(r[1]), THREE.MathUtils.degToRad(r[2]));
+      if (pd.color) for (const c of g.children) (c as THREE.Mesh).userData.tint = pd.color;
+      g.updateMatrixWorld(true);
+      this.propRoot.add(g);
+      if (pd.collision && pd.collision !== 'none') this.propColliders.push({ def: pd, box: unrotated });
+    }
+    this.root.add(this.propRoot);
+  }
+
   private buildProxies(): void {
+    for (const { def: pd, box } of this.propColliders) {
+      const c = box.getCenter(new THREE.Vector3());
+      const h = box.getSize(new THREE.Vector3()).multiplyScalar(0.5);
+      const yaw = THREE.MathUtils.degToRad(pd.rotation?.[1] ?? 0);
+      const desc = pd.collision === 'cylinder' ? this.R.ColliderDesc.cylinder(h.y, Math.min(h.x, h.z)) : this.R.ColliderDesc.cuboid(h.x, h.y, h.z);
+      // Box centre relative to the prop origin rotates with the prop.
+      const ox = c.x - pd.position[0];
+      const oz = c.z - pd.position[2];
+      const cy = Math.cos(yaw);
+      const sy = Math.sin(yaw);
+      desc.setTranslation(pd.position[0] + ox * cy + oz * sy, c.y, pd.position[2] - ox * sy + oz * cy);
+      desc.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) });
+      this.world.createCollider(desc);
+    }
     for (const rule of this.def.scatter) {
       if (!rule.collision || rule.collision === 'none') continue;
       const sp = this.scatter.speciesInfo(rule.mesh);
@@ -369,6 +418,9 @@ export class SceneRuntime {
     sharedUniforms.uFogSunDir.value.copy(s.sunDir);
     sharedUniforms.uFogSunColor.value.copy(s.sunColor);
     sharedUniforms.uFogSunScatter.value = s.fogSunScatter;
+    sharedUniforms.uNightLights.value = s.nightLights;
+    u.uAurora.value = s.aurora;
+    u.uStars.value = s.stars;
     const ambient = s.ambSky.clone().multiplyScalar(s.ambIntensity);
     this.particles?.setLight(
       s.sunDir,

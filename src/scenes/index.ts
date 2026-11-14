@@ -42,21 +42,45 @@ export const SCENES: SceneEntry[] = [
     id: 'village',
     name: 'Japanese Village',
     description: 'Wooden houses, a shrine path and a bamboo grove.',
-    available: false,
-    moods: [],
+    available: true,
+    moods: [
+      { id: 'lantern-dusk', name: 'Lantern dusk' },
+      { id: 'rainy-morning', name: 'Rainy morning' },
+      { id: 'midday', name: 'Midday' },
+    ],
+    load: async () => {
+      (await import('./village/placeholders')).registerVillagePlaceholders();
+      return (await import('./village/scene.json')).default as unknown as SceneDef;
+    },
   },
   {
     id: 'jungle',
     name: 'Jungle Ruin',
     description: 'Overgrown stone, vines and humid light shafts.',
-    available: false,
-    moods: [],
+    available: true,
+    moods: [
+      { id: 'midday', name: 'Midday shafts' },
+      { id: 'storm', name: 'Storm' },
+      { id: 'golden-hour', name: 'Golden hour' },
+    ],
+    load: async () => {
+      (await import('./jungle/placeholders')).registerJunglePlaceholders();
+      return (await import('./jungle/scene.json')).default as unknown as SceneDef;
+    },
   },
   {
     id: 'cabin',
     name: 'Snowy Mountain Cabin',
     description: 'Deep snow, pines and a lit window at blue hour.',
-    available: false,
-    moods: [],
+    available: true,
+    moods: [
+      { id: 'blue-hour', name: 'Blue hour' },
+      { id: 'midday', name: 'Midday' },
+      { id: 'aurora-night', name: 'Aurora night' },
+    ],
+    load: async () => {
+      (await import('./cabin/placeholders')).registerCabinPlaceholders();
+      return (await import('./cabin/scene.json')).default as unknown as SceneDef;
+    },
   },
 ];

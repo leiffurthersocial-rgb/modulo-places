@@ -109,6 +109,10 @@ export interface MoodDef {
     ground: ColorHex;
     hdri?: string;
     hdriIntensity?: number;
+    /** 0..1 aurora curtain strength (night skies). */
+    aurora?: number;
+    /** 0..1 star field strength (night skies). */
+    stars?: number;
   };
   sun: {
     /** Degrees; azimuth 0 = +Z (south-ish), 90 = +X. */
@@ -140,6 +144,8 @@ export interface MoodDef {
     tint: number; // -1 (green) .. 1 (magenta)
     bloom: number; // intensity
     vignette: number; // 0..1
+    /** 0..1 emissive night lights (lanterns, lit windows). */
+    nightLights?: number;
     /** Light-shaft strength multiplier (0 = none, 1 = default); quality decides if shafts exist. */
     shafts?: number;
   };

@@ -44,7 +44,15 @@ export function placeholderIdFor(id: string): string {
   return map.find(([re]) => re.test(k))?.[1] ?? 'rock';
 }
 
+/** Scene-specific greybox species (houses, lanterns, ruins, …) registered by each scene module. */
+const registry = new Map<string, () => Species>();
+export function registerPlaceholder(id: string, build: () => Species): void {
+  registry.set(id, build);
+}
+
 export function placeholderSpecies(id: string): Species {
+  const custom = registry.get(id);
+  if (custom) return custom();
   const p = buildPlaceholderSpecies(placeholderIdFor(id));
   patchMaterial(p.material, { wind: p.wind, windHeight: p.windHeight, flutter: p.flutter });
   return {

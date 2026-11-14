@@ -28,6 +28,9 @@ export interface MoodState {
   bloom: number;
   vignette: number;
   shafts: number;
+  nightLights: number;
+  aurora: number;
+  stars: number;
 }
 
 const c = (hex: string) => new THREE.Color(hex);
@@ -70,6 +73,9 @@ export function moodToState(m: MoodDef): MoodState {
     bloom: m.post.bloom,
     vignette: m.post.vignette,
     shafts: m.post.shafts ?? 1,
+    nightLights: m.post.nightLights ?? 0,
+    aurora: m.sky.aurora ?? 0,
+    stars: m.sky.stars ?? 0,
   };
 }
 
@@ -102,6 +108,9 @@ export function lerpMood(a: MoodState, b: MoodState, t: number, out: MoodState):
   out.bloom = l(a.bloom, b.bloom);
   out.vignette = l(a.vignette, b.vignette);
   out.shafts = l(a.shafts, b.shafts);
+  out.nightLights = l(a.nightLights, b.nightLights);
+  out.aurora = l(a.aurora, b.aurora);
+  out.stars = l(a.stars, b.stars);
   return out;
 }
 

@@ -59,6 +59,9 @@ export class Sky {
     uHdriIntensityB: { value: 1 },
     /** 0 = HDRI only lights the scene (via the env capture), 1 = HDRI also visible as background. */
     uHdriVisible: { value: 0 },
+    uAurora: { value: 0 },
+    uStars: { value: 0 },
+    uTime: sharedUniforms.uTime,
   };
   private fade = { t: 1, dur: 1 };
 
@@ -90,6 +93,7 @@ export class Sky {
         uniform vec3 uZenith, uHorizon, uGround, uSunDir, uSunColor;
         uniform float uSunDisc, uSunIntensity, uHorizonFog;
         uniform sampler2D tHdriA, tHdriB;
+        uniform float uAurora, uStars, uTime;
         uniform float uHdriVisible, uHdriRotA, uHdriRotB, uHdriMix, uHdriWeightA, uHdriWeightB, uHdriIntensityA, uHdriIntensityB;
         varying vec3 vDir;
         ${FOG_GLSL}
@@ -114,9 +118,37 @@ export class Sky {
           // backdrop impostor ring and the fog own the horizon; the analytic gradient fills in.
           return mix(fallback, h, w * uHdriVisible * smoothstep(-0.05, 0.04, d.y));
         }
+        float sHash(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
+        float sNoise(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+          return mix(mix(sHash(vec3(i, 1.0)), sHash(vec3(i + vec2(1, 0), 1.0)), f.x), mix(sHash(vec3(i + vec2(0, 1), 1.0)), sHash(vec3(i + 1.0, 1.0)), f.x), f.y); }
+        vec3 night(vec3 d) {
+          vec3 c = vec3(0.0);
+          if (d.y <= 0.0) return c;
+          // Stars: sparse hashed points, twinkle.
+          vec3 sp = floor(d * 380.0);
+          float st = step(0.9975, sHash(sp)) * (0.6 + 0.4 * sin(uTime * 2.0 + sHash(sp + 3.1) * 40.0));
+          c += vec3(0.8, 0.85, 1.0) * st * uStars * smoothstep(0.0, 0.25, d.y) * 2.5;
+          // Aurora: curtains = folded noise bands projected on a sky plane, green with violet tops.
+          if (uAurora > 0.0) {
+            vec2 q = d.xz / max(d.y, 0.08) * 0.35;
+            float t = uTime * 0.03;
+            float band = 0.0;
+            for (int i = 0; i < 3; i++) {
+              float fi = float(i);
+              float n = sNoise(q * (1.2 + fi * 0.7) + vec2(t * (1.0 + fi), fi * 4.1));
+              float fold = abs(sin(q.x * (2.0 + fi) + n * 4.0 + t * 3.0));
+              band += pow(1.0 - fold, 6.0) * (0.6 - fi * 0.15);
+            }
+            float h = smoothstep(0.05, 0.25, d.y) * (1.0 - smoothstep(0.55, 0.9, d.y));
+            vec3 green = vec3(0.15, 1.0, 0.45);
+            vec3 violet = vec3(0.5, 0.2, 0.9);
+            c += mix(green, violet, smoothstep(0.3, 0.7, d.y)) * band * h * uAurora * 1.6;
+          }
+          return c;
+        }
         void main() {
           vec3 d = normalize(vDir);
-          vec3 a = analytic(d);
+          vec3 a = analytic(d) + night(d);
           vec3 col = mix(slot(tHdriA, uHdriRotA, uHdriWeightA, uHdriIntensityA, d, a),
                          slot(tHdriB, uHdriRotB, uHdriWeightB, uHdriIntensityB, d, a), uHdriMix);
           // Blend toward fog colour near the horizon so distant terrain meets the sky softly.
