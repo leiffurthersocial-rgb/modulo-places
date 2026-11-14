@@ -4,6 +4,11 @@ Newest first. Each entry: decision · why · source (only pages actually opened;
 
 ## 2026-11-14 — Scenes 2–4 and foliage
 
+### D-037 Additive effects opt out of N8AO's transparency pass
+N8AO auto-enables `transparencyAware` when any scene material is transparent. It then re-renders transparent meshes and uses their written alpha as coverage in the AO composite. The additive shaft cards write alpha 1 over the whole quad, which stamped straight-edged translucent "panels" into frames (forest dawn, jungle golden hour), even when the beams themselves were faded to zero. Bisected by A/B renders: not mist, impostors or alpha-to-coverage; it went away only when the shaft mesh was absent, and a red debug tint proved the shader drew nothing. Fix: `mesh.userData.treatAsOpaque = true` on the shafts. Any future additive effect must do the same or write its real alpha. Two related tweaks shipped with it:
+- The shaft cross-profile is now windowed to reach exactly 0 at the card edges.
+- Foliage cards with alpha-to-coverage sharpen alpha to a ~1-pixel ramp, so compressed "empty" texels never give partial coverage.
+
 ### D-036 All foliage is procedural, textured from baked scan atlases
 Following D-031, broadleaf trees (maple, deciduous, jungle giant and canopy) are generated from leaf-cluster atlases baked from Poly Haven `tree_small_02`, with a crimson palette mapping for maples. Tropical plants (monstera, banana, elephant-ear, palm, tree fern) use leaves baked from the calathea / anthurium / fern scans. Bamboo uses procedural leaf sprays. Scatter ids are `broadleaf:*`, `tropical:*`, `conifer:*` and `log:*`. All have 3 variants × 3 LODs plus a baked impostor for big trees. Every procedural geometry runs `repairNormals` (D-033).
 

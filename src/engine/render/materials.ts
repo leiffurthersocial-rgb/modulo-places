@@ -120,6 +120,15 @@ export function patchMaterial<T extends THREE.Material>(mat: T, opts: PatchOptio
   const prev = mat.onBeforeCompile;
   mat.onBeforeCompile = (shader, renderer) => {
     prev.call(mat, shader, renderer);
+    if (mat.alphaToCoverage) {
+      // Alpha-to-coverage turns any residual alpha in "empty" texels (compressed textures never
+      // hold a clean 0) into partial coverage → faint fogged panels around foliage cards. Sharpen
+      // alpha to a ~1-pixel ramp around 0.5 (Golus, "anti-aliased alpha test").
+      shader.fragmentShader = shader.fragmentShader.replace(
+        '#include <alphatest_fragment>',
+        'diffuseColor.a = clamp((diffuseColor.a - 0.5) / max(fwidth(diffuseColor.a), 1e-4) + 0.5, 0.0, 1.0);\n#include <alphatest_fragment>',
+      );
+    }
     shader.uniforms.uFogColor = sharedUniforms.uFogColor;
     shader.uniforms.uFogDensity = sharedUniforms.uFogDensity;
     shader.uniforms.uFogHeightFalloff = sharedUniforms.uFogHeightFalloff;

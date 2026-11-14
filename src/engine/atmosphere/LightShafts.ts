@@ -83,8 +83,11 @@ export class LightShafts {
         ${FOG_GLSL}
         void main() {
           float across = vUv.x * 2.0 - 1.0;
-          float core = exp(-across * across * 3.5);
-          float along = smoothstep(0.0, 0.12, vUv.y) * (1.0 - smoothstep(0.55, 1.0, vUv.y));
+          // Windowed profile that reaches exactly 0 at the card edges: a Gaussian alone leaves ~3% at
+          // the border, which additive blending in dim fog turns into visible straight panel edges.
+          float w = max(1.0 - across * across, 0.0);
+          float core = exp(-across * across * 3.5) * w * w;
+          float along = smoothstep(0.0, 0.25, vUv.y) * (1.0 - smoothstep(0.45, 1.0, vUv.y));
           // Slow drifting density so beams breathe a little.
           float n = 0.75 + 0.25 * sin(uTime * 0.25 + vWorld.x * 0.31 + vWorld.z * 0.17);
           vec3 V = normalize(vWorld - cameraPosition);
@@ -104,6 +107,10 @@ export class LightShafts {
     this.mesh.name = 'light-shafts';
     this.mesh.frustumCulled = false;
     this.mesh.renderOrder = 10;
+    // N8AO auto-enables transparency-aware mode when the scene has transparent meshes and re-renders
+    // them, using their written alpha as coverage. Additive beams write alpha 1 over the whole card,
+    // which stamped rectangular "panels" into the AO composite. They neither receive nor occlude AO.
+    this.mesh.userData.treatAsOpaque = true;
   }
 
   private reseed(cx: number, cz: number): void {
