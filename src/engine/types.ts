@@ -265,7 +265,7 @@ export interface SceneDef {
   /** Triplanar scene materials (pack keys) for greybox/procedural geometry; see render/sceneMaterials.ts. */
   materials?: Record<
     string,
-    { scale: number; tint?: ColorHex; roughness?: number; doubleSided?: boolean }
+    { scale: number; tint?: ColorHex; brightness?: number; roughness?: number; doubleSided?: boolean }
   >;
   /** Bark material keys for procedural trees/logs (fir, pine, log, moss). */
   barks?: Partial<Record<'fir' | 'pine' | 'log' | 'moss', string>>;
