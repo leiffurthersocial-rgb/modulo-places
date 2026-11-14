@@ -86,7 +86,7 @@
       },
       {
         "id": "snow-rock",
-        "material": "cabin/snow-rock",
+        "material": "cabin/rock",
         "scale": 4.0,
         "triplanar": true,
         "surface": "rock",
@@ -3184,7 +3184,9 @@
         "zenith": "#1c3768",
         "horizon": "#9fb3d8",
         "ground": "#34415e",
-        "stars": 0.3
+        "stars": 0.3,
+        "hdri": "cabin/blue-hour",
+        "hdriIntensity": 1.0
       },
       "sun": {
         "azimuth": 255,
@@ -3226,7 +3228,9 @@
       "sky": {
         "zenith": "#2f6dbd",
         "horizon": "#bcd8ee",
-        "ground": "#dde7f1"
+        "ground": "#dde7f1",
+        "hdri": "cabin/midday",
+        "hdriIntensity": 1.0
       },
       "sun": {
         "azimuth": 165,
@@ -3269,7 +3273,9 @@
         "horizon": "#12254c",
         "ground": "#0a1226",
         "aurora": 1,
-        "stars": 1
+        "stars": 1,
+        "hdri": "cabin/aurora-night",
+        "hdriIntensity": 1.0
       },
       "sun": {
         "azimuth": 205,

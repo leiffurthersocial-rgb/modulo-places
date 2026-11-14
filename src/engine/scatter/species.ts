@@ -78,6 +78,8 @@ export interface ModelSpeciesOptions {
   alphaToCoverage: boolean;
   /** Treat the whole model as one variant even if LOD groups have several children. */
   single?: boolean;
+  /** Snowy scene: blend snow onto up-facing surfaces. */
+  snow?: boolean;
 }
 
 /** Build a species from a processed GLB scene (children "LOD0", "LOD1", …). */
@@ -122,6 +124,7 @@ export function speciesFromGltf(root: THREE.Object3D, o: ModelSpeciesOptions): S
       wind: o.wind,
       windHeight: Math.max(0.5, height),
       flutter: foliage ? o.flutter : 0,
+      snow: o.snow,
     });
     materials.set(m, out);
     owned.push(out);

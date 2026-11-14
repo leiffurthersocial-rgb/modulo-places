@@ -15,6 +15,8 @@ export interface ProceduralOptions {
   flutter: number;
   /** Bark material keys per kind (scene-specific variety). */
   barks: { fir: string; pine: string; log: string; moss: string };
+  /** Snowy scene: snow on up-facing branches/logs. */
+  snow?: boolean;
 }
 
 /** Variant heights (m) at instance scale 1 — instance scale adds further variety. */
@@ -25,7 +27,10 @@ const HEIGHTS: Record<string, number[]> = {
   'pine-sapling': [1.5, 2.4, 3.4],
 };
 
-function toSpecies(variants: BuiltModel[][], owned: (THREE.BufferGeometry | THREE.Material)[]): Species {
+function toSpecies(
+  variants: BuiltModel[][],
+  owned: (THREE.BufferGeometry | THREE.Material)[],
+): Species {
   let height = 0;
   let radius = 0;
   for (const lods of variants) {
@@ -34,36 +39,78 @@ function toSpecies(variants: BuiltModel[][], owned: (THREE.BufferGeometry | THRE
     for (const m of lods) for (const p of m.parts) owned.push(p.geometry);
   }
   return {
-    variants: variants.map((lods) => lods.map((m) => m.parts.map((p) => ({ geometry: p.geometry, material: p.material, castShadow: true })))),
+    variants: variants.map((lods) =>
+      lods.map((m) =>
+        m.parts.map((p) => ({ geometry: p.geometry, material: p.material, castShadow: true })),
+      ),
+    ),
     height,
     radius,
     owned,
   };
 }
 
-export async function buildProceduralSpecies(meshId: string, assets: AssetLoader, o: ProceduralOptions): Promise<Species | null> {
+export async function buildProceduralSpecies(
+  meshId: string,
+  assets: AssetLoader,
+  o: ProceduralOptions,
+): Promise<Species | null> {
   const [kind, name = ''] = meshId.split(':') as [string, string?];
   if (kind === 'conifer') {
     const base = name.startsWith('pine') ? 'pine' : 'fir';
     const sapling = name.endsWith('sapling');
-    const [bark, foliage] = await Promise.all([assets.material(o.barks[base], o.tier, o.anisotropy), assets.foliage(base, o.anisotropy)]);
+    const [bark, foliage] = await Promise.all([
+      assets.material(o.barks[base], o.tier, o.anisotropy),
+      assets.foliage(base, o.anisotropy),
+    ]);
     if (!bark || !foliage) return null;
     const mats = createConiferMaterials({ bark, ...foliage }, o.alphaToCoverage);
     const heights = HEIGHTS[name] ?? HEIGHTS[base]!;
     const windHeight = Math.max(...heights);
     // Bark and needles share the main bend so the crown stays attached to the trunk.
-    patchMaterial(mats.bark, { wind: o.wind, windHeight, key: `conifer-bark-${base}` });
-    patchMaterial(mats.foliage, { wind: o.wind, windHeight, flutter: o.flutter, key: `conifer-foliage-${base}` });
+    patchMaterial(mats.bark, {
+      wind: o.wind,
+      windHeight,
+      key: `conifer-bark-${base}`,
+      snow: o.snow,
+    });
+    patchMaterial(mats.foliage, {
+      wind: o.wind,
+      windHeight,
+      flutter: o.flutter,
+      key: `conifer-foliage-${base}`,
+      snow: o.snow,
+    });
     const variants = heights.map((h, v) =>
-      ([0, 1, 2] as const).map((lod) => buildConifer({ kind: base, height: h, seed: 101 + v * 977, lod, sapling }, mats)),
+      ([0, 1, 2] as const).map((lod) =>
+        buildConifer({ kind: base, height: h, seed: 101 + v * 977, lod, sapling }, mats),
+      ),
     );
     return toSpecies(variants, [mats.bark, mats.foliage]);
   }
   if (kind === 'log') {
-    const [bark, moss] = await Promise.all([assets.material(o.barks.log, o.tier, o.anisotropy), assets.material(o.barks.moss, o.tier, o.anisotropy)]);
+    const [bark, moss] = await Promise.all([
+      assets.material(o.barks.log, o.tier, o.anisotropy),
+      assets.material(o.barks.moss, o.tier, o.anisotropy),
+    ]);
     if (!bark) return null;
-    const barkMat = new THREE.MeshStandardMaterial({ map: bark.map, normalMap: bark.normalMap, roughnessMap: bark.armMap, aoMap: bark.armMap, roughness: 1, metalness: 0, vertexColors: true });
-    const mossMat = moss ? new THREE.MeshStandardMaterial({ map: moss.map, normalMap: moss.normalMap, roughness: 0.95, metalness: 0 }) : undefined;
+    const barkMat = new THREE.MeshStandardMaterial({
+      map: bark.map,
+      normalMap: bark.normalMap,
+      roughnessMap: bark.armMap,
+      aoMap: bark.armMap,
+      roughness: 1,
+      metalness: 0,
+      vertexColors: true,
+    });
+    const mossMat = moss
+      ? new THREE.MeshStandardMaterial({
+          map: moss.map,
+          normalMap: moss.normalMap,
+          roughness: 0.95,
+          metalness: 0,
+        })
+      : undefined;
     const sizes = [
       { length: 5, radius: 0.24 },
       { length: 7, radius: 0.32 },
@@ -79,7 +126,7 @@ export async function buildProceduralSpecies(meshId: string, assets: AssetLoader
           if (!patched.has(p.material)) {
             patched.add(p.material);
             if (p.material !== barkMat && p.material !== mossMat) owned.push(p.material);
-            patchMaterial(p.material, { key: 'log' });
+            patchMaterial(p.material, { key: 'log', snow: o.snow });
           }
         }
         return m;

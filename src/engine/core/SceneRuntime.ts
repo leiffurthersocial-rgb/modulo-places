@@ -10,6 +10,11 @@ import { buildProceduralSpecies } from '../scatter/proceduralSpecies';
 import { type Species, speciesFromGltf } from '../scatter/species';
 import type { TerrainLayerMaps } from '../terrain/terrainMaterial';
 import { Creek } from '../water/Creek';
+import {
+  clearSceneMaterials,
+  createTriplanarMaterial,
+  setSceneMaterial,
+} from '../render/sceneMaterials';
 import { MoodBlender, type MoodState } from '../lighting/moods';
 import { PlayerController } from '../player/PlayerController';
 import { sharedUniforms } from '../render/materials';
@@ -75,6 +80,28 @@ export class SceneRuntime {
     progress(0.03, 'Reading asset manifest');
     const manifest = await loadPackManifest();
     if (manifest) this.assets = new AssetLoader(renderer, manifest);
+    // Scene material library (triplanar) — must exist before any species is built.
+    clearSceneMaterials();
+    sharedUniforms.uSnowCover.value = d.snowCover ?? 0;
+    if (this.assets && d.materials) {
+      progress(0.04, 'Loading materials');
+      await Promise.all(
+        Object.entries(d.materials).map(async ([key, mo]) => {
+          const maps = await this.assets!.material(key, q.textureTier as Tier, q.anisotropy);
+          if (maps)
+            setSceneMaterial(
+              key,
+              createTriplanarMaterial(key, maps, {
+                scale: mo.scale,
+                tint: mo.tint,
+                roughness: mo.roughness,
+                side: mo.doubleSided ? THREE.DoubleSide : THREE.FrontSide,
+                snow: (d.snowCover ?? 0) > 0,
+              }),
+            );
+        }),
+      );
+    }
     progress(0.05, 'Shaping terrain');
     await nextFrame();
     this.hf = generateHeightfield(d.terrain, this.seed);
@@ -189,13 +216,27 @@ export class SceneRuntime {
         alphaToCoverage: msaa0,
         wind: rule.wind ?? 0,
         flutter: rule.flutter ?? 0,
-        barks: { fir: 'forest/bark-knotted', pine: 'forest/bark-pine', log: 'forest/bark', moss: 'forest/moss', ...(this.def.barks ?? {}) },
+        snow: (this.def.snowCover ?? 0) > 0,
+        barks: {
+          fir: 'forest/bark-knotted',
+          pine: 'forest/bark-pine',
+          log: 'forest/bark',
+          moss: 'forest/moss',
+          ...(this.def.barks ?? {}),
+        },
       });
       if (!sp) continue;
-      if (procRules.some((r) => r.mesh === meshId && r.impostor) && this.quality.drawDistance > 60) {
+      if (
+        procRules.some((r) => r.mesh === meshId && r.impostor) &&
+        this.quality.drawDistance > 60
+      ) {
         const src = new THREE.Group();
-        for (const part of sp.variants[0]![0]!) src.add(new THREE.Mesh(part.geometry, part.material));
-        const imp = bakeImpostor(renderer, src, { views: 12, resolution: this.quality.textureTier >= 2048 ? 512 : 256 });
+        for (const part of sp.variants[0]![0]!)
+          src.add(new THREE.Mesh(part.geometry, part.material));
+        const imp = bakeImpostor(renderer, src, {
+          views: 12,
+          resolution: this.quality.textureTier >= 2048 ? 512 : 256,
+        });
         this.impostors.push(imp);
         sp.impostor = [{ geometry: imp.geometry, material: imp.material, castShadow: false }];
       }
@@ -219,6 +260,7 @@ export class SceneRuntime {
           wind: rule.wind ?? 0,
           flutter: rule.flutter ?? 0,
           alphaToCoverage: msaa,
+          snow: (this.def.snowCover ?? 0) > 0,
         });
         if (rule.impostor && this.quality.drawDistance > 60) {
           const src = new THREE.Group();
@@ -274,11 +316,16 @@ export class SceneRuntime {
       // Collision box measured before rotation (true half-extents), then rotated by yaw.
       const unrotated = new THREE.Box3().setFromObject(g);
       const r = pd.rotation ?? [0, 0, 0];
-      g.rotation.set(THREE.MathUtils.degToRad(r[0]), THREE.MathUtils.degToRad(r[1]), THREE.MathUtils.degToRad(r[2]));
+      g.rotation.set(
+        THREE.MathUtils.degToRad(r[0]),
+        THREE.MathUtils.degToRad(r[1]),
+        THREE.MathUtils.degToRad(r[2]),
+      );
       if (pd.color) for (const c of g.children) (c as THREE.Mesh).userData.tint = pd.color;
       g.updateMatrixWorld(true);
       this.propRoot.add(g);
-      if (pd.collision && pd.collision !== 'none') this.propColliders.push({ def: pd, box: unrotated });
+      if (pd.collision && pd.collision !== 'none')
+        this.propColliders.push({ def: pd, box: unrotated });
     }
     this.root.add(this.propRoot);
   }
@@ -288,13 +335,20 @@ export class SceneRuntime {
       const c = box.getCenter(new THREE.Vector3());
       const h = box.getSize(new THREE.Vector3()).multiplyScalar(0.5);
       const yaw = THREE.MathUtils.degToRad(pd.rotation?.[1] ?? 0);
-      const desc = pd.collision === 'cylinder' ? this.R.ColliderDesc.cylinder(h.y, Math.min(h.x, h.z)) : this.R.ColliderDesc.cuboid(h.x, h.y, h.z);
+      const desc =
+        pd.collision === 'cylinder'
+          ? this.R.ColliderDesc.cylinder(h.y, Math.min(h.x, h.z))
+          : this.R.ColliderDesc.cuboid(h.x, h.y, h.z);
       // Box centre relative to the prop origin rotates with the prop.
       const ox = c.x - pd.position[0];
       const oz = c.z - pd.position[2];
       const cy = Math.cos(yaw);
       const sy = Math.sin(yaw);
-      desc.setTranslation(pd.position[0] + ox * cy + oz * sy, c.y, pd.position[2] - ox * sy + oz * cy);
+      desc.setTranslation(
+        pd.position[0] + ox * cy + oz * sy,
+        c.y,
+        pd.position[2] - ox * sy + oz * cy,
+      );
       desc.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) });
       this.world.createCollider(desc);
     }
@@ -534,6 +588,7 @@ export class SceneRuntime {
     this.particles?.dispose();
     this.creek?.dispose();
     for (const imp of this.impostors) imp.dispose();
+    clearSceneMaterials();
     this.assets?.dispose();
     this.terrain?.dispose();
     this.sky.dispose();

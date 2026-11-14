@@ -1,4679 +1,3216 @@
 {
- "id": "jungle",
- "name": "Jungle Ruin",
- "description": "Overgrown stone, vines and humid light shafts.",
- "seed": 20261113,
- "terrain": {
-  "size": 232,
-  "resolution": 289,
-  "source": {
-   "type": "procedural",
-   "seedOffset": 3
+  "id": "jungle",
+  "name": "Jungle Ruin",
+  "description": "Overgrown stone, vines and humid light shafts.",
+  "seed": 20261113,
+  "terrain": {
+    "size": 232,
+    "resolution": 289,
+    "source": {
+      "type": "procedural",
+      "seedOffset": 3
+    },
+    "height": 11,
+    "baseFrequency": 0.009,
+    "octaves": 5,
+    "warp": 22,
+    "flatten": [
+      {
+        "x": 0,
+        "z": -14,
+        "radius": 40,
+        "height": 0
+      },
+      {
+        "x": 0,
+        "z": 14,
+        "radius": 46,
+        "height": 0
+      }
+    ],
+    "creek": {
+      "points": [
+        [-108, -60],
+        [-72, -38],
+        [-50, -12],
+        [-40, 16],
+        [-44, 44],
+        [-62, 70],
+        [-100, 92]
+      ],
+      "width": 3.4,
+      "depth": 0.9,
+      "bedMaterial": "forest/creek-bed",
+      "bankLayer": "mud"
+    },
+    "paths": [
+      {
+        "points": [
+          [0, -4],
+          [0, 12],
+          [0, 30]
+        ],
+        "width": 34,
+        "layer": "mossy-stone"
+      },
+      {
+        "points": [
+          [7, 90],
+          [5, 72],
+          [2.5, 54],
+          [0.8, 38],
+          [0, 30],
+          [0, 22]
+        ],
+        "width": 3.4,
+        "layer": "mud"
+      }
+    ],
+    "layers": [
+      {
+        "id": "jungle-floor",
+        "material": "jungle/jungle-floor",
+        "scale": 3.0,
+        "surface": "leaves",
+        "color": "#4d5c2e",
+        "roughness": 0.95,
+        "slope": [0, 40],
+        "noise": 0.5
+      },
+      {
+        "id": "mud",
+        "material": "jungle/mud",
+        "scale": 2.4,
+        "surface": "dirt",
+        "color": "#5a4330",
+        "roughness": 0.97,
+        "slope": [0, 6],
+        "height": [-40, -2.4],
+        "noise": 0.4
+      },
+      {
+        "id": "mossy-stone",
+        "material": "jungle/mossy-stone",
+        "scale": 2.0,
+        "surface": "rock",
+        "color": "#6f7458",
+        "roughness": 0.9,
+        "slope": [88, 90]
+      },
+      {
+        "id": "rock",
+        "material": "forest/rock",
+        "scale": 4.0,
+        "triplanar": true,
+        "surface": "rock",
+        "color": "#6e6a5c",
+        "roughness": 0.85,
+        "slope": [34, 90]
+      }
+    ]
   },
-  "height": 11,
-  "baseFrequency": 0.009,
-  "octaves": 5,
-  "warp": 22,
-  "flatten": [
-   {
-    "x": 0,
-    "z": -14,
-    "radius": 40,
-    "height": 0
-   },
-   {
-    "x": 0,
-    "z": 14,
-    "radius": 46,
-    "height": 0
-   }
+  "scatter": [
+    {
+      "id": "giants",
+      "mesh": "jungle:giant-tree",
+      "density": 0.9,
+      "minDistance": 12.5,
+      "scale": [0.85, 1.2],
+      "tilt": 1.5,
+      "sink": 0.3,
+      "detail": false,
+      "castShadow": true,
+      "collision": "cylinder",
+      "collisionRadius": 1.3,
+      "lods": [34, 85],
+      "cullDistance": 200,
+      "cell": 64,
+      "colorVariation": 0.1,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 30,
+          "soft": 5
+        },
+        {
+          "type": "layer",
+          "layer": "mud",
+          "max": 0.4
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 14,
+          "radius": 25.0,
+          "soft": 6
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -18,
+          "radius": 27.0,
+          "soft": 6
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -2,
+          "radius": 20.0,
+          "soft": 6
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 36,
+          "radius": 8,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": 0.8,
+          "z": 44,
+          "radius": 8,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 52,
+          "radius": 8,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": 2.2,
+          "z": 60,
+          "radius": 8,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": 3,
+          "z": 68,
+          "radius": 8,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 76,
+          "radius": 8,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": 5,
+          "z": 84,
+          "radius": 8,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": -32,
+          "z": 22,
+          "radius": 8,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": -38,
+          "z": 8,
+          "radius": 7,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": -24,
+          "z": -4,
+          "radius": 7,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 27,
+          "z": -10,
+          "radius": 7,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": -26,
+          "z": 24,
+          "radius": 7,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 28,
+          "z": 30,
+          "radius": 7,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": -12,
+          "z": -42,
+          "radius": 7,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 14,
+          "z": -44,
+          "radius": 7,
+          "soft": 2
+        }
+      ],
+      "cluster": {
+        "frequency": 0.02,
+        "strength": 0.3
+      }
+    },
+    {
+      "id": "giants-far",
+      "mesh": "jungle:giant-far",
+      "density": 2.0,
+      "minDistance": 9,
+      "scale": [0.9, 1.35],
+      "sink": 0.3,
+      "detail": false,
+      "castShadow": false,
+      "cell": 64,
+      "colorVariation": 0.12,
+      "masks": [
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 0,
+          "radius": 95,
+          "soft": 5
+        },
+        {
+          "type": "slope",
+          "max": 45,
+          "soft": 6
+        }
+      ]
+    },
+    {
+      "id": "canopy-trees",
+      "mesh": "jungle:canopy-tree",
+      "density": 1.5,
+      "minDistance": 6,
+      "scale": [0.8, 1.25],
+      "tilt": 2,
+      "sink": 0.2,
+      "detail": false,
+      "castShadow": true,
+      "collision": "cylinder",
+      "collisionRadius": 0.5,
+      "lods": [30, 72],
+      "cullDistance": 150,
+      "colorVariation": 0.12,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 32,
+          "soft": 5
+        },
+        {
+          "type": "layer",
+          "layer": "mud",
+          "max": 0.4
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 14,
+          "radius": 22.5,
+          "soft": 5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -18,
+          "radius": 24.3,
+          "soft": 5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -2,
+          "radius": 18.0,
+          "soft": 5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 36,
+          "radius": 7,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0.8,
+          "z": 44,
+          "radius": 7,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 52,
+          "radius": 7,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 2.2,
+          "z": 60,
+          "radius": 7,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 3,
+          "z": 68,
+          "radius": 7,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 76,
+          "radius": 7,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 5,
+          "z": 84,
+          "radius": 7,
+          "soft": 3
+        }
+      ],
+      "cluster": {
+        "frequency": 0.03,
+        "strength": 0.4
+      }
+    },
+    {
+      "id": "palms",
+      "mesh": "jungle:palm",
+      "density": 1.4,
+      "minDistance": 4.5,
+      "scale": [0.8, 1.3],
+      "tilt": 3,
+      "sink": 0.2,
+      "detail": true,
+      "castShadow": true,
+      "collision": "cylinder",
+      "collisionRadius": 0.25,
+      "lods": [24, 58],
+      "cullDistance": 115,
+      "colorVariation": 0.1,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 30,
+          "soft": 5
+        },
+        {
+          "type": "layer",
+          "layer": "mud",
+          "max": 0.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 14,
+          "radius": 21.25,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -18,
+          "radius": 22.95,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -2,
+          "radius": 17.0,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 36,
+          "radius": 6,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 0.8,
+          "z": 44,
+          "radius": 6,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 52,
+          "radius": 6,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 2.2,
+          "z": 60,
+          "radius": 6,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 3,
+          "z": 68,
+          "radius": 6,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 76,
+          "radius": 6,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 5,
+          "z": 84,
+          "radius": 6,
+          "soft": 2
+        }
+      ],
+      "cluster": {
+        "frequency": 0.045,
+        "strength": 0.5
+      }
+    },
+    {
+      "id": "tree-ferns",
+      "mesh": "jungle:tree-fern",
+      "density": 2.6,
+      "minDistance": 3.0,
+      "scale": [0.8, 1.4],
+      "tilt": 4,
+      "sink": 0.15,
+      "detail": true,
+      "castShadow": true,
+      "lods": [18, 46],
+      "cullDistance": 90,
+      "colorVariation": 0.12,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 34,
+          "soft": 5
+        },
+        {
+          "type": "layer",
+          "layer": "mud",
+          "max": 0.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 14,
+          "radius": 20.0,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -18,
+          "radius": 21.6,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -2,
+          "radius": 16.0,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 36,
+          "radius": 5,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 0.8,
+          "z": 44,
+          "radius": 5,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 52,
+          "radius": 5,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 2.2,
+          "z": 60,
+          "radius": 5,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 3,
+          "z": 68,
+          "radius": 5,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 76,
+          "radius": 5,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 5,
+          "z": 84,
+          "radius": 5,
+          "soft": 2
+        }
+      ],
+      "cluster": {
+        "frequency": 0.05,
+        "strength": 0.55
+      }
+    },
+    {
+      "id": "saplings",
+      "mesh": "jungle:sapling",
+      "density": 2.6,
+      "minDistance": 2.8,
+      "scale": [0.8, 1.4],
+      "tilt": 5,
+      "sink": 0.1,
+      "detail": true,
+      "castShadow": true,
+      "lods": [18, 46],
+      "cullDistance": 80,
+      "colorVariation": 0.12,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 34,
+          "soft": 5
+        },
+        {
+          "type": "layer",
+          "layer": "mud",
+          "max": 0.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 14,
+          "radius": 20.0,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -18,
+          "radius": 21.6,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -2,
+          "radius": 16.0,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 36,
+          "radius": 5,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 0.8,
+          "z": 44,
+          "radius": 5,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 52,
+          "radius": 5,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 2.2,
+          "z": 60,
+          "radius": 5,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 3,
+          "z": 68,
+          "radius": 5,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 76,
+          "radius": 5,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 5,
+          "z": 84,
+          "radius": 5,
+          "soft": 2
+        }
+      ],
+      "cluster": {
+        "frequency": 0.06,
+        "strength": 0.5
+      }
+    },
+    {
+      "id": "bananas",
+      "mesh": "jungle:banana",
+      "density": 1.1,
+      "minDistance": 4,
+      "scale": [0.9, 1.5],
+      "tilt": 3,
+      "sink": 0.05,
+      "detail": true,
+      "castShadow": true,
+      "lods": [16, 40],
+      "cullDistance": 90,
+      "colorVariation": 0.1,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 22,
+          "soft": 4
+        },
+        {
+          "type": "layer",
+          "layer": "mud",
+          "max": 0.7
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 14,
+          "radius": 21.25,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -18,
+          "radius": 22.95,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -2,
+          "radius": 17.0,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 36,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.8,
+          "z": 44,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 52,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.2,
+          "z": 60,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3,
+          "z": 68,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 76,
+          "radius": 1.8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 5,
+          "z": 84,
+          "radius": 1.8,
+          "soft": 1.5
+        }
+      ],
+      "cluster": {
+        "frequency": 0.035,
+        "strength": 0.85
+      }
+    },
+    {
+      "id": "monstera",
+      "mesh": "jungle:monstera",
+      "density": 6.5,
+      "minDistance": 1.5,
+      "scale": [0.8, 1.6],
+      "tilt": 3,
+      "detail": true,
+      "castShadow": false,
+      "lods": [14, 34],
+      "cullDistance": 62,
+      "colorVariation": 0.14,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 36,
+          "soft": 5
+        },
+        {
+          "type": "layer",
+          "layer": "mud",
+          "max": 0.7
+        },
+        {
+          "type": "layer",
+          "layer": "mossy-stone",
+          "max": 0.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 14,
+          "radius": 15.0,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -18,
+          "radius": 16.2,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -2,
+          "radius": 12.0,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 36,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 0.8,
+          "z": 44,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 52,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 2.2,
+          "z": 60,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 3,
+          "z": 68,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 76,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 5,
+          "z": 84,
+          "radius": 1.4,
+          "soft": 1.2
+        }
+      ],
+      "cluster": {
+        "frequency": 0.06,
+        "strength": 0.65
+      }
+    },
+    {
+      "id": "elephant-ears",
+      "mesh": "jungle:elephant-ear",
+      "density": 5,
+      "minDistance": 1.3,
+      "scale": [0.8, 1.5],
+      "tilt": 3,
+      "detail": true,
+      "castShadow": false,
+      "lods": [14, 34],
+      "cullDistance": 60,
+      "colorVariation": 0.14,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 30,
+          "soft": 5
+        },
+        {
+          "type": "layer",
+          "layer": "mud",
+          "min": 0.12
+        },
+        {
+          "type": "layer",
+          "layer": "mossy-stone",
+          "max": 0.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 14,
+          "radius": 15.0,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -18,
+          "radius": 16.2,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -2,
+          "radius": 12.0,
+          "soft": 3
+        }
+      ],
+      "cluster": {
+        "frequency": 0.07,
+        "strength": 0.5
+      }
+    },
+    {
+      "id": "ferns-big",
+      "mesh": "jungle:fern-big",
+      "density": 14,
+      "minDistance": 0.9,
+      "scale": [0.8, 1.6],
+      "alignToNormal": 0.4,
+      "detail": true,
+      "castShadow": false,
+      "lods": [12, 30],
+      "cullDistance": 55,
+      "colorVariation": 0.16,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 40,
+          "soft": 5
+        },
+        {
+          "type": "layer",
+          "layer": "mossy-stone",
+          "max": 0.6
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 14,
+          "radius": 12.5,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -18,
+          "radius": 13.5,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -2,
+          "radius": 10.0,
+          "soft": 3
+        }
+      ],
+      "cluster": {
+        "frequency": 0.05,
+        "strength": 0.5
+      }
+    },
+    {
+      "id": "ginger",
+      "mesh": "jungle:ginger",
+      "density": 3.5,
+      "minDistance": 1.8,
+      "scale": [0.8, 1.5],
+      "tilt": 4,
+      "detail": true,
+      "castShadow": false,
+      "lods": [14, 34],
+      "cullDistance": 60,
+      "colorVariation": 0.14,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 30,
+          "soft": 5
+        },
+        {
+          "type": "layer",
+          "layer": "mossy-stone",
+          "max": 0.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 14,
+          "radius": 15.0,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -18,
+          "radius": 16.2,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -2,
+          "radius": 12.0,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 36,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 0.8,
+          "z": 44,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 52,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 2.2,
+          "z": 60,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 3,
+          "z": 68,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 76,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 5,
+          "z": 84,
+          "radius": 1.4,
+          "soft": 1.2
+        }
+      ],
+      "cluster": {
+        "frequency": 0.06,
+        "strength": 0.7
+      }
+    },
+    {
+      "id": "shrubs",
+      "mesh": "jungle:shrub",
+      "density": 4.5,
+      "minDistance": 1.6,
+      "scale": [0.8, 1.6],
+      "tilt": 3,
+      "detail": true,
+      "castShadow": false,
+      "lods": [14, 34],
+      "cullDistance": 60,
+      "colorVariation": 0.14,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 36,
+          "soft": 5
+        },
+        {
+          "type": "layer",
+          "layer": "mossy-stone",
+          "max": 0.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 14,
+          "radius": 15.0,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -18,
+          "radius": 16.2,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -2,
+          "radius": 12.0,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 36,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 0.8,
+          "z": 44,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 52,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 2.2,
+          "z": 60,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 3,
+          "z": 68,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 76,
+          "radius": 1.4,
+          "soft": 1.2
+        },
+        {
+          "type": "exclude",
+          "x": 5,
+          "z": 84,
+          "radius": 1.4,
+          "soft": 1.2
+        }
+      ],
+      "cluster": {
+        "frequency": 0.05,
+        "strength": 0.6
+      }
+    },
+    {
+      "id": "ground-leaf",
+      "mesh": "jungle:ground-leaf",
+      "density": 30,
+      "minDistance": 0.6,
+      "scale": [0.9, 1.7],
+      "alignToNormal": 0.5,
+      "detail": true,
+      "castShadow": false,
+      "lods": [8, 20],
+      "cullDistance": 38,
+      "colorVariation": 0.18,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 40,
+          "soft": 5
+        },
+        {
+          "type": "layer",
+          "layer": "mossy-stone",
+          "max": 0.75
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 36,
+          "radius": 1.2,
+          "soft": 1.0
+        },
+        {
+          "type": "exclude",
+          "x": 0.8,
+          "z": 44,
+          "radius": 1.2,
+          "soft": 1.0
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 52,
+          "radius": 1.2,
+          "soft": 1.0
+        },
+        {
+          "type": "exclude",
+          "x": 2.2,
+          "z": 60,
+          "radius": 1.2,
+          "soft": 1.0
+        },
+        {
+          "type": "exclude",
+          "x": 3,
+          "z": 68,
+          "radius": 1.2,
+          "soft": 1.0
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 76,
+          "radius": 1.2,
+          "soft": 1.0
+        },
+        {
+          "type": "exclude",
+          "x": 5,
+          "z": 84,
+          "radius": 1.2,
+          "soft": 1.0
+        }
+      ],
+      "cluster": {
+        "frequency": 0.08,
+        "strength": 0.5
+      }
+    },
+    {
+      "id": "ferns-low",
+      "mesh": "jungle:fern-low",
+      "density": 34,
+      "minDistance": 0.5,
+      "scale": [0.9, 1.8],
+      "alignToNormal": 0.5,
+      "detail": true,
+      "castShadow": false,
+      "lods": [8, 18],
+      "cullDistance": 30,
+      "colorVariation": 0.18,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 40,
+          "soft": 5
+        },
+        {
+          "type": "layer",
+          "layer": "mossy-stone",
+          "max": 0.8
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 36,
+          "radius": 1.0,
+          "soft": 0.8
+        },
+        {
+          "type": "exclude",
+          "x": 0.8,
+          "z": 44,
+          "radius": 1.0,
+          "soft": 0.8
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 52,
+          "radius": 1.0,
+          "soft": 0.8
+        },
+        {
+          "type": "exclude",
+          "x": 2.2,
+          "z": 60,
+          "radius": 1.0,
+          "soft": 0.8
+        },
+        {
+          "type": "exclude",
+          "x": 3,
+          "z": 68,
+          "radius": 1.0,
+          "soft": 0.8
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 76,
+          "radius": 1.0,
+          "soft": 0.8
+        },
+        {
+          "type": "exclude",
+          "x": 5,
+          "z": 84,
+          "radius": 1.0,
+          "soft": 0.8
+        }
+      ],
+      "cluster": {
+        "frequency": 0.09,
+        "strength": 0.5
+      }
+    },
+    {
+      "id": "boulders",
+      "mesh": "jungle:boulder",
+      "density": 0.45,
+      "minDistance": 9,
+      "scale": [0.9, 2.3],
+      "tilt": 8,
+      "sink": 0.3,
+      "detail": false,
+      "castShadow": true,
+      "collision": "sphere",
+      "lods": [25, 60],
+      "cullDistance": 120,
+      "colorVariation": 0.12,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "mossy-stone",
+          "max": 0.3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 14,
+          "radius": 22.5,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -18,
+          "radius": 24.3,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -2,
+          "radius": 18.0,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 36,
+          "radius": 3,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 0.8,
+          "z": 44,
+          "radius": 3,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 52,
+          "radius": 3,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 2.2,
+          "z": 60,
+          "radius": 3,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 3,
+          "z": 68,
+          "radius": 3,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 76,
+          "radius": 3,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 5,
+          "z": 84,
+          "radius": 3,
+          "soft": 2
+        }
+      ]
+    },
+    {
+      "id": "creek-boulders",
+      "mesh": "jungle:boulder",
+      "density": 7,
+      "minDistance": 2.4,
+      "scale": [0.45, 1.5],
+      "tilt": 10,
+      "sink": 0.25,
+      "detail": false,
+      "castShadow": true,
+      "collision": "sphere",
+      "lods": [25, 60],
+      "cullDistance": 100,
+      "colorVariation": 0.12,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "mud",
+          "min": 0.7
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 48,
+          "radius": 36,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 30,
+          "radius": 16,
+          "soft": 3
+        }
+      ]
+    },
+    {
+      "id": "logs",
+      "mesh": "jungle:log",
+      "density": 0.3,
+      "minDistance": 14,
+      "scale": [0.9, 1.3],
+      "alignToNormal": 1,
+      "sink": 0.1,
+      "detail": false,
+      "castShadow": true,
+      "lods": [20, 50],
+      "cullDistance": 90,
+      "colorVariation": 0.12,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 22,
+          "soft": 4
+        },
+        {
+          "type": "layer",
+          "layer": "mud",
+          "max": 0.4
+        },
+        {
+          "type": "layer",
+          "layer": "mossy-stone",
+          "max": 0.3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 14,
+          "radius": 22.5,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -18,
+          "radius": 24.3,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -2,
+          "radius": 18.0,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 36,
+          "radius": 4,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 0.8,
+          "z": 44,
+          "radius": 4,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 52,
+          "radius": 4,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 2.2,
+          "z": 60,
+          "radius": 4,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 3,
+          "z": 68,
+          "radius": 4,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 76,
+          "radius": 4,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 5,
+          "z": 84,
+          "radius": 4,
+          "soft": 2
+        }
+      ]
+    },
+    {
+      "id": "surface-roots",
+      "mesh": "jungle:root-spread",
+      "density": 0.7,
+      "minDistance": 5,
+      "scale": [0.7, 1.4],
+      "alignToNormal": 0.6,
+      "sink": 0.04,
+      "detail": true,
+      "castShadow": false,
+      "lods": [15, 40],
+      "cullDistance": 70,
+      "colorVariation": 0.12,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "mud",
+          "max": 0.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 36,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0.8,
+          "z": 44,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 52,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 2.2,
+          "z": 60,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 3,
+          "z": 68,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 76,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 5,
+          "z": 84,
+          "radius": 2.5,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 14,
+          "radius": 10,
+          "soft": 4
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -2,
+          "radius": 8,
+          "soft": 3
+        }
+      ]
+    },
+    {
+      "id": "paving",
+      "mesh": "jungle:slab",
+      "density": 55,
+      "minDistance": 1.6,
+      "scale": [0.9, 1.25],
+      "tilt": 3,
+      "sink": 0.0,
+      "detail": false,
+      "castShadow": false,
+      "lods": [10, 24],
+      "cullDistance": 48,
+      "colorVariation": 0.12,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "mossy-stone",
+          "min": 0.5
+        },
+        {
+          "type": "noise",
+          "frequency": 0.11,
+          "threshold": 0.36,
+          "soft": 0.14,
+          "seedOffset": 4
+        },
+        {
+          "type": "exclude",
+          "x": -9,
+          "z": -10,
+          "radius": 8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 9,
+          "z": -10,
+          "radius": 8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -13,
+          "radius": 8,
+          "soft": 1.5
+        }
+      ]
+    },
+    {
+      "id": "loose-blocks",
+      "mesh": "jungle:block",
+      "density": 2.2,
+      "minDistance": 3.5,
+      "scale": [0.8, 1.3],
+      "tilt": 8,
+      "sink": 0.1,
+      "detail": false,
+      "castShadow": true,
+      "lods": [16, 40],
+      "cullDistance": 70,
+      "colorVariation": 0.1,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "mossy-stone",
+          "min": 0.3
+        },
+        {
+          "type": "exclude",
+          "x": -9,
+          "z": -10,
+          "radius": 8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 9,
+          "z": -10,
+          "radius": 8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -13,
+          "radius": 8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 14,
+          "radius": 5,
+          "soft": 3
+        }
+      ]
+    },
+    {
+      "id": "rubble-piles",
+      "mesh": "jungle:rubble",
+      "density": 0.7,
+      "minDistance": 7,
+      "scale": [0.8, 1.3],
+      "sink": 0.1,
+      "detail": false,
+      "castShadow": true,
+      "lods": [16, 40],
+      "cullDistance": 70,
+      "colorVariation": 0.1,
+      "masks": [
+        {
+          "type": "layer",
+          "layer": "mossy-stone",
+          "min": 0.2,
+          "max": 0.8
+        },
+        {
+          "type": "exclude",
+          "x": -9,
+          "z": -10,
+          "radius": 8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 9,
+          "z": -10,
+          "radius": 8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -13,
+          "radius": 8,
+          "soft": 1.5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 14,
+          "radius": 7,
+          "soft": 3
+        }
+      ]
+    },
+    {
+      "id": "lianas",
+      "mesh": "jungle:liana",
+      "density": 0.55,
+      "minDistance": 6,
+      "scale": [0.9, 1.2],
+      "detail": false,
+      "castShadow": false,
+      "lods": [40],
+      "cullDistance": 95,
+      "colorVariation": 0.1,
+      "masks": [
+        {
+          "type": "slope",
+          "max": 30,
+          "soft": 5
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 14,
+          "radius": 20.0,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -18,
+          "radius": 21.6,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": -2,
+          "radius": 16.0,
+          "soft": 3
+        },
+        {
+          "type": "exclude",
+          "x": 0,
+          "z": 36,
+          "radius": 3,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 0.8,
+          "z": 44,
+          "radius": 3,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 1.5,
+          "z": 52,
+          "radius": 3,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 2.2,
+          "z": 60,
+          "radius": 3,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 3,
+          "z": 68,
+          "radius": 3,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 4,
+          "z": 76,
+          "radius": 3,
+          "soft": 2
+        },
+        {
+          "type": "exclude",
+          "x": 5,
+          "z": 84,
+          "radius": 3,
+          "soft": 2
+        }
+      ]
+    }
   ],
-  "creek": {
-   "points": [
-    [
-     -108,
-     -60
-    ],
-    [
-     -72,
-     -38
-    ],
-    [
-     -50,
-     -12
-    ],
-    [
-     -40,
-     16
-    ],
-    [
-     -44,
-     44
-    ],
-    [
-     -62,
-     70
-    ],
-    [
-     -100,
-     92
-    ]
-   ],
-   "width": 3.4,
-   "depth": 0.9,
-   "bedMaterial": "jungle/creek-bed",
-   "bankLayer": "mud"
+  "props": [
+    {
+      "id": "temple",
+      "mesh": "jungle:temple",
+      "position": [0, 0, 0],
+      "collision": "none"
+    },
+    {
+      "id": "temple-growth",
+      "mesh": "jungle:temple-growth",
+      "position": [0, 0, 0],
+      "collision": "none"
+    },
+    {
+      "id": "tier1-l",
+      "mesh": "jungle:collider",
+      "position": [-9.7, -3, -20.0],
+      "scale": [12.6, 5.4, 28],
+      "collision": "box"
+    },
+    {
+      "id": "tier1-r",
+      "mesh": "jungle:collider",
+      "position": [9.7, -3, -20.0],
+      "scale": [12.6, 5.4, 28],
+      "collision": "box"
+    },
+    {
+      "id": "tier2-l",
+      "mesh": "jungle:collider",
+      "position": [-7.95, -3, -21.1],
+      "scale": [9.1, 7.8, 23.8],
+      "collision": "box"
+    },
+    {
+      "id": "tier2-r",
+      "mesh": "jungle:collider",
+      "position": [7.95, -3, -21.1],
+      "scale": [9.1, 7.8, 23.8],
+      "collision": "box"
+    },
+    {
+      "id": "tier3-l",
+      "mesh": "jungle:collider",
+      "position": [-6.2, -3, -22.2],
+      "scale": [5.6, 10.2, 19.6],
+      "collision": "box"
+    },
+    {
+      "id": "tier3-r",
+      "mesh": "jungle:collider",
+      "position": [6.2, -3, -22.2],
+      "scale": [5.6, 10.2, 19.6],
+      "collision": "box"
+    },
+    {
+      "id": "tier3-mid",
+      "mesh": "jungle:collider",
+      "position": [0.0, -3, -23.7],
+      "scale": [6.8, 10.2, 16.6],
+      "collision": "box"
+    },
+    {
+      "id": "step01",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -6.2],
+      "scale": [6.8, 1.3, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step02",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -6.6],
+      "scale": [6.8, 1.6, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step03",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -7.0],
+      "scale": [6.8, 1.9, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step04",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -7.4],
+      "scale": [6.8, 2.2, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step05",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -7.8],
+      "scale": [6.8, 2.5, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step06",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -8.2],
+      "scale": [6.8, 2.8, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step07",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -8.6],
+      "scale": [6.8, 3.1, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step08",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -9.0],
+      "scale": [6.8, 3.4, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step09",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -9.4],
+      "scale": [6.8, 3.7, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step10",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -9.8],
+      "scale": [6.8, 4.0, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step11",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -10.2],
+      "scale": [6.8, 4.3, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step12",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -10.6],
+      "scale": [6.8, 4.6, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step13",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -11.0],
+      "scale": [6.8, 4.9, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step14",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -11.4],
+      "scale": [6.8, 5.2, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step15",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -11.8],
+      "scale": [6.8, 5.5, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step16",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -12.2],
+      "scale": [6.8, 5.8, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step17",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -12.6],
+      "scale": [6.8, 6.1, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step18",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -13.0],
+      "scale": [6.8, 6.4, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step19",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -13.4],
+      "scale": [6.8, 6.7, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step20",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -13.8],
+      "scale": [6.8, 7.0, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step21",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -14.2],
+      "scale": [6.8, 7.3, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step22",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -14.6],
+      "scale": [6.8, 7.6, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step23",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -15.0],
+      "scale": [6.8, 7.9, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "step24",
+      "mesh": "jungle:collider",
+      "position": [0.0, -1.0, -15.4],
+      "scale": [6.8, 8.2, 0.4],
+      "collision": "box"
+    },
+    {
+      "id": "shrine-fl",
+      "mesh": "jungle:collider",
+      "position": [-3.55, 7.1, -20.6],
+      "scale": [4.5, 6.5, 2.2],
+      "collision": "box"
+    },
+    {
+      "id": "shrine-fr",
+      "mesh": "jungle:collider",
+      "position": [3.55, 7.1, -20.6],
+      "scale": [4.5, 6.5, 2.2],
+      "collision": "box"
+    },
+    {
+      "id": "shrine-l",
+      "mesh": "jungle:collider",
+      "position": [-4.7, 7.1, -26.1],
+      "scale": [2.2, 6.5, 8.8],
+      "collision": "box"
+    },
+    {
+      "id": "shrine-r",
+      "mesh": "jungle:collider",
+      "position": [4.7, 7.1, -26.1],
+      "scale": [2.2, 6.5, 8.8],
+      "collision": "box"
+    },
+    {
+      "id": "shrine-b",
+      "mesh": "jungle:collider",
+      "position": [0.0, 7.1, -29.4],
+      "scale": [7.2, 6.5, 2.2],
+      "collision": "box"
+    },
+    {
+      "id": "shrine-altar",
+      "mesh": "jungle:collider",
+      "position": [0.0, 7.2, -26.9],
+      "scale": [2.2, 1.2, 1.8],
+      "collision": "box"
+    },
+    {
+      "id": "guardian-l",
+      "mesh": "jungle:guardian",
+      "position": [-6.2, 0, -4.2],
+      "rotation": [0, 8, 0],
+      "collision": "box"
+    },
+    {
+      "id": "guardian-r",
+      "mesh": "jungle:guardian",
+      "position": [6.2, 0, -4.4],
+      "rotation": [0, -6, 0],
+      "scale": 1.0,
+      "collision": "box"
+    },
+    {
+      "id": "stele-a",
+      "mesh": "jungle:stele",
+      "position": [-13.5, 0, 7],
+      "rotation": [0, 12, 5],
+      "collision": "box"
+    },
+    {
+      "id": "stele-b",
+      "mesh": "jungle:stele",
+      "position": [14.5, 0, 13],
+      "rotation": [0, -24, -8],
+      "collision": "box"
+    },
+    {
+      "id": "pillar-l0",
+      "mesh": "jungle:pillar",
+      "position": [-8.25, 0, 22],
+      "rotation": [0, -5.59, 0],
+      "collision": "box"
+    },
+    {
+      "id": "pillar-l1",
+      "mesh": "jungle:pillar-broken",
+      "position": [-8.15, 0, 16],
+      "rotation": [0, -6.84, 0],
+      "collision": "box"
+    },
+    {
+      "id": "pillar-l2",
+      "mesh": "jungle:pillar",
+      "position": [-8.19, 0, 10],
+      "rotation": [0, -2.15, 0],
+      "collision": "box"
+    },
+    {
+      "id": "pillar-l3",
+      "mesh": "jungle:pillar-stump",
+      "position": [-8.33, 0, 4],
+      "rotation": [0, 0.12, 0],
+      "collision": "box"
+    },
+    {
+      "id": "pillar-r0",
+      "mesh": "jungle:pillar-broken",
+      "position": [8.06, 0, 22],
+      "rotation": [0, -1.06, 0],
+      "collision": "box"
+    },
+    {
+      "id": "pillar-r1",
+      "mesh": "jungle:pillar",
+      "position": [8.07, 0, 16],
+      "rotation": [0, -6.55, 0],
+      "collision": "box"
+    },
+    {
+      "id": "pillar-r2",
+      "mesh": "jungle:pillar-fallen",
+      "position": [8.9, 0, 10],
+      "rotation": [0, 82, 0],
+      "collision": "box"
+    },
+    {
+      "id": "pillar-r3",
+      "mesh": "jungle:pillar",
+      "position": [8.18, 0, 4],
+      "rotation": [0, 5.23, 0],
+      "collision": "box"
+    },
+    {
+      "id": "gate-l",
+      "mesh": "jungle:pillar",
+      "position": [-5.6, 0, 30],
+      "rotation": [0, 3, 0],
+      "scale": 1.25,
+      "collision": "box"
+    },
+    {
+      "id": "gate-r",
+      "mesh": "jungle:pillar-broken",
+      "position": [5.7, 0, 30.4],
+      "rotation": [0, -6, 0],
+      "scale": 1.25,
+      "collision": "box"
+    },
+    {
+      "id": "gate-lintel",
+      "mesh": "jungle:block",
+      "position": [-1.5, 0, 28.6],
+      "rotation": [0, 14, 4],
+      "scale": [5.0, 1.3, 1.5],
+      "collision": "box"
+    },
+    {
+      "id": "wall-e0",
+      "mesh": "jungle:wall",
+      "position": [21.5, 0, -1.0],
+      "rotation": [0, 90, 0],
+      "scale": 1.0,
+      "collision": "box"
+    },
+    {
+      "id": "wall-e1",
+      "mesh": "jungle:wall-b",
+      "position": [21.2, 0, 7.5],
+      "rotation": [0, 92, 0],
+      "scale": 1.0,
+      "collision": "box"
+    },
+    {
+      "id": "wall-e2",
+      "mesh": "jungle:wall-low",
+      "position": [21.5, 0, 15.5],
+      "rotation": [0, 88, 0],
+      "scale": 1.0,
+      "collision": "box"
+    },
+    {
+      "id": "wall-e3",
+      "mesh": "jungle:wall",
+      "position": [21.8, 0, 24.0],
+      "rotation": [0, 90, 0],
+      "scale": 1.0,
+      "collision": "box"
+    },
+    {
+      "id": "wall-w0",
+      "mesh": "jungle:wall-b",
+      "position": [-21.4, 0, 0.5],
+      "rotation": [0, 90, 0],
+      "scale": 1.0,
+      "collision": "box"
+    },
+    {
+      "id": "wall-w1",
+      "mesh": "jungle:wall-low",
+      "position": [-21.2, 0, 8.5],
+      "rotation": [0, 91, 0],
+      "scale": 1.0,
+      "collision": "box"
+    },
+    {
+      "id": "wall-w2",
+      "mesh": "jungle:wall",
+      "position": [-21.6, 0, 17.5],
+      "rotation": [0, 90, 0],
+      "scale": 1.0,
+      "collision": "box"
+    },
+    {
+      "id": "wall-w3",
+      "mesh": "jungle:wall-b",
+      "position": [-21.3, 0, 26.0],
+      "rotation": [0, 89, 0],
+      "scale": 1.0,
+      "collision": "box"
+    },
+    {
+      "id": "wall-s0",
+      "mesh": "jungle:wall-low",
+      "position": [13.5, 0, 31.5],
+      "scale": 1.0,
+      "collision": "box"
+    },
+    {
+      "id": "wall-s1",
+      "mesh": "jungle:wall-b",
+      "position": [-13.5, 0, 31.8],
+      "rotation": [0, 2, 0],
+      "scale": 1.0,
+      "collision": "box"
+    },
+    {
+      "id": "rubble-0",
+      "mesh": "jungle:rubble",
+      "position": [21.5, 0, 11.8],
+      "rotation": [0, 44.57, 0],
+      "scale": 1.1116194823035073
+    },
+    {
+      "id": "rubble-1",
+      "mesh": "jungle:rubble",
+      "position": [-21, 0, 4.4],
+      "rotation": [0, 225.88, 0],
+      "scale": 1.4738544712285029
+    },
+    {
+      "id": "rubble-2",
+      "mesh": "jungle:rubble",
+      "position": [-21.2, 0, 13],
+      "rotation": [0, 207.76, 0],
+      "scale": 1.19834023732539
+    },
+    {
+      "id": "rubble-3",
+      "mesh": "jungle:rubble",
+      "position": [20.5, 0, 20],
+      "rotation": [0, 351.45, 0],
+      "scale": 1.0232913403088781
+    },
+    {
+      "id": "rubble-4",
+      "mesh": "jungle:rubble",
+      "position": [11, 0, 31],
+      "rotation": [0, 309.05, 0],
+      "scale": 1.144804643165838
+    },
+    {
+      "id": "rubble-5",
+      "mesh": "jungle:rubble",
+      "position": [-10, 0, 32],
+      "rotation": [0, 51.93, 0],
+      "scale": 1.0588961190391841
+    },
+    {
+      "id": "rubble-s0",
+      "mesh": "jungle:rubble",
+      "position": [-8, 0, -3],
+      "rotation": [0, 111.05, 0],
+      "scale": 1.2264505436480126
+    },
+    {
+      "id": "rubble-s1",
+      "mesh": "jungle:rubble",
+      "position": [9.5, 0, -2.5],
+      "rotation": [0, 65.06, 0],
+      "scale": 1.1326400654649866
+    },
+    {
+      "id": "rubble-s2",
+      "mesh": "jungle:rubble",
+      "position": [-3.5, 0, 3],
+      "rotation": [0, 230.01, 0],
+      "scale": 1.0489590170902925
+    },
+    {
+      "id": "rubble-s3",
+      "mesh": "jungle:rubble",
+      "position": [2, 0, 8],
+      "rotation": [0, 197.19, 0],
+      "scale": 0.9251155899893293
+    },
+    {
+      "id": "block-00",
+      "mesh": "jungle:block",
+      "position": [-16.74, 0, 3.18],
+      "rotation": [2.16, 153.93, -2.97],
+      "scale": 1.1220590249292013,
+      "collision": "box"
+    },
+    {
+      "id": "block-01",
+      "mesh": "jungle:block",
+      "position": [-1.78, 0, 5.99],
+      "rotation": [3.53, 251.64, -4.09],
+      "scale": 1.1159330406422692,
+      "collision": "box"
+    },
+    {
+      "id": "block-02",
+      "mesh": "jungle:block",
+      "position": [0.96, 0, 23.25],
+      "rotation": [2.75, 103.66, 7.68],
+      "scale": 0.8649361780402292,
+      "collision": "box"
+    },
+    {
+      "id": "block-03",
+      "mesh": "jungle:block",
+      "position": [-3.11, 0, 19.71],
+      "rotation": [-4.18, 176.03, -7.37],
+      "scale": 1.1675187210939173,
+      "collision": "box"
+    },
+    {
+      "id": "block-04",
+      "mesh": "jungle:block",
+      "position": [10.05, 0, 14.19],
+      "rotation": [4.51, 112.95, 3.12],
+      "scale": 1.1269034324077603,
+      "collision": "box"
+    },
+    {
+      "id": "block-05",
+      "mesh": "jungle:block",
+      "position": [3.04, 0, 10.69],
+      "rotation": [4.08, 340.09, -0.41],
+      "scale": 1.1652837130110711,
+      "collision": "box"
+    },
+    {
+      "id": "block-06",
+      "mesh": "jungle:block",
+      "position": [-16.69, 0, 18.04],
+      "rotation": [1.77, 357.51, 5.15],
+      "scale": 0.9565275426517821,
+      "collision": "box"
+    },
+    {
+      "id": "block-07",
+      "mesh": "jungle:block",
+      "position": [-4.34, 0, 17.06],
+      "rotation": [-5.73, 166.21, -5.31],
+      "scale": 0.8644026869649526,
+      "collision": "box"
+    },
+    {
+      "id": "block-08",
+      "mesh": "jungle:block",
+      "position": [-16.76, 0, 20.05],
+      "rotation": [-4.45, 89.14, -1.74],
+      "scale": 1.2792820857694647,
+      "collision": "box"
+    },
+    {
+      "id": "block-09",
+      "mesh": "jungle:block",
+      "position": [-15.94, 0, 10.48],
+      "rotation": [0.59, 318.02, 5.11],
+      "scale": 1.2751914583341835,
+      "collision": "box"
+    },
+    {
+      "id": "block-10",
+      "mesh": "jungle:block",
+      "position": [-8.42, 0, 9.46],
+      "rotation": [-1.69, 318.31, 7.32],
+      "scale": 0.88300649818511,
+      "collision": "box"
+    },
+    {
+      "id": "block-11",
+      "mesh": "jungle:block",
+      "position": [-12.3, 0, 3.96],
+      "rotation": [-3.2, 174.59, 1.43],
+      "scale": 0.9445106406141959,
+      "collision": "box"
+    },
+    {
+      "id": "block-12",
+      "mesh": "jungle:block",
+      "position": [-18.84, 0, 9.57],
+      "rotation": [-1.57, 203.88, 7.25],
+      "scale": 1.179771511424788,
+      "collision": "box"
+    },
+    {
+      "id": "block-13",
+      "mesh": "jungle:block",
+      "position": [0.59, 0, 15.53],
+      "rotation": [2.11, 19.44, 6.39],
+      "scale": 1.2289832198883401,
+      "collision": "box"
+    },
+    {
+      "id": "block-14",
+      "mesh": "jungle:block",
+      "position": [14.23, 0, 20.94],
+      "rotation": [-1.29, 143.63, -6.34],
+      "scale": 1.14885926112714,
+      "collision": "box"
+    },
+    {
+      "id": "block-15",
+      "mesh": "jungle:block",
+      "position": [-16.63, 0, -0.98],
+      "rotation": [-3.49, 58.43, -2.56],
+      "scale": 0.8289165821396469,
+      "collision": "box"
+    },
+    {
+      "id": "block-16",
+      "mesh": "jungle:block",
+      "position": [-18.99, 0, 1.54],
+      "rotation": [-4.78, 130.9, -7.59],
+      "scale": 1.280882807555601,
+      "collision": "box"
+    },
+    {
+      "id": "block-17",
+      "mesh": "jungle:block",
+      "position": [4.33, 0, 1.46],
+      "rotation": [-2.97, 125.06, -2.17],
+      "scale": 0.8675632269192073,
+      "collision": "box"
+    },
+    {
+      "id": "block-18",
+      "mesh": "jungle:block",
+      "position": [13.26, 0, 26.79],
+      "rotation": [-0.41, 174.18, -6.63],
+      "scale": 0.8562031892114927,
+      "collision": "box"
+    },
+    {
+      "id": "block-19",
+      "mesh": "jungle:block",
+      "position": [-5.98, 0, 4.94],
+      "rotation": [3.95, 58.12, -7.63],
+      "scale": 1.3230420650810863,
+      "collision": "box"
+    },
+    {
+      "id": "block-20",
+      "mesh": "jungle:block",
+      "position": [1.07, 0, 26.36],
+      "rotation": [4.36, 250.63, -3.82],
+      "scale": 1.0016848854686484,
+      "collision": "box"
+    },
+    {
+      "id": "block-21",
+      "mesh": "jungle:block",
+      "position": [-12.65, 0, 20.16],
+      "rotation": [0.39, 280.46, -2.73],
+      "scale": 0.9226729202067518,
+      "collision": "box"
+    },
+    {
+      "id": "block-22",
+      "mesh": "jungle:block",
+      "position": [11.84, 0, 26.55],
+      "rotation": [4.23, 290.19, 5.09],
+      "scale": 1.2069301612066428,
+      "collision": "box"
+    },
+    {
+      "id": "block-23",
+      "mesh": "jungle:block",
+      "position": [-10.38, 0, 12.53],
+      "rotation": [-1.73, 10.43, -7.55],
+      "scale": 0.9536801964769664,
+      "collision": "box"
+    },
+    {
+      "id": "block-24",
+      "mesh": "jungle:block",
+      "position": [-9.15, 0, 17.78],
+      "rotation": [5.48, 161.0, 6.99],
+      "scale": 1.3434209320115733,
+      "collision": "box"
+    },
+    {
+      "id": "block-25",
+      "mesh": "jungle:block",
+      "position": [17.29, 0, 7.94],
+      "rotation": [-3.35, 81.66, -4.85],
+      "scale": 0.9124053498019227,
+      "collision": "box"
+    },
+    {
+      "id": "block-26",
+      "mesh": "jungle:block",
+      "position": [4.71, 0, 24.01],
+      "rotation": [4.09, 172.61, 2.45],
+      "scale": 1.2398040596673132,
+      "collision": "box"
+    },
+    {
+      "id": "block-27",
+      "mesh": "jungle:block",
+      "position": [-15.78, 0, 16.82],
+      "rotation": [4.92, 281.63, 4.0],
+      "scale": 1.0629180095267001,
+      "collision": "box"
+    },
+    {
+      "id": "block-28",
+      "mesh": "jungle:block",
+      "position": [-12.22, 0, 20.67],
+      "rotation": [-2.01, 288.3, 7.55],
+      "scale": 1.0177111722881964,
+      "collision": "box"
+    },
+    {
+      "id": "block-29",
+      "mesh": "jungle:block",
+      "position": [-3.75, 0, 25.4],
+      "rotation": [2.7, 61.2, -5.97],
+      "scale": 0.8831328852098195,
+      "collision": "box"
+    },
+    {
+      "id": "roots-0",
+      "mesh": "jungle:root-spread",
+      "position": [13.76, 0, 21.78],
+      "rotation": [0, 52.62, 0],
+      "scale": 1.2132552392626936
+    },
+    {
+      "id": "roots-1",
+      "mesh": "jungle:root-spread",
+      "position": [16.33, 0, 17.75],
+      "rotation": [0, 126.15, 0],
+      "scale": 1.0743300219933896
+    },
+    {
+      "id": "roots-2",
+      "mesh": "jungle:root-spread",
+      "position": [-12.55, 0, 0.38],
+      "rotation": [0, 349.52, 0],
+      "scale": 1.1248373348369154
+    },
+    {
+      "id": "roots-3",
+      "mesh": "jungle:root-spread",
+      "position": [0.9, 0, 25.21],
+      "rotation": [0, 156.17, 0],
+      "scale": 1.2358714639947022
+    },
+    {
+      "id": "roots-4",
+      "mesh": "jungle:root-spread",
+      "position": [11.09, 0, 5.7],
+      "rotation": [0, 90.66, 0],
+      "scale": 0.9464833263351096
+    },
+    {
+      "id": "roots-5",
+      "mesh": "jungle:root-spread",
+      "position": [-8.82, 0, 15.83],
+      "rotation": [0, 93.37, 0],
+      "scale": 1.0095062763772717
+    },
+    {
+      "id": "roots-6",
+      "mesh": "jungle:root-spread",
+      "position": [-12.54, 0, 24.57],
+      "rotation": [0, 127.36, 0],
+      "scale": 1.0290804932358668
+    },
+    {
+      "id": "roots-7",
+      "mesh": "jungle:root-spread",
+      "position": [2.83, 0, 24.42],
+      "rotation": [0, 151.43, 0],
+      "scale": 1.2588605421713321
+    },
+    {
+      "id": "roots-8",
+      "mesh": "jungle:root-spread",
+      "position": [0.06, 0, 14.36],
+      "rotation": [0, 188.46, 0],
+      "scale": 0.8093524339527101
+    },
+    {
+      "id": "roots-9",
+      "mesh": "jungle:root-spread",
+      "position": [-2.04, 0, 4.94],
+      "rotation": [0, 1.42, 0],
+      "scale": 1.199585225246111
+    },
+    {
+      "id": "roots-stair-0",
+      "mesh": "jungle:root-spread",
+      "position": [-9, 0, -5.5],
+      "rotation": [0, 62.04, 0],
+      "scale": 1.0893971729847824
+    },
+    {
+      "id": "roots-stair-1",
+      "mesh": "jungle:root-spread",
+      "position": [9.5, 0, -5.5],
+      "rotation": [0, 261.07, 0],
+      "scale": 1.1225902499608853
+    },
+    {
+      "id": "roots-stair-2",
+      "mesh": "jungle:root-spread",
+      "position": [-4, 0, -6.5],
+      "rotation": [0, 117.35, 0],
+      "scale": 1.1073394850812148
+    },
+    {
+      "id": "roots-stair-3",
+      "mesh": "jungle:root-spread",
+      "position": [3.6, 0, -6.8],
+      "rotation": [0, 199.96, 0],
+      "scale": 1.2137089901461904
+    },
+    {
+      "id": "terrace-shrub-0",
+      "mesh": "jungle:fern-big",
+      "position": [-13, 2.4, -20],
+      "rotation": [0, 201.71, 0],
+      "scale": 1.4848875336839424
+    },
+    {
+      "id": "terrace-shrub-1",
+      "mesh": "jungle:shrub",
+      "position": [13, 2.4, -22],
+      "rotation": [0, 99.69, 0],
+      "scale": 1.598795456834472
+    },
+    {
+      "id": "terrace-shrub-2",
+      "mesh": "jungle:shrub",
+      "position": [-14, 2.4, -9],
+      "rotation": [0, 182.78, 0],
+      "scale": 2.0178088790043907
+    },
+    {
+      "id": "terrace-shrub-3",
+      "mesh": "jungle:fern-big",
+      "position": [14, 2.4, -8],
+      "rotation": [0, 273.6, 0],
+      "scale": 1.8493835093251811
+    },
+    {
+      "id": "terrace-shrub-4",
+      "mesh": "jungle:shrub",
+      "position": [-10.5, 4.8, -22],
+      "rotation": [0, 159.57, 0],
+      "scale": 2.1299904290638496
+    },
+    {
+      "id": "terrace-shrub-5",
+      "mesh": "jungle:shrub",
+      "position": [10.5, 4.8, -20],
+      "rotation": [0, 182.0, 0],
+      "scale": 1.8900223074755684
+    },
+    {
+      "id": "terrace-shrub-6",
+      "mesh": "jungle:fern-big",
+      "position": [-9, 4.8, -11],
+      "rotation": [0, 249.38, 0],
+      "scale": 1.8097291779482556
+    },
+    {
+      "id": "terrace-shrub-7",
+      "mesh": "jungle:shrub",
+      "position": [8.8, 4.8, -11.5],
+      "rotation": [0, 191.98, 0],
+      "scale": 1.7618766338119278
+    },
+    {
+      "id": "terrace-shrub-8",
+      "mesh": "jungle:shrub",
+      "position": [-7.5, 7.2, -16],
+      "rotation": [0, 338.94, 0],
+      "scale": 1.7824290544256678
+    },
+    {
+      "id": "terrace-shrub-9",
+      "mesh": "jungle:fern-big",
+      "position": [7.5, 7.2, -15],
+      "rotation": [0, 315.55, 0],
+      "scale": 1.9593743057442288
+    },
+    {
+      "id": "terrace-shrub-10",
+      "mesh": "jungle:shrub",
+      "position": [-7, 7.2, -25],
+      "rotation": [0, 93.45, 0],
+      "scale": 2.153744470642861
+    },
+    {
+      "id": "terrace-shrub-11",
+      "mesh": "jungle:shrub",
+      "position": [7.2, 7.2, -26],
+      "rotation": [0, 339.58, 0],
+      "scale": 1.847611045198172
+    },
+    {
+      "id": "roof-shrub-0",
+      "mesh": "jungle:shrub",
+      "position": [-4, 15.5, -26],
+      "rotation": [0, 49.37, 0],
+      "scale": 2.4719998267145646
+    },
+    {
+      "id": "roof-shrub-1",
+      "mesh": "jungle:shrub",
+      "position": [1.5, 14.5, -23],
+      "rotation": [0, 159.16, 0],
+      "scale": 1.8972975635073446
+    },
+    {
+      "id": "roof-shrub-2",
+      "mesh": "jungle:shrub",
+      "position": [3.5, 15.5, -29],
+      "rotation": [0, 86.63, 0],
+      "scale": 1.8580368797251907
+    },
+    {
+      "id": "roof-sapling-0",
+      "mesh": "jungle:sapling",
+      "position": [3.0, 14.6, -28],
+      "rotation": [0, 26.32, 0],
+      "scale": 1.3
+    },
+    {
+      "id": "roof-sapling-1",
+      "mesh": "jungle:sapling",
+      "position": [-5.0, 14.5, -24],
+      "rotation": [0, 241.01, 0],
+      "scale": 1.0
+    },
+    {
+      "id": "terrace-sapling",
+      "mesh": "jungle:sapling",
+      "position": [-11, 4.8, -26],
+      "rotation": [0, 282.22, 0],
+      "scale": 1.1
+    },
+    {
+      "id": "terrace-palm",
+      "mesh": "jungle:palm",
+      "position": [10.5, 4.8, -27],
+      "rotation": [0, 322.93, 0],
+      "scale": 0.9
+    },
+    {
+      "id": "hero-giant-0",
+      "mesh": "jungle:giant-tree",
+      "position": [-24, 0, -4],
+      "rotation": [0, 55.6, 0],
+      "scale": 1.0932239765576393,
+      "collision": "none"
+    },
+    {
+      "id": "hero-giant-0-trunk",
+      "mesh": "jungle:collider",
+      "position": [-24, 0, -4],
+      "scale": [2.3, 4, 2.3],
+      "collision": "cylinder"
+    },
+    {
+      "id": "hero-giant-1",
+      "mesh": "jungle:giant-tree",
+      "position": [27, 0, -10],
+      "rotation": [0, 237.69, 0],
+      "scale": 0.9785957995848474,
+      "collision": "none"
+    },
+    {
+      "id": "hero-giant-1-trunk",
+      "mesh": "jungle:collider",
+      "position": [27, 0, -10],
+      "scale": [2.3, 4, 2.3],
+      "collision": "cylinder"
+    },
+    {
+      "id": "hero-giant-2",
+      "mesh": "jungle:giant-tree",
+      "position": [-27, 0, 40],
+      "rotation": [0, 317.82, 0],
+      "scale": 1.1435089565332768,
+      "collision": "none"
+    },
+    {
+      "id": "hero-giant-2-trunk",
+      "mesh": "jungle:collider",
+      "position": [-27, 0, 40],
+      "scale": [2.3, 4, 2.3],
+      "collision": "cylinder"
+    },
+    {
+      "id": "hero-giant-3",
+      "mesh": "jungle:giant-tree",
+      "position": [28, 0, 30],
+      "rotation": [0, 79.05, 0],
+      "scale": 1.1405008257837972,
+      "collision": "none"
+    },
+    {
+      "id": "hero-giant-3-trunk",
+      "mesh": "jungle:collider",
+      "position": [28, 0, 30],
+      "scale": [2.3, 4, 2.3],
+      "collision": "cylinder"
+    },
+    {
+      "id": "hero-giant-4",
+      "mesh": "jungle:giant-tree",
+      "position": [-12, 0, -42],
+      "rotation": [0, 143.37, 0],
+      "scale": 1.047452154998176,
+      "collision": "none"
+    },
+    {
+      "id": "hero-giant-4-trunk",
+      "mesh": "jungle:collider",
+      "position": [-12, 0, -42],
+      "scale": [2.3, 4, 2.3],
+      "collision": "cylinder"
+    },
+    {
+      "id": "hero-giant-5",
+      "mesh": "jungle:giant-tree",
+      "position": [14, 0, -44],
+      "rotation": [0, 356.35, 0],
+      "scale": 1.1164889338965893,
+      "collision": "none"
+    },
+    {
+      "id": "hero-giant-5-trunk",
+      "mesh": "jungle:collider",
+      "position": [14, 0, -44],
+      "scale": [2.3, 4, 2.3],
+      "collision": "cylinder"
+    },
+    {
+      "id": "hero-giant-6",
+      "mesh": "jungle:giant-tree",
+      "position": [-38, 0, -22],
+      "rotation": [0, 58.13, 0],
+      "scale": 1.0363043635995277,
+      "collision": "none"
+    },
+    {
+      "id": "hero-giant-6-trunk",
+      "mesh": "jungle:collider",
+      "position": [-38, 0, -22],
+      "scale": [2.3, 4, 2.3],
+      "collision": "cylinder"
+    },
+    {
+      "id": "hero-giant-7",
+      "mesh": "jungle:giant-tree",
+      "position": [37, 0, -28],
+      "rotation": [0, 185.62, 0],
+      "scale": 1.017823228867764,
+      "collision": "none"
+    },
+    {
+      "id": "hero-giant-7-trunk",
+      "mesh": "jungle:collider",
+      "position": [37, 0, -28],
+      "scale": [2.3, 4, 2.3],
+      "collision": "cylinder"
+    }
+  ],
+  "spawn": {
+    "position": [2.6, 0, 56],
+    "yaw": 0.04
   },
-  "paths": [
-   {
-    "points": [
-     [
-      0,
-      -4
-     ],
-     [
-      0,
-      12
-     ],
-     [
-      0,
-      30
-     ]
-    ],
-    "width": 34,
-    "layer": "mossy-stone"
-   },
-   {
-    "points": [
-     [
-      7,
-      90
-     ],
-     [
-      5,
-      72
-     ],
-     [
-      2.5,
-      54
-     ],
-     [
-      0.8,
-      38
-     ],
-     [
-      0,
-      30
-     ],
-     [
-      0,
-      22
-     ]
-    ],
-    "width": 3.4,
-    "layer": "mud"
-   }
+  "bounds": {
+    "walkRadius": 94,
+    "photoHalfExtent": 108,
+    "photoMaxHeight": 60
+  },
+  "defaultMood": "midday",
+  "moods": [
+    {
+      "id": "midday",
+      "name": "Midday shafts",
+      "audio": "jungle-midday",
+      "sky": {
+        "zenith": "#5a96cc",
+        "horizon": "#cfe4d2",
+        "ground": "#3c4a2c",
+        "hdri": "jungle/midday",
+        "hdriIntensity": 1.0
+      },
+      "sun": {
+        "azimuth": 25,
+        "elevation": 68,
+        "color": "#fff1d2",
+        "intensity": 3.4,
+        "discSize": 0.6
+      },
+      "ambient": {
+        "sky": "#a3cc98",
+        "ground": "#40502a",
+        "intensity": 0.55,
+        "ibl": 0.3
+      },
+      "fog": {
+        "color": "#a9c8a2",
+        "density": 0.0036,
+        "heightFalloff": 0.03,
+        "baseHeight": 0,
+        "sunScatter": 0.5
+      },
+      "post": {
+        "exposure": 0.38,
+        "contrast": 0.22,
+        "saturation": 0.3,
+        "temperature": 0.08,
+        "tint": -0.04,
+        "bloom": 0.6,
+        "vignette": 0.32,
+        "shafts": 1.5
+      },
+      "particles": ["pollen", "dust"]
+    },
+    {
+      "id": "storm",
+      "name": "Storm",
+      "audio": "jungle-storm",
+      "sky": {
+        "zenith": "#4b5a62",
+        "horizon": "#8a9a9a",
+        "ground": "#2b3329",
+        "hdri": "jungle/storm",
+        "hdriIntensity": 1.0
+      },
+      "sun": {
+        "azimuth": 40,
+        "elevation": 35,
+        "color": "#a9bdc2",
+        "intensity": 0.5,
+        "discSize": 1.2
+      },
+      "ambient": {
+        "sky": "#7f9a98",
+        "ground": "#1f2a20",
+        "intensity": 0.9,
+        "ibl": 0.3
+      },
+      "fog": {
+        "color": "#70827f",
+        "density": 0.015,
+        "heightFalloff": 0.03,
+        "baseHeight": 0,
+        "sunScatter": 0.05
+      },
+      "post": {
+        "exposure": 0.3,
+        "contrast": 0.14,
+        "saturation": -0.2,
+        "temperature": -0.12,
+        "tint": -0.04,
+        "bloom": 0.35,
+        "vignette": 0.5,
+        "shafts": 0
+      },
+      "particles": ["rain", "mist"]
+    },
+    {
+      "id": "golden-hour",
+      "name": "Golden hour",
+      "audio": "jungle-golden-hour",
+      "sky": {
+        "zenith": "#7a8fb0",
+        "horizon": "#f2b878",
+        "ground": "#4a3a28",
+        "hdri": "jungle/golden-hour",
+        "hdriIntensity": 1.0
+      },
+      "sun": {
+        "azimuth": 60,
+        "elevation": 9,
+        "color": "#ffb35c",
+        "intensity": 2.8,
+        "discSize": 0.8
+      },
+      "ambient": {
+        "sky": "#e0b890",
+        "ground": "#4a3a22",
+        "intensity": 0.7,
+        "ibl": 0.35
+      },
+      "fog": {
+        "color": "#e0a468",
+        "density": 0.009,
+        "heightFalloff": 0.02,
+        "baseHeight": 0,
+        "sunScatter": 0.9
+      },
+      "post": {
+        "exposure": 0.38,
+        "contrast": 0.2,
+        "saturation": 0.25,
+        "temperature": 0.3,
+        "tint": 0.05,
+        "bloom": 0.9,
+        "vignette": 0.35,
+        "shafts": 1.7
+      },
+      "particles": ["pollen", "mist", "dust"]
+    }
   ],
-  "layers": [
-   {
-    "id": "jungle-floor",
-    "material": "jungle/jungle-floor",
-    "scale": 3.0,
-    "surface": "leaves",
-    "color": "#4d5c2e",
-    "roughness": 0.95,
-    "slope": [
-     0,
-     40
-    ],
-    "noise": 0.5
-   },
-   {
-    "id": "mud",
-    "material": "jungle/mud",
-    "scale": 2.4,
-    "surface": "dirt",
-    "color": "#5a4330",
-    "roughness": 0.97,
-    "slope": [
-     0,
-     6
-    ],
-    "height": [
-     -40,
-     -2.4
-    ],
-    "noise": 0.4
-   },
-   {
-    "id": "mossy-stone",
-    "material": "jungle/mossy-stone",
-    "scale": 2.0,
-    "surface": "rock",
-    "color": "#6f7458",
-    "roughness": 0.9,
-    "slope": [
-     88,
-     90
-    ]
-   },
-   {
-    "id": "rock",
-    "material": "jungle/rock",
-    "scale": 4.0,
-    "triplanar": true,
-    "surface": "rock",
-    "color": "#6e6a5c",
-    "roughness": 0.85,
-    "slope": [
-     34,
-     90
-    ]
-   }
+  "cameras": [
+    {
+      "id": "spawn",
+      "position": [2.6, 1.65, 56],
+      "target": [0, 6.5, 0],
+      "fov": 60
+    },
+    {
+      "id": "stairs",
+      "position": [0.5, 1.65, 8],
+      "target": [0, 8.6, -21],
+      "fov": 58
+    },
+    {
+      "id": "courtyard",
+      "position": [15, 1.65, 27],
+      "target": [-5, 2.6, 4],
+      "fov": 64
+    },
+    {
+      "id": "canopy-up",
+      "position": [-18, 1.3, 3],
+      "target": [-26, 30, -6],
+      "fov": 70
+    },
+    {
+      "id": "creek",
+      "position": [-32, 1.65, 26],
+      "target": [-41, -0.6, 6],
+      "fov": 62
+    },
+    {
+      "id": "doorway",
+      "position": [0, 8.85, -21.2],
+      "target": [0, 1.0, -4],
+      "fov": 66
+    }
   ]
- },
- "scatter": [
-  {
-   "id": "giants",
-   "mesh": "jungle:giant-tree",
-   "density": 0.9,
-   "minDistance": 12.5,
-   "scale": [
-    0.85,
-    1.2
-   ],
-   "tilt": 1.5,
-   "sink": 0.3,
-   "detail": false,
-   "castShadow": true,
-   "collision": "cylinder",
-   "collisionRadius": 1.3,
-   "lods": [
-    34,
-    85
-   ],
-   "cullDistance": 200,
-   "cell": 64,
-   "colorVariation": 0.1,
-   "masks": [
-    {
-     "type": "slope",
-     "max": 30,
-     "soft": 5
-    },
-    {
-     "type": "layer",
-     "layer": "mud",
-     "max": 0.4
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 14,
-     "radius": 25.0,
-     "soft": 6
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -18,
-     "radius": 27.0,
-     "soft": 6
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -2,
-     "radius": 20.0,
-     "soft": 6
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 36,
-     "radius": 8,
-     "soft": 4
-    },
-    {
-     "type": "exclude",
-     "x": 0.8,
-     "z": 44,
-     "radius": 8,
-     "soft": 4
-    },
-    {
-     "type": "exclude",
-     "x": 1.5,
-     "z": 52,
-     "radius": 8,
-     "soft": 4
-    },
-    {
-     "type": "exclude",
-     "x": 2.2,
-     "z": 60,
-     "radius": 8,
-     "soft": 4
-    },
-    {
-     "type": "exclude",
-     "x": 3,
-     "z": 68,
-     "radius": 8,
-     "soft": 4
-    },
-    {
-     "type": "exclude",
-     "x": 4,
-     "z": 76,
-     "radius": 8,
-     "soft": 4
-    },
-    {
-     "type": "exclude",
-     "x": 5,
-     "z": 84,
-     "radius": 8,
-     "soft": 4
-    },
-    {
-     "type": "exclude",
-     "x": -32,
-     "z": 22,
-     "radius": 8,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": -38,
-     "z": 8,
-     "radius": 7,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": -24,
-     "z": -4,
-     "radius": 7,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 27,
-     "z": -10,
-     "radius": 7,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": -26,
-     "z": 24,
-     "radius": 7,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 28,
-     "z": 30,
-     "radius": 7,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": -12,
-     "z": -42,
-     "radius": 7,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 14,
-     "z": -44,
-     "radius": 7,
-     "soft": 2
-    }
-   ],
-   "cluster": {
-    "frequency": 0.02,
-    "strength": 0.3
-   }
-  },
-  {
-   "id": "giants-far",
-   "mesh": "jungle:giant-far",
-   "density": 2.0,
-   "minDistance": 9,
-   "scale": [
-    0.9,
-    1.35
-   ],
-   "sink": 0.3,
-   "detail": false,
-   "castShadow": false,
-   "cell": 64,
-   "colorVariation": 0.12,
-   "masks": [
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 0,
-     "radius": 95,
-     "soft": 5
-    },
-    {
-     "type": "slope",
-     "max": 45,
-     "soft": 6
-    }
-   ]
-  },
-  {
-   "id": "canopy-trees",
-   "mesh": "jungle:canopy-tree",
-   "density": 1.5,
-   "minDistance": 6,
-   "scale": [
-    0.8,
-    1.25
-   ],
-   "tilt": 2,
-   "sink": 0.2,
-   "detail": false,
-   "castShadow": true,
-   "collision": "cylinder",
-   "collisionRadius": 0.5,
-   "lods": [
-    30,
-    72
-   ],
-   "cullDistance": 150,
-   "colorVariation": 0.12,
-   "masks": [
-    {
-     "type": "slope",
-     "max": 32,
-     "soft": 5
-    },
-    {
-     "type": "layer",
-     "layer": "mud",
-     "max": 0.4
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 14,
-     "radius": 22.5,
-     "soft": 5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -18,
-     "radius": 24.3,
-     "soft": 5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -2,
-     "radius": 18.0,
-     "soft": 5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 36,
-     "radius": 7,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0.8,
-     "z": 44,
-     "radius": 7,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 1.5,
-     "z": 52,
-     "radius": 7,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 2.2,
-     "z": 60,
-     "radius": 7,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 3,
-     "z": 68,
-     "radius": 7,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 4,
-     "z": 76,
-     "radius": 7,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 5,
-     "z": 84,
-     "radius": 7,
-     "soft": 3
-    }
-   ],
-   "cluster": {
-    "frequency": 0.03,
-    "strength": 0.4
-   }
-  },
-  {
-   "id": "palms",
-   "mesh": "jungle:palm",
-   "density": 1.4,
-   "minDistance": 4.5,
-   "scale": [
-    0.8,
-    1.3
-   ],
-   "tilt": 3,
-   "sink": 0.2,
-   "detail": true,
-   "castShadow": true,
-   "collision": "cylinder",
-   "collisionRadius": 0.25,
-   "lods": [
-    24,
-    58
-   ],
-   "cullDistance": 115,
-   "colorVariation": 0.1,
-   "masks": [
-    {
-     "type": "slope",
-     "max": 30,
-     "soft": 5
-    },
-    {
-     "type": "layer",
-     "layer": "mud",
-     "max": 0.5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 14,
-     "radius": 21.25,
-     "soft": 4
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -18,
-     "radius": 22.95,
-     "soft": 4
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -2,
-     "radius": 17.0,
-     "soft": 4
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 36,
-     "radius": 6,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 0.8,
-     "z": 44,
-     "radius": 6,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 1.5,
-     "z": 52,
-     "radius": 6,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 2.2,
-     "z": 60,
-     "radius": 6,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 3,
-     "z": 68,
-     "radius": 6,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 4,
-     "z": 76,
-     "radius": 6,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 5,
-     "z": 84,
-     "radius": 6,
-     "soft": 2
-    }
-   ],
-   "cluster": {
-    "frequency": 0.045,
-    "strength": 0.5
-   }
-  },
-  {
-   "id": "tree-ferns",
-   "mesh": "jungle:tree-fern",
-   "density": 2.6,
-   "minDistance": 3.0,
-   "scale": [
-    0.8,
-    1.4
-   ],
-   "tilt": 4,
-   "sink": 0.15,
-   "detail": true,
-   "castShadow": true,
-   "lods": [
-    18,
-    46
-   ],
-   "cullDistance": 90,
-   "colorVariation": 0.12,
-   "masks": [
-    {
-     "type": "slope",
-     "max": 34,
-     "soft": 5
-    },
-    {
-     "type": "layer",
-     "layer": "mud",
-     "max": 0.5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 14,
-     "radius": 20.0,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -18,
-     "radius": 21.6,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -2,
-     "radius": 16.0,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 36,
-     "radius": 5,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 0.8,
-     "z": 44,
-     "radius": 5,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 1.5,
-     "z": 52,
-     "radius": 5,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 2.2,
-     "z": 60,
-     "radius": 5,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 3,
-     "z": 68,
-     "radius": 5,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 4,
-     "z": 76,
-     "radius": 5,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 5,
-     "z": 84,
-     "radius": 5,
-     "soft": 2
-    }
-   ],
-   "cluster": {
-    "frequency": 0.05,
-    "strength": 0.55
-   }
-  },
-  {
-   "id": "saplings",
-   "mesh": "jungle:sapling",
-   "density": 2.6,
-   "minDistance": 2.8,
-   "scale": [
-    0.8,
-    1.4
-   ],
-   "tilt": 5,
-   "sink": 0.1,
-   "detail": true,
-   "castShadow": true,
-   "lods": [
-    18,
-    46
-   ],
-   "cullDistance": 80,
-   "colorVariation": 0.12,
-   "masks": [
-    {
-     "type": "slope",
-     "max": 34,
-     "soft": 5
-    },
-    {
-     "type": "layer",
-     "layer": "mud",
-     "max": 0.5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 14,
-     "radius": 20.0,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -18,
-     "radius": 21.6,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -2,
-     "radius": 16.0,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 36,
-     "radius": 5,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 0.8,
-     "z": 44,
-     "radius": 5,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 1.5,
-     "z": 52,
-     "radius": 5,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 2.2,
-     "z": 60,
-     "radius": 5,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 3,
-     "z": 68,
-     "radius": 5,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 4,
-     "z": 76,
-     "radius": 5,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 5,
-     "z": 84,
-     "radius": 5,
-     "soft": 2
-    }
-   ],
-   "cluster": {
-    "frequency": 0.06,
-    "strength": 0.5
-   }
-  },
-  {
-   "id": "bananas",
-   "mesh": "jungle:banana",
-   "density": 1.1,
-   "minDistance": 4,
-   "scale": [
-    0.9,
-    1.5
-   ],
-   "tilt": 3,
-   "sink": 0.05,
-   "detail": true,
-   "castShadow": true,
-   "lods": [
-    16,
-    40
-   ],
-   "cullDistance": 90,
-   "colorVariation": 0.1,
-   "masks": [
-    {
-     "type": "slope",
-     "max": 22,
-     "soft": 4
-    },
-    {
-     "type": "layer",
-     "layer": "mud",
-     "max": 0.7
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 14,
-     "radius": 21.25,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -18,
-     "radius": 22.95,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -2,
-     "radius": 17.0,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 36,
-     "radius": 1.8,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 0.8,
-     "z": 44,
-     "radius": 1.8,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 1.5,
-     "z": 52,
-     "radius": 1.8,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 2.2,
-     "z": 60,
-     "radius": 1.8,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 3,
-     "z": 68,
-     "radius": 1.8,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 4,
-     "z": 76,
-     "radius": 1.8,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 5,
-     "z": 84,
-     "radius": 1.8,
-     "soft": 1.5
-    }
-   ],
-   "cluster": {
-    "frequency": 0.035,
-    "strength": 0.85
-   }
-  },
-  {
-   "id": "monstera",
-   "mesh": "jungle:monstera",
-   "density": 6.5,
-   "minDistance": 1.5,
-   "scale": [
-    0.8,
-    1.6
-   ],
-   "tilt": 3,
-   "detail": true,
-   "castShadow": false,
-   "lods": [
-    14,
-    34
-   ],
-   "cullDistance": 62,
-   "colorVariation": 0.14,
-   "masks": [
-    {
-     "type": "slope",
-     "max": 36,
-     "soft": 5
-    },
-    {
-     "type": "layer",
-     "layer": "mud",
-     "max": 0.7
-    },
-    {
-     "type": "layer",
-     "layer": "mossy-stone",
-     "max": 0.5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 14,
-     "radius": 15.0,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -18,
-     "radius": 16.2,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -2,
-     "radius": 12.0,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 36,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 0.8,
-     "z": 44,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 1.5,
-     "z": 52,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 2.2,
-     "z": 60,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 3,
-     "z": 68,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 4,
-     "z": 76,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 5,
-     "z": 84,
-     "radius": 1.4,
-     "soft": 1.2
-    }
-   ],
-   "cluster": {
-    "frequency": 0.06,
-    "strength": 0.65
-   }
-  },
-  {
-   "id": "elephant-ears",
-   "mesh": "jungle:elephant-ear",
-   "density": 5,
-   "minDistance": 1.3,
-   "scale": [
-    0.8,
-    1.5
-   ],
-   "tilt": 3,
-   "detail": true,
-   "castShadow": false,
-   "lods": [
-    14,
-    34
-   ],
-   "cullDistance": 60,
-   "colorVariation": 0.14,
-   "masks": [
-    {
-     "type": "slope",
-     "max": 30,
-     "soft": 5
-    },
-    {
-     "type": "layer",
-     "layer": "mud",
-     "min": 0.12
-    },
-    {
-     "type": "layer",
-     "layer": "mossy-stone",
-     "max": 0.5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 14,
-     "radius": 15.0,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -18,
-     "radius": 16.2,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -2,
-     "radius": 12.0,
-     "soft": 3
-    }
-   ],
-   "cluster": {
-    "frequency": 0.07,
-    "strength": 0.5
-   }
-  },
-  {
-   "id": "ferns-big",
-   "mesh": "jungle:fern-big",
-   "density": 14,
-   "minDistance": 0.9,
-   "scale": [
-    0.8,
-    1.6
-   ],
-   "alignToNormal": 0.4,
-   "detail": true,
-   "castShadow": false,
-   "lods": [
-    12,
-    30
-   ],
-   "cullDistance": 55,
-   "colorVariation": 0.16,
-   "masks": [
-    {
-     "type": "slope",
-     "max": 40,
-     "soft": 5
-    },
-    {
-     "type": "layer",
-     "layer": "mossy-stone",
-     "max": 0.6
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 14,
-     "radius": 12.5,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -18,
-     "radius": 13.5,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -2,
-     "radius": 10.0,
-     "soft": 3
-    }
-   ],
-   "cluster": {
-    "frequency": 0.05,
-    "strength": 0.5
-   }
-  },
-  {
-   "id": "ginger",
-   "mesh": "jungle:ginger",
-   "density": 3.5,
-   "minDistance": 1.8,
-   "scale": [
-    0.8,
-    1.5
-   ],
-   "tilt": 4,
-   "detail": true,
-   "castShadow": false,
-   "lods": [
-    14,
-    34
-   ],
-   "cullDistance": 60,
-   "colorVariation": 0.14,
-   "masks": [
-    {
-     "type": "slope",
-     "max": 30,
-     "soft": 5
-    },
-    {
-     "type": "layer",
-     "layer": "mossy-stone",
-     "max": 0.5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 14,
-     "radius": 15.0,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -18,
-     "radius": 16.2,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -2,
-     "radius": 12.0,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 36,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 0.8,
-     "z": 44,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 1.5,
-     "z": 52,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 2.2,
-     "z": 60,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 3,
-     "z": 68,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 4,
-     "z": 76,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 5,
-     "z": 84,
-     "radius": 1.4,
-     "soft": 1.2
-    }
-   ],
-   "cluster": {
-    "frequency": 0.06,
-    "strength": 0.7
-   }
-  },
-  {
-   "id": "shrubs",
-   "mesh": "jungle:shrub",
-   "density": 4.5,
-   "minDistance": 1.6,
-   "scale": [
-    0.8,
-    1.6
-   ],
-   "tilt": 3,
-   "detail": true,
-   "castShadow": false,
-   "lods": [
-    14,
-    34
-   ],
-   "cullDistance": 60,
-   "colorVariation": 0.14,
-   "masks": [
-    {
-     "type": "slope",
-     "max": 36,
-     "soft": 5
-    },
-    {
-     "type": "layer",
-     "layer": "mossy-stone",
-     "max": 0.5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 14,
-     "radius": 15.0,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -18,
-     "radius": 16.2,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -2,
-     "radius": 12.0,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 36,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 0.8,
-     "z": 44,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 1.5,
-     "z": 52,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 2.2,
-     "z": 60,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 3,
-     "z": 68,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 4,
-     "z": 76,
-     "radius": 1.4,
-     "soft": 1.2
-    },
-    {
-     "type": "exclude",
-     "x": 5,
-     "z": 84,
-     "radius": 1.4,
-     "soft": 1.2
-    }
-   ],
-   "cluster": {
-    "frequency": 0.05,
-    "strength": 0.6
-   }
-  },
-  {
-   "id": "ground-leaf",
-   "mesh": "jungle:ground-leaf",
-   "density": 30,
-   "minDistance": 0.6,
-   "scale": [
-    0.9,
-    1.7
-   ],
-   "alignToNormal": 0.5,
-   "detail": true,
-   "castShadow": false,
-   "lods": [
-    8,
-    20
-   ],
-   "cullDistance": 38,
-   "colorVariation": 0.18,
-   "masks": [
-    {
-     "type": "slope",
-     "max": 40,
-     "soft": 5
-    },
-    {
-     "type": "layer",
-     "layer": "mossy-stone",
-     "max": 0.75
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 36,
-     "radius": 1.2,
-     "soft": 1.0
-    },
-    {
-     "type": "exclude",
-     "x": 0.8,
-     "z": 44,
-     "radius": 1.2,
-     "soft": 1.0
-    },
-    {
-     "type": "exclude",
-     "x": 1.5,
-     "z": 52,
-     "radius": 1.2,
-     "soft": 1.0
-    },
-    {
-     "type": "exclude",
-     "x": 2.2,
-     "z": 60,
-     "radius": 1.2,
-     "soft": 1.0
-    },
-    {
-     "type": "exclude",
-     "x": 3,
-     "z": 68,
-     "radius": 1.2,
-     "soft": 1.0
-    },
-    {
-     "type": "exclude",
-     "x": 4,
-     "z": 76,
-     "radius": 1.2,
-     "soft": 1.0
-    },
-    {
-     "type": "exclude",
-     "x": 5,
-     "z": 84,
-     "radius": 1.2,
-     "soft": 1.0
-    }
-   ],
-   "cluster": {
-    "frequency": 0.08,
-    "strength": 0.5
-   }
-  },
-  {
-   "id": "ferns-low",
-   "mesh": "jungle:fern-low",
-   "density": 34,
-   "minDistance": 0.5,
-   "scale": [
-    0.9,
-    1.8
-   ],
-   "alignToNormal": 0.5,
-   "detail": true,
-   "castShadow": false,
-   "lods": [
-    8,
-    18
-   ],
-   "cullDistance": 30,
-   "colorVariation": 0.18,
-   "masks": [
-    {
-     "type": "slope",
-     "max": 40,
-     "soft": 5
-    },
-    {
-     "type": "layer",
-     "layer": "mossy-stone",
-     "max": 0.8
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 36,
-     "radius": 1.0,
-     "soft": 0.8
-    },
-    {
-     "type": "exclude",
-     "x": 0.8,
-     "z": 44,
-     "radius": 1.0,
-     "soft": 0.8
-    },
-    {
-     "type": "exclude",
-     "x": 1.5,
-     "z": 52,
-     "radius": 1.0,
-     "soft": 0.8
-    },
-    {
-     "type": "exclude",
-     "x": 2.2,
-     "z": 60,
-     "radius": 1.0,
-     "soft": 0.8
-    },
-    {
-     "type": "exclude",
-     "x": 3,
-     "z": 68,
-     "radius": 1.0,
-     "soft": 0.8
-    },
-    {
-     "type": "exclude",
-     "x": 4,
-     "z": 76,
-     "radius": 1.0,
-     "soft": 0.8
-    },
-    {
-     "type": "exclude",
-     "x": 5,
-     "z": 84,
-     "radius": 1.0,
-     "soft": 0.8
-    }
-   ],
-   "cluster": {
-    "frequency": 0.09,
-    "strength": 0.5
-   }
-  },
-  {
-   "id": "boulders",
-   "mesh": "jungle:boulder",
-   "density": 0.45,
-   "minDistance": 9,
-   "scale": [
-    0.9,
-    2.3
-   ],
-   "tilt": 8,
-   "sink": 0.3,
-   "detail": false,
-   "castShadow": true,
-   "collision": "sphere",
-   "lods": [
-    25,
-    60
-   ],
-   "cullDistance": 120,
-   "colorVariation": 0.12,
-   "masks": [
-    {
-     "type": "layer",
-     "layer": "mossy-stone",
-     "max": 0.3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 14,
-     "radius": 22.5,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -18,
-     "radius": 24.3,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -2,
-     "radius": 18.0,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 36,
-     "radius": 3,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 0.8,
-     "z": 44,
-     "radius": 3,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 1.5,
-     "z": 52,
-     "radius": 3,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 2.2,
-     "z": 60,
-     "radius": 3,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 3,
-     "z": 68,
-     "radius": 3,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 4,
-     "z": 76,
-     "radius": 3,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 5,
-     "z": 84,
-     "radius": 3,
-     "soft": 2
-    }
-   ]
-  },
-  {
-   "id": "creek-boulders",
-   "mesh": "jungle:boulder",
-   "density": 7,
-   "minDistance": 2.4,
-   "scale": [
-    0.45,
-    1.5
-   ],
-   "tilt": 10,
-   "sink": 0.25,
-   "detail": false,
-   "castShadow": true,
-   "collision": "sphere",
-   "lods": [
-    25,
-    60
-   ],
-   "cullDistance": 100,
-   "colorVariation": 0.12,
-   "masks": [
-    {
-     "type": "layer",
-     "layer": "mud",
-     "min": 0.7
-    },
-    {
-     "type": "exclude",
-     "x": 4,
-     "z": 48,
-     "radius": 36,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 30,
-     "radius": 16,
-     "soft": 3
-    }
-   ]
-  },
-  {
-   "id": "logs",
-   "mesh": "jungle:log",
-   "density": 0.3,
-   "minDistance": 14,
-   "scale": [
-    0.9,
-    1.3
-   ],
-   "alignToNormal": 1,
-   "sink": 0.1,
-   "detail": false,
-   "castShadow": true,
-   "lods": [
-    20,
-    50
-   ],
-   "cullDistance": 90,
-   "colorVariation": 0.12,
-   "masks": [
-    {
-     "type": "slope",
-     "max": 22,
-     "soft": 4
-    },
-    {
-     "type": "layer",
-     "layer": "mud",
-     "max": 0.4
-    },
-    {
-     "type": "layer",
-     "layer": "mossy-stone",
-     "max": 0.3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 14,
-     "radius": 22.5,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -18,
-     "radius": 24.3,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -2,
-     "radius": 18.0,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 36,
-     "radius": 4,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 0.8,
-     "z": 44,
-     "radius": 4,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 1.5,
-     "z": 52,
-     "radius": 4,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 2.2,
-     "z": 60,
-     "radius": 4,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 3,
-     "z": 68,
-     "radius": 4,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 4,
-     "z": 76,
-     "radius": 4,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 5,
-     "z": 84,
-     "radius": 4,
-     "soft": 2
-    }
-   ]
-  },
-  {
-   "id": "surface-roots",
-   "mesh": "jungle:root-spread",
-   "density": 0.7,
-   "minDistance": 5,
-   "scale": [
-    0.7,
-    1.4
-   ],
-   "alignToNormal": 0.6,
-   "sink": 0.04,
-   "detail": true,
-   "castShadow": false,
-   "lods": [
-    15,
-    40
-   ],
-   "cullDistance": 70,
-   "colorVariation": 0.12,
-   "masks": [
-    {
-     "type": "layer",
-     "layer": "mud",
-     "max": 0.5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 36,
-     "radius": 2.5,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 0.8,
-     "z": 44,
-     "radius": 2.5,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 1.5,
-     "z": 52,
-     "radius": 2.5,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 2.2,
-     "z": 60,
-     "radius": 2.5,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 3,
-     "z": 68,
-     "radius": 2.5,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 4,
-     "z": 76,
-     "radius": 2.5,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 5,
-     "z": 84,
-     "radius": 2.5,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 14,
-     "radius": 10,
-     "soft": 4
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -2,
-     "radius": 8,
-     "soft": 3
-    }
-   ]
-  },
-  {
-   "id": "paving",
-   "mesh": "jungle:slab",
-   "density": 55,
-   "minDistance": 1.6,
-   "scale": [
-    0.9,
-    1.25
-   ],
-   "tilt": 3,
-   "sink": 0.0,
-   "detail": false,
-   "castShadow": false,
-   "lods": [
-    10,
-    24
-   ],
-   "cullDistance": 48,
-   "colorVariation": 0.12,
-   "masks": [
-    {
-     "type": "layer",
-     "layer": "mossy-stone",
-     "min": 0.5
-    },
-    {
-     "type": "noise",
-     "frequency": 0.11,
-     "threshold": 0.36,
-     "soft": 0.14,
-     "seedOffset": 4
-    },
-    {
-     "type": "exclude",
-     "x": -9,
-     "z": -10,
-     "radius": 8,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 9,
-     "z": -10,
-     "radius": 8,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -13,
-     "radius": 8,
-     "soft": 1.5
-    }
-   ]
-  },
-  {
-   "id": "loose-blocks",
-   "mesh": "jungle:block",
-   "density": 2.2,
-   "minDistance": 3.5,
-   "scale": [
-    0.8,
-    1.3
-   ],
-   "tilt": 8,
-   "sink": 0.1,
-   "detail": false,
-   "castShadow": true,
-   "lods": [
-    16,
-    40
-   ],
-   "cullDistance": 70,
-   "colorVariation": 0.1,
-   "masks": [
-    {
-     "type": "layer",
-     "layer": "mossy-stone",
-     "min": 0.3
-    },
-    {
-     "type": "exclude",
-     "x": -9,
-     "z": -10,
-     "radius": 8,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 9,
-     "z": -10,
-     "radius": 8,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -13,
-     "radius": 8,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 14,
-     "radius": 5,
-     "soft": 3
-    }
-   ]
-  },
-  {
-   "id": "rubble-piles",
-   "mesh": "jungle:rubble",
-   "density": 0.7,
-   "minDistance": 7,
-   "scale": [
-    0.8,
-    1.3
-   ],
-   "sink": 0.1,
-   "detail": false,
-   "castShadow": true,
-   "lods": [
-    16,
-    40
-   ],
-   "cullDistance": 70,
-   "colorVariation": 0.1,
-   "masks": [
-    {
-     "type": "layer",
-     "layer": "mossy-stone",
-     "min": 0.2,
-     "max": 0.8
-    },
-    {
-     "type": "exclude",
-     "x": -9,
-     "z": -10,
-     "radius": 8,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 9,
-     "z": -10,
-     "radius": 8,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -13,
-     "radius": 8,
-     "soft": 1.5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 14,
-     "radius": 7,
-     "soft": 3
-    }
-   ]
-  },
-  {
-   "id": "lianas",
-   "mesh": "jungle:liana",
-   "density": 0.55,
-   "minDistance": 6,
-   "scale": [
-    0.9,
-    1.2
-   ],
-   "detail": false,
-   "castShadow": false,
-   "lods": [
-    40
-   ],
-   "cullDistance": 95,
-   "colorVariation": 0.1,
-   "masks": [
-    {
-     "type": "slope",
-     "max": 30,
-     "soft": 5
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 14,
-     "radius": 20.0,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -18,
-     "radius": 21.6,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": -2,
-     "radius": 16.0,
-     "soft": 3
-    },
-    {
-     "type": "exclude",
-     "x": 0,
-     "z": 36,
-     "radius": 3,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 0.8,
-     "z": 44,
-     "radius": 3,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 1.5,
-     "z": 52,
-     "radius": 3,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 2.2,
-     "z": 60,
-     "radius": 3,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 3,
-     "z": 68,
-     "radius": 3,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 4,
-     "z": 76,
-     "radius": 3,
-     "soft": 2
-    },
-    {
-     "type": "exclude",
-     "x": 5,
-     "z": 84,
-     "radius": 3,
-     "soft": 2
-    }
-   ]
-  }
- ],
- "props": [
-  {
-   "id": "temple",
-   "mesh": "jungle:temple",
-   "position": [
-    0,
-    0,
-    0
-   ],
-   "collision": "none"
-  },
-  {
-   "id": "temple-growth",
-   "mesh": "jungle:temple-growth",
-   "position": [
-    0,
-    0,
-    0
-   ],
-   "collision": "none"
-  },
-  {
-   "id": "tier1-l",
-   "mesh": "jungle:collider",
-   "position": [
-    -9.7,
-    -3,
-    -20.0
-   ],
-   "scale": [
-    12.6,
-    5.4,
-    28
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "tier1-r",
-   "mesh": "jungle:collider",
-   "position": [
-    9.7,
-    -3,
-    -20.0
-   ],
-   "scale": [
-    12.6,
-    5.4,
-    28
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "tier2-l",
-   "mesh": "jungle:collider",
-   "position": [
-    -7.95,
-    -3,
-    -21.1
-   ],
-   "scale": [
-    9.1,
-    7.8,
-    23.8
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "tier2-r",
-   "mesh": "jungle:collider",
-   "position": [
-    7.95,
-    -3,
-    -21.1
-   ],
-   "scale": [
-    9.1,
-    7.8,
-    23.8
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "tier3-l",
-   "mesh": "jungle:collider",
-   "position": [
-    -6.2,
-    -3,
-    -22.2
-   ],
-   "scale": [
-    5.6,
-    10.2,
-    19.6
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "tier3-r",
-   "mesh": "jungle:collider",
-   "position": [
-    6.2,
-    -3,
-    -22.2
-   ],
-   "scale": [
-    5.6,
-    10.2,
-    19.6
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "tier3-mid",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -3,
-    -23.7
-   ],
-   "scale": [
-    6.8,
-    10.2,
-    16.6
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step01",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -6.2
-   ],
-   "scale": [
-    6.8,
-    1.3,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step02",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -6.6
-   ],
-   "scale": [
-    6.8,
-    1.6,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step03",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -7.0
-   ],
-   "scale": [
-    6.8,
-    1.9,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step04",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -7.4
-   ],
-   "scale": [
-    6.8,
-    2.2,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step05",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -7.8
-   ],
-   "scale": [
-    6.8,
-    2.5,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step06",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -8.2
-   ],
-   "scale": [
-    6.8,
-    2.8,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step07",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -8.6
-   ],
-   "scale": [
-    6.8,
-    3.1,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step08",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -9.0
-   ],
-   "scale": [
-    6.8,
-    3.4,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step09",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -9.4
-   ],
-   "scale": [
-    6.8,
-    3.7,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step10",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -9.8
-   ],
-   "scale": [
-    6.8,
-    4.0,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step11",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -10.2
-   ],
-   "scale": [
-    6.8,
-    4.3,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step12",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -10.6
-   ],
-   "scale": [
-    6.8,
-    4.6,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step13",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -11.0
-   ],
-   "scale": [
-    6.8,
-    4.9,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step14",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -11.4
-   ],
-   "scale": [
-    6.8,
-    5.2,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step15",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -11.8
-   ],
-   "scale": [
-    6.8,
-    5.5,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step16",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -12.2
-   ],
-   "scale": [
-    6.8,
-    5.8,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step17",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -12.6
-   ],
-   "scale": [
-    6.8,
-    6.1,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step18",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -13.0
-   ],
-   "scale": [
-    6.8,
-    6.4,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step19",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -13.4
-   ],
-   "scale": [
-    6.8,
-    6.7,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step20",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -13.8
-   ],
-   "scale": [
-    6.8,
-    7.0,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step21",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -14.2
-   ],
-   "scale": [
-    6.8,
-    7.3,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step22",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -14.6
-   ],
-   "scale": [
-    6.8,
-    7.6,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step23",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -15.0
-   ],
-   "scale": [
-    6.8,
-    7.9,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "step24",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    -1.0,
-    -15.4
-   ],
-   "scale": [
-    6.8,
-    8.2,
-    0.4
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "shrine-fl",
-   "mesh": "jungle:collider",
-   "position": [
-    -3.55,
-    7.1,
-    -20.6
-   ],
-   "scale": [
-    4.5,
-    6.5,
-    2.2
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "shrine-fr",
-   "mesh": "jungle:collider",
-   "position": [
-    3.55,
-    7.1,
-    -20.6
-   ],
-   "scale": [
-    4.5,
-    6.5,
-    2.2
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "shrine-l",
-   "mesh": "jungle:collider",
-   "position": [
-    -4.7,
-    7.1,
-    -26.1
-   ],
-   "scale": [
-    2.2,
-    6.5,
-    8.8
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "shrine-r",
-   "mesh": "jungle:collider",
-   "position": [
-    4.7,
-    7.1,
-    -26.1
-   ],
-   "scale": [
-    2.2,
-    6.5,
-    8.8
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "shrine-b",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    7.1,
-    -29.4
-   ],
-   "scale": [
-    7.2,
-    6.5,
-    2.2
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "shrine-altar",
-   "mesh": "jungle:collider",
-   "position": [
-    0.0,
-    7.2,
-    -26.9
-   ],
-   "scale": [
-    2.2,
-    1.2,
-    1.8
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "guardian-l",
-   "mesh": "jungle:guardian",
-   "position": [
-    -6.2,
-    0,
-    -4.2
-   ],
-   "rotation": [
-    0,
-    8,
-    0
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "guardian-r",
-   "mesh": "jungle:guardian",
-   "position": [
-    6.2,
-    0,
-    -4.4
-   ],
-   "rotation": [
-    0,
-    -6,
-    0
-   ],
-   "scale": 1.0,
-   "collision": "box"
-  },
-  {
-   "id": "stele-a",
-   "mesh": "jungle:stele",
-   "position": [
-    -13.5,
-    0,
-    7
-   ],
-   "rotation": [
-    0,
-    12,
-    5
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "stele-b",
-   "mesh": "jungle:stele",
-   "position": [
-    14.5,
-    0,
-    13
-   ],
-   "rotation": [
-    0,
-    -24,
-    -8
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "pillar-l0",
-   "mesh": "jungle:pillar",
-   "position": [
-    -8.25,
-    0,
-    22
-   ],
-   "rotation": [
-    0,
-    -5.59,
-    0
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "pillar-l1",
-   "mesh": "jungle:pillar-broken",
-   "position": [
-    -8.15,
-    0,
-    16
-   ],
-   "rotation": [
-    0,
-    -6.84,
-    0
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "pillar-l2",
-   "mesh": "jungle:pillar",
-   "position": [
-    -8.19,
-    0,
-    10
-   ],
-   "rotation": [
-    0,
-    -2.15,
-    0
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "pillar-l3",
-   "mesh": "jungle:pillar-stump",
-   "position": [
-    -8.33,
-    0,
-    4
-   ],
-   "rotation": [
-    0,
-    0.12,
-    0
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "pillar-r0",
-   "mesh": "jungle:pillar-broken",
-   "position": [
-    8.06,
-    0,
-    22
-   ],
-   "rotation": [
-    0,
-    -1.06,
-    0
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "pillar-r1",
-   "mesh": "jungle:pillar",
-   "position": [
-    8.07,
-    0,
-    16
-   ],
-   "rotation": [
-    0,
-    -6.55,
-    0
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "pillar-r2",
-   "mesh": "jungle:pillar-fallen",
-   "position": [
-    8.9,
-    0,
-    10
-   ],
-   "rotation": [
-    0,
-    82,
-    0
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "pillar-r3",
-   "mesh": "jungle:pillar",
-   "position": [
-    8.18,
-    0,
-    4
-   ],
-   "rotation": [
-    0,
-    5.23,
-    0
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "gate-l",
-   "mesh": "jungle:pillar",
-   "position": [
-    -5.6,
-    0,
-    30
-   ],
-   "rotation": [
-    0,
-    3,
-    0
-   ],
-   "scale": 1.25,
-   "collision": "box"
-  },
-  {
-   "id": "gate-r",
-   "mesh": "jungle:pillar-broken",
-   "position": [
-    5.7,
-    0,
-    30.4
-   ],
-   "rotation": [
-    0,
-    -6,
-    0
-   ],
-   "scale": 1.25,
-   "collision": "box"
-  },
-  {
-   "id": "gate-lintel",
-   "mesh": "jungle:block",
-   "position": [
-    -1.5,
-    0,
-    28.6
-   ],
-   "rotation": [
-    0,
-    14,
-    4
-   ],
-   "scale": [
-    5.0,
-    1.3,
-    1.5
-   ],
-   "collision": "box"
-  },
-  {
-   "id": "wall-e0",
-   "mesh": "jungle:wall",
-   "position": [
-    21.5,
-    0,
-    -1.0
-   ],
-   "rotation": [
-    0,
-    90,
-    0
-   ],
-   "scale": 1.0,
-   "collision": "box"
-  },
-  {
-   "id": "wall-e1",
-   "mesh": "jungle:wall-b",
-   "position": [
-    21.2,
-    0,
-    7.5
-   ],
-   "rotation": [
-    0,
-    92,
-    0
-   ],
-   "scale": 1.0,
-   "collision": "box"
-  },
-  {
-   "id": "wall-e2",
-   "mesh": "jungle:wall-low",
-   "position": [
-    21.5,
-    0,
-    15.5
-   ],
-   "rotation": [
-    0,
-    88,
-    0
-   ],
-   "scale": 1.0,
-   "collision": "box"
-  },
-  {
-   "id": "wall-e3",
-   "mesh": "jungle:wall",
-   "position": [
-    21.8,
-    0,
-    24.0
-   ],
-   "rotation": [
-    0,
-    90,
-    0
-   ],
-   "scale": 1.0,
-   "collision": "box"
-  },
-  {
-   "id": "wall-w0",
-   "mesh": "jungle:wall-b",
-   "position": [
-    -21.4,
-    0,
-    0.5
-   ],
-   "rotation": [
-    0,
-    90,
-    0
-   ],
-   "scale": 1.0,
-   "collision": "box"
-  },
-  {
-   "id": "wall-w1",
-   "mesh": "jungle:wall-low",
-   "position": [
-    -21.2,
-    0,
-    8.5
-   ],
-   "rotation": [
-    0,
-    91,
-    0
-   ],
-   "scale": 1.0,
-   "collision": "box"
-  },
-  {
-   "id": "wall-w2",
-   "mesh": "jungle:wall",
-   "position": [
-    -21.6,
-    0,
-    17.5
-   ],
-   "rotation": [
-    0,
-    90,
-    0
-   ],
-   "scale": 1.0,
-   "collision": "box"
-  },
-  {
-   "id": "wall-w3",
-   "mesh": "jungle:wall-b",
-   "position": [
-    -21.3,
-    0,
-    26.0
-   ],
-   "rotation": [
-    0,
-    89,
-    0
-   ],
-   "scale": 1.0,
-   "collision": "box"
-  },
-  {
-   "id": "wall-s0",
-   "mesh": "jungle:wall-low",
-   "position": [
-    13.5,
-    0,
-    31.5
-   ],
-   "scale": 1.0,
-   "collision": "box"
-  },
-  {
-   "id": "wall-s1",
-   "mesh": "jungle:wall-b",
-   "position": [
-    -13.5,
-    0,
-    31.8
-   ],
-   "rotation": [
-    0,
-    2,
-    0
-   ],
-   "scale": 1.0,
-   "collision": "box"
-  },
-  {
-   "id": "rubble-0",
-   "mesh": "jungle:rubble",
-   "position": [
-    21.5,
-    0,
-    11.8
-   ],
-   "rotation": [
-    0,
-    44.57,
-    0
-   ],
-   "scale": 1.1116194823035073
-  },
-  {
-   "id": "rubble-1",
-   "mesh": "jungle:rubble",
-   "position": [
-    -21,
-    0,
-    4.4
-   ],
-   "rotation": [
-    0,
-    225.88,
-    0
-   ],
-   "scale": 1.4738544712285029
-  },
-  {
-   "id": "rubble-2",
-   "mesh": "jungle:rubble",
-   "position": [
-    -21.2,
-    0,
-    13
-   ],
-   "rotation": [
-    0,
-    207.76,
-    0
-   ],
-   "scale": 1.19834023732539
-  },
-  {
-   "id": "rubble-3",
-   "mesh": "jungle:rubble",
-   "position": [
-    20.5,
-    0,
-    20
-   ],
-   "rotation": [
-    0,
-    351.45,
-    0
-   ],
-   "scale": 1.0232913403088781
-  },
-  {
-   "id": "rubble-4",
-   "mesh": "jungle:rubble",
-   "position": [
-    11,
-    0,
-    31
-   ],
-   "rotation": [
-    0,
-    309.05,
-    0
-   ],
-   "scale": 1.144804643165838
-  },
-  {
-   "id": "rubble-5",
-   "mesh": "jungle:rubble",
-   "position": [
-    -10,
-    0,
-    32
-   ],
-   "rotation": [
-    0,
-    51.93,
-    0
-   ],
-   "scale": 1.0588961190391841
-  },
-  {
-   "id": "rubble-s0",
-   "mesh": "jungle:rubble",
-   "position": [
-    -8,
-    0,
-    -3
-   ],
-   "rotation": [
-    0,
-    111.05,
-    0
-   ],
-   "scale": 1.2264505436480126
-  },
-  {
-   "id": "rubble-s1",
-   "mesh": "jungle:rubble",
-   "position": [
-    9.5,
-    0,
-    -2.5
-   ],
-   "rotation": [
-    0,
-    65.06,
-    0
-   ],
-   "scale": 1.1326400654649866
-  },
-  {
-   "id": "rubble-s2",
-   "mesh": "jungle:rubble",
-   "position": [
-    -3.5,
-    0,
-    3
-   ],
-   "rotation": [
-    0,
-    230.01,
-    0
-   ],
-   "scale": 1.0489590170902925
-  },
-  {
-   "id": "rubble-s3",
-   "mesh": "jungle:rubble",
-   "position": [
-    2,
-    0,
-    8
-   ],
-   "rotation": [
-    0,
-    197.19,
-    0
-   ],
-   "scale": 0.9251155899893293
-  },
-  {
-   "id": "block-00",
-   "mesh": "jungle:block",
-   "position": [
-    -16.74,
-    0,
-    3.18
-   ],
-   "rotation": [
-    2.16,
-    153.93,
-    -2.97
-   ],
-   "scale": 1.1220590249292013,
-   "collision": "box"
-  },
-  {
-   "id": "block-01",
-   "mesh": "jungle:block",
-   "position": [
-    -1.78,
-    0,
-    5.99
-   ],
-   "rotation": [
-    3.53,
-    251.64,
-    -4.09
-   ],
-   "scale": 1.1159330406422692,
-   "collision": "box"
-  },
-  {
-   "id": "block-02",
-   "mesh": "jungle:block",
-   "position": [
-    0.96,
-    0,
-    23.25
-   ],
-   "rotation": [
-    2.75,
-    103.66,
-    7.68
-   ],
-   "scale": 0.8649361780402292,
-   "collision": "box"
-  },
-  {
-   "id": "block-03",
-   "mesh": "jungle:block",
-   "position": [
-    -3.11,
-    0,
-    19.71
-   ],
-   "rotation": [
-    -4.18,
-    176.03,
-    -7.37
-   ],
-   "scale": 1.1675187210939173,
-   "collision": "box"
-  },
-  {
-   "id": "block-04",
-   "mesh": "jungle:block",
-   "position": [
-    10.05,
-    0,
-    14.19
-   ],
-   "rotation": [
-    4.51,
-    112.95,
-    3.12
-   ],
-   "scale": 1.1269034324077603,
-   "collision": "box"
-  },
-  {
-   "id": "block-05",
-   "mesh": "jungle:block",
-   "position": [
-    3.04,
-    0,
-    10.69
-   ],
-   "rotation": [
-    4.08,
-    340.09,
-    -0.41
-   ],
-   "scale": 1.1652837130110711,
-   "collision": "box"
-  },
-  {
-   "id": "block-06",
-   "mesh": "jungle:block",
-   "position": [
-    -16.69,
-    0,
-    18.04
-   ],
-   "rotation": [
-    1.77,
-    357.51,
-    5.15
-   ],
-   "scale": 0.9565275426517821,
-   "collision": "box"
-  },
-  {
-   "id": "block-07",
-   "mesh": "jungle:block",
-   "position": [
-    -4.34,
-    0,
-    17.06
-   ],
-   "rotation": [
-    -5.73,
-    166.21,
-    -5.31
-   ],
-   "scale": 0.8644026869649526,
-   "collision": "box"
-  },
-  {
-   "id": "block-08",
-   "mesh": "jungle:block",
-   "position": [
-    -16.76,
-    0,
-    20.05
-   ],
-   "rotation": [
-    -4.45,
-    89.14,
-    -1.74
-   ],
-   "scale": 1.2792820857694647,
-   "collision": "box"
-  },
-  {
-   "id": "block-09",
-   "mesh": "jungle:block",
-   "position": [
-    -15.94,
-    0,
-    10.48
-   ],
-   "rotation": [
-    0.59,
-    318.02,
-    5.11
-   ],
-   "scale": 1.2751914583341835,
-   "collision": "box"
-  },
-  {
-   "id": "block-10",
-   "mesh": "jungle:block",
-   "position": [
-    -8.42,
-    0,
-    9.46
-   ],
-   "rotation": [
-    -1.69,
-    318.31,
-    7.32
-   ],
-   "scale": 0.88300649818511,
-   "collision": "box"
-  },
-  {
-   "id": "block-11",
-   "mesh": "jungle:block",
-   "position": [
-    -12.3,
-    0,
-    3.96
-   ],
-   "rotation": [
-    -3.2,
-    174.59,
-    1.43
-   ],
-   "scale": 0.9445106406141959,
-   "collision": "box"
-  },
-  {
-   "id": "block-12",
-   "mesh": "jungle:block",
-   "position": [
-    -18.84,
-    0,
-    9.57
-   ],
-   "rotation": [
-    -1.57,
-    203.88,
-    7.25
-   ],
-   "scale": 1.179771511424788,
-   "collision": "box"
-  },
-  {
-   "id": "block-13",
-   "mesh": "jungle:block",
-   "position": [
-    0.59,
-    0,
-    15.53
-   ],
-   "rotation": [
-    2.11,
-    19.44,
-    6.39
-   ],
-   "scale": 1.2289832198883401,
-   "collision": "box"
-  },
-  {
-   "id": "block-14",
-   "mesh": "jungle:block",
-   "position": [
-    14.23,
-    0,
-    20.94
-   ],
-   "rotation": [
-    -1.29,
-    143.63,
-    -6.34
-   ],
-   "scale": 1.14885926112714,
-   "collision": "box"
-  },
-  {
-   "id": "block-15",
-   "mesh": "jungle:block",
-   "position": [
-    -16.63,
-    0,
-    -0.98
-   ],
-   "rotation": [
-    -3.49,
-    58.43,
-    -2.56
-   ],
-   "scale": 0.8289165821396469,
-   "collision": "box"
-  },
-  {
-   "id": "block-16",
-   "mesh": "jungle:block",
-   "position": [
-    -18.99,
-    0,
-    1.54
-   ],
-   "rotation": [
-    -4.78,
-    130.9,
-    -7.59
-   ],
-   "scale": 1.280882807555601,
-   "collision": "box"
-  },
-  {
-   "id": "block-17",
-   "mesh": "jungle:block",
-   "position": [
-    4.33,
-    0,
-    1.46
-   ],
-   "rotation": [
-    -2.97,
-    125.06,
-    -2.17
-   ],
-   "scale": 0.8675632269192073,
-   "collision": "box"
-  },
-  {
-   "id": "block-18",
-   "mesh": "jungle:block",
-   "position": [
-    13.26,
-    0,
-    26.79
-   ],
-   "rotation": [
-    -0.41,
-    174.18,
-    -6.63
-   ],
-   "scale": 0.8562031892114927,
-   "collision": "box"
-  },
-  {
-   "id": "block-19",
-   "mesh": "jungle:block",
-   "position": [
-    -5.98,
-    0,
-    4.94
-   ],
-   "rotation": [
-    3.95,
-    58.12,
-    -7.63
-   ],
-   "scale": 1.3230420650810863,
-   "collision": "box"
-  },
-  {
-   "id": "block-20",
-   "mesh": "jungle:block",
-   "position": [
-    1.07,
-    0,
-    26.36
-   ],
-   "rotation": [
-    4.36,
-    250.63,
-    -3.82
-   ],
-   "scale": 1.0016848854686484,
-   "collision": "box"
-  },
-  {
-   "id": "block-21",
-   "mesh": "jungle:block",
-   "position": [
-    -12.65,
-    0,
-    20.16
-   ],
-   "rotation": [
-    0.39,
-    280.46,
-    -2.73
-   ],
-   "scale": 0.9226729202067518,
-   "collision": "box"
-  },
-  {
-   "id": "block-22",
-   "mesh": "jungle:block",
-   "position": [
-    11.84,
-    0,
-    26.55
-   ],
-   "rotation": [
-    4.23,
-    290.19,
-    5.09
-   ],
-   "scale": 1.2069301612066428,
-   "collision": "box"
-  },
-  {
-   "id": "block-23",
-   "mesh": "jungle:block",
-   "position": [
-    -10.38,
-    0,
-    12.53
-   ],
-   "rotation": [
-    -1.73,
-    10.43,
-    -7.55
-   ],
-   "scale": 0.9536801964769664,
-   "collision": "box"
-  },
-  {
-   "id": "block-24",
-   "mesh": "jungle:block",
-   "position": [
-    -9.15,
-    0,
-    17.78
-   ],
-   "rotation": [
-    5.48,
-    161.0,
-    6.99
-   ],
-   "scale": 1.3434209320115733,
-   "collision": "box"
-  },
-  {
-   "id": "block-25",
-   "mesh": "jungle:block",
-   "position": [
-    17.29,
-    0,
-    7.94
-   ],
-   "rotation": [
-    -3.35,
-    81.66,
-    -4.85
-   ],
-   "scale": 0.9124053498019227,
-   "collision": "box"
-  },
-  {
-   "id": "block-26",
-   "mesh": "jungle:block",
-   "position": [
-    4.71,
-    0,
-    24.01
-   ],
-   "rotation": [
-    4.09,
-    172.61,
-    2.45
-   ],
-   "scale": 1.2398040596673132,
-   "collision": "box"
-  },
-  {
-   "id": "block-27",
-   "mesh": "jungle:block",
-   "position": [
-    -15.78,
-    0,
-    16.82
-   ],
-   "rotation": [
-    4.92,
-    281.63,
-    4.0
-   ],
-   "scale": 1.0629180095267001,
-   "collision": "box"
-  },
-  {
-   "id": "block-28",
-   "mesh": "jungle:block",
-   "position": [
-    -12.22,
-    0,
-    20.67
-   ],
-   "rotation": [
-    -2.01,
-    288.3,
-    7.55
-   ],
-   "scale": 1.0177111722881964,
-   "collision": "box"
-  },
-  {
-   "id": "block-29",
-   "mesh": "jungle:block",
-   "position": [
-    -3.75,
-    0,
-    25.4
-   ],
-   "rotation": [
-    2.7,
-    61.2,
-    -5.97
-   ],
-   "scale": 0.8831328852098195,
-   "collision": "box"
-  },
-  {
-   "id": "roots-0",
-   "mesh": "jungle:root-spread",
-   "position": [
-    13.76,
-    0,
-    21.78
-   ],
-   "rotation": [
-    0,
-    52.62,
-    0
-   ],
-   "scale": 1.2132552392626936
-  },
-  {
-   "id": "roots-1",
-   "mesh": "jungle:root-spread",
-   "position": [
-    16.33,
-    0,
-    17.75
-   ],
-   "rotation": [
-    0,
-    126.15,
-    0
-   ],
-   "scale": 1.0743300219933896
-  },
-  {
-   "id": "roots-2",
-   "mesh": "jungle:root-spread",
-   "position": [
-    -12.55,
-    0,
-    0.38
-   ],
-   "rotation": [
-    0,
-    349.52,
-    0
-   ],
-   "scale": 1.1248373348369154
-  },
-  {
-   "id": "roots-3",
-   "mesh": "jungle:root-spread",
-   "position": [
-    0.9,
-    0,
-    25.21
-   ],
-   "rotation": [
-    0,
-    156.17,
-    0
-   ],
-   "scale": 1.2358714639947022
-  },
-  {
-   "id": "roots-4",
-   "mesh": "jungle:root-spread",
-   "position": [
-    11.09,
-    0,
-    5.7
-   ],
-   "rotation": [
-    0,
-    90.66,
-    0
-   ],
-   "scale": 0.9464833263351096
-  },
-  {
-   "id": "roots-5",
-   "mesh": "jungle:root-spread",
-   "position": [
-    -8.82,
-    0,
-    15.83
-   ],
-   "rotation": [
-    0,
-    93.37,
-    0
-   ],
-   "scale": 1.0095062763772717
-  },
-  {
-   "id": "roots-6",
-   "mesh": "jungle:root-spread",
-   "position": [
-    -12.54,
-    0,
-    24.57
-   ],
-   "rotation": [
-    0,
-    127.36,
-    0
-   ],
-   "scale": 1.0290804932358668
-  },
-  {
-   "id": "roots-7",
-   "mesh": "jungle:root-spread",
-   "position": [
-    2.83,
-    0,
-    24.42
-   ],
-   "rotation": [
-    0,
-    151.43,
-    0
-   ],
-   "scale": 1.2588605421713321
-  },
-  {
-   "id": "roots-8",
-   "mesh": "jungle:root-spread",
-   "position": [
-    0.06,
-    0,
-    14.36
-   ],
-   "rotation": [
-    0,
-    188.46,
-    0
-   ],
-   "scale": 0.8093524339527101
-  },
-  {
-   "id": "roots-9",
-   "mesh": "jungle:root-spread",
-   "position": [
-    -2.04,
-    0,
-    4.94
-   ],
-   "rotation": [
-    0,
-    1.42,
-    0
-   ],
-   "scale": 1.199585225246111
-  },
-  {
-   "id": "roots-stair-0",
-   "mesh": "jungle:root-spread",
-   "position": [
-    -9,
-    0,
-    -5.5
-   ],
-   "rotation": [
-    0,
-    62.04,
-    0
-   ],
-   "scale": 1.0893971729847824
-  },
-  {
-   "id": "roots-stair-1",
-   "mesh": "jungle:root-spread",
-   "position": [
-    9.5,
-    0,
-    -5.5
-   ],
-   "rotation": [
-    0,
-    261.07,
-    0
-   ],
-   "scale": 1.1225902499608853
-  },
-  {
-   "id": "roots-stair-2",
-   "mesh": "jungle:root-spread",
-   "position": [
-    -4,
-    0,
-    -6.5
-   ],
-   "rotation": [
-    0,
-    117.35,
-    0
-   ],
-   "scale": 1.1073394850812148
-  },
-  {
-   "id": "roots-stair-3",
-   "mesh": "jungle:root-spread",
-   "position": [
-    3.6,
-    0,
-    -6.8
-   ],
-   "rotation": [
-    0,
-    199.96,
-    0
-   ],
-   "scale": 1.2137089901461904
-  },
-  {
-   "id": "terrace-shrub-0",
-   "mesh": "jungle:fern-big",
-   "position": [
-    -13,
-    2.4,
-    -20
-   ],
-   "rotation": [
-    0,
-    201.71,
-    0
-   ],
-   "scale": 1.4848875336839424
-  },
-  {
-   "id": "terrace-shrub-1",
-   "mesh": "jungle:shrub",
-   "position": [
-    13,
-    2.4,
-    -22
-   ],
-   "rotation": [
-    0,
-    99.69,
-    0
-   ],
-   "scale": 1.598795456834472
-  },
-  {
-   "id": "terrace-shrub-2",
-   "mesh": "jungle:shrub",
-   "position": [
-    -14,
-    2.4,
-    -9
-   ],
-   "rotation": [
-    0,
-    182.78,
-    0
-   ],
-   "scale": 2.0178088790043907
-  },
-  {
-   "id": "terrace-shrub-3",
-   "mesh": "jungle:fern-big",
-   "position": [
-    14,
-    2.4,
-    -8
-   ],
-   "rotation": [
-    0,
-    273.6,
-    0
-   ],
-   "scale": 1.8493835093251811
-  },
-  {
-   "id": "terrace-shrub-4",
-   "mesh": "jungle:shrub",
-   "position": [
-    -10.5,
-    4.8,
-    -22
-   ],
-   "rotation": [
-    0,
-    159.57,
-    0
-   ],
-   "scale": 2.1299904290638496
-  },
-  {
-   "id": "terrace-shrub-5",
-   "mesh": "jungle:shrub",
-   "position": [
-    10.5,
-    4.8,
-    -20
-   ],
-   "rotation": [
-    0,
-    182.0,
-    0
-   ],
-   "scale": 1.8900223074755684
-  },
-  {
-   "id": "terrace-shrub-6",
-   "mesh": "jungle:fern-big",
-   "position": [
-    -9,
-    4.8,
-    -11
-   ],
-   "rotation": [
-    0,
-    249.38,
-    0
-   ],
-   "scale": 1.8097291779482556
-  },
-  {
-   "id": "terrace-shrub-7",
-   "mesh": "jungle:shrub",
-   "position": [
-    8.8,
-    4.8,
-    -11.5
-   ],
-   "rotation": [
-    0,
-    191.98,
-    0
-   ],
-   "scale": 1.7618766338119278
-  },
-  {
-   "id": "terrace-shrub-8",
-   "mesh": "jungle:shrub",
-   "position": [
-    -7.5,
-    7.2,
-    -16
-   ],
-   "rotation": [
-    0,
-    338.94,
-    0
-   ],
-   "scale": 1.7824290544256678
-  },
-  {
-   "id": "terrace-shrub-9",
-   "mesh": "jungle:fern-big",
-   "position": [
-    7.5,
-    7.2,
-    -15
-   ],
-   "rotation": [
-    0,
-    315.55,
-    0
-   ],
-   "scale": 1.9593743057442288
-  },
-  {
-   "id": "terrace-shrub-10",
-   "mesh": "jungle:shrub",
-   "position": [
-    -7,
-    7.2,
-    -25
-   ],
-   "rotation": [
-    0,
-    93.45,
-    0
-   ],
-   "scale": 2.153744470642861
-  },
-  {
-   "id": "terrace-shrub-11",
-   "mesh": "jungle:shrub",
-   "position": [
-    7.2,
-    7.2,
-    -26
-   ],
-   "rotation": [
-    0,
-    339.58,
-    0
-   ],
-   "scale": 1.847611045198172
-  },
-  {
-   "id": "roof-shrub-0",
-   "mesh": "jungle:shrub",
-   "position": [
-    -4,
-    15.5,
-    -26
-   ],
-   "rotation": [
-    0,
-    49.37,
-    0
-   ],
-   "scale": 2.4719998267145646
-  },
-  {
-   "id": "roof-shrub-1",
-   "mesh": "jungle:shrub",
-   "position": [
-    1.5,
-    14.5,
-    -23
-   ],
-   "rotation": [
-    0,
-    159.16,
-    0
-   ],
-   "scale": 1.8972975635073446
-  },
-  {
-   "id": "roof-shrub-2",
-   "mesh": "jungle:shrub",
-   "position": [
-    3.5,
-    15.5,
-    -29
-   ],
-   "rotation": [
-    0,
-    86.63,
-    0
-   ],
-   "scale": 1.8580368797251907
-  },
-  {
-   "id": "roof-sapling-0",
-   "mesh": "jungle:sapling",
-   "position": [
-    3.0,
-    14.6,
-    -28
-   ],
-   "rotation": [
-    0,
-    26.32,
-    0
-   ],
-   "scale": 1.3
-  },
-  {
-   "id": "roof-sapling-1",
-   "mesh": "jungle:sapling",
-   "position": [
-    -5.0,
-    14.5,
-    -24
-   ],
-   "rotation": [
-    0,
-    241.01,
-    0
-   ],
-   "scale": 1.0
-  },
-  {
-   "id": "terrace-sapling",
-   "mesh": "jungle:sapling",
-   "position": [
-    -11,
-    4.8,
-    -26
-   ],
-   "rotation": [
-    0,
-    282.22,
-    0
-   ],
-   "scale": 1.1
-  },
-  {
-   "id": "terrace-palm",
-   "mesh": "jungle:palm",
-   "position": [
-    10.5,
-    4.8,
-    -27
-   ],
-   "rotation": [
-    0,
-    322.93,
-    0
-   ],
-   "scale": 0.9
-  },
-  {
-   "id": "hero-giant-0",
-   "mesh": "jungle:giant-tree",
-   "position": [
-    -24,
-    0,
-    -4
-   ],
-   "rotation": [
-    0,
-    55.6,
-    0
-   ],
-   "scale": 1.0932239765576393,
-   "collision": "none"
-  },
-  {
-   "id": "hero-giant-0-trunk",
-   "mesh": "jungle:collider",
-   "position": [
-    -24,
-    0,
-    -4
-   ],
-   "scale": [
-    2.3,
-    4,
-    2.3
-   ],
-   "collision": "cylinder"
-  },
-  {
-   "id": "hero-giant-1",
-   "mesh": "jungle:giant-tree",
-   "position": [
-    27,
-    0,
-    -10
-   ],
-   "rotation": [
-    0,
-    237.69,
-    0
-   ],
-   "scale": 0.9785957995848474,
-   "collision": "none"
-  },
-  {
-   "id": "hero-giant-1-trunk",
-   "mesh": "jungle:collider",
-   "position": [
-    27,
-    0,
-    -10
-   ],
-   "scale": [
-    2.3,
-    4,
-    2.3
-   ],
-   "collision": "cylinder"
-  },
-  {
-   "id": "hero-giant-2",
-   "mesh": "jungle:giant-tree",
-   "position": [
-    -27,
-    0,
-    40
-   ],
-   "rotation": [
-    0,
-    317.82,
-    0
-   ],
-   "scale": 1.1435089565332768,
-   "collision": "none"
-  },
-  {
-   "id": "hero-giant-2-trunk",
-   "mesh": "jungle:collider",
-   "position": [
-    -27,
-    0,
-    40
-   ],
-   "scale": [
-    2.3,
-    4,
-    2.3
-   ],
-   "collision": "cylinder"
-  },
-  {
-   "id": "hero-giant-3",
-   "mesh": "jungle:giant-tree",
-   "position": [
-    28,
-    0,
-    30
-   ],
-   "rotation": [
-    0,
-    79.05,
-    0
-   ],
-   "scale": 1.1405008257837972,
-   "collision": "none"
-  },
-  {
-   "id": "hero-giant-3-trunk",
-   "mesh": "jungle:collider",
-   "position": [
-    28,
-    0,
-    30
-   ],
-   "scale": [
-    2.3,
-    4,
-    2.3
-   ],
-   "collision": "cylinder"
-  },
-  {
-   "id": "hero-giant-4",
-   "mesh": "jungle:giant-tree",
-   "position": [
-    -12,
-    0,
-    -42
-   ],
-   "rotation": [
-    0,
-    143.37,
-    0
-   ],
-   "scale": 1.047452154998176,
-   "collision": "none"
-  },
-  {
-   "id": "hero-giant-4-trunk",
-   "mesh": "jungle:collider",
-   "position": [
-    -12,
-    0,
-    -42
-   ],
-   "scale": [
-    2.3,
-    4,
-    2.3
-   ],
-   "collision": "cylinder"
-  },
-  {
-   "id": "hero-giant-5",
-   "mesh": "jungle:giant-tree",
-   "position": [
-    14,
-    0,
-    -44
-   ],
-   "rotation": [
-    0,
-    356.35,
-    0
-   ],
-   "scale": 1.1164889338965893,
-   "collision": "none"
-  },
-  {
-   "id": "hero-giant-5-trunk",
-   "mesh": "jungle:collider",
-   "position": [
-    14,
-    0,
-    -44
-   ],
-   "scale": [
-    2.3,
-    4,
-    2.3
-   ],
-   "collision": "cylinder"
-  },
-  {
-   "id": "hero-giant-6",
-   "mesh": "jungle:giant-tree",
-   "position": [
-    -38,
-    0,
-    -22
-   ],
-   "rotation": [
-    0,
-    58.13,
-    0
-   ],
-   "scale": 1.0363043635995277,
-   "collision": "none"
-  },
-  {
-   "id": "hero-giant-6-trunk",
-   "mesh": "jungle:collider",
-   "position": [
-    -38,
-    0,
-    -22
-   ],
-   "scale": [
-    2.3,
-    4,
-    2.3
-   ],
-   "collision": "cylinder"
-  },
-  {
-   "id": "hero-giant-7",
-   "mesh": "jungle:giant-tree",
-   "position": [
-    37,
-    0,
-    -28
-   ],
-   "rotation": [
-    0,
-    185.62,
-    0
-   ],
-   "scale": 1.017823228867764,
-   "collision": "none"
-  },
-  {
-   "id": "hero-giant-7-trunk",
-   "mesh": "jungle:collider",
-   "position": [
-    37,
-    0,
-    -28
-   ],
-   "scale": [
-    2.3,
-    4,
-    2.3
-   ],
-   "collision": "cylinder"
-  }
- ],
- "spawn": {
-  "position": [
-   2.6,
-   0,
-   56
-  ],
-  "yaw": 0.04
- },
- "bounds": {
-  "walkRadius": 94,
-  "photoHalfExtent": 108,
-  "photoMaxHeight": 60
- },
- "defaultMood": "midday",
- "moods": [
-  {
-   "id": "midday",
-   "name": "Midday shafts",
-   "audio": "jungle-midday",
-   "sky": {
-    "zenith": "#5a96cc",
-    "horizon": "#cfe4d2",
-    "ground": "#3c4a2c"
-   },
-   "sun": {
-    "azimuth": 25,
-    "elevation": 68,
-    "color": "#fff1d2",
-    "intensity": 3.4,
-    "discSize": 0.6
-   },
-   "ambient": {
-    "sky": "#a3cc98",
-    "ground": "#40502a",
-    "intensity": 0.55,
-    "ibl": 0.3
-   },
-   "fog": {
-    "color": "#a9c8a2",
-    "density": 0.0036,
-    "heightFalloff": 0.03,
-    "baseHeight": 0,
-    "sunScatter": 0.5
-   },
-   "post": {
-    "exposure": 0.38,
-    "contrast": 0.22,
-    "saturation": 0.3,
-    "temperature": 0.08,
-    "tint": -0.04,
-    "bloom": 0.6,
-    "vignette": 0.32,
-    "shafts": 1.5
-   },
-   "particles": [
-    "pollen",
-    "dust"
-   ]
-  },
-  {
-   "id": "storm",
-   "name": "Storm",
-   "audio": "jungle-storm",
-   "sky": {
-    "zenith": "#4b5a62",
-    "horizon": "#8a9a9a",
-    "ground": "#2b3329"
-   },
-   "sun": {
-    "azimuth": 40,
-    "elevation": 35,
-    "color": "#a9bdc2",
-    "intensity": 0.5,
-    "discSize": 1.2
-   },
-   "ambient": {
-    "sky": "#7f9a98",
-    "ground": "#1f2a20",
-    "intensity": 0.9,
-    "ibl": 0.3
-   },
-   "fog": {
-    "color": "#70827f",
-    "density": 0.015,
-    "heightFalloff": 0.03,
-    "baseHeight": 0,
-    "sunScatter": 0.05
-   },
-   "post": {
-    "exposure": 0.3,
-    "contrast": 0.14,
-    "saturation": -0.2,
-    "temperature": -0.12,
-    "tint": -0.04,
-    "bloom": 0.35,
-    "vignette": 0.5,
-    "shafts": 0
-   },
-   "particles": [
-    "rain",
-    "mist"
-   ]
-  },
-  {
-   "id": "golden-hour",
-   "name": "Golden hour",
-   "audio": "jungle-golden-hour",
-   "sky": {
-    "zenith": "#7a8fb0",
-    "horizon": "#f2b878",
-    "ground": "#4a3a28"
-   },
-   "sun": {
-    "azimuth": 60,
-    "elevation": 9,
-    "color": "#ffb35c",
-    "intensity": 2.8,
-    "discSize": 0.8
-   },
-   "ambient": {
-    "sky": "#e0b890",
-    "ground": "#4a3a22",
-    "intensity": 0.7,
-    "ibl": 0.35
-   },
-   "fog": {
-    "color": "#e0a468",
-    "density": 0.009,
-    "heightFalloff": 0.02,
-    "baseHeight": 0,
-    "sunScatter": 0.9
-   },
-   "post": {
-    "exposure": 0.38,
-    "contrast": 0.2,
-    "saturation": 0.25,
-    "temperature": 0.3,
-    "tint": 0.05,
-    "bloom": 0.9,
-    "vignette": 0.35,
-    "shafts": 1.7
-   },
-   "particles": [
-    "pollen",
-    "mist",
-    "dust"
-   ]
-  }
- ],
- "cameras": [
-  {
-   "id": "spawn",
-   "position": [
-    2.6,
-    1.65,
-    56
-   ],
-   "target": [
-    0,
-    6.5,
-    0
-   ],
-   "fov": 60
-  },
-  {
-   "id": "stairs",
-   "position": [
-    0.5,
-    1.65,
-    8
-   ],
-   "target": [
-    0,
-    8.6,
-    -21
-   ],
-   "fov": 58
-  },
-  {
-   "id": "courtyard",
-   "position": [
-    15,
-    1.65,
-    27
-   ],
-   "target": [
-    -5,
-    2.6,
-    4
-   ],
-   "fov": 64
-  },
-  {
-   "id": "canopy-up",
-   "position": [
-    -18,
-    1.3,
-    3
-   ],
-   "target": [
-    -26,
-    30,
-    -6
-   ],
-   "fov": 70
-  },
-  {
-   "id": "creek",
-   "position": [
-    -32,
-    1.65,
-    26
-   ],
-   "target": [
-    -41,
-    -0.6,
-    6
-   ],
-   "fov": 62
-  },
-  {
-   "id": "doorway",
-   "position": [
-    0,
-    8.85,
-    -21.2
-   ],
-   "target": [
-    0,
-    1.0,
-    -4
-   ],
-   "fov": 66
-  }
- ]
 }

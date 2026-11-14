@@ -20,6 +20,8 @@ export const sharedUniforms = {
   uMotion: { value: 1 }, // 0 = frozen (photo mode pause / reduce motion)
   /** 0..1 — scales emissive 'night light' materials (lanterns, lit windows) by mood. */
   uNightLights: { value: 0 },
+  /** 0..1 — snow accumulation on up-facing surfaces of materials patched with `snow: true`. */
+  uSnowCover: { value: 0 },
 };
 
 export const FOG_GLSL = /* glsl */ `
@@ -105,6 +107,8 @@ export interface PatchOptions {
   key?: string;
   /** Emissive output is scaled by the mood's night-light level (lanterns glow at dusk only). */
   nightLight?: boolean;
+  /** Blend snow onto up-facing surfaces by sharedUniforms.uSnowCover (snowy scenes). */
+  snow?: boolean;
 }
 
 const patched = new WeakSet<THREE.Material>();
@@ -123,11 +127,28 @@ export function patchMaterial<T extends THREE.Material>(mat: T, opts: PatchOptio
     shader.uniforms.uFogSunDir = sharedUniforms.uFogSunDir;
     shader.uniforms.uFogSunColor = sharedUniforms.uFogSunColor;
     shader.uniforms.uFogSunScatter = sharedUniforms.uFogSunScatter;
+    if (opts.snow) {
+      shader.uniforms.uSnowCover = sharedUniforms.uSnowCover;
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nuniform float uSnowCover;')
+        .replace(
+          '#include <normal_fragment_maps>',
+          `#include <normal_fragment_maps>
+          {
+            vec3 snowN = inverseTransformDirection(normal, viewMatrix);
+            float snowK = smoothstep(0.25, 0.75, snowN.y) * uSnowCover;
+            diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.86, 0.9, 0.96), snowK);
+          }`,
+        );
+    }
     if (opts.nightLight) {
       shader.uniforms.uNightLights = sharedUniforms.uNightLights;
       shader.fragmentShader = shader.fragmentShader
         .replace('#include <common>', '#include <common>\nuniform float uNightLights;')
-        .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\ntotalEmissiveRadiance *= uNightLights;');
+        .replace(
+          '#include <emissivemap_fragment>',
+          '#include <emissivemap_fragment>\ntotalEmissiveRadiance *= uNightLights;',
+        );
     }
     if (wind > 0) {
       shader.uniforms.uTime = sharedUniforms.uTime;

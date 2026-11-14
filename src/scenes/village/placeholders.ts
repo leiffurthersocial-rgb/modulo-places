@@ -117,7 +117,9 @@ class MB {
     if (l < 1e-12) return;
     n = mul(n, 1 / l);
     let q: [V3, V3, V3, V3] = [a, b, c, d];
-    let cols: RGB[] = Array.isArray(col[0]) ? (col as RGB[]) : [col as RGB, col as RGB, col as RGB, col as RGB];
+    let cols: RGB[] = Array.isArray(col[0])
+      ? (col as RGB[])
+      : [col as RGB, col as RGB, col as RGB, col as RGB];
     if (hint && dot(n, hint) < 0) {
       n = mul(n, -1);
       q = [a, d, c, b];
@@ -174,8 +176,10 @@ class MB {
     if (!(skip & 2)) this.quad([x0, y0, z0], [x0, y0, z1], [x0, y1, z1], [x0, y1, z0], side);
     if (!(skip & 4)) this.quad([x0, y1, z1], [x1, y1, z1], [x1, y1, z0], [x0, y1, z0], c);
     if (!(skip & 8)) this.quad([x0, y0, z0], [x1, y0, z0], [x1, y0, z1], [x0, y0, z1], bot);
-    if (!(skip & 16)) this.quad([x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1], shade(c, 0.97));
-    if (!(skip & 32)) this.quad([x1, y0, z0], [x0, y0, z0], [x0, y1, z0], [x1, y1, z0], shade(c, 0.97));
+    if (!(skip & 16))
+      this.quad([x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1], shade(c, 0.97));
+    if (!(skip & 32))
+      this.quad([x1, y0, z0], [x0, y0, z0], [x0, y1, z0], [x1, y1, z0], shade(c, 0.97));
   }
   /** Tapered tube between two points (smooth normals). */
   tube(
@@ -209,27 +213,45 @@ class MB {
       const n0 = norm(add(d0, mul(ax, slope)));
       const n1 = norm(add(d1, mul(ax, slope)));
       this.sq(
-        [
-          add(p0, mul(d0, r0)),
-          add(p0, mul(d1, r0)),
-          add(p1, mul(d1, r1)),
-          add(p1, mul(d0, r1)),
-        ],
+        [add(p0, mul(d0, r0)), add(p0, mul(d1, r0)), add(p1, mul(d1, r1)), add(p1, mul(d0, r1))],
         [n0, n1, n1, n0],
         [c0, c0, c1, c1],
       );
       if (o.caps) {
         if (r1 > 0) this.tri(p1, add(p1, mul(d0, r1)), add(p1, mul(d1, r1)), shade(c1, 1.05), ax);
-        if (r0 > 0) this.tri(p0, add(p0, mul(d0, r0)), add(p0, mul(d1, r0)), shade(c0, 0.8), mul(ax, -1));
+        if (r0 > 0)
+          this.tri(p0, add(p0, mul(d0, r0)), add(p0, mul(d1, r0)), shade(c0, 0.8), mul(ax, -1));
       }
     }
   }
   /** Upright cylinder helper. */
-  cyl(cx: number, y0: number, cz: number, r0: number, r1: number, h: number, seg: number, col: RGB, caps = true, top?: RGB): void {
+  cyl(
+    cx: number,
+    y0: number,
+    cz: number,
+    r0: number,
+    r1: number,
+    h: number,
+    seg: number,
+    col: RGB,
+    caps = true,
+    top?: RGB,
+  ): void {
     this.tube([cx, y0, cz], [cx, y0 + h, cz], r0, r1, seg, col, { caps, top });
   }
   /** Ellipsoid (smooth). */
-  ell(cx: number, cy: number, cz: number, rx: number, ry: number, rz: number, ws: number, hs: number, col: RGB, colTop?: RGB): void {
+  ell(
+    cx: number,
+    cy: number,
+    cz: number,
+    rx: number,
+    ry: number,
+    rz: number,
+    ws: number,
+    hs: number,
+    col: RGB,
+    colTop?: RGB,
+  ): void {
     const pt = (i: number, j: number): { p: V3; n: V3; c: RGB } => {
       const th = (j / hs) * Math.PI;
       const ph = (i / ws) * Math.PI * 2;
@@ -291,7 +313,11 @@ class MB {
       const y = pos.getY(i);
       const z = pos.getZ(i);
       const c = colFn(y * 0.5 + 0.5, nvals[i]!, x, z);
-      this.v([cx + x * rx, cy + y * ry, cz + z * rz], norm([nor.getX(i) / rx, nor.getY(i) / ry, nor.getZ(i) / rz]), c);
+      this.v(
+        [cx + x * rx, cy + y * ry, cz + z * rz],
+        norm([nor.getX(i) / rx, nor.getY(i) / ry, nor.getZ(i) / rz]),
+        c,
+      );
     }
     for (let i = 0; i < idx.count; i++) this.i.push(base + idx.getX(i));
     g.dispose();
@@ -371,7 +397,11 @@ function finish(key: string, cfg: Cfg, variants: Built[][][]): Species {
       );
     } else {
       mat = patchMaterial(
-        new THREE.MeshStandardMaterial({ vertexColors: true, roughness: cfg.rough ?? 0.88, metalness: 0 }),
+        new THREE.MeshStandardMaterial({
+          vertexColors: true,
+          roughness: cfg.rough ?? 0.88,
+          metalness: 0,
+        }),
         { key: `village-${key}`, ...wind },
       );
     }
@@ -386,7 +416,11 @@ function finish(key: string, cfg: Cfg, variants: Built[][][]): Species {
         .map((b) => {
           const geometry = b.mb.geo();
           owned.push(geometry);
-          return { geometry, material: matFor(b.mat), castShadow: b.shadow ?? (b.mat !== 'glow' && b.mat !== 'water') };
+          return {
+            geometry,
+            material: matFor(b.mat),
+            castShadow: b.shadow ?? (b.mat !== 'glow' && b.mat !== 'water'),
+          };
         }),
     ),
   );
@@ -527,7 +561,16 @@ function addRoof(mb: MB, r: RoofP, detail: number): void {
       }
     }
     if (detail > 0 && !r.thatch) {
-      for (const sx of [-1, 1]) mb.box(sx * r.rh - 0.18, roofY(r, sx * r.rh, 0) + 0.05, -0.2, sx * r.rh + 0.18, roofY(r, sx * r.rh, 0) + 0.5, 0.2, P.tile);
+      for (const sx of [-1, 1])
+        mb.box(
+          sx * r.rh - 0.18,
+          roofY(r, sx * r.rh, 0) + 0.05,
+          -0.2,
+          sx * r.rh + 0.18,
+          roofY(r, sx * r.rh, 0) + 0.5,
+          0.2,
+          P.tile,
+        );
     }
   } else {
     const xA = r.Lh - 0.05;
@@ -535,7 +578,8 @@ function addRoof(mb: MB, r: RoofP, detail: number): void {
     const b: V3 = [xA, roofY(r, xA, 0) + 0.05, 0];
     mb.tube(a, b, capR, capR, seg, capCol, { caps: true });
     if (detail > 0 && !r.thatch) {
-      for (const sx of [-1, 1]) mb.box(sx * xA - 0.17, a[1], -0.17, sx * xA + 0.17, a[1] + 0.42, 0.17, P.tile);
+      for (const sx of [-1, 1])
+        mb.box(sx * xA - 0.17, a[1], -0.17, sx * xA + 0.17, a[1] + 0.42, 0.17, P.tile);
     }
   }
   if (r.thatch && detail > 0) {
@@ -589,18 +633,63 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
 
   // Foundation.
   if (p.platform) {
-    mb.box(-L / 2 - 0.5, -0.9, -D / 2 - 0.5, L / 2 + 0.5, fy - 0.12, D / 2 + 0.5 + deckD, P.stone, 0.06);
-    mb.box(-L / 2 - 0.55, fy - 0.2, -D / 2 - 0.55, L / 2 + 0.55, fy - 0.08, D / 2 + 0.55 + deckD, P.stoneLight, 0.04);
+    mb.box(
+      -L / 2 - 0.5,
+      -0.9,
+      -D / 2 - 0.5,
+      L / 2 + 0.5,
+      fy - 0.12,
+      D / 2 + 0.5 + deckD,
+      P.stone,
+      0.06,
+    );
+    mb.box(
+      -L / 2 - 0.55,
+      fy - 0.2,
+      -D / 2 - 0.55,
+      L / 2 + 0.55,
+      fy - 0.08,
+      D / 2 + 0.55 + deckD,
+      P.stoneLight,
+      0.04,
+    );
   } else if (lod === 0) {
-    const blocks = (x0: number, z0: number, x1: number, z1: number, step: number, alongX: boolean): void => {
+    const blocks = (
+      x0: number,
+      z0: number,
+      x1: number,
+      z1: number,
+      step: number,
+      alongX: boolean,
+    ): void => {
       const n = Math.max(1, Math.round((alongX ? x1 - x0 : z1 - z0) / step));
       for (let i = 0; i < n; i++) {
         const t0 = i / n;
         const t1 = (i + 1) / n;
         const c = mixc(P.stone, P.stoneDark, mb.rnd() * 0.8);
         const hgt = fy - 0.04 - mb.rnd() * 0.05;
-        if (alongX) mb.box(x0 + (x1 - x0) * t0, -0.9, z0, x0 + (x1 - x0) * t1 - 0.03, hgt, z1, mixc(c, P.moss, 0.12), 0.08);
-        else mb.box(x0, -0.9, z0 + (z1 - z0) * t0, x1, hgt, z0 + (z1 - z0) * t1 - 0.03, mixc(c, P.moss, 0.12), 0.08);
+        if (alongX)
+          mb.box(
+            x0 + (x1 - x0) * t0,
+            -0.9,
+            z0,
+            x0 + (x1 - x0) * t1 - 0.03,
+            hgt,
+            z1,
+            mixc(c, P.moss, 0.12),
+            0.08,
+          );
+        else
+          mb.box(
+            x0,
+            -0.9,
+            z0 + (z1 - z0) * t0,
+            x1,
+            hgt,
+            z0 + (z1 - z0) * t1 - 0.03,
+            mixc(c, P.moss, 0.12),
+            0.08,
+          );
       }
     };
     blocks(-L / 2 - 0.12, -D / 2 - 0.12, L / 2 + 0.12, -D / 2 + 0.2, 0.8, true);
@@ -608,18 +697,57 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
     blocks(-L / 2 - 0.12, -D / 2 + 0.2, -L / 2 + 0.2, D / 2 - 0.2, 0.8, false);
     blocks(L / 2 - 0.2, -D / 2 + 0.2, L / 2 + 0.12, D / 2 - 0.2, 0.8, false);
   } else {
-    mb.box(-L / 2 - 0.12, -0.9, -D / 2 - 0.12, L / 2 + 0.12, fy - 0.04, D / 2 + 0.12, P.stone, 0.05);
+    mb.box(
+      -L / 2 - 0.12,
+      -0.9,
+      -D / 2 - 0.12,
+      L / 2 + 0.12,
+      fy - 0.04,
+      D / 2 + 0.12,
+      P.stone,
+      0.05,
+    );
   }
 
   // Core volume (plaster) with charred dado and timber frame.
   mb.box(-L / 2, fy - 0.05, -D / 2, L / 2, wt, D / 2, p.wall, 0.03, 8);
   if (lod < 2) {
     const dh = fy + 0.95;
-    mb.box(-L / 2 - 0.03, fy - 0.05, -D / 2 - 0.03, L / 2 + 0.03, dh, -D / 2 + 0.0, p.dado, 0.1, 8 | 4 | 16);
-    mb.box(-L / 2 - 0.03, fy - 0.05, -D / 2 - 0.03, -L / 2, dh, D / 2 + 0.03, p.dado, 0.1, 8 | 4 | 1);
+    mb.box(
+      -L / 2 - 0.03,
+      fy - 0.05,
+      -D / 2 - 0.03,
+      L / 2 + 0.03,
+      dh,
+      -D / 2 + 0.0,
+      p.dado,
+      0.1,
+      8 | 4 | 16,
+    );
+    mb.box(
+      -L / 2 - 0.03,
+      fy - 0.05,
+      -D / 2 - 0.03,
+      -L / 2,
+      dh,
+      D / 2 + 0.03,
+      p.dado,
+      0.1,
+      8 | 4 | 1,
+    );
     mb.box(L / 2, fy - 0.05, -D / 2 - 0.03, L / 2 + 0.03, dh, D / 2 + 0.03, p.dado, 0.1, 8 | 4 | 2);
     // Top plate (nuki) all round.
-    mb.box(-L / 2 - 0.06, wt - 0.34, -D / 2 - 0.06, L / 2 + 0.06, wt - 0.12, D / 2 + 0.06, p.post, 0.06, 8);
+    mb.box(
+      -L / 2 - 0.06,
+      wt - 0.34,
+      -D / 2 - 0.06,
+      L / 2 + 0.06,
+      wt - 0.12,
+      D / 2 + 0.06,
+      p.post,
+      0.06,
+      8,
+    );
     // Posts on the back and sides.
     const post = (x: number, z: number, sx: number, sz: number): void => {
       mb.box(x - sx, fy - 0.05, z - sz, x + sx, wt - 0.12, z + sz, p.post, 0.08, 8);
@@ -631,16 +759,47 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
       post(L / 2 + 0.035, -D / 2 + (k * D) / nd, 0.05, 0.07);
     }
     // Mid rail on plaster walls.
-    mb.box(-L / 2 - 0.04, fy + 1.55, -D / 2 - 0.04, L / 2 + 0.04, fy + 1.65, -D / 2 + 0.0, p.post, 0.06, 8 | 16 | 4);
+    mb.box(
+      -L / 2 - 0.04,
+      fy + 1.55,
+      -D / 2 - 0.04,
+      L / 2 + 0.04,
+      fy + 1.65,
+      -D / 2 + 0.0,
+      p.post,
+      0.06,
+      8 | 16 | 4,
+    );
   }
 
   // Front facade.
   const zf = D / 2;
   const bayX = (k: number): number => -L / 2 + (k + 0.5) * bw;
   for (let k = 0; k <= nb && lod < 2; k++) {
-    mb.box(-L / 2 + k * bw - 0.07, fy - 0.05, zf - 0.02, -L / 2 + k * bw + 0.07, wt - 0.12, zf + 0.07, p.post, 0.08, 8);
+    mb.box(
+      -L / 2 + k * bw - 0.07,
+      fy - 0.05,
+      zf - 0.02,
+      -L / 2 + k * bw + 0.07,
+      wt - 0.12,
+      zf + 0.07,
+      p.post,
+      0.08,
+      8,
+    );
   }
-  if (lod < 2) mb.box(-L / 2 - 0.06, wt - 0.34, zf - 0.02, L / 2 + 0.06, wt - 0.12, zf + 0.09, p.post, 0.06, 8);
+  if (lod < 2)
+    mb.box(
+      -L / 2 - 0.06,
+      wt - 0.34,
+      zf - 0.02,
+      L / 2 + 0.06,
+      wt - 0.12,
+      zf + 0.09,
+      p.post,
+      0.06,
+      8,
+    );
   for (let k = 0; k < nb; k++) {
     const cx = bayX(k);
     const x0 = cx - bw / 2 + 0.07;
@@ -650,16 +809,43 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
     if (!p.shoji && !isDoor) continue;
     if (isDoor) {
       const dw = Math.min(bw - 0.3, 1.15);
-      mb.box(cx - dw / 2, fy, zf + 0.0, cx + dw / 2, fy + 1.9, zf + 0.06, mixc(P.timberDark, P.timber, 0.35), 0.08, 8);
+      mb.box(
+        cx - dw / 2,
+        fy,
+        zf + 0.0,
+        cx + dw / 2,
+        fy + 1.9,
+        zf + 0.06,
+        mixc(P.timberDark, P.timber, 0.35),
+        0.08,
+        8,
+      );
       if (lod === 0) {
         for (let s = 0; s < 5; s++) {
           const xa = cx - dw / 2 + (dw * s) / 5;
-          mb.quad([xa, fy + 0.02, zf + 0.062], [xa + 0.012, fy + 0.02, zf + 0.062], [xa + 0.012, fy + 1.88, zf + 0.062], [xa, fy + 1.88, zf + 0.062], P.charred, [0, 0, 1]);
+          mb.quad(
+            [xa, fy + 0.02, zf + 0.062],
+            [xa + 0.012, fy + 0.02, zf + 0.062],
+            [xa + 0.012, fy + 1.88, zf + 0.062],
+            [xa, fy + 1.88, zf + 0.062],
+            P.charred,
+            [0, 0, 1],
+          );
         }
         // Noren curtain
         for (let s = 0; s < 3; s++) {
           const xa = cx - 0.45 + s * 0.31;
-          mb.box(xa, fy + 1.15, zf + 0.08, xa + 0.28, fy + 1.9, zf + 0.1, P.indigo, 0.12, 8 | 4 | 32);
+          mb.box(
+            xa,
+            fy + 1.15,
+            zf + 0.08,
+            xa + 0.28,
+            fy + 1.9,
+            zf + 0.1,
+            P.indigo,
+            0.12,
+            8 | 4 | 32,
+          );
         }
       }
       continue;
@@ -667,14 +853,45 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
     if (solid) {
       // Plaster bay with a small glowing lattice window.
       if (lod === 0) {
-        mb.box(cx - 0.4, fy + 1.15, zf - 0.01, cx + 0.4, fy + 1.75, zf + 0.04, P.timberDark, 0.05, 8);
-        gl.quad([cx - 0.33, fy + 1.22, zf + 0.045], [cx + 0.33, fy + 1.22, zf + 0.045], [cx + 0.33, fy + 1.68, zf + 0.045], [cx - 0.33, fy + 1.68, zf + 0.045], P.paper, [0, 0, 1]);
+        mb.box(
+          cx - 0.4,
+          fy + 1.15,
+          zf - 0.01,
+          cx + 0.4,
+          fy + 1.75,
+          zf + 0.04,
+          P.timberDark,
+          0.05,
+          8,
+        );
+        gl.quad(
+          [cx - 0.33, fy + 1.22, zf + 0.045],
+          [cx + 0.33, fy + 1.22, zf + 0.045],
+          [cx + 0.33, fy + 1.68, zf + 0.045],
+          [cx - 0.33, fy + 1.68, zf + 0.045],
+          P.paper,
+          [0, 0, 1],
+        );
         for (let s = 1; s < 4; s++) {
           const xa = cx - 0.33 + (0.66 * s) / 4;
-          mb.quad([xa - 0.012, fy + 1.22, zf + 0.05], [xa + 0.012, fy + 1.22, zf + 0.05], [xa + 0.012, fy + 1.68, zf + 0.05], [xa - 0.012, fy + 1.68, zf + 0.05], P.timberDark, [0, 0, 1]);
+          mb.quad(
+            [xa - 0.012, fy + 1.22, zf + 0.05],
+            [xa + 0.012, fy + 1.22, zf + 0.05],
+            [xa + 0.012, fy + 1.68, zf + 0.05],
+            [xa - 0.012, fy + 1.68, zf + 0.05],
+            P.timberDark,
+            [0, 0, 1],
+          );
         }
       } else if (lod === 1) {
-        gl.quad([cx - 0.33, fy + 1.22, zf + 0.045], [cx + 0.33, fy + 1.22, zf + 0.045], [cx + 0.33, fy + 1.68, zf + 0.045], [cx - 0.33, fy + 1.68, zf + 0.045], P.paper, [0, 0, 1]);
+        gl.quad(
+          [cx - 0.33, fy + 1.22, zf + 0.045],
+          [cx + 0.33, fy + 1.22, zf + 0.045],
+          [cx + 0.33, fy + 1.68, zf + 0.045],
+          [cx - 0.33, fy + 1.68, zf + 0.045],
+          P.paper,
+          [0, 0, 1],
+        );
       }
       continue;
     }
@@ -687,17 +904,33 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
       const yb = fy + 0.5;
       const yt = fy + 1.95;
       mb.box(xa, fy + 0.1, zz - 0.01, xa + pw, yb, zz + 0.012, P.timber, 0.08, 8 | 4);
-      gl.quad([xa, yb, zz + 0.012], [xa + pw, yb, zz + 0.012], [xa + pw, yt, zz + 0.012], [xa, yt, zz + 0.012], P.paper, [0, 0, 1]);
+      gl.quad(
+        [xa, yb, zz + 0.012],
+        [xa + pw, yb, zz + 0.012],
+        [xa + pw, yt, zz + 0.012],
+        [xa, yt, zz + 0.012],
+        P.paper,
+        [0, 0, 1],
+      );
       if (lod === 0) {
         const bar = (a0: number, b0: number, a1: number, b1: number): void =>
-          mb.quad([a0, b0, zz + 0.016], [a1, b0, zz + 0.016], [a1, b1, zz + 0.016], [a0, b1, zz + 0.016], P.timberDark, [0, 0, 1]);
+          mb.quad(
+            [a0, b0, zz + 0.016],
+            [a1, b0, zz + 0.016],
+            [a1, b1, zz + 0.016],
+            [a0, b1, zz + 0.016],
+            P.timberDark,
+            [0, 0, 1],
+          );
         const t = 0.022;
         bar(xa, yb, xa + t, yt);
         bar(xa + pw - t, yb, xa + pw, yt);
         bar(xa, yt - t, xa + pw, yt);
         bar(xa, yb, xa + pw, yb + t);
-        for (let q = 1; q < 3; q++) bar(xa + (pw * q) / 3 - t / 2, yb, xa + (pw * q) / 3 + t / 2, yt);
-        for (let q = 1; q < 4; q++) bar(xa, yb + ((yt - yb) * q) / 4 - t / 2, xa + pw, yb + ((yt - yb) * q) / 4 + t / 2);
+        for (let q = 1; q < 3; q++)
+          bar(xa + (pw * q) / 3 - t / 2, yb, xa + (pw * q) / 3 + t / 2, yt);
+        for (let q = 1; q < 4; q++)
+          bar(xa, yb + ((yt - yb) * q) / 4 - t / 2, xa + pw, yb + ((yt - yb) * q) / 4 + t / 2);
       }
     }
     // Lintel
@@ -708,7 +941,17 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
   if (lod < 2 && p.shoji) {
     for (const sx of [-1, 1]) {
       const x = sx * (L / 2);
-      mb.box(sx > 0 ? x : x - 0.05, fy + 1.3, -0.5, sx > 0 ? x + 0.05 : x, fy + 1.85, 0.5, P.timberDark, 0.05, 8);
+      mb.box(
+        sx > 0 ? x : x - 0.05,
+        fy + 1.3,
+        -0.5,
+        sx > 0 ? x + 0.05 : x,
+        fy + 1.85,
+        0.5,
+        P.timberDark,
+        0.05,
+        8,
+      );
       gl.quad(
         [x + sx * 0.052, fy + 1.37, -0.42],
         [x + sx * 0.052, fy + 1.37, 0.42],
@@ -720,7 +963,14 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
       if (lod === 0)
         for (let s = 1; s < 6; s++) {
           const z = -0.42 + (0.84 * s) / 6;
-          mb.quad([x + sx * 0.056, fy + 1.37, z - 0.01], [x + sx * 0.056, fy + 1.37, z + 0.01], [x + sx * 0.056, fy + 1.78, z + 0.01], [x + sx * 0.056, fy + 1.78, z - 0.01], P.timberDark, [sx, 0, 0]);
+          mb.quad(
+            [x + sx * 0.056, fy + 1.37, z - 0.01],
+            [x + sx * 0.056, fy + 1.37, z + 0.01],
+            [x + sx * 0.056, fy + 1.78, z + 0.01],
+            [x + sx * 0.056, fy + 1.78, z - 0.01],
+            P.timberDark,
+            [sx, 0, 0],
+          );
         }
     }
   }
@@ -732,14 +982,42 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
     if (lod === 0) {
       for (let s = 1; s < 8; s++) {
         const z = zf + (deckD * s) / 8;
-        mb.quad([-L / 2 - 0.1, fy + 0.002, z - 0.008], [L / 2 + 0.1, fy + 0.002, z - 0.008], [L / 2 + 0.1, fy + 0.002, z + 0.008], [-L / 2 - 0.1, fy + 0.002, z + 0.008], shade(P.timberDark, 1.4), [0, 1, 0]);
+        mb.quad(
+          [-L / 2 - 0.1, fy + 0.002, z - 0.008],
+          [L / 2 + 0.1, fy + 0.002, z - 0.008],
+          [L / 2 + 0.1, fy + 0.002, z + 0.008],
+          [-L / 2 - 0.1, fy + 0.002, z + 0.008],
+          shade(P.timberDark, 1.4),
+          [0, 1, 0],
+        );
       }
       // Stone feet
-      for (let k = 0; k <= nb; k++) mb.box(-L / 2 + k * bw - 0.17, -0.9, zD - 0.3 - 0.17, -L / 2 + k * bw + 0.17, fy - 0.16, zD - 0.3 + 0.17, mixc(P.stoneDark, P.moss, 0.15), 0.1);
+      for (let k = 0; k <= nb; k++)
+        mb.box(
+          -L / 2 + k * bw - 0.17,
+          -0.9,
+          zD - 0.3 - 0.17,
+          -L / 2 + k * bw + 0.17,
+          fy - 0.16,
+          zD - 0.3 + 0.17,
+          mixc(P.stoneDark, P.moss, 0.15),
+          0.1,
+        );
     } else mb.box(-L / 2, -0.9, zD - 0.3, L / 2, fy - 0.16, zD - 0.1, P.stoneDark, 0.05);
     // Outer posts + eave girder.
     if (lod < 2) {
-      for (let k = 0; k <= nb; k++) mb.box(-L / 2 + k * bw - 0.07, fy, zD - 0.37, -L / 2 + k * bw + 0.07, wt - 0.12, zD - 0.23, p.post, 0.08, 8);
+      for (let k = 0; k <= nb; k++)
+        mb.box(
+          -L / 2 + k * bw - 0.07,
+          fy,
+          zD - 0.37,
+          -L / 2 + k * bw + 0.07,
+          wt - 0.12,
+          zD - 0.23,
+          p.post,
+          0.08,
+          8,
+        );
       mb.box(-L / 2 - 0.1, wt - 0.34, zD - 0.42, L / 2 + 0.1, wt - 0.1, zD - 0.18, p.post, 0.05, 8);
     }
   }
@@ -789,14 +1067,41 @@ function buildHouse(p: HouseP, lod: 0 | 1 | 2): { main: MB; glow: MB } {
         const z1 = -D / 2 + (D * (j + 1)) / nzI;
         const y0 = roofY(roof, x, z0) - t;
         const y1 = roofY(roof, x, z1) - t;
-        mb.quad([x, wt - 0.12, z0], [x, wt - 0.12, z1], [x, y1 + 0.02, z1], [x, y0 + 0.02, z0], p.wall, [sx, 0, 0]);
+        mb.quad(
+          [x, wt - 0.12, z0],
+          [x, wt - 0.12, z1],
+          [x, y1 + 0.02, z1],
+          [x, y0 + 0.02, z0],
+          p.wall,
+          [sx, 0, 0],
+        );
       }
       if (lod < 2) {
         // Timber frame in the gable: king post + collar beam.
         const yr = roofY(roof, x, 0) - t;
-        mb.box(sx > 0 ? x : x - 0.06, wt - 0.12, -0.07, sx > 0 ? x + 0.06 : x, yr, 0.07, p.post, 0.06, 8);
+        mb.box(
+          sx > 0 ? x : x - 0.06,
+          wt - 0.12,
+          -0.07,
+          sx > 0 ? x + 0.06 : x,
+          yr,
+          0.07,
+          p.post,
+          0.06,
+          8,
+        );
         const yc = wt + (yr - wt) * 0.45;
-        mb.box(sx > 0 ? x : x - 0.06, yc - 0.05, -D * 0.28, sx > 0 ? x + 0.06 : x, yc + 0.05, D * 0.28, p.post, 0.06, 8);
+        mb.box(
+          sx > 0 ? x : x - 0.06,
+          yc - 0.05,
+          -D * 0.28,
+          sx > 0 ? x + 0.06 : x,
+          yc + 0.05,
+          D * 0.28,
+          p.post,
+          0.06,
+          8,
+        );
       }
     }
   }
@@ -844,7 +1149,17 @@ function buildTorii(lod: 0 | 1 | 2): MB {
     const lift0 = 0.32 * t0 ** 2;
     const lift1 = 0.32 * t1 ** 2;
     for (const s of [-1, 1]) {
-      mb.box(Math.min(s * xa, s * xb), hP + 0.28 + lift0, -0.25, Math.max(s * xa, s * xb), hP + 0.5 + lift1, 0.25, P.black, 0.02, 8);
+      mb.box(
+        Math.min(s * xa, s * xb),
+        hP + 0.28 + lift0,
+        -0.25,
+        Math.max(s * xa, s * xb),
+        hP + 0.5 + lift1,
+        0.25,
+        P.black,
+        0.02,
+        8,
+      );
     }
   }
   mb.box(-sp - 0.62, hP + 0.28, -0.25, sp + 0.62, hP + 0.5, 0.25, P.black, 0.02);
@@ -862,7 +1177,18 @@ function buildStairs(lod: 0 | 1 | 2, steps = 10, rise = 0.16, run = 0.42, w = 3.
     const c2 = mb.rnd() < 0.25 ? mixc(col, P.moss, 0.3) : col;
     mb.box(-w / 2, -1.1, z0, w / 2, top, z1 + 0.02, c2, 0.07, 8 | 32);
     // Slightly proud tread lip
-    if (lod === 0) mb.box(-w / 2, top - 0.035, z1 - 0.0, w / 2, top, z1 + 0.035, shade(c2, 1.08), 0.03, 8 | 32 | 1 | 2);
+    if (lod === 0)
+      mb.box(
+        -w / 2,
+        top - 0.035,
+        z1 - 0.0,
+        w / 2,
+        top,
+        z1 + 0.035,
+        shade(c2, 1.08),
+        0.03,
+        8 | 32 | 1 | 2,
+      );
     // Cheek walls
     const cc = mixc(P.stone, P.stoneDark, mb.rnd() * 0.5);
     mb.box(-w / 2 - cheek, -1.1, z0, -w / 2, top + 0.34, z1 + 0.02, cc, 0.08, 8 | 32);
@@ -944,7 +1270,9 @@ function buildLanternString(lod: 0 | 1 | 2): { mb: MB; gl: MB } {
   const gl = new MB(151);
   const half = 5.6;
   for (const s of [-1, 1]) {
-    mb.tube([s * half, -0.2, 0], [s * half, 3.5, 0], 0.09, 0.07, lod === 0 ? 7 : 5, P.timber, { caps: true });
+    mb.tube([s * half, -0.2, 0], [s * half, 3.5, 0], 0.09, 0.07, lod === 0 ? 7 : 5, P.timber, {
+      caps: true,
+    });
     mb.box(s * half - 0.35, -0.35, -0.35, s * half + 0.35, 0.15, 0.35, P.stone, 0.08);
   }
   const sag = 0.55;
@@ -974,7 +1302,8 @@ function buildWell(lod: 0 | 1 | 2): MB {
   const seg = lod === 0 ? 12 : 8;
   mb.cyl(0, -0.3, 0, 0.78, 0.74, 1.12, seg, mixc(P.stone, P.moss, 0.15), true, P.stoneDark);
   mb.cyl(0, 0.72, 0, 0.62, 0.62, 0.05, seg, P.black, true);
-  for (const s of [-1, 1]) mb.box(s * 0.74 - 0.07, 0.7, -0.07, s * 0.74 + 0.07, 2.35, 0.07, P.timber, 0.08);
+  for (const s of [-1, 1])
+    mb.box(s * 0.74 - 0.07, 0.7, -0.07, s * 0.74 + 0.07, 2.35, 0.07, P.timber, 0.08);
   mb.box(-0.86, 2.2, -0.08, 0.86, 2.36, 0.08, P.timberDark, 0.05);
   // Small tiled roof.
   const r: RoofP = {
@@ -1030,9 +1359,30 @@ function buildFirewood(lod: 0 | 1 | 2): MB {
     mb.box(s * 1.65 - 0.06, 0, 0.43, s * 1.65 + 0.06, 1.45, 0.55, P.timber, 0.08);
   }
   // Lean-to cover
-  mb.quad([-1.85, 1.5, -0.7], [1.85, 1.5, -0.7], [1.85, 1.2, 0.75], [-1.85, 1.2, 0.75], P.tile, [0, 1, 0]);
-  mb.quad([-1.85, 1.46, -0.7], [1.85, 1.46, -0.7], [1.85, 1.16, 0.75], [-1.85, 1.16, 0.75], P.timberDark, [0, -1, 0]);
-  mb.quad([-1.85, 1.5, 0.75], [1.85, 1.5, 0.75], [1.85, 1.16, 0.75], [-1.85, 1.16, 0.75], P.tileEdge, [0, 0, 1]);
+  mb.quad(
+    [-1.85, 1.5, -0.7],
+    [1.85, 1.5, -0.7],
+    [1.85, 1.2, 0.75],
+    [-1.85, 1.2, 0.75],
+    P.tile,
+    [0, 1, 0],
+  );
+  mb.quad(
+    [-1.85, 1.46, -0.7],
+    [1.85, 1.46, -0.7],
+    [1.85, 1.16, 0.75],
+    [-1.85, 1.16, 0.75],
+    P.timberDark,
+    [0, -1, 0],
+  );
+  mb.quad(
+    [-1.85, 1.5, 0.75],
+    [1.85, 1.5, 0.75],
+    [1.85, 1.16, 0.75],
+    [-1.85, 1.16, 0.75],
+    P.tileEdge,
+    [0, 0, 1],
+  );
   return mb;
 }
 
@@ -1045,7 +1395,16 @@ function buildBridge(lod: 0 | 1 | 2): MB {
   for (let i = 0; i < n; i++) {
     const x0 = -Lb / 2 + (Lb * i) / n;
     const x1 = -Lb / 2 + (Lb * (i + 1)) / n;
-    mb.box(x0 + 0.01, arch((x0 + x1) / 2) - 0.1, -w / 2, x1 - 0.01, arch((x0 + x1) / 2), w / 2, mixc(P.timberLight, P.timber, mb.rnd()), 0.08);
+    mb.box(
+      x0 + 0.01,
+      arch((x0 + x1) / 2) - 0.1,
+      -w / 2,
+      x1 - 0.01,
+      arch((x0 + x1) / 2),
+      w / 2,
+      mixc(P.timberLight, P.timber, mb.rnd()),
+      0.08,
+    );
   }
   for (const s of [-1, 1]) {
     const pts: V3[] = [];
@@ -1057,7 +1416,15 @@ function buildBridge(lod: 0 | 1 | 2): MB {
     // Rope rail + posts
     for (let i = 0; i <= 4; i++) {
       const x = -Lb / 2 + 0.3 + ((Lb - 0.6) * i) / 4;
-      mb.tube([x, arch(x), s * (w / 2 - 0.05)], [x, arch(x) + 0.95, s * (w / 2 - 0.05)], 0.05, 0.045, 5, P.timber, { caps: true });
+      mb.tube(
+        [x, arch(x), s * (w / 2 - 0.05)],
+        [x, arch(x) + 0.95, s * (w / 2 - 0.05)],
+        0.05,
+        0.045,
+        5,
+        P.timber,
+        { caps: true },
+      );
     }
     const rail: V3[] = [];
     for (let i = 0; i <= 8; i++) {
@@ -1076,7 +1443,17 @@ function buildShrineExtras(mb: MB, gl: MB, p: HouseP, lod: 0 | 1 | 2): void {
   const fy = p.fy;
   // Front steps.
   for (let s = 0; s < 4; s++) {
-    mb.box(-1.4, -0.9, p.D / 2 + p.ov + 0.2 + s * 0.4 - 0.4 * 0, 1.4, fy - 0.2 - s * (fy - 0.2) / 4 - 0.0, p.D / 2 + p.ov + 0.2 + (s + 1) * 0.4 + 0.2, mixc(P.stoneLight, P.stoneDark, 0.1 * s), 0.05, 0);
+    mb.box(
+      -1.4,
+      -0.9,
+      p.D / 2 + p.ov + 0.2 + s * 0.4 - 0.4 * 0,
+      1.4,
+      fy - 0.2 - (s * (fy - 0.2)) / 4 - 0.0,
+      p.D / 2 + p.ov + 0.2 + (s + 1) * 0.4 + 0.2,
+      mixc(P.stoneLight, P.stoneDark, 0.1 * s),
+      0.05,
+      0,
+    );
   }
   // Rope with bell, offering box.
   const zr = zD + 0.12;
@@ -1087,7 +1464,14 @@ function buildShrineExtras(mb: MB, gl: MB, p: HouseP, lod: 0 | 1 | 2): void {
     mb.box(-0.9, fy - 0.3, zD + 0.55, 0.9, fy + 0.5, zD + 1.1, P.timber, 0.06, 8);
     for (let s = 0; s < 8; s++) {
       const xa = -0.9 + (1.8 * s) / 8;
-      mb.quad([xa + 0.01, fy + 0.5, zD + 0.8], [xa + 0.2, fy + 0.5, zD + 0.8], [xa + 0.2, fy + 0.5, zD + 1.1], [xa + 0.01, fy + 0.5, zD + 1.1], P.black, [0, 1, 0]);
+      mb.quad(
+        [xa + 0.01, fy + 0.5, zD + 0.8],
+        [xa + 0.2, fy + 0.5, zD + 0.8],
+        [xa + 0.2, fy + 0.5, zD + 1.1],
+        [xa + 0.01, fy + 0.5, zD + 1.1],
+        P.black,
+        [0, 1, 0],
+      );
     }
   }
   // Shimenawa rope across the front with paper streamers.
@@ -1104,7 +1488,14 @@ function buildShrineExtras(mb: MB, gl: MB, p: HouseP, lod: 0 | 1 | 2): void {
       for (let k = 0; k < 3; k++) {
         const yy = y - 0.1 - k * 0.17;
         const dx = k % 2 === 0 ? 0.07 : -0.07;
-        mb.quad([x + dx, yy, zs], [x + dx + 0.12, yy, zs], [x + 0.12 - dx, yy - 0.18, zs], [x - dx, yy - 0.18, zs], P.plasterWhite, [0, 0, 1]);
+        mb.quad(
+          [x + dx, yy, zs],
+          [x + dx + 0.12, yy, zs],
+          [x + 0.12 - dx, yy - 0.18, zs],
+          [x - dx, yy - 0.18, zs],
+          P.plasterWhite,
+          [0, 0, 1],
+        );
       }
     }
   }
@@ -1149,14 +1540,31 @@ function buildPaddy(rice: boolean, lod: 0 | 1 | 2): { mb: MB; water: MB; leaf: M
   mb.box(-hx - bt, -1.3, hz - 0.02, hx + bt, bh, hz + bt, P.soil, 0.1, 8);
   mb.box(-hx - bt, -2.4, -hz, -hx + 0.02, bh, hz, P.soil, 0.1, 8 | 2);
   mb.box(hx - 0.02, -1.3, -hz, hx + bt, bh, hz, P.soil, 0.1, 8);
-  mb.box(-hx - bt - 0.04, -2.4, -hz - bt, -hx - bt, -0.05, hz + bt, P.stone, 0.12, 8 | 4 | 1 | 16 | 32);
+  mb.box(
+    -hx - bt - 0.04,
+    -2.4,
+    -hz - bt,
+    -hx - bt,
+    -0.05,
+    hz + bt,
+    P.stone,
+    0.12,
+    8 | 4 | 1 | 16 | 32,
+  );
   for (const [x0, z0, x1, z1] of [
     [-hx - bt, -hz - bt, hx + bt, -hz + 0.02],
     [-hx - bt, hz - 0.02, hx + bt, hz + bt],
     [-hx - bt, -hz, -hx + 0.02, hz],
     [hx - 0.02, -hz, hx + bt, hz],
   ] as const)
-    mb.quad([x0, bh + 0.004, z0], [x1, bh + 0.004, z0], [x1, bh + 0.004, z1], [x0, bh + 0.004, z1], P.grassTop, [0, 1, 0]);
+    mb.quad(
+      [x0, bh + 0.004, z0],
+      [x1, bh + 0.004, z0],
+      [x1, bh + 0.004, z1],
+      [x0, bh + 0.004, z1],
+      P.grassTop,
+      [0, 1, 0],
+    );
   if (lod > 0) return { mb, water, leaf };
   if (rice) {
     const step = 0.5;
@@ -1193,7 +1601,8 @@ function buildPond(lod: 0 | 1 | 2): { mb: MB; water: MB } {
   const rx = 3.7;
   const rz = 2.5;
   const seg = lod === 0 ? 28 : 16;
-  const rad = (a: number): number => 1 + 0.16 * noise.fbm(Math.cos(a) * 1.3 + 2, Math.sin(a) * 1.3, 2);
+  const rad = (a: number): number =>
+    1 + 0.16 * noise.fbm(Math.cos(a) * 1.3 + 2, Math.sin(a) * 1.3, 2);
   const wc = rgb('#17242a');
   for (let i = 0; i < seg; i++) {
     const a0 = (i / seg) * Math.PI * 2;
@@ -1213,8 +1622,17 @@ function buildPond(lod: 0 | 1 | 2): { mb: MB; water: MB } {
     const r = rad(a);
     const s = 0.28 + mb.rnd() * 0.3;
     const col = mixc(P.stone, P.stoneDark, mb.rnd());
-    mb.blob(Math.cos(a) * rx * r * 1.02, 0.02 + s * 0.18, Math.sin(a) * rz * r * 1.02, s * 1.2, s * 0.65, s, lod === 0 ? 1 : 0, 200 + i, 0.25, (y, n) =>
-      mixc(shade(col, 0.85 + y * 0.3 + n * 0.2), P.moss, y > 0.7 ? 0.3 : 0),
+    mb.blob(
+      Math.cos(a) * rx * r * 1.02,
+      0.02 + s * 0.18,
+      Math.sin(a) * rz * r * 1.02,
+      s * 1.2,
+      s * 0.65,
+      s,
+      lod === 0 ? 1 : 0,
+      200 + i,
+      0.25,
+      (y, n) => mixc(shade(col, 0.85 + y * 0.3 + n * 0.2), P.moss, y > 0.7 ? 0.3 : 0),
     );
   }
   // Lily pads.
@@ -1226,7 +1644,13 @@ function buildPond(lod: 0 | 1 | 2): { mb: MB; water: MB } {
       for (let s = 0; s < 8; s++) {
         const a0 = (s / 8) * Math.PI * 2;
         const a1 = ((s + 0.85) / 8) * Math.PI * 2;
-        mb.tri([x, 0.012, z], [x + Math.cos(a0) * r, 0.012, z + Math.sin(a0) * r], [x + Math.cos(a1) * r, 0.012, z + Math.sin(a1) * r], rgb('#4d7a2e'), [0, 1, 0]);
+        mb.tri(
+          [x, 0.012, z],
+          [x + Math.cos(a0) * r, 0.012, z + Math.sin(a0) * r],
+          [x + Math.cos(a1) * r, 0.012, z + Math.sin(a1) * r],
+          rgb('#4d7a2e'),
+          [0, 1, 0],
+        );
       }
     }
   }
@@ -1262,7 +1686,12 @@ function buildGravel(lod: 0 | 1 | 2): MB {
           [x1, 0.03 + h(z1), z1],
           [x0, 0.03 + h(z1), z1],
         ],
-        [norm([0, 1, -h(z0) * 6]), norm([0, 1, -h(z0) * 6]), norm([0, 1, -h(z1) * 6]), norm([0, 1, -h(z1) * 6])],
+        [
+          norm([0, 1, -h(z0) * 6]),
+          norm([0, 1, -h(z0) * 6]),
+          norm([0, 1, -h(z1) * 6]),
+          norm([0, 1, -h(z1) * 6]),
+        ],
         [col, col, col, col],
       );
     }
@@ -1279,10 +1708,21 @@ function buildGardenRock(variant: number, lod: 0 | 1 | 2): MB {
   ];
   const [rx, ry, rz] = sizes[variant % 3]!;
   const base = mixc(P.stone, rgb('#7a7d72'), 0.5);
-  mb.blob(0, ry * 0.55, 0, rx, ry, rz, lod === 0 ? 2 : lod === 1 ? 1 : 0, 300 + variant, 0.3, (y, n) => {
-    const c = shade(base, 0.7 + y * 0.45 + n * 0.25);
-    return mixc(c, P.moss, smooth(0.62, 0.9, y + n * 0.2) * 0.55);
-  });
+  mb.blob(
+    0,
+    ry * 0.55,
+    0,
+    rx,
+    ry,
+    rz,
+    lod === 0 ? 2 : lod === 1 ? 1 : 0,
+    300 + variant,
+    0.3,
+    (y, n) => {
+      const c = shade(base, 0.7 + y * 0.45 + n * 0.25);
+      return mixc(c, P.moss, smooth(0.62, 0.9, y + n * 0.2) * 0.55);
+    },
+  );
   return mb;
 }
 
@@ -1299,7 +1739,15 @@ function buildSteppingStones(lod: 0 | 1 | 2): MB {
   ];
   for (const [x, z, r] of pts) {
     const c = mixc(P.stoneLight, P.stoneDark, mb.rnd() * 0.6);
-    mb.tube([x, -0.12, z], [x, 0.11, z], r * 1.05, r * 0.92, lod === 0 ? 9 : 6, mixc(c, P.moss, 0.15), { caps: true, jit: 0.1, rot: mb.rnd() });
+    mb.tube(
+      [x, -0.12, z],
+      [x, 0.11, z],
+      r * 1.05,
+      r * 0.92,
+      lod === 0 ? 9 : 6,
+      mixc(c, P.moss, 0.15),
+      { caps: true, jit: 0.1, rot: mb.rnd() },
+    );
   }
   return mb;
 }
@@ -1311,8 +1759,18 @@ function buildFence(variant: number, lod: 0 | 1 | 2): MB {
     // Bamboo lattice fence (yotsume-gaki).
     const bam = rgb('#a9a768');
     const seg = lod === 0 ? 5 : 4;
-    for (let k = 0; k <= 2; k++) mb.tube([-Lf / 2 + (Lf * k) / 2, -0.15, 0], [-Lf / 2 + (Lf * k) / 2, 1.2, 0], 0.045, 0.04, seg, bam, { caps: true });
-    for (const y of [0.3, 0.7, 1.1]) mb.tube([-Lf / 2, y, 0.05], [Lf / 2, y, 0.05], 0.025, 0.025, 4, shade(bam, 0.9));
+    for (let k = 0; k <= 2; k++)
+      mb.tube(
+        [-Lf / 2 + (Lf * k) / 2, -0.15, 0],
+        [-Lf / 2 + (Lf * k) / 2, 1.2, 0],
+        0.045,
+        0.04,
+        seg,
+        bam,
+        { caps: true },
+      );
+    for (const y of [0.3, 0.7, 1.1])
+      mb.tube([-Lf / 2, y, 0.05], [Lf / 2, y, 0.05], 0.025, 0.025, 4, shade(bam, 0.9));
     const n = lod === 0 ? 14 : 7;
     for (let k = 0; k < n; k++) {
       const x = -Lf / 2 + 0.15 + ((Lf - 0.3) * k) / (n - 1);
@@ -1320,8 +1778,19 @@ function buildFence(variant: number, lod: 0 | 1 | 2): MB {
     }
   } else {
     // Low wooden rail fence.
-    for (let k = 0; k <= 2; k++) mb.box(-Lf / 2 + (Lf * k) / 2 - 0.06, -0.2, -0.06, -Lf / 2 + (Lf * k) / 2 + 0.06, 1.0, 0.06, P.timber, 0.1);
-    for (const y of [0.35, 0.75]) mb.box(-Lf / 2, y, -0.03, Lf / 2, y + 0.09, 0.03, P.timberLight, 0.08);
+    for (let k = 0; k <= 2; k++)
+      mb.box(
+        -Lf / 2 + (Lf * k) / 2 - 0.06,
+        -0.2,
+        -0.06,
+        -Lf / 2 + (Lf * k) / 2 + 0.06,
+        1.0,
+        0.06,
+        P.timber,
+        0.1,
+      );
+    for (const y of [0.35, 0.75])
+      mb.box(-Lf / 2, y, -0.03, Lf / 2, y + 0.09, 0.03, P.timberLight, 0.08);
   }
   return mb;
 }
@@ -1332,14 +1801,39 @@ function buildGardenWall(lod: 0 | 1 | 2): MB {
   mb.box(-Lw / 2, -0.4, -0.22, Lw / 2, 0.3, 0.22, P.stone, 0.06);
   mb.box(-Lw / 2 + 0.02, 0.3, -0.17, Lw / 2 - 0.02, 1.45, 0.17, P.plaster, 0.04, 8);
   if (lod === 0) {
-    for (let k = 0; k <= 2; k++) mb.box(-Lw / 2 + (Lw * k) / 2 - 0.06, 0.3, -0.2, -Lw / 2 + (Lw * k) / 2 + 0.06, 1.45, 0.2, P.timber, 0.08);
+    for (let k = 0; k <= 2; k++)
+      mb.box(
+        -Lw / 2 + (Lw * k) / 2 - 0.06,
+        0.3,
+        -0.2,
+        -Lw / 2 + (Lw * k) / 2 + 0.06,
+        1.45,
+        0.2,
+        P.timber,
+        0.08,
+      );
   }
   // Tile cap (gable section)
   const y0 = 1.45;
   for (const s of [-1, 1]) {
-    mb.quad([-Lw / 2 - 0.05, y0 + 0.14, 0], [Lw / 2 + 0.05, y0 + 0.14, 0], [Lw / 2 + 0.05, y0 - 0.03, s * 0.34], [-Lw / 2 - 0.05, y0 - 0.03, s * 0.34], P.tile, [0, 1, s * 0.5]);
+    mb.quad(
+      [-Lw / 2 - 0.05, y0 + 0.14, 0],
+      [Lw / 2 + 0.05, y0 + 0.14, 0],
+      [Lw / 2 + 0.05, y0 - 0.03, s * 0.34],
+      [-Lw / 2 - 0.05, y0 - 0.03, s * 0.34],
+      P.tile,
+      [0, 1, s * 0.5],
+    );
   }
-  mb.tube([-Lw / 2 - 0.05, y0 + 0.16, 0], [Lw / 2 + 0.05, y0 + 0.16, 0], 0.07, 0.07, 5, P.tileEdge, { caps: true });
+  mb.tube(
+    [-Lw / 2 - 0.05, y0 + 0.16, 0],
+    [Lw / 2 + 0.05, y0 + 0.16, 0],
+    0.07,
+    0.07,
+    5,
+    P.tileEdge,
+    { caps: true },
+  );
   return mb;
 }
 
@@ -1361,9 +1855,18 @@ function buildMaple(variant: number, lod: 0 | 1 | 2): MB {
   // Trunk + limbs.
   mb.tube([0, -0.15, 0], [0.12, 1.5, 0.05], 0.24, 0.17, seg, bark, { caps: true });
   const limbs: [V3, V3][] = [
-    [[0.12, 1.4, 0.05], [-0.9, 3.3, 0.3]],
-    [[0.12, 1.5, 0.05], [1.1, 3.1, -0.4]],
-    [[0.12, 1.7, 0.05], [0.1, 3.9, 0.9]],
+    [
+      [0.12, 1.4, 0.05],
+      [-0.9, 3.3, 0.3],
+    ],
+    [
+      [0.12, 1.5, 0.05],
+      [1.1, 3.1, -0.4],
+    ],
+    [
+      [0.12, 1.7, 0.05],
+      [0.1, 3.9, 0.9],
+    ],
   ];
   for (const [a, b] of limbs) mb.tube(a, b, 0.12, 0.06, seg, bark);
   const blobs: [number, number, number, number, number][] = [
@@ -1442,7 +1945,14 @@ function buildBamboo(variant: number, lod: 0 | 1 | 2): { culms: MB; leaves: MB }
         const tip = add(add(root, mul(dir, len0)), [0, -0.22 - rnd() * 0.12, 0]);
         const mid = add(lerp3(root, tip, 0.5), [0, 0.1, 0]);
         const side = mul(norm(cross(dir, [0, 1, 0])), 0.055);
-        leaves.quad(root, add(mid, side), tip, sub(mid, side), [leafA, leafB, leafB, leafA], [0, 1, 0]);
+        leaves.quad(
+          root,
+          add(mid, side),
+          tip,
+          sub(mid, side),
+          [leafA, leafB, leafB, leafA],
+          [0, 1, 0],
+        );
       }
     }
     if (lod === 2) {
@@ -1584,7 +2094,9 @@ function houseSpecies(key: string, p: HouseP): Species {
     ];
   });
   const hgt = p.fy + p.wallH + p.H + 0.6;
-  return finish(key, { height: hgt, radius: Math.max(p.L, p.D) / 2 + p.ov, glowIntensity: 4.2 }, [lods]);
+  return finish(key, { height: hgt, radius: Math.max(p.L, p.D) / 2 + p.ov, glowIntensity: 4.2 }, [
+    lods,
+  ]);
 }
 
 function shrineSpecies(): Species {
@@ -1593,15 +2105,39 @@ function shrineSpecies(): Species {
     // Doors: lattice panels on the front.
     const zf = SHRINE.D / 2;
     const fy = SHRINE.fy;
-    b.main.box(-SHRINE.L / 2 + 0.3, fy, zf - 0.01, SHRINE.L / 2 - 0.3, fy + 2.0, zf + 0.04, P.timberDark, 0.05, 8);
+    b.main.box(
+      -SHRINE.L / 2 + 0.3,
+      fy,
+      zf - 0.01,
+      SHRINE.L / 2 - 0.3,
+      fy + 2.0,
+      zf + 0.04,
+      P.timberDark,
+      0.05,
+      8,
+    );
     for (let k = 0; k < 3; k++) {
       const x0 = -SHRINE.L / 2 + 0.35 + k * ((SHRINE.L - 0.7) / 3);
       const x1 = x0 + (SHRINE.L - 0.7) / 3 - 0.06;
-      b.glow.quad([x0, fy + 0.45, zf + 0.045], [x1, fy + 0.45, zf + 0.045], [x1, fy + 1.95, zf + 0.045], [x0, fy + 1.95, zf + 0.045], P.paper, [0, 0, 1]);
+      b.glow.quad(
+        [x0, fy + 0.45, zf + 0.045],
+        [x1, fy + 0.45, zf + 0.045],
+        [x1, fy + 1.95, zf + 0.045],
+        [x0, fy + 1.95, zf + 0.045],
+        P.paper,
+        [0, 0, 1],
+      );
       if (l === 0)
         for (let q = 0; q <= 5; q++) {
           const xx = x0 + ((x1 - x0) * q) / 5;
-          b.main.quad([xx - 0.012, fy + 0.45, zf + 0.05], [xx + 0.012, fy + 0.45, zf + 0.05], [xx + 0.012, fy + 1.95, zf + 0.05], [xx - 0.012, fy + 1.95, zf + 0.05], P.timberDark, [0, 0, 1]);
+          b.main.quad(
+            [xx - 0.012, fy + 0.45, zf + 0.05],
+            [xx + 0.012, fy + 0.45, zf + 0.05],
+            [xx + 0.012, fy + 1.95, zf + 0.05],
+            [xx - 0.012, fy + 1.95, zf + 0.05],
+            P.timberDark,
+            [0, 0, 1],
+          );
         }
     }
     buildShrineExtras(b.main, b.glow, SHRINE, l);
@@ -1637,22 +2173,40 @@ export function registerVillagePlaceholders(): void {
   registerPlaceholder('village:house-c', () => houseSpecies('house-c', HOUSE_C));
   registerPlaceholder('village:storehouse', () => houseSpecies('storehouse', KURA));
   registerPlaceholder('village:shrine', shrineSpecies);
-  registerPlaceholder('village:torii', () => simple('torii', { height: 5.2, radius: 3.6 }, buildTorii));
-  registerPlaceholder('village:stairs', () => simple('stairs', { height: 2.2, radius: 2.8 }, (l) => buildStairs(l), 2));
-  registerPlaceholder('village:well', () => simple('well', { height: 3.2, radius: 1.2 }, buildWell));
-  registerPlaceholder('village:firewood', () => simple('firewood', { height: 1.6, radius: 2 }, buildFirewood));
-  registerPlaceholder('village:bridge', () => simple('bridge', { height: 1.3, radius: 3.2 }, buildBridge));
-  registerPlaceholder('village:gravel-bed', () => simple('gravel-bed', { height: 0.2, radius: 4.5 }, buildGravel, 2));
+  registerPlaceholder('village:torii', () =>
+    simple('torii', { height: 5.2, radius: 3.6 }, buildTorii),
+  );
+  registerPlaceholder('village:stairs', () =>
+    simple('stairs', { height: 2.2, radius: 2.8 }, (l) => buildStairs(l), 2),
+  );
+  registerPlaceholder('village:well', () =>
+    simple('well', { height: 3.2, radius: 1.2 }, buildWell),
+  );
+  registerPlaceholder('village:firewood', () =>
+    simple('firewood', { height: 1.6, radius: 2 }, buildFirewood),
+  );
+  registerPlaceholder('village:bridge', () =>
+    simple('bridge', { height: 1.3, radius: 3.2 }, buildBridge),
+  );
+  registerPlaceholder('village:gravel-bed', () =>
+    simple('gravel-bed', { height: 0.2, radius: 4.5 }, buildGravel, 2),
+  );
   registerPlaceholder('village:stepping-stones', () =>
     simple('stepping-stones', { height: 0.2, radius: 3.4 }, buildSteppingStones, 2),
   );
-  registerPlaceholder('village:garden-wall', () => simple('garden-wall', { height: 1.8, radius: 2.1 }, buildGardenWall, 2));
+  registerPlaceholder('village:garden-wall', () =>
+    simple('garden-wall', { height: 1.8, radius: 2.1 }, buildGardenWall, 2),
+  );
   registerVariants('garden-rock', () => {
-    const v = [0, 1, 2].map((k) => ([0, 1, 2] as const).map((l) => [{ mb: buildGardenRock(k, l), mat: 'main' as const }]));
+    const v = [0, 1, 2].map((k) =>
+      ([0, 1, 2] as const).map((l) => [{ mb: buildGardenRock(k, l), mat: 'main' as const }]),
+    );
     return finish('garden-rock', { height: 1.0, radius: 1.2 }, v);
   });
   registerVariants('fence', () => {
-    const v = [0, 1].map((k) => ([0, 1] as const).map((l) => [{ mb: buildFence(k, l), mat: 'main' as const }]));
+    const v = [0, 1].map((k) =>
+      ([0, 1] as const).map((l) => [{ mb: buildFence(k, l), mat: 'main' as const }]),
+    );
     return finish('fence', { height: 1.2, radius: 1.5 }, v);
   });
   registerVariants('stone-lantern', () => {
@@ -1700,7 +2254,11 @@ export function registerVillagePlaceholders(): void {
         { mb: b.leaf, mat: 'leaf' as const, shadow: false },
       ];
     });
-    return finish(rice ? 'paddy-rice' : 'paddy', { height: 0.5, radius: 15, wind: 0.04, windHeight: 0.5, flutter: 0.01 }, [lods]);
+    return finish(
+      rice ? 'paddy-rice' : 'paddy',
+      { height: 0.5, radius: 15, wind: 0.04, windHeight: 0.5, flutter: 0.01 },
+      [lods],
+    );
   };
   registerPlaceholder('village:paddy', paddy(false));
   registerPlaceholder('village:paddy-rice', paddy(true));
@@ -1715,7 +2273,9 @@ export function registerVillagePlaceholders(): void {
     return finish('pond', { height: 0.6, radius: 4.5 }, [lods]);
   });
   registerVariants('maple', () => {
-    const v = [0, 1, 2].map((k) => ([0, 1, 2] as const).map((l) => [{ mb: buildMaple(k, l), mat: 'main' as const }]));
+    const v = [0, 1, 2].map((k) =>
+      ([0, 1, 2] as const).map((l) => [{ mb: buildMaple(k, l), mat: 'main' as const }]),
+    );
     return finish('maple', { wind: 0.2, windHeight: 7, flutter: 0.035, height: 7, radius: 0.4 }, v);
   });
   registerVariants('bamboo', () => {
@@ -1728,6 +2288,10 @@ export function registerVillagePlaceholders(): void {
         ];
       }),
     );
-    return finish('bamboo', { wind: 0.55, windHeight: 11, flutter: 0.05, height: 12, radius: 1.2 }, v);
+    return finish(
+      'bamboo',
+      { wind: 0.55, windHeight: 11, flutter: 0.05, height: 12, radius: 1.2 },
+      v,
+    );
   });
 }

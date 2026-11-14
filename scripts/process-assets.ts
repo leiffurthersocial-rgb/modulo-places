@@ -119,6 +119,10 @@ async function armImage(files: MaterialFiles, size: number): Promise<Buffer> {
 
 async function processMaterials(p: Picks): Promise<void> {
   for (const [key, m] of Object.entries(p.materials)) {
+    if (manifest.materials[key]?.id === m.id && !process.argv.includes('--force')) {
+      console.log(`  · material ${key} already processed`);
+      continue;
+    }
     const res = m.hero ? '4k' : '2k';
     const files =
       m.source === 'polyhaven'
@@ -393,6 +397,7 @@ async function processModel(
 
 async function processHdris(p: Picks): Promise<void> {
   for (const [key, h] of Object.entries(p.hdris ?? {})) {
+    if (manifest.hdris[key]?.id === h.id && !process.argv.includes('--force')) continue;
     const k1 = readFileSync(await polyhavenHdri(h.id, '1k'));
     const k2 = readFileSync(await polyhavenHdri(h.id, '2k'));
     const name = key.replaceAll('/', '-');

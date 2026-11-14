@@ -29,7 +29,8 @@ const mul = (a: RGB, k: number): RGB => [a[0] * k, a[1] * k, a[2] * k];
 const clamp01 = (x: number): number => Math.min(1, Math.max(0, x));
 
 const NZ = new Noise2D(90210);
-const hnoise = (x: number, y: number, seed = 0): number => NZ.noise(x + seed * 17.3, y - seed * 9.1);
+const hnoise = (x: number, y: number, seed = 0): number =>
+  NZ.noise(x + seed * 17.3, y - seed * 9.1);
 const fnoise = (x: number, y: number, seed = 0, oct = 3): number =>
   NZ.fbm(x + seed * 17.3, y - seed * 9.1, oct);
 
@@ -356,9 +357,7 @@ function blade(b: MB, o: BladeOpts): THREE.Vector3 {
       const w = vf * hw;
       let c = mul(base, 1 - 0.22 * vf * vf);
       if (o.vein && Math.abs(vf) < 0.01) c = mix(c, o.vein, 0.35);
-      row.push(
-        b.v(px + sx * w, py - fold * Math.abs(vf) * hw * 0.6, pz + sz * w, c),
-      );
+      row.push(b.v(px + sx * w, py - fold * Math.abs(vf) * hw * 0.6, pz + sz * w, c));
     }
     rows.push(row);
     const ph = o.pitch - droop * Math.pow((i + 0.5) / nU, 1.4);
@@ -437,7 +436,13 @@ function vine(
   }
   const vc = col('#46562a');
   const vc2 = col('#2f4421');
-  tube(b, pts, (t) => (o.radius ?? 0.035) * (1.1 - 0.4 * t), 3, (t) => mix(vc, vc2, t));
+  tube(
+    b,
+    pts,
+    (t) => (o.radius ?? 0.035) * (1.1 - 0.4 * t),
+    3,
+    (t) => mix(vc, vc2, t),
+  );
   if (o.leaves === false) return;
   const lc0 = col('#2f6a22');
   const lc1 = col('#5aa032');
@@ -597,7 +602,9 @@ interface PartDef {
 
 function assemble(variants: PartDef[][][], height: number, radius: number): Species {
   const owned = new Set<THREE.BufferGeometry | THREE.Material>();
-  for (const v of variants) for (const l of v) for (const p of l) {
+  for (const v of variants)
+    for (const l of v)
+      for (const p of l) {
         owned.add(p.geo);
         owned.add(p.material);
       }
@@ -614,7 +621,12 @@ function assemble(variants: PartDef[][][], height: number, radius: number): Spec
 }
 
 /** Single-material species: variants[v] = LOD geometries. */
-function simple(m: THREE.Material, variants: THREE.BufferGeometry[][], height: number, radius: number): Species {
+function simple(
+  m: THREE.Material,
+  variants: THREE.BufferGeometry[][],
+  height: number,
+  radius: number,
+): Species {
   return assemble(
     variants.map((v) => v.map((geo) => [{ geo, material: m }])),
     height,
@@ -678,7 +690,11 @@ const MID: TreeKind = {
   curtains: 1,
 };
 
-function canopyTree(seed: number, lod: number, kind: TreeKind): { bark: THREE.BufferGeometry; leaf: THREE.BufferGeometry } {
+function canopyTree(
+  seed: number,
+  lod: number,
+  kind: TreeKind,
+): { bark: THREE.BufferGeometry; leaf: THREE.BufferGeometry } {
   const r = new Rng(seed);
   const bark = new MB();
   const leaf = new MB();
@@ -706,7 +722,9 @@ function canopyTree(seed: number, lod: number, kind: TreeKind): { bark: THREE.Bu
   tube(
     bark,
     pts,
-    (t, a) => trunkR(-1.5 + (H + 1.5) * t) * (1 + 0.07 * Math.sin(a * 7 + t * 6 + seed) * (lod === 0 ? 1 : 0.5)),
+    (t, a) =>
+      trunkR(-1.5 + (H + 1.5) * t) *
+      (1 + 0.07 * Math.sin(a * 7 + t * 6 + seed) * (lod === 0 ? 1 : 0.5)),
     sides,
     (t, a) => {
       const y = -1.5 + (H + 1.5) * t;
@@ -837,30 +855,62 @@ function canopyTree(seed: number, lod: number, kind: TreeKind): { bark: THREE.Bu
         const rr = trunkR(y) + 0.04;
         sp.push(new THREE.Vector3(c.x + Math.cos(ang) * rr, y, c.z + Math.sin(ang) * rr));
       }
-      tube(leaf, sp, (t) => 0.07 * (1 - 0.4 * t), 4, (t) => mix(col('#4a4a30'), col('#2f4421'), t));
+      tube(
+        leaf,
+        sp,
+        (t) => 0.07 * (1 - 0.4 * t),
+        4,
+        (t) => mix(col('#4a4a30'), col('#2f4421'), t),
+      );
     }
     for (let cu = 0; cu < kind.curtains; cu++) {
       const bl = blobs[1 + ((cu * 2) % Math.max(1, blobs.length - 1))] ?? blobs[0]!;
       const len = r.range(0.45, 0.8) * (bl.y - 2);
       const nStr = kind === GIANT ? 5 : 3;
       for (let s = 0; s < nStr; s++) {
-        vine(leaf, bl.x + r.range(-1.6, 1.6), bl.y - bl.ry * 0.7, bl.z + r.range(-1.6, 1.6), len * r.range(0.7, 1), r, {
-          leafEvery: 1.4,
-          leafSize: 0.5,
-          radius: 0.05,
-          sway: 0.8,
-        });
+        vine(
+          leaf,
+          bl.x + r.range(-1.6, 1.6),
+          bl.y - bl.ry * 0.7,
+          bl.z + r.range(-1.6, 1.6),
+          len * r.range(0.7, 1),
+          r,
+          {
+            leafEvery: 1.4,
+            leafSize: 0.5,
+            radius: 0.05,
+            sway: 0.8,
+          },
+        );
       }
     }
   }
   return { bark: bark.geometry(), leaf: leaf.geometry(0.6) };
 }
 
-function buildCanopyTrees(key: string, kind: TreeKind, seeds: number[], height: number, radius: number): Species {
+function buildCanopyTrees(
+  key: string,
+  kind: TreeKind,
+  seeds: number[],
+  height: number,
+  radius: number,
+): Species {
   const H = height;
   const wind = kind === GIANT ? 0.55 : 0.4;
-  const barkM = mat(`${key}-bark`, { rough: 0.95, double: true, wind, windHeight: H, translucent: false });
-  const leafM = mat(`${key}-leaf`, { rough: 0.85, double: true, wind, windHeight: H, flutter: 0.06 });
+  const barkM = mat(`${key}-bark`, {
+    rough: 0.95,
+    double: true,
+    wind,
+    windHeight: H,
+    translucent: false,
+  });
+  const leafM = mat(`${key}-leaf`, {
+    rough: 0.85,
+    double: true,
+    wind,
+    windHeight: H,
+    flutter: 0.06,
+  });
   const variants: PartDef[][][] = seeds.map((s) =>
     [0, 1, 2].map((lod) => {
       const g = canopyTree(s, lod, kind);
@@ -875,7 +925,13 @@ function buildCanopyTrees(key: string, kind: TreeKind, seeds: number[], height: 
 
 /** Very cheap far-field giant (one part, one LOD), for the ring of canopy beyond the walkable area. */
 function buildGiantFar(): Species {
-  const m = mat('giant-far', { rough: 0.95, double: true, wind: 0.4, windHeight: 36, translucent: false });
+  const m = mat('giant-far', {
+    rough: 0.95,
+    double: true,
+    wind: 0.4,
+    windHeight: 36,
+    translucent: false,
+  });
   const geos = [301, 302].map((s) => {
     const g = canopyTree(s, 2, GIANT);
     const merged = new MB();
@@ -883,7 +939,8 @@ function buildGiantFar(): Species {
       const p = geo.attributes.position as THREE.BufferAttribute;
       const c = geo.attributes.color as THREE.BufferAttribute;
       const base = merged.count;
-      for (let k = 0; k < p.count; k++) merged.v(p.getX(k), p.getY(k), p.getZ(k), [c.getX(k), c.getY(k), c.getZ(k)]);
+      for (let k = 0; k < p.count; k++)
+        merged.v(p.getX(k), p.getY(k), p.getZ(k), [c.getX(k), c.getY(k), c.getZ(k)]);
       const idx = geo.index!;
       for (let k = 0; k < idx.count; k++) merged.i.push(base + idx.getX(k));
     };
@@ -893,14 +950,22 @@ function buildGiantFar(): Species {
     g.leaf.dispose();
     return merged.geometry();
   });
-  return simple(m, geos.map((g) => [g]), 36, 6);
+  return simple(
+    m,
+    geos.map((g) => [g]),
+    36,
+    6,
+  );
 }
 
 // ---------------------------------------------------------------------------------------------
 // Palms, tree ferns, saplings
 // ---------------------------------------------------------------------------------------------
 
-function palm(seed: number, lod: number): { trunk: THREE.BufferGeometry; crown: THREE.BufferGeometry; h: number } {
+function palm(
+  seed: number,
+  lod: number,
+): { trunk: THREE.BufferGeometry; crown: THREE.BufferGeometry; h: number } {
   const r = new Rng(seed);
   const trunk = new MB();
   const crown = new MB();
@@ -953,7 +1018,13 @@ function palm(seed: number, lod: number): { trunk: THREE.BufferGeometry; crown: 
 
 function buildPalm(): Species {
   const wind = 0.5;
-  const tm = mat('palm-trunk', { rough: 0.9, double: true, wind, windHeight: 12, translucent: false });
+  const tm = mat('palm-trunk', {
+    rough: 0.9,
+    double: true,
+    wind,
+    windHeight: 12,
+    translucent: false,
+  });
   const lm = mat('palm-leaf', { rough: 0.8, double: true, wind, windHeight: 12, flutter: 0.1 });
   const variants = [41, 42, 43].map((s) =>
     [0, 1, 2].map((lod) => {
@@ -967,7 +1038,10 @@ function buildPalm(): Species {
   return assemble(variants, 13, 2.5);
 }
 
-function treeFern(seed: number, lod: number): { trunk: THREE.BufferGeometry; crown: THREE.BufferGeometry } {
+function treeFern(
+  seed: number,
+  lod: number,
+): { trunk: THREE.BufferGeometry; crown: THREE.BufferGeometry } {
   const r = new Rng(seed);
   const trunk = new MB();
   const crown = new MB();
@@ -975,9 +1049,16 @@ function treeFern(seed: number, lod: number): { trunk: THREE.BufferGeometry; cro
   const pts: THREE.Vector3[] = [];
   const sg = [5, 3, 2][lod]!;
   const lx = r.range(-0.3, 0.3);
-  for (let k = 0; k <= sg; k++) pts.push(new THREE.Vector3(lx * (k / sg) ** 2, h * (k / sg) - 0.2, 0));
-  tube(trunk, pts, (t) => 0.11 + 0.04 * (1 - t), lod === 2 ? 4 : 6, (t, a) =>
-    mix(col('#4c3b2a'), col('#6c5a3c'), 0.5 + 0.5 * hnoise(a * 3, t * 6, seed)), true);
+  for (let k = 0; k <= sg; k++)
+    pts.push(new THREE.Vector3(lx * (k / sg) ** 2, h * (k / sg) - 0.2, 0));
+  tube(
+    trunk,
+    pts,
+    (t) => 0.11 + 0.04 * (1 - t),
+    lod === 2 ? 4 : 6,
+    (t, a) => mix(col('#4c3b2a'), col('#6c5a3c'), 0.5 + 0.5 * hnoise(a * 3, t * 6, seed)),
+    true,
+  );
   const top = pts[pts.length - 1]!;
   const nf = [16, 10, 7][lod]!;
   for (let f = 0; f < nf; f++) {
@@ -1004,7 +1085,13 @@ function treeFern(seed: number, lod: number): { trunk: THREE.BufferGeometry; cro
 
 function buildTreeFern(): Species {
   const wind = 0.15;
-  const tm = mat('treefern-trunk', { rough: 0.95, double: true, wind, windHeight: 4, translucent: false });
+  const tm = mat('treefern-trunk', {
+    rough: 0.95,
+    double: true,
+    wind,
+    windHeight: 4,
+    translucent: false,
+  });
   const lm = mat('treefern-leaf', { rough: 0.8, double: true, wind, windHeight: 4, flutter: 0.06 });
   const variants = [51, 52, 53].map((s) =>
     [0, 1, 2].map((lod) => {
@@ -1018,7 +1105,10 @@ function buildTreeFern(): Species {
   return assemble(variants, 4.5, 1.8);
 }
 
-function sapling(seed: number, lod: number): { trunk: THREE.BufferGeometry; leaf: THREE.BufferGeometry } {
+function sapling(
+  seed: number,
+  lod: number,
+): { trunk: THREE.BufferGeometry; leaf: THREE.BufferGeometry } {
   const r = new Rng(seed);
   const trunk = new MB();
   const leaf = new MB();
@@ -1028,10 +1118,22 @@ function sapling(seed: number, lod: number): { trunk: THREE.BufferGeometry; leaf
   const sg = [6, 4, 2][lod]!;
   for (let k = 0; k <= sg; k++) {
     const t = k / sg;
-    pts.push(new THREE.Vector3(lx * t * t + 0.1 * Math.sin(t * 5 + seed), h * t - 0.2, 0.2 * Math.cos(t * 4 + seed)));
+    pts.push(
+      new THREE.Vector3(
+        lx * t * t + 0.1 * Math.sin(t * 5 + seed),
+        h * t - 0.2,
+        0.2 * Math.cos(t * 4 + seed),
+      ),
+    );
   }
-  tube(trunk, pts, (t) => 0.11 * (1 - 0.55 * t) + 0.02, lod === 2 ? 4 : 5, (t, a) =>
-    mix(col('#5c4f3a'), col('#7b6c52'), 0.5 + 0.5 * hnoise(a * 2, t * 5, seed)), true);
+  tube(
+    trunk,
+    pts,
+    (t) => 0.11 * (1 - 0.55 * t) + 0.02,
+    lod === 2 ? 4 : 5,
+    (t, a) => mix(col('#5c4f3a'), col('#7b6c52'), 0.5 + 0.5 * hnoise(a * 2, t * 5, seed)),
+    true,
+  );
   const tiers = lod === 2 ? 2 : 3;
   for (let ti = 0; ti < tiers; ti++) {
     const y = h * (0.45 + 0.55 * (ti / Math.max(1, tiers - 1)) ** 0.8);
@@ -1062,7 +1164,13 @@ function sapling(seed: number, lod: number): { trunk: THREE.BufferGeometry; leaf
 
 function buildSapling(): Species {
   const wind = 0.25;
-  const tm = mat('sapling-trunk', { rough: 0.95, double: true, wind, windHeight: 7, translucent: false });
+  const tm = mat('sapling-trunk', {
+    rough: 0.95,
+    double: true,
+    wind,
+    windHeight: 7,
+    translucent: false,
+  });
   const lm = mat('sapling-leaf', { rough: 0.8, double: true, wind, windHeight: 7, flutter: 0.1 });
   const variants = [61, 62, 63].map((s) =>
     [0, 1, 2].map((lod) => {
@@ -1080,7 +1188,12 @@ function buildSapling(): Species {
 // Broad-leaf understory and ground plants (single foliage part, double-sided)
 // ---------------------------------------------------------------------------------------------
 
-function foliageMat(key: string, wind: number, windHeight: number, flutter: number): THREE.MeshStandardMaterial {
+function foliageMat(
+  key: string,
+  wind: number,
+  windHeight: number,
+  flutter: number,
+): THREE.MeshStandardMaterial {
   return mat(key, { rough: 0.78, double: true, wind, windHeight, flutter });
 }
 
@@ -1124,7 +1237,17 @@ function elephantEar(seed: number, lod: number): THREE.BufferGeometry {
   for (let i = 0; i < n; i++) {
     const yaw = (i / n) * Math.PI * 2 + r.range(-0.4, 0.4);
     const h = r.range(0.9, 1.5);
-    const s = stalk(b, Math.sin(yaw) * 0.1, 0, Math.cos(yaw) * 0.1, yaw, h, r.range(0.15, 0.4), 0.04, col('#5a8a34'));
+    const s = stalk(
+      b,
+      Math.sin(yaw) * 0.1,
+      0,
+      Math.cos(yaw) * 0.1,
+      yaw,
+      h,
+      r.range(0.15, 0.4),
+      0.04,
+      col('#5a8a34'),
+    );
     blade(b, {
       x: s.tip.x,
       y: s.tip.y,
@@ -1151,8 +1274,16 @@ function banana(seed: number, lod: number): THREE.BufferGeometry {
   const b = new MB();
   const h = r.range(2.4, 3.4);
   const pts: THREE.Vector3[] = [];
-  for (let k = 0; k <= 4; k++) pts.push(new THREE.Vector3(0.1 * Math.sin(k + seed), (h * k) / 4, 0));
-  tube(b, pts, (t) => 0.16 - 0.06 * t, lod === 2 ? 4 : 6, (t) => mix(col('#6e8a3a'), col('#52702c'), t), true);
+  for (let k = 0; k <= 4; k++)
+    pts.push(new THREE.Vector3(0.1 * Math.sin(k + seed), (h * k) / 4, 0));
+  tube(
+    b,
+    pts,
+    (t) => 0.16 - 0.06 * t,
+    lod === 2 ? 4 : 6,
+    (t) => mix(col('#6e8a3a'), col('#52702c'), t),
+    true,
+  );
   const top = pts[4]!;
   const n = [9, 7, 5][lod]!;
   for (let i = 0; i < n; i++) {
@@ -1363,7 +1494,13 @@ function logGeo(seed: number, len: number, lod: number): THREE.BufferGeometry {
   const n = lod === 0 ? 8 : 4;
   for (let k = 0; k <= n; k++) {
     const t = k / n;
-    pts.push(new THREE.Vector3(-len / 2 + len * t, 0.5 + 0.06 * Math.sin(t * 5 + seed), 0.15 * Math.sin(t * 3)));
+    pts.push(
+      new THREE.Vector3(
+        -len / 2 + len * t,
+        0.5 + 0.06 * Math.sin(t * 5 + seed),
+        0.15 * Math.sin(t * 3),
+      ),
+    );
   }
   tube(
     b,
@@ -1383,7 +1520,11 @@ function logGeo(seed: number, len: number, lod: number): THREE.BufferGeometry {
     // Shelf fungi + a stub branch for silhouette interest.
     tube(
       b,
-      [new THREE.Vector3(r.range(-1, 1), 0.7, 0.2), new THREE.Vector3(r.range(-1, 1), 1.0, 0.7), new THREE.Vector3(r.range(-1, 1), 1.2, 1.2)],
+      [
+        new THREE.Vector3(r.range(-1, 1), 0.7, 0.2),
+        new THREE.Vector3(r.range(-1, 1), 1.0, 0.7),
+        new THREE.Vector3(r.range(-1, 1), 1.2, 1.2),
+      ],
       (t) => 0.13 - 0.08 * t,
       5,
       () => col('#56473a'),
@@ -1409,7 +1550,13 @@ function rootSpread(seed: number, lod: number): THREE.BufferGeometry {
     for (let k = 0; k <= seg; k++) {
       const t = k / seg;
       const a2 = ang + Math.sin(t * 4 + ph) * 0.25 * wig;
-      pts.push(new THREE.Vector3(Math.cos(a2) * L * t, 0.1 * (1 - t) + 0.04 + 0.04 * Math.sin(t * 9 + ph), Math.sin(a2) * L * t));
+      pts.push(
+        new THREE.Vector3(
+          Math.cos(a2) * L * t,
+          0.1 * (1 - t) + 0.04 + 0.04 * Math.sin(t * 9 + ph),
+          Math.sin(a2) * L * t,
+        ),
+      );
     }
     tube(
       b,
@@ -1438,9 +1585,21 @@ function rootCurtain(seed: number, width: number, drop: number): THREE.BufferGeo
     const ph = r.range(0, 6);
     for (let k = 0; k <= 6; k++) {
       const t = k / 6;
-      pts.push(new THREE.Vector3(x + Math.sin(t * 5 + ph) * 0.12, -len * t, 0.25 * Math.sin(t * 3) * t + 0.12 * t));
+      pts.push(
+        new THREE.Vector3(
+          x + Math.sin(t * 5 + ph) * 0.12,
+          -len * t,
+          0.25 * Math.sin(t * 3) * t + 0.12 * t,
+        ),
+      );
     }
-    tube(b, pts, (t) => 0.1 * (1 - t) + 0.025, 5, (t, a) => mix(col('#54463a'), col('#3c4a28'), t * 0.6 + 0.3 * hnoise(a, t, seed)));
+    tube(
+      b,
+      pts,
+      (t) => 0.1 * (1 - t) + 0.025,
+      5,
+      (t, a) => mix(col('#54463a'), col('#3c4a28'), t * 0.6 + 0.3 * hnoise(a, t, seed)),
+    );
   }
   return b.geometry();
 }
@@ -1463,7 +1622,8 @@ function pillarGeo(seed: number, kind: 'full' | 'broken' | 'stump'): THREE.Buffe
     seed: sd + 1,
   });
   const band = (y0: number, y1: number): void => {
-    if (y1 < full) bx(b, -0.51, 0.51, y0, y1, -0.51, 0.51, stoneFn(seed + 5, 0.3, 0.9), { seg: 1, jit: 0.01 });
+    if (y1 < full)
+      bx(b, -0.51, 0.51, y0, y1, -0.51, 0.51, stoneFn(seed + 5, 0.3, 0.9), { seg: 1, jit: 0.01 });
   };
   band(1.2, 1.45);
   band(2.4, 2.65);
@@ -1477,7 +1637,15 @@ function pillarGeo(seed: number, kind: 'full' | 'broken' | 'stump'): THREE.Buffe
   for (let f = 0; f < 4; f++) {
     const a = (f * Math.PI) / 2;
     if (1.9 + 0.7 < full)
-      box(b, 0.38, 0.38, 0.1, xf(Math.sin(a) * 0.47, 1.65, Math.cos(a) * 0.47, a, 0, 0.785), relief, { seg: 1, noBottom: true });
+      box(
+        b,
+        0.38,
+        0.38,
+        0.1,
+        xf(Math.sin(a) * 0.47, 1.65, Math.cos(a) * 0.47, a, 0, 0.785),
+        relief,
+        { seg: 1, noBottom: true },
+      );
   }
   return b.geometry();
 }
@@ -1490,14 +1658,28 @@ function fallenPillarGeo(seed: number): THREE.BufferGeometry {
   const r = new Rng(seed);
   for (let k = 0; k < 3; k++) {
     const len = [1.9, 1.6, 1.3][k]! + r.range(-0.1, 0.2);
-    box(b, len, 0.9, 0.9, xf(x + len / 2, 0, r.range(-0.15, 0.15), r.range(-0.12, 0.12), 0, 0), fn, { seg: 0.5, jit: 0.02, seed: seed + k });
+    box(
+      b,
+      len,
+      0.9,
+      0.9,
+      xf(x + len / 2, 0, r.range(-0.15, 0.15), r.range(-0.12, 0.12), 0, 0),
+      fn,
+      { seg: 0.5, jit: 0.02, seed: seed + k },
+    );
     x += len + r.range(0.02, 0.35);
   }
   bx(b, 0, 0.6, 0, 0.18, 0.7, 1.3, fn);
   return b.geometry();
 }
 
-function wallGeo(seed: number, len: number, hMax: number, hMin: number, thick = 1.1): THREE.BufferGeometry {
+function wallGeo(
+  seed: number,
+  len: number,
+  hMax: number,
+  hMin: number,
+  thick = 1.1,
+): THREE.BufferGeometry {
   const b = new MB();
   const r = new Rng(seed);
   const fn = stoneFn(seed, 0.6);
@@ -1519,7 +1701,14 @@ function wallGeo(seed: number, len: number, hMax: number, hMin: number, thick = 
         e - s - 0.04,
         ch - 0.03,
         thick + r.range(-0.08, 0.1),
-        xf(mid, row * ch - 0.9, r.range(-0.05, 0.05), r.range(-0.03, 0.03), r.range(-0.012, 0.012), 0),
+        xf(
+          mid,
+          row * ch - 0.9,
+          r.range(-0.05, 0.05),
+          r.range(-0.03, 0.03),
+          r.range(-0.012, 0.012),
+          0,
+        ),
         fn,
         { seg: 2, noBottom: row > 0 },
       );
@@ -1535,9 +1724,25 @@ function blockGeo(seed: number): THREE.BufferGeometry {
   const w = r.range(0.9, 1.5);
   const h = r.range(0.55, 0.9);
   const d = r.range(0.7, 1.1);
-  box(b, w, h, d, xf(0, -0.08, 0, r.range(0, 6.28), r.range(-0.12, 0.12), r.range(-0.12, 0.12)), fn, { seg: 0.4, jit: 0.025, seed });
+  box(
+    b,
+    w,
+    h,
+    d,
+    xf(0, -0.08, 0, r.range(0, 6.28), r.range(-0.12, 0.12), r.range(-0.12, 0.12)),
+    fn,
+    { seg: 0.4, jit: 0.025, seed },
+  );
   // Carved band / boss on one face.
-  box(b, w * 0.7, 0.12, 0.08, xf(0, h * 0.45, d / 2 - 0.02, 0, 0, 0), stoneFn(seed + 9, 0.2, 0.85), { noBottom: true });
+  box(
+    b,
+    w * 0.7,
+    0.12,
+    0.08,
+    xf(0, h * 0.45, d / 2 - 0.02, 0, 0, 0),
+    stoneFn(seed + 9, 0.2, 0.85),
+    { noBottom: true },
+  );
   return b.geometry();
 }
 
@@ -1547,12 +1752,20 @@ function slabGeo(seed: number, lod: number): THREE.BufferGeometry {
   const fn = stoneFn(seed, 0.4);
   const w = r.range(1.2, 1.9);
   const d = r.range(1.1, 1.7);
-  box(b, w, 0.34, d, xf(0, -0.22, 0, r.range(-0.1, 0.1), r.range(-0.04, 0.04), r.range(-0.04, 0.04)), fn, {
-    seg: lod === 0 ? 0.5 : 2,
-    jit: lod === 0 ? 0.025 : 0,
-    seed,
-    noBottom: true,
-  });
+  box(
+    b,
+    w,
+    0.34,
+    d,
+    xf(0, -0.22, 0, r.range(-0.1, 0.1), r.range(-0.04, 0.04), r.range(-0.04, 0.04)),
+    fn,
+    {
+      seg: lod === 0 ? 0.5 : 2,
+      jit: lod === 0 ? 0.025 : 0,
+      seed,
+      noBottom: true,
+    },
+  );
   return b.geometry();
 }
 
@@ -1570,7 +1783,14 @@ function rubbleGeo(seed: number): THREE.BufferGeometry {
       sz * r.range(0.8, 1.4),
       sz * r.range(0.5, 0.9),
       sz * r.range(0.7, 1.2),
-      xf(Math.cos(a) * rr * 1.5, i * 0.05 - 0.1, Math.sin(a) * rr, r.range(0, 6.28), r.range(-0.4, 0.4), r.range(-0.4, 0.4)),
+      xf(
+        Math.cos(a) * rr * 1.5,
+        i * 0.05 - 0.1,
+        Math.sin(a) * rr,
+        r.range(0, 6.28),
+        r.range(-0.4, 0.4),
+        r.range(-0.4, 0.4),
+      ),
       fn,
       { seg: 0.5, jit: 0.02, seed: seed + i },
     );
@@ -1660,7 +1880,12 @@ function templeGeo(): THREE.BufferGeometry {
         seed: 20 + ti,
       });
     }
-    if (ti === 2) bx(b, -sh + 0.04, sh - 0.04, -3, t.h, t.z0 + 0.04, -15.6, fnTop, { seg: 2, jit: 0.03, seed: 29 });
+    if (ti === 2)
+      bx(b, -sh + 0.04, sh - 0.04, -3, t.h, t.z0 + 0.04, -15.6, fnTop, {
+        seg: 2,
+        jit: 0.03,
+        seed: 29,
+      });
     const y0 = ti === 0 ? 0 : tiers[ti - 1]!.h;
     const course = 0.6;
     // Fronts (+z) of the flank blocks.
@@ -1673,10 +1898,34 @@ function templeGeo(): THREE.BufferGeometry {
     skin(b, '-x', t.z0, t.z1, y0 + (ti === 0 ? 0 : 0), t.h, sh, fn, r, { course }); // channel wall facing the stair (right side)
     skin(b, '+x', t.z0, t.z1, y0, t.h, -sh, fn, r, { course }); // channel wall (left side)
     // Cornice lip.
-    skin(b, '+z', -t.w, -sh, t.h - 0.3, t.h, t.z1, fn, r, { course: 0.3, thick: 0.4, bulge: 0.22, blockMin: 1.6, blockMax: 3 });
-    skin(b, '+z', sh, t.w, t.h - 0.3, t.h, t.z1, fn, r, { course: 0.3, thick: 0.4, bulge: 0.22, blockMin: 1.6, blockMax: 3 });
-    skin(b, '+x', t.z0, t.z1, t.h - 0.3, t.h, t.w, fn, r, { course: 0.3, thick: 0.4, bulge: 0.22, blockMin: 1.6, blockMax: 3 });
-    skin(b, '-x', t.z0, t.z1, t.h - 0.3, t.h, -t.w, fn, r, { course: 0.3, thick: 0.4, bulge: 0.22, blockMin: 1.6, blockMax: 3 });
+    skin(b, '+z', -t.w, -sh, t.h - 0.3, t.h, t.z1, fn, r, {
+      course: 0.3,
+      thick: 0.4,
+      bulge: 0.22,
+      blockMin: 1.6,
+      blockMax: 3,
+    });
+    skin(b, '+z', sh, t.w, t.h - 0.3, t.h, t.z1, fn, r, {
+      course: 0.3,
+      thick: 0.4,
+      bulge: 0.22,
+      blockMin: 1.6,
+      blockMax: 3,
+    });
+    skin(b, '+x', t.z0, t.z1, t.h - 0.3, t.h, t.w, fn, r, {
+      course: 0.3,
+      thick: 0.4,
+      bulge: 0.22,
+      blockMin: 1.6,
+      blockMax: 3,
+    });
+    skin(b, '-x', t.z0, t.z1, t.h - 0.3, t.h, -t.w, fn, r, {
+      course: 0.3,
+      thick: 0.4,
+      bulge: 0.22,
+      blockMin: 1.6,
+      blockMax: 3,
+    });
   });
 
   // Stair: only the visible riser slice of each step (solid colliders are separate props).
@@ -1691,12 +1940,28 @@ function templeGeo(): THREE.BufferGeometry {
       const left = r.next() < 0.5;
       const xs = left ? [-sh, -sh + cut] : [sh - cut, sh];
       const xr = left ? [-sh + cut, sh] : [-sh, sh - cut];
-      bx(b, xr[0]!, xr[1]!, top - 0.35, top + settle, zf - T.tread, zf, stepFn, { seg: 0.9, jit: 0.02, seed: i });
-      bx(b, xs[0]!, xs[1]!, top - 0.45, top - 0.12 + settle, zf - T.tread, zf + 0.02, stepFn, { seg: 0.9, jit: 0.035, seed: i + 50 });
+      bx(b, xr[0]!, xr[1]!, top - 0.35, top + settle, zf - T.tread, zf, stepFn, {
+        seg: 0.9,
+        jit: 0.02,
+        seed: i,
+      });
+      bx(b, xs[0]!, xs[1]!, top - 0.45, top - 0.12 + settle, zf - T.tread, zf + 0.02, stepFn, {
+        seg: 0.9,
+        jit: 0.035,
+        seed: i + 50,
+      });
     } else {
       const split = r.range(-1.8, 1.8);
-      bx(b, -sh, split - 0.02, top - 0.35, top + settle, zf - T.tread, zf, stepFn, { seg: 0.9, jit: 0.02, seed: i });
-      bx(b, split + 0.02, sh, top - 0.35, top - settle * 1.5, zf - T.tread, zf, stepFn, { seg: 0.9, jit: 0.02, seed: i + 50 });
+      bx(b, -sh, split - 0.02, top - 0.35, top + settle, zf - T.tread, zf, stepFn, {
+        seg: 0.9,
+        jit: 0.02,
+        seed: i,
+      });
+      bx(b, split + 0.02, sh, top - 0.35, top - settle * 1.5, zf - T.tread, zf, stepFn, {
+        seg: 0.9,
+        jit: 0.02,
+        seed: i + 50,
+      });
     }
   }
 
@@ -1713,7 +1978,14 @@ function templeGeo(): THREE.BufferGeometry {
         1.6 + r.range(-0.1, 0.05),
         0.14,
         1.6 + r.range(-0.1, 0.05),
-        xf(gx + 0.85, T.topY - 0.03 + wob, gz + 0.85, r.range(-0.04, 0.04), r.range(-0.02, 0.02), r.range(-0.02, 0.02)),
+        xf(
+          gx + 0.85,
+          T.topY - 0.03 + wob,
+          gz + 0.85,
+          r.range(-0.04, 0.04),
+          r.range(-0.02, 0.02),
+          r.range(-0.02, 0.02),
+        ),
         slabInside,
         { noBottom: true, seg: 3 },
       );
@@ -1727,7 +1999,8 @@ function templeGeo(): THREE.BufferGeometry {
   const hw = T.doorW / 2;
   const inner = stoneFn(31, 0.1, 0.34);
   const wallBase = stoneFn(32, 0.6);
-  const wall: ColFn = (x, y, z, nx, ny, nz) => mul(wallBase(x, y, z, nx, ny, nz), ny < -0.5 ? 0.3 : 1);
+  const wall: ColFn = (x, y, z, nx, ny, nz) =>
+    mul(wallBase(x, y, z, nx, ny, nz), ny < -0.5 ? 0.3 : 1);
   const wallCore = stoneFn(33, 0.3, 0.6);
   const parts: [number, number, number, number][] = [
     [-5.8, -hw, dz - 2.2, dz], // front-left
@@ -1754,13 +2027,38 @@ function templeGeo(): THREE.BufferGeometry {
   // Door jambs (reveal) and lintel.
   skin(b, '+x', dz - 2.2, dz, y0, y0 + T.doorH, -hw, wall, r, { course: 0.5, thick: 0.2 });
   skin(b, '-x', dz - 2.2, dz, y0, y0 + T.doorH, hw, wall, r, { course: 0.5, thick: 0.2 });
-  bx(b, -hw - 0.5, hw + 0.5, y0 + T.doorH, y0 + T.doorH + 1.0, dz - 2.25, dz + 0.22, wall, { seg: 0.8, jit: 0.02, seed: 7 });
-  bx(b, -hw - 0.9, hw + 0.9, y0 + T.doorH + 1.0, y0 + T.doorH + 1.35, dz - 2.3, dz + 0.4, wall, { seg: 0.8, jit: 0.02, seed: 8 });
+  bx(b, -hw - 0.5, hw + 0.5, y0 + T.doorH, y0 + T.doorH + 1.0, dz - 2.25, dz + 0.22, wall, {
+    seg: 0.8,
+    jit: 0.02,
+    seed: 7,
+  });
+  bx(b, -hw - 0.9, hw + 0.9, y0 + T.doorH + 1.0, y0 + T.doorH + 1.35, dz - 2.3, dz + 0.4, wall, {
+    seg: 0.8,
+    jit: 0.02,
+    seed: 8,
+  });
   // Engaged pillars flanking the door.
   for (const sx of [-1, 1]) {
-    bx(b, sx * (hw + 1.3) - 0.45, sx * (hw + 1.3) + 0.45, y0, y0 + 4.2, dz + 0.02, dz + 0.9, wall, { seg: 0.5, jit: 0.015, seed: 40 + sx });
-    bx(b, sx * (hw + 1.3) - 0.6, sx * (hw + 1.3) + 0.6, y0 + 4.2, y0 + 4.55, dz + 0.02, dz + 1.05, wall, { jit: 0.02, seed: 44 + sx });
-    bx(b, sx * (hw + 1.3) - 0.62, sx * (hw + 1.3) + 0.62, y0, y0 + 0.4, dz + 0.0, dz + 1.1, wall, { jit: 0.02, seed: 46 + sx });
+    bx(b, sx * (hw + 1.3) - 0.45, sx * (hw + 1.3) + 0.45, y0, y0 + 4.2, dz + 0.02, dz + 0.9, wall, {
+      seg: 0.5,
+      jit: 0.015,
+      seed: 40 + sx,
+    });
+    bx(
+      b,
+      sx * (hw + 1.3) - 0.6,
+      sx * (hw + 1.3) + 0.6,
+      y0 + 4.2,
+      y0 + 4.55,
+      dz + 0.02,
+      dz + 1.05,
+      wall,
+      { jit: 0.02, seed: 44 + sx },
+    );
+    bx(b, sx * (hw + 1.3) - 0.62, sx * (hw + 1.3) + 0.62, y0, y0 + 0.4, dz + 0.0, dz + 1.1, wall, {
+      jit: 0.02,
+      seed: 46 + sx,
+    });
   }
   // Roof: partly collapsed slab, stepped crown.
   bx(b, -6.4, 0.2, yt, yt + 0.9, -31.1, dz + 0.6, wall, { seg: 1.2, jit: 0.04, seed: 50 });
@@ -1769,8 +2067,15 @@ function templeGeo(): THREE.BufferGeometry {
   bx(b, 1.0, 4.6, yt + 0.9, yt + 1.7, -29.8, -26.0, wall, { seg: 1.2, jit: 0.07, seed: 53 });
   bx(b, -2.8, 0.2, yt + 1.9, yt + 2.8, -28.2, -23.0, wall, { seg: 1.2, jit: 0.05, seed: 54 });
   // Altar in the dark chamber.
-  bx(b, -1.1, 1.1, y0, y0 + 1.0, -27.6, -26.2, stoneFn(60, 0.1, 0.4), { seg: 0.8, jit: 0.015, seed: 60 });
-  bx(b, -1.3, 1.3, y0 + 1.0, y0 + 1.18, -27.8, -26.0, stoneFn(61, 0.1, 0.4), { jit: 0.01, seed: 61 });
+  bx(b, -1.1, 1.1, y0, y0 + 1.0, -27.6, -26.2, stoneFn(60, 0.1, 0.4), {
+    seg: 0.8,
+    jit: 0.015,
+    seed: 60,
+  });
+  bx(b, -1.3, 1.3, y0 + 1.0, y0 + 1.18, -27.8, -26.0, stoneFn(61, 0.1, 0.4), {
+    jit: 0.01,
+    seed: 61,
+  });
   return b.geometry();
 }
 
@@ -1795,27 +2100,72 @@ function templeGrowthGeo(): THREE.BufferGeometry {
     for (let k = 0; k <= 22; k++) {
       const t = k / 22;
       const z = zStart + (zEnd - zStart) * t;
-      pts.push(new THREE.Vector3(x0 + drift * t + 0.25 * Math.sin(t * 9 + i), surfaceY(z) + 0.12 + 0.07 * Math.sin(t * 40), z));
+      pts.push(
+        new THREE.Vector3(
+          x0 + drift * t + 0.25 * Math.sin(t * 9 + i),
+          surfaceY(z) + 0.12 + 0.07 * Math.sin(t * 40),
+          z,
+        ),
+      );
     }
-    tube(b, pts, (t) => 0.09 * (1 - 0.6 * t) + 0.03, 5, (t, a) => mix(ROOT_D, ROOT, 0.5 + 0.5 * hnoise(a, t * 6, 80 + i)));
+    tube(
+      b,
+      pts,
+      (t) => 0.09 * (1 - 0.6 * t) + 0.03,
+      5,
+      (t, a) => mix(ROOT_D, ROOT, 0.5 + 0.5 * hnoise(a, t * 6, 80 + i)),
+    );
   }
   // Moss cushions on terraces and stair cheeks.
   const place: [number, number, number, number][] = [
-    [-12, 2.4, -8, 1.6], [11, 2.4, -7.6, 1.4], [-10.5, 4.8, -11, 1.5], [9.5, 4.8, -10.5, 1.3],
-    [-7.5, 7.2, -14.5, 1.7], [7, 7.2, -15, 1.5], [-5.2, 7.2, -17.5, 1.2], [5.0, 7.2, -17, 1.1],
+    [-12, 2.4, -8, 1.6],
+    [11, 2.4, -7.6, 1.4],
+    [-10.5, 4.8, -11, 1.5],
+    [9.5, 4.8, -10.5, 1.3],
+    [-7.5, 7.2, -14.5, 1.7],
+    [7, 7.2, -15, 1.5],
+    [-5.2, 7.2, -17.5, 1.2],
+    [5.0, 7.2, -17, 1.1],
   ];
   place.forEach(([x, y, z, rr], i) => {
-    blob(b, x, y + 0.05, z, rr * 0.8, 0.28, rr * 0.55, 1, (px, py, pz, _nx, ny) => mix(MOSS_D, MOSS, clamp01(0.5 + 0.7 * ny + 0.2 * hnoise(px * 2, pz * 2, i))), { disp: 0.3, seed: i });
+    blob(
+      b,
+      x,
+      y + 0.05,
+      z,
+      rr * 0.8,
+      0.28,
+      rr * 0.55,
+      1,
+      (px, py, pz, _nx, ny) =>
+        mix(MOSS_D, MOSS, clamp01(0.5 + 0.7 * ny + 0.2 * hnoise(px * 2, pz * 2, i))),
+      { disp: 0.3, seed: i },
+    );
   });
   // Vine curtains: the door lintel, tier lips and roof edge.
-  const curtain = (x: number, y: number, z: number, len: number, n: number, spread: number): void => {
+  const curtain = (
+    x: number,
+    y: number,
+    z: number,
+    len: number,
+    n: number,
+    spread: number,
+  ): void => {
     for (let k = 0; k < n; k++) {
-      vine(b, x + (k / Math.max(1, n - 1) - 0.5) * spread + r.range(-0.15, 0.15), y, z + r.range(-0.1, 0.15), len * r.range(0.6, 1), r, {
-        leafEvery: 0.55,
-        leafSize: 0.34,
-        radius: 0.022,
-        sway: 0.3,
-      });
+      vine(
+        b,
+        x + (k / Math.max(1, n - 1) - 0.5) * spread + r.range(-0.15, 0.15),
+        y,
+        z + r.range(-0.1, 0.15),
+        len * r.range(0.6, 1),
+        r,
+        {
+          leafEvery: 0.55,
+          leafSize: 0.34,
+          radius: 0.022,
+          sway: 0.3,
+        },
+      );
     }
   };
   const yd = T.topY + T.doorH + 1.35;
@@ -1833,10 +2183,19 @@ function templeGrowthGeo(): THREE.BufferGeometry {
   const pos = rc.attributes.position as THREE.BufferAttribute;
   const colr = rc.attributes.color as THREE.BufferAttribute;
   const idx = rc.index!;
-  const place2: [number, number, number][] = [[2.8, T.topY + T.wallH + 0.9, T.doorZ + 0.45], [-3.8, 4.8 + 0.0, -9.05], [8, 2.4, -5.9]];
+  const place2: [number, number, number][] = [
+    [2.8, T.topY + T.wallH + 0.9, T.doorZ + 0.45],
+    [-3.8, 4.8 + 0.0, -9.05],
+    [8, 2.4, -5.9],
+  ];
   for (const [ox, oy, oz] of place2) {
     const base = b.count;
-    for (let k = 0; k < pos.count; k++) b.v(pos.getX(k) + ox, pos.getY(k) + oy, pos.getZ(k) + oz, [colr.getX(k), colr.getY(k), colr.getZ(k)]);
+    for (let k = 0; k < pos.count; k++)
+      b.v(pos.getX(k) + ox, pos.getY(k) + oy, pos.getZ(k) + oz, [
+        colr.getX(k),
+        colr.getY(k),
+        colr.getZ(k),
+      ]);
     for (let k = 0; k < idx.count; k++) b.i.push(base + idx.getX(k));
   }
   rc.dispose();
@@ -1884,12 +2243,18 @@ function stoneMat(key: string): THREE.MeshStandardMaterial {
 
 function boulderSpecies(): Species {
   const m = stoneMat('boulder');
-  return simple(m, [301, 302, 303].map((s) => [boulderGeo(s, 3), boulderGeo(s, 2), boulderGeo(s, 1)]), 1.4, 1.4);
+  return simple(
+    m,
+    [301, 302, 303].map((s) => [boulderGeo(s, 3), boulderGeo(s, 2), boulderGeo(s, 1)]),
+    1.4,
+    1.4,
+  );
 }
 
 export const JUNGLE_SPECIES: Record<string, () => Species> = {
   'jungle:temple': () => simple(stoneMat('temple'), [[templeGeo()]], 18, 18),
-  'jungle:temple-growth': () => simple(mat('temple-growth', { rough: 0.85, double: true }), [[templeGrowthGeo()]], 18, 18),
+  'jungle:temple-growth': () =>
+    simple(mat('temple-growth', { rough: 0.85, double: true }), [[templeGrowthGeo()]], 18, 18),
   'jungle:collider': () => simple(mat('collider', { invisible: true }), [[colliderGeo()]], 1, 0.5),
   'jungle:pillar': () => simple(stoneMat('pillar'), [[pillarGeo(5, 'full')]], 5.2, 0.9),
   'jungle:pillar-broken': () => simple(stoneMat('pillar'), [[pillarGeo(6, 'broken')]], 3.4, 0.9),
@@ -1898,17 +2263,41 @@ export const JUNGLE_SPECIES: Record<string, () => Species> = {
   'jungle:wall': () => simple(stoneMat('wall'), [[wallGeo(21, 8, 3.4, 1.2)]], 3.4, 4.2),
   'jungle:wall-b': () => simple(stoneMat('wall'), [[wallGeo(22, 6, 2.6, 0.7)]], 2.6, 3.2),
   'jungle:wall-low': () => simple(stoneMat('wall'), [[wallGeo(23, 7, 1.2, 0.5)]], 1.2, 3.6),
-  'jungle:block': () => simple(stoneMat('block'), [71, 72, 73].map((s) => [blockGeo(s)]), 1, 1),
+  'jungle:block': () =>
+    simple(
+      stoneMat('block'),
+      [71, 72, 73].map((s) => [blockGeo(s)]),
+      1,
+      1,
+    ),
   'jungle:rubble': () => simple(stoneMat('rubble'), [[rubbleGeo(31)], [rubbleGeo(32)]], 1.2, 1.8),
   'jungle:slab': () =>
-    simple(stoneMat('slab'), [81, 82, 83, 84].map((s) => [slabGeo(s, 0), slabGeo(s, 1)]), 0.2, 1),
+    simple(
+      stoneMat('slab'),
+      [81, 82, 83, 84].map((s) => [slabGeo(s, 0), slabGeo(s, 1)]),
+      0.2,
+      1,
+    ),
   'jungle:stele': () => simple(stoneMat('stele'), [[steleGeo(91)]], 3.3, 0.8),
   'jungle:guardian': () => simple(stoneMat('guardian'), [[guardianGeo()]], 3.4, 1.0),
   'jungle:root-spread': () =>
-    simple(mat('root', { rough: 0.95, double: true, translucent: false }), [11, 12, 13, 14].map((s) => [rootSpread(s, 0), rootSpread(s, 1)]), 0.5, 5),
+    simple(
+      mat('root', { rough: 0.95, double: true, translucent: false }),
+      [11, 12, 13, 14].map((s) => [rootSpread(s, 0), rootSpread(s, 1)]),
+      0.5,
+      5,
+    ),
   'jungle:boulder': boulderSpecies,
   'jungle:log': () =>
-    simple(mat('log', { rough: 0.95 }), [[logGeo(5, 7, 0), logGeo(5, 7, 1)], [logGeo(6, 10, 0), logGeo(6, 10, 1)]], 1.2, 3),
+    simple(
+      mat('log', { rough: 0.95 }),
+      [
+        [logGeo(5, 7, 0), logGeo(5, 7, 1)],
+        [logGeo(6, 10, 0), logGeo(6, 10, 1)],
+      ],
+      1.2,
+      3,
+    ),
   'jungle:giant-tree': () => buildCanopyTrees('giant', GIANT, [101, 102, 103], 38, 3),
   'jungle:giant-far': buildGiantFar,
   'jungle:canopy-tree': () => buildCanopyTrees('mid', MID, [111, 112, 113], 22, 1.5),
@@ -1916,12 +2305,19 @@ export const JUNGLE_SPECIES: Record<string, () => Species> = {
   'jungle:tree-fern': buildTreeFern,
   'jungle:sapling': buildSapling,
   'jungle:liana': () =>
-    simple(mat('liana', { rough: 0.85, double: true, wind: 0.5, windHeight: 30, flutter: 0.05 }), [121, 122, 123].map((s) => [lianaGeo(s, 0), lianaGeo(s, 1)]), 31, 0.5),
+    simple(
+      mat('liana', { rough: 0.85, double: true, wind: 0.5, windHeight: 30, flutter: 0.05 }),
+      [121, 122, 123].map((s) => [lianaGeo(s, 0), lianaGeo(s, 1)]),
+      31,
+      0.5,
+    ),
   'jungle:monstera': () => plantSpecies('monstera', [201, 202], monstera, 0.1, 1.6, 1.8, 1.2),
-  'jungle:elephant-ear': () => plantSpecies('elephant-ear', [211, 212], elephantEar, 0.1, 1.8, 2.0, 1.1),
+  'jungle:elephant-ear': () =>
+    plantSpecies('elephant-ear', [211, 212], elephantEar, 0.1, 1.8, 2.0, 1.1),
   'jungle:banana': () => plantSpecies('banana', [221, 222], banana, 0.2, 4, 4.5, 2.2),
   'jungle:fern-big': () => plantSpecies('fern-big', [231, 232, 233], bigFern, 0.08, 1.2, 1.3, 1.5),
-  'jungle:ground-leaf': () => plantSpecies('ground-leaf', [241, 242, 243], groundLeaf, 0.05, 0.7, 0.8, 0.6),
+  'jungle:ground-leaf': () =>
+    plantSpecies('ground-leaf', [241, 242, 243], groundLeaf, 0.05, 0.7, 0.8, 0.6),
   'jungle:ginger': () => plantSpecies('ginger', [251, 252], ginger, 0.1, 2, 2.2, 1),
   'jungle:shrub': () => plantSpecies('shrub', [261, 262, 263], shrub, 0.08, 1.4, 1.5, 1.1),
   'jungle:fern-low': () => plantSpecies('fern-low', [271, 272, 273], lowFern, 0.04, 0.5, 0.5, 0.7),

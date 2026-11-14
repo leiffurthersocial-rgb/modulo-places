@@ -24,7 +24,16 @@ export interface PackManifest {
   hdris: Record<string, { source: string; id: string; '1k': string; '2k': string; bytes: number }>;
   audio: Record<string, { ogg: string; m4a: string; bytes: number }>;
   /** Branch-card atlases baked by scripts/bake-foliage.ts. */
-  foliage?: Record<string, { albedo: string; normal: string; rects: [number, number, number, number][]; aspect: number[]; bytes: number }>;
+  foliage?: Record<
+    string,
+    {
+      albedo: string;
+      normal: string;
+      rects: [number, number, number, number][];
+      aspect: number[];
+      bytes: number;
+    }
+  >;
 }
 
 export interface PbrMaterialMaps {
@@ -99,10 +108,21 @@ export class AssetLoader {
     return { map, normalMap, armMap };
   }
 
-  async foliage(kind: string, anisotropy: number): Promise<{ albedo: THREE.Texture; normal: THREE.Texture; rects: [number, number, number, number][]; aspect: number[] } | null> {
+  async foliage(
+    kind: string,
+    anisotropy: number,
+  ): Promise<{
+    albedo: THREE.Texture;
+    normal: THREE.Texture;
+    rects: [number, number, number, number][];
+    aspect: number[];
+  } | null> {
     const f = this.manifest.foliage?.[kind];
     if (!f) return null;
-    const [albedo, normal] = await Promise.all([this.ktx(f.albedo, true, anisotropy), this.ktx(f.normal, false, anisotropy)]);
+    const [albedo, normal] = await Promise.all([
+      this.ktx(f.albedo, true, anisotropy),
+      this.ktx(f.normal, false, anisotropy),
+    ]);
     // Cards use clamped UV rects of the atlas.
     for (const t of [albedo, normal]) t.wrapS = t.wrapT = THREE.ClampToEdgeWrapping;
     this.bytesLoaded += f.bytes;

@@ -851,7 +851,11 @@ export function buildLog(
     radius = Math.max(radius, Math.abs(m.pos[i]!));
     hmax = Math.max(hmax, m.pos[i + 1]!);
   }
-  return { parts: [{ geometry: repairNormals(m.toGeometry(true)), material: mat }], height: hmax, radius };
+  return {
+    parts: [{ geometry: repairNormals(m.toGeometry(true)), material: mat }],
+    height: hmax,
+    radius,
+  };
 }
 
 function mossBlendMaterial(
