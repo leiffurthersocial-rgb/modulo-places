@@ -47,6 +47,15 @@ The process the Misty Forest (M3) established. Village, jungle and cabin (M4–M
 - **Moods:** each mood has an HDRI key; the panorama is auto-rotated so its sun matches `sun.azimuth`. Each also sets fog, post, `particles` (mist/pollen/dust/leaves/rain/snow) and an `audio` preset.
 - **Cameras:** 6 review cameras, with heights relative to the terrain: spawn, water, open view, low ground detail, into the sun, path.
 
+## 2b. Species and materials
+- **Vegetation:** prefer procedural species: `conifer:{fir,pine,fir-sapling,pine-sapling}`, `broadleaf:{maple,deciduous,jungle-giant,jungle-canopy}`, `tropical:{monstera,banana,elephant-ear,palm,tree-fern,bamboo}`, `log:oak`. Scanned trees are not usable at real-time budgets (DECISIONS D-031). Big trees: `impostor: true`. Backdrop rings: `lods: [1,2,3]` (always impostor).
+- **Architecture and props:** register placeholder species in `src/scenes/<id>/placeholders.ts` with one part per material.
+  - **Textured parts:** use `sceneMaterial('<pack key>', fallback)`.
+  - **Glowing parts:** use `patchMaterial(..., { nightLight: true })`.
+  - **Pack keys:** list every key you use in `scene.json.materials` with scale, tint and brightness.
+- **Props:** hand-placed with terrain-relative Y. Collision is a box or cylinder from the prop's bounds, so set `collision: 'none'` on trees and use invisible collider props for trunks.
+- **Snowy scenes:** set `snowCover`.
+
 ## 3. Review loop (every visual change)
 1. Render all moods × 6 cameras × {desktop High, iPad Medium}:
 

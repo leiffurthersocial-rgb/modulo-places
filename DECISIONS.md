@@ -2,6 +2,23 @@
 
 Newest first. Each entry: decision · why · source (only pages actually opened; see RESEARCH.md).
 
+## 2026-11-14 — Scenes 2–4 and foliage
+
+### D-036 All foliage is procedural, textured from baked scan atlases
+Following D-031, broadleaf trees (maple, deciduous, jungle giant and canopy) are generated from leaf-cluster atlases baked from Poly Haven `tree_small_02`, with a crimson palette mapping for maples. Tropical plants (monstera, banana, elephant-ear, palm, tree fern) use leaves baked from the calathea / anthurium / fern scans. Bamboo uses procedural leaf sprays. Scatter ids are `broadleaf:*`, `tropical:*`, `conifer:*` and `log:*`. All have 3 variants × 3 LODs plus a baked impostor for big trees. Every procedural geometry runs `repairNormals` (D-033).
+
+### D-035 Card light shafts for Medium/iPad
+Medium and iPad get instanced, sun-aligned, soft additive beams in one draw call, seeded on a world grid around the camera. They follow the mood's shaft strength and are brightest when looking toward the sun. They fade for low suns (the beams would be near-horizontal panels) and when viewed along their axis. High and Ultra add the radial blur pass on top.
+
+### D-034 Snow cover and night lights are material options
+`patchMaterial({ snow })` blends snow onto up-facing surfaces by `scene.snowCover`; it is on for conifers, logs, GLB rocks and triplanar materials in snowy scenes. `patchMaterial({ nightLight })` scales emissive output by the mood's `post.nightLights`, for lanterns, shoji and windows. The sky has mood-driven aurora curtains and stars.
+
+### D-033 Greybox/procedural geometry is textured by a world-space triplanar library
+Placeholder buildings, ruins and props have no UVs. `scene.json.materials` lists pack materials with scale, tint, brightness and roughness. `sceneMaterial(key, fallback)` returns a world-space triplanar PBR material (instancing-aware), which builders use per part. The library is owned by SceneRuntime and disposed on exit.
+
+### D-032 HDRIs light every scene but are never the visible sky
+Same reasoning as the forest: wrong scale and resolution as a backdrop. Visible skies are the analytic gradient, plus aurora and stars at night.
+
 ## 2026-11-14 — M3 forest
 
 ### D-031 Scanned conifers are not usable as-is; trees become procedural with baked branch cards
