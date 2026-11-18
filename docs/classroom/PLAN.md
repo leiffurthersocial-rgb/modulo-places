@@ -1,6 +1,10 @@
 # PLAN.md: Modulo: Classroom
 
-Status: **draft, waiting for your OK.** STEP 0 (environment + hello-world deploy) and STEP 1 (research) are done. I won't start Phase 1 until you approve.
+Status (2026-11-18): **you said "continue, finish as far as you can"**, so I used the recommended defaults for the open questions (same repo, photos stay local, English UI with data-driven strings, 10 fictional classmates, ~10-minute lessons).
+
+**Done:** Phase 1 (greybox vertical slice) and Phase 2 (greybox depth) are playable. Phase 3 (quality presets, Battery Saver, pause when hidden, watchdog, benchmark route) is implemented but **not measured on real devices**.
+**Not started:** Phase 4 (real assets), Phase 5 (characters), most of Phase 6 polish (there is a title screen, settings, controls, credits and subtitles for cues; no tutorial lesson yet).
+See §9 for the delivered feature list and §10 for next steps.
 
 Docs: `ENVIRONMENT.md`, `SETUP.md`, `RESEARCH.md` (sources + recommended architecture + risks) and `DECISIONS.md` (C-001…C-016), all in `docs/classroom/`.
 
@@ -119,3 +123,24 @@ The room is small, so the budgets are tighter than Places'.
 ## 8. Top risks
 
 See RESEARCH.md "Risks". In short: (1) detection fairness tuning, (2) NPC CPU cost on iPad (budget ≤ 2 ms per sim tick), (3) skinned characters on iPad, (4) iPad memory with video, (5) media unlock on iPad, (6) scope, (7) no real GPU in the container.
+
+## 9. What is built (greybox)
+
+- **Room** from `classroom-a.json`: a U of 11 tables, 11 seats + a front "hot seat", two window bays, a column, door, sink, radiator, board, pinboard, posters, wall clock with moving hands, ceiling projector, teacher's standing desk with document camera and laptop.
+- **Player**: walk, sprint (loud), crouch (quiet), sit/stand, lean, look, interact (view-cone pick + prompt with verb cycling), carry and throw paper balls/planes, raise hand, work (hold), peek (tests), cheat sheet (prepared on the title screen), notes.
+- **Devices**: phone (lap) / laptop (table); Block Drop mini-game; procedural video; quick-switch decoy with fumble window and "twitchy" rule; brightness; earbud (sound bleed vs. muffled room cues); screen glow light; confiscation.
+- **Teacher**: HFSM (board, facing, patrol, behind, check desks, hand out, answer, laptop, leave/away/return, investigate, watch, confront, penalty, prank tasks) + bucketed utility with inertia. Five profiles (strict, lazy, distracted, hawk, substitute). Telegraphs: slow head turn, speech trails off, marker stops squeaking before glances, footsteps.
+- **Senses**: inner cone / coffin / peripheral / near zones; 6 body sample points; 2.5D occlusion (tables, desk, columns, walls, people); dim-light factor; hearing with surface materials (carpet vs. hard-floor zones), quiet-phase multipliers, the off-screen fairness rule, attribution vs. investigation.
+- **Classmates (10)**: needs → bucketed utility actions (listen, notes, doodle, yawn, glance, whisper, phone, cough/sneeze, sharpener trips, raise hand, pass notes to friends); break-time clusters; react to your screen (laugh, snitch), friends cough-warn you, refuse or allow copying; complain when you take their seat.
+- **Social**: affinity + memory log (persisted), NPC↔NPC affinity, note chains through the seat graph (pass / read / refuse / snitch / intercept, replies, answer notes in tests), diegetic notebook page.
+- **Pranks (10)**: hide marker, projector input, window gust, wobbly chair (break only), clock 5 min fast (lesson ends early), reorder posters, paper plane on desk, board sticker, radiator knock, flipped document camera. Each has setup evidence, witnesses with opinions, a delayed effect, a teacher distraction task, and a "Who did this?" phase.
+- **Lessons**: lecture, silent worksheet, group work, test, presentations, film day (lights dim, projector), free study (surprise test possible), detention. Seeded events: pop question, handout, door, classmate drop, phone buzz, teacher leaves, surprise test.
+- **Record**: persistent strikes → warning → written warning + seat change → detention lesson → call home + grade drop (with a dry summary). Clean lessons heal one strike. Teacher trust per profile, grades (tests + participation), wishlist challenges, lesson summary and end-of-day report, versioned save with a migration.
+- **Tools**: F3 debug (FPS, draw calls, sim tick, teacher state, suspicion list, vision fans, hearing rings, path, time scale, force events), F4 free camera, screenshot mode, seed links, headless balance runner (`npx tsx scripts/classroom-balance.ts 500`, report in `reports/classroom-balance.md`).
+
+## 10. Next steps (proposal)
+
+1. **Your playtest** of the preview at `/classroom` on desktop + iPad, plus the benchmark route numbers (SETUP.md).
+2. Balance pass from your feel plus the runner. Escalation is currently steep for persistent offenders, and pranks are rarely "clean" (witnesses).
+3. Phase 4 assets (needs API keys: Pexels, Freesound, Pixabay; Kenney manually), `/lab` material picks for concrete, carpet, ceiling slats and table top.
+4. Phase 5 characters (shared skeleton, CC0 sources), Phase 6 tutorial lesson.

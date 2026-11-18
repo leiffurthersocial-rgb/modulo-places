@@ -219,7 +219,7 @@ function chooseAction(w: World, s: StudentState): void {
   const a = s.agent;
   switch (pick) {
     case 'yawn':
-      if (cd(s, 'yawn', w, 20)) w.say(a.id, 'student', 'yawn');
+      if (cd(s, 'yawn', w, 75) && w.rngStudents.chance(0.3)) w.say(a.id, 'student', 'yawn');
       n.sleepy = Math.max(0, n.sleepy - 0.3);
       break;
     case 'cough':

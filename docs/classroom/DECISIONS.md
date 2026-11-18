@@ -84,3 +84,51 @@ Format: **what**, **why**, **alternatives rejected**. IDs use the prefix `C-` to
 ### C-016: Greybox palette approximates the reference materials
 
 - Brown carpet, warm-grey concrete, honey-wood slats over a dark gap, white tables, chrome, plywood chairs, red-brown door, yellow pinboard. This keeps Phase-4 material swaps intuitive and keeps the greybox readable in screenshots.
+
+---
+
+## Build decisions (Phases 1–3, greybox)
+
+### C-017: Player collision runs in the sim (circle vs. oriented boxes), not Rapier
+
+- **What**: the player is a 0.22 m circle resolved against the layout's static boxes and other people, inside `sim/player.ts`. Rapier is not used by Classroom yet.
+- **Why**: the balance runner's bots must drive the _same_ player code headless and deterministically (500 lessons in about a minute). The room is flat, so a capsule-in-physics adds nothing yet. Thrown paper balls and planes use a deterministic ballistic + collider march.
+- **Deviation from the brief** ("Rapier for the player capsule and loose props"): flagged here. Rapier can be added later for purely visual props (tumbling chairs) that only _report_ noise to the sim (C-010).
+
+### C-018: Nav radius 0.25 m; the layout was reshaped for connectivity
+
+- The first layout split the room into disconnected regions: the teacher's desk sealed the left lane off from the front, and the sink sealed the back lane. The desk got smaller, the sink and bin moved, and the rows shifted (`classroom-a.json`). A unit test now checks paths between all spots and seats.
+
+### C-019: Laptop vs. phone visibility asymmetry (core stealth rule)
+
+- Phone held in the lap: the tabletop slab hides it from a far viewer. It is visible from close by (looking over the table, < 1.3 m) or from behind or the side.
+- Laptop on the table: content is readable only from behind the student (screen side). From the front the teacher only sees "absorbed in the screen" (weak evidence).
+- So the two devices are opposite risks: the phone is risky when the teacher patrols behind or close, the laptop when the teacher is behind you. This came from the 2.5D occluder model, not from special cases.
+
+### C-020: Post-penalty grace period
+
+- After a penalty the target gets 25 s (player) / 20 s (classmates) of no new suspicion. Before this, bots out of their seat were re-caught every ~5 s, escalating to "call home" within a minute (unfair and unreadable). This is enforced by tests.
+
+### C-021: The phone is confiscated on a device catch
+
+- Consequences change the sandbox: a confiscated phone means the laptop (riskier from behind) or nothing. A written warning moves your assigned seat to the front "hot seat".
+
+### C-022: The substitute goes by the seating chart
+
+- `knowsNames: false`. If you're caught sitting in someone else's seat, the substitute writes down that seat's owner. You escape the penalty, they lose 20 affinity and remember it. That is the "seating trick" from the brief, with a social cost.
+
+### C-023: Evidence-based suspicion (what, not who)
+
+- Being visible is never suspicious by itself. Suspicion comes from visible _evidence_ (device content, fumbling the quick-switch, out of seat without cover, a note in hand, peeking, cheat sheet, prank setup, throwing) times zone factor × distance falloff × light × teacher focus/distraction. Hearing adds impulses for attributable noises, or sends the teacher to investigate unattributed ones (thrown objects = distractions).
+
+### C-024: Synthesized audio for the greybox
+
+- All sounds (steps, chair squeaks, marker squeak, teacher speech murmur, radiator knocks, bell, device audio) are WebAudio synthesis (`audio/audio.ts`). There are no asset licences to track before Phase 4, and it works offline. The AudioContext is created and resumed only inside the "Enter class" gesture (iPad).
+
+### C-025: Placeholder "video" is procedural
+
+- The in-class "episode" is an original canvas cartoon ("Duck Odyssey"). Real CC-BY / CC0 clips (e.g. Blender open movies) are Phase 4 work with licence entries.
+
+### C-026: Work split with cheaper models
+
+- At your request, self-contained parts went to Sonnet subagents: the audio engine, the unit-test suite + balance runner, and the benchmark route + memory estimate. Architecture, sim and gameplay code stayed in the main session. Every subagent change was reviewed, typechecked and tested before commit.
