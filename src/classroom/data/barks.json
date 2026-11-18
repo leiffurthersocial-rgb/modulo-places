@@ -1,0 +1,126 @@
+{
+  "$comment": "Short barks, tiered: tier 1 specific lines are used first, then tier 2, then generic tier 3 (Splinter Cell Blacklist style). {name} = student name, {object} = object.",
+  "teacher": {
+    "telegraph": [["…and so the— hm.", "Where was I… hm."], ["Mm.", "Hm?"], ["…"]],
+    "watch": [
+      ["{name}. Everything all right over there?", "I can see you, {name}."],
+      ["Mm-hm.", "Eyes front."],
+      ["…"]
+    ],
+    "watchAnon": [["Someone over there is very busy.", "I hear something."], ["Hm."], ["…"]],
+    "confront": [
+      ["{name}. Hand it over. Now.", "{name}, what is that?"],
+      ["{name}. A word."],
+      ["{name}."]
+    ],
+    "confrontAnon": [["You. Yes, you. In that seat."], ["You there."], ["You."]],
+    "warning": [
+      ["That's a warning, {name}. I'll be watching."],
+      ["Last chance, {name}."],
+      ["Warning."]
+    ],
+    "written": [
+      ["Written warning. And you're moving to the front."],
+      ["Front seat. Now."],
+      ["Move."]
+    ],
+    "detention": [["Detention. Next lesson, my room."], ["Detention."], ["Detention."]],
+    "callhome": [
+      ["I'll be calling your parents tonight, {name}."],
+      ["Your parents will hear about this."],
+      ["…"]
+    ],
+    "investigate": [["What was that?", "Who's throwing things?"], ["Hm? What was that?"], ["Huh?"]],
+    "clear": [["Right. Back to work, everyone."], ["Carry on."], ["Mm."]],
+    "markerMissing": [
+      ["Has anyone seen my marker? It was right here.", "Marker. Where is my marker."],
+      ["Where did that go…"],
+      ["Hm."]
+    ],
+    "noSignal": [
+      ["No signal? It worked five minutes ago.", "Why is it on HDMI 2…"],
+      ["Technology. Wonderful."],
+      ["Hm."]
+    ],
+    "gust": [
+      ["My papers! Who opened the window?", "Close that window, please. Who opened it?"],
+      ["Window. Closed. Thank you."],
+      ["Brr."]
+    ],
+    "posters": [
+      ["Has someone been redecorating?", "Those posters were in order this morning."],
+      ["Hm. Posters."],
+      ["…"]
+    ],
+    "plane": [
+      ["A paper plane. How original.", "Nice folding. Still confiscated."],
+      ["Planes. Wonderful."],
+      ["Hm."]
+    ],
+    "sticker": [
+      ["Who put a smiley on my board?", "Very cheerful. Very removable."],
+      ["A sticker. Really."],
+      ["Hm."]
+    ],
+    "radiator": [
+      ["Is that the radiator again?", "Facilities, honestly…"],
+      ["That radiator…"],
+      ["Hm."]
+    ],
+    "doccam": [
+      ["Why is everything upside down?", "Who touched the visualiser?"],
+      ["Upside down. Great."],
+      ["Hm."]
+    ],
+    "clockFast": [
+      ["Is that clock right? My watch says otherwise.", "Nice try with the clock."],
+      ["Hm, the clock…"],
+      ["…"]
+    ],
+    "wobbly": [["Is that chair broken? Sit still, please."], ["Careful with that chair."], ["Hm."]],
+    "noteIntercept": [
+      ["And what's this? A note. How delightful.", "Passing notes? Let's see."],
+      ["I'll take that."],
+      ["Mine now."]
+    ],
+    "popQuestion": [
+      ["{name}, what do you think? Anyone? {name}?", "Let's ask… {name}."],
+      ["{name}?"],
+      ["{name}."]
+    ],
+    "handout": [["Sheets coming round. One each."], ["Pass these back."], ["Here."]],
+    "shh": [["Shh. Quiet, please."], ["Shh."], ["…"]],
+    "leave": [["I'll be right back. Keep working."], ["Back in a minute."], ["…"]],
+    "back": [["I'm back. Where were we?"], ["Right."], ["…"]],
+    "breakStart": [["Five minutes. Don't break anything."], ["Short break."], ["Break."]],
+    "breakEnd": [["Back to your seats, please."], ["Seats."], ["…"]],
+    "question": [["Yes, {name}? What's your question?"], ["Yes?"], ["Mm?"]],
+    "substituteWho": [
+      ["And you are… {name}? It says so on the chart."],
+      ["Name? Never mind, I'll check the chart."],
+      ["…"]
+    ]
+  },
+  "student": {
+    "whisper": [["psst—", "did you see that?"], ["…"], ["…"]],
+    "laugh": [["*snort*", "haha—"], ["*giggle*"], ["…"]],
+    "gasp": [["oh no", "oooh"], ["…"], ["…"]],
+    "cough": [["*cough cough*"], ["*ahem*"], ["*cough*"]],
+    "yawn": [["*yaaawn*"], ["*yawn*"], ["…"]],
+    "sneeze": [["*achoo*"], ["*achoo*"], ["*choo*"]],
+    "snitch": [
+      ["{teacher}, {target} is on their phone!", "Um, {teacher}? {target}…"],
+      ["{teacher}…"],
+      ["…"]
+    ],
+    "warnPlayer": [["*cough* (teacher!)"], ["*ahem*"], ["*cough*"]],
+    "refuseCopy": [["Eyes on your own paper."], ["No."], ["…"]],
+    "allowCopy": [["(tilts paper toward you)"], ["(slides paper over)"], ["…"]],
+    "noteRead": [["*reads the note* heh"], ["*reads*"], ["…"]],
+    "noteRefuse": [["Not passing that."], ["No."], ["…"]],
+    "chat": [["Did you finish the homework?", "This room is freezing."], ["Hey."], ["Mm."]],
+    "prankLove": [["legend.", "*quietly delighted*"], ["heh."], ["…"]],
+    "prankHate": [["Seriously?", "Grow up."], ["Ugh."], ["…"]],
+    "deny": [["Wasn't us."], ["No idea."], ["…"]]
+  }
+}

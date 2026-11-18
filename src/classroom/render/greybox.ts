@@ -139,12 +139,21 @@ export function buildGreybox(layout: RoomLayout): GreyboxRoom {
 
   // --- Openings: door ----------------------------------------------------------------------
   for (const o of layout.openings.filter((x) => x.kind === 'door')) {
-    const p = onWall(layout, o.wall, o.offset + o.width / 2, o.height / 2, 0.02);
+    // Door leaf on a hinge pivot (scene code swings it open).
+    const p = onWall(layout, o.wall, o.offset, o.height / 2, 0.03);
+    const pivot = new THREE.Group();
+    pivot.position.copy(p.pos);
+    pivot.rotation.y = p.rotY;
     const door = box(o.width, o.height, 0.05, mat(C.door, { roughness: 0.6 }));
-    door.position.copy(p.pos);
-    door.rotation.y = p.rotY;
-    door.name = o.id;
-    root.add(door);
+    door.position.x = o.width / 2;
+    const handle = box(0.12, 0.03, 0.06, mat(C.chrome, { metalness: 0.9, roughness: 0.3 }));
+    handle.position.set(o.width - 0.12, -0.05, 0.05);
+    const leaf = new THREE.Group();
+    leaf.name = 'leaf';
+    leaf.add(door, handle);
+    pivot.add(leaf);
+    pivot.name = o.id;
+    root.add(pivot);
   }
 
   // --- Wall fixtures -----------------------------------------------------------------------
@@ -179,7 +188,16 @@ export function buildGreybox(layout: RoomLayout): GreyboxRoom {
         rim.rotation.x = Math.PI / 2;
         const face = new THREE.Mesh(new THREE.CircleGeometry(fw / 2 - 0.02, 32), mat(0xffffff));
         face.position.z = 0.021;
-        g.add(rim, face);
+        const hm = mat(0x222222);
+        const hh = box(0.012, fw * 0.24, 0.006, hm);
+        hh.geometry.translate(0, fw * 0.12, 0);
+        hh.position.z = 0.03;
+        hh.name = 'hand-h';
+        const mh = box(0.008, fw * 0.36, 0.006, hm);
+        mh.geometry.translate(0, fw * 0.18, 0);
+        mh.position.z = 0.034;
+        mh.name = 'hand-m';
+        g.add(rim, face, hh, mh);
         mesh = g;
         break;
       }
@@ -198,6 +216,10 @@ export function buildGreybox(layout: RoomLayout): GreyboxRoom {
         mesh = g;
         break;
       }
+      case 'sharpener':
+        mesh = box(fw, fh, 0.12, mat(0x3a5f9e, { roughness: 0.5 }));
+        inset = 0.06;
+        break;
       case 'pinboard':
         mesh = box(fw, fh, 0.02, mat(C.pinboard));
         break;
@@ -320,6 +342,7 @@ export function buildGreybox(layout: RoomLayout): GreyboxRoom {
         const arm = box(0.03, 0.35, 0.03, mat(0xe8e8e8));
         arm.position.set(0, 0.18, -0.1);
         const head = box(0.08, 0.05, 0.18, mat(0xe8e8e8));
+        head.name = 'doccam-head';
         head.position.set(0, 0.36, -0.02);
         g.add(base, arm, head);
         g.position.y = 1.07;
@@ -333,6 +356,17 @@ export function buildGreybox(layout: RoomLayout): GreyboxRoom {
         rod.position.y = 0.17;
         g.add(body, rod);
         g.position.y = p.height ?? 2.55;
+        mesh = g;
+        break;
+      }
+      case 'laptop': {
+        const g = new THREE.Group();
+        const base = box(0.32, 0.02, 0.22, mat(0x2b2d30, { metalness: 0.5, roughness: 0.4 }));
+        const lid = box(0.32, 0.21, 0.012, mat(0x2b2d30, { metalness: 0.5, roughness: 0.4 }));
+        lid.position.set(0, 0.105, 0.11);
+        lid.rotation.x = -0.25;
+        g.add(base, lid);
+        g.position.y = 1.07;
         mesh = g;
         break;
       }

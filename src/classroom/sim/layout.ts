@@ -52,6 +52,8 @@ export interface Seat {
   pos: Vec2;
   /** Degrees around +y; 0 = looking toward -z (the board). */
   facing: number;
+  /** Front "hot seat" used for seat-change penalties. */
+  hot?: boolean;
 }
 
 export interface Column {
@@ -71,6 +73,8 @@ export interface RoomLayout {
   tables: Table[];
   seats: Seat[];
   spareChairs: { id: string; pos: Vec2; facing: number }[];
+  zones?: { id: string; kind: string; min: Vec2; max: Vec2 }[];
+  spots?: Record<string, Vec2>;
   playerSeat: string;
   teacherHome: Vec2;
 }

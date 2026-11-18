@@ -1,0 +1,53 @@
+{
+  "$comment": "Optional self-chosen challenges. counter = record counter key, goal = target value within one day.",
+  "challenges": [
+    {
+      "id": "highscore",
+      "text": "Score 300 in Block Drop during a lesson",
+      "counter": "bestScore",
+      "goal": 300
+    },
+    {
+      "id": "episode",
+      "text": "Watch 3 minutes of video in class",
+      "counter": "videoSeconds",
+      "goal": 180
+    },
+    {
+      "id": "postman",
+      "text": "Deliver notes to 4 different classmates",
+      "counter": "notesDeliveredUnique",
+      "goal": 4
+    },
+    {
+      "id": "trickster",
+      "text": "Pull off 2 pranks without getting caught",
+      "counter": "pranksClean",
+      "goal": 2
+    },
+    {
+      "id": "angel",
+      "text": "Finish a lesson without a single warning",
+      "counter": "cleanLessons",
+      "goal": 1
+    },
+    {
+      "id": "scholar",
+      "text": "Score 85% or better on a test without cheating",
+      "counter": "honestAce",
+      "goal": 1
+    },
+    {
+      "id": "ghost",
+      "text": "Spend 60 seconds out of your seat unnoticed",
+      "counter": "sneakSeconds",
+      "goal": 60
+    },
+    {
+      "id": "popular",
+      "text": "Raise three classmates to friend level (50+)",
+      "counter": "friends",
+      "goal": 3
+    }
+  ]
+}

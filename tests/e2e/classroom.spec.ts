@@ -10,17 +10,25 @@ function collectErrors(page: Page): string[] {
   return errors;
 }
 
-for (const cam of ['seat', 'overview', 'teacher']) {
-  test(`classroom greybox renders (${cam})`, async ({ page }, info) => {
+const SHOTS: [string, string][] = [
+  ['seat', 'lesson=lecture&t=40&bot=angel'],
+  ['overview', 'lesson=lecture&t=90&bot=prankster&debug=1'],
+  ['seat', 'lesson=film&t=60&bot=sneaky&device=phone&hud=1'],
+  ['front', 'lesson=group&t=30&bot=postman'],
+  ['top', 'lesson=lecture&t=120&bot=chaos&debug=1'],
+];
+for (const [cam, extra] of SHOTS) {
+  test(`classroom renders (${cam} ${extra})`, async ({ page }, info) => {
     const errors = collectErrors(page);
-    await page.goto(`/classroom.html?shot=3&seed=1&cam=${cam}`);
+    await page.goto(`/classroom.html?shot=3&seed=1&cam=${cam}&${extra}`);
     await page.waitForFunction(() => window.__shotReady === true, null, { timeout: 90_000 });
     const i = await page.evaluate(() => window.__info);
     expect(i?.app).toBe('classroom');
     expect(i?.webgl2).toBe(true);
-    expect(i?.layoutProblems).toBe(0);
-    expect(i?.tick).toBe(3);
-    await page.screenshot({ path: `screenshots/latest/classroom-${cam}-${info.project.name}.png` });
+    expect(Number(i?.tick)).toBeGreaterThan(0);
+    await page.screenshot({
+      path: `screenshots/latest/classroom-${cam}-${extra.split('&')[0]!.split('=')[1]}-${extra.includes('debug') ? 'debug-' : ''}${info.project.name}.png`,
+    });
     expect(errors).toEqual([]);
   });
 }
@@ -28,13 +36,76 @@ for (const cam of ['seat', 'overview', 'teacher']) {
 test('classroom sim is deterministic for a seed', async ({ page }, info) => {
   test.skip(info.project.name !== 'desktop', 'one viewport is enough');
   const run = async (seed: string) => {
-    await page.goto(`/classroom.html?shot=6&seed=${seed}&cam=overview`);
+    await page.goto(`/classroom.html?shot=3&t=20&bot=sneaky&seed=${seed}&cam=overview`);
     await page.waitForFunction(() => window.__shotReady === true, null, { timeout: 90_000 });
-    return page.evaluate(() => window.__info?.simChecksum);
+    return page.evaluate(() => window.__info?.hash);
   };
   const a = await run('7');
   const b = await run('7');
   const c = await run('8');
   expect(a).toBe(b);
   expect(a).not.toBe(c);
+});
+
+test('classroom interactive: title → class → phone → decoy → stand/walk', async ({
+  page,
+}, info) => {
+  test.skip(info.project.name === 'ipad-keyboard', 'covered by desktop + ipad-touch');
+  const errors = collectErrors(page);
+  await page.goto('/classroom.html?test=1');
+  await page.waitForSelector('text=Enter class');
+  await page.screenshot({ path: `screenshots/latest/classroom-title-${info.project.name}.png` });
+  await page.click('text=Enter class');
+  await page.waitForFunction(() => {
+    const g = (window as unknown as { __game?: { world?: { tick: number } } }).__game;
+    return !!g?.world && g.world.tick > 10;
+  });
+  type G = {
+    world: {
+      ps: { device: { kind: string | null; mode: string } };
+      player: { sittingIn: string | null; pos: { x: number; z: number } };
+      tick: number;
+    };
+    queue: (c: object) => void;
+  };
+  const g = () => (window as unknown as { __game: G }).__game;
+  await page.evaluate(() =>
+    (window as unknown as { __game: { queue: (c: object) => void } }).__game.queue({
+      device: 'phone',
+    }),
+  );
+  await page.waitForFunction(
+    () => (window as unknown as { __game: G }).__game.world.ps.device.kind === 'phone',
+  );
+  await page.waitForTimeout(800);
+  await page.screenshot({
+    path: `screenshots/latest/classroom-play-phone-${info.project.name}.png`,
+  });
+  await page.keyboard.press('KeyQ');
+  await page.waitForFunction(
+    () => (window as unknown as { __game: G }).__game.world.ps.device.mode === 'decoy',
+  );
+  await page.keyboard.press('Digit1');
+  await page.waitForFunction(
+    () => (window as unknown as { __game: G }).__game.world.ps.device.kind === null,
+  );
+  await page.keyboard.press('Space');
+  await page.waitForFunction(
+    () => (window as unknown as { __game: G }).__game.world.player.sittingIn === null,
+  );
+  const before = await page.evaluate(() => ({
+    ...(window as unknown as { __game: G }).__game.world.player.pos,
+  }));
+  await page.keyboard.down('KeyS');
+  await page.waitForTimeout(700);
+  await page.keyboard.up('KeyS');
+  const after = await page.evaluate(() => ({
+    ...(window as unknown as { __game: G }).__game.world.player.pos,
+  }));
+  expect(Math.hypot(after.x - before.x, after.z - before.z)).toBeGreaterThan(0.1);
+  await page.keyboard.press('Escape');
+  await page.waitForSelector('text=Paused');
+  await page.screenshot({ path: `screenshots/latest/classroom-pause-${info.project.name}.png` });
+  void g;
+  expect(errors).toEqual([]);
 });

@@ -1,0 +1,27 @@
+{
+  "$comment": "Note templates. affinity: change for the recipient on delivery. severity: how bad it is if the teacher intercepts (0..1). answers: carries test answers (cheating).",
+  "templates": [
+    {
+      "id": "bored",
+      "text": "Is it just me or is this lesson 900 minutes long?",
+      "affinity": 4,
+      "severity": 0.3
+    },
+    {
+      "id": "joke",
+      "text": "Drew you a duck. It's very professional.",
+      "affinity": 6,
+      "severity": 0.3
+    },
+    { "id": "warning", "text": "Heads up: you're being watched.", "affinity": 5, "severity": 0.4 },
+    { "id": "lunch", "text": "Window spot at break?", "affinity": 5, "severity": 0.2 },
+    {
+      "id": "answers",
+      "text": "What did you get for question 3?",
+      "affinity": 2,
+      "severity": 0.9,
+      "answers": true
+    },
+    { "id": "sorry", "text": "Sorry about earlier. Truce?", "affinity": 10, "severity": 0.2 }
+  ]
+}

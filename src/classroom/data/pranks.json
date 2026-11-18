@@ -1,0 +1,108 @@
+{
+  "$comment": "Harmless prank library. target = interactable id. setup: seconds of visible fiddling (evidence while doing it). delay: seconds until the effect. effect.kind maps to code in sim/pranks.ts. distraction: seconds the teacher is busy (cover). opinion: how classmates' traits react (rebellious likes, goody dislikes).",
+  "pranks": [
+    {
+      "id": "hide-marker",
+      "name": "Hide the marker",
+      "target": "marker",
+      "setup": 1.5,
+      "delay": 0,
+      "effect": { "kind": "marker-missing" },
+      "distraction": 20,
+      "heat": 0.5,
+      "requires": "carry-free"
+    },
+    {
+      "id": "projector-input",
+      "name": "Switch the projector input",
+      "target": "projector-remote",
+      "setup": 1.2,
+      "delay": 2,
+      "effect": { "kind": "no-signal" },
+      "distraction": 18,
+      "heat": 0.4
+    },
+    {
+      "id": "open-window",
+      "name": "Open the window a crack",
+      "target": "window-a",
+      "setup": 1.5,
+      "delay": 25,
+      "effect": { "kind": "gust" },
+      "distraction": 16,
+      "heat": 0.3
+    },
+    {
+      "id": "swap-chair",
+      "name": "Swap a chair for the wobbly spare",
+      "target": "seat",
+      "setup": 2.5,
+      "delay": 0,
+      "effect": { "kind": "wobbly-chair" },
+      "distraction": 8,
+      "heat": 0.4,
+      "requires": "break"
+    },
+    {
+      "id": "clock-offset",
+      "name": "Set the clock five minutes fast",
+      "target": "clock",
+      "setup": 3.0,
+      "delay": 0,
+      "effect": { "kind": "clock-fast", "minutes": 5 },
+      "distraction": 6,
+      "heat": 0.5
+    },
+    {
+      "id": "reorder-posters",
+      "name": "Reorder the posters",
+      "target": "poster-1",
+      "setup": 2.5,
+      "delay": 0,
+      "effect": { "kind": "posters-swapped" },
+      "distraction": 10,
+      "heat": 0.3
+    },
+    {
+      "id": "paper-plane",
+      "name": "Paper plane on the teacher's desk",
+      "target": "teacher-desk",
+      "setup": 0.8,
+      "delay": 0,
+      "effect": { "kind": "plane-on-desk" },
+      "distraction": 7,
+      "heat": 0.3,
+      "requires": "plane"
+    },
+    {
+      "id": "board-sticker",
+      "name": "Stick a smiley on the board",
+      "target": "board",
+      "setup": 1.2,
+      "delay": 0,
+      "effect": { "kind": "sticker" },
+      "distraction": 9,
+      "heat": 0.4
+    },
+    {
+      "id": "radiator-knock",
+      "name": "Make the radiator knock",
+      "target": "radiator",
+      "setup": 1.0,
+      "delay": 4,
+      "effect": { "kind": "radiator-knock", "duration": 35 },
+      "distraction": 14,
+      "heat": 0.3
+    },
+    {
+      "id": "doc-cam-flip",
+      "name": "Turn the document camera upside down",
+      "target": "doc-camera",
+      "setup": 1.2,
+      "delay": 0,
+      "effect": { "kind": "doccam-flipped" },
+      "distraction": 12,
+      "heat": 0.4
+    }
+  ]
+}
