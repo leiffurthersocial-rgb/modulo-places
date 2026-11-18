@@ -109,3 +109,21 @@ test('classroom interactive: title → class → phone → decoy → stand/walk'
   void g;
   expect(errors).toEqual([]);
 });
+
+test('classroom benchmark route reports stats', async ({ page }, info) => {
+  test.skip(info.project.name !== 'desktop', 'one viewport is enough');
+  const errors = collectErrors(page);
+  await page.goto('/classroom.html?bench=3&preset=battery');
+  await page.waitForFunction(() => !!(window as unknown as { __bench?: unknown }).__bench, null, {
+    timeout: 120_000,
+  });
+  const b = await page.evaluate(
+    () => (window as unknown as { __bench: Record<string, number | string> }).__bench,
+  );
+  expect(Number(b.frames)).toBeGreaterThan(0);
+  expect(Number(b.estGpuMB)).toBeGreaterThan(0);
+  expect(Number(b.estGpuMB)).toBeLessThan(1024);
+  expect(b.preset).toBe('battery');
+  await page.screenshot({ path: 'screenshots/latest/classroom-bench-desktop.png' });
+  expect(errors).toEqual([]);
+});

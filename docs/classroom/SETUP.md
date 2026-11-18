@@ -48,6 +48,22 @@ Screenshots go to `screenshots/latest/classroom-<cam>-<profile>.png` (gitignored
 npx playwright install chromium
 ```
 
+## Benchmark (Phase 3)
+
+`?bench=SECONDS` starts a lesson directly (no menus, a `sneaky` bot plays), flies the camera along a fixed loop through the room, and runs in real time at the preset's FPS cap. Optional: `&preset=`, `&lesson=`, `&teacher=`, `&seed=`. When done it fills `window.__bench` (frame-time avg/p50/p95/p99/max, FPS, draw calls, triangles, textures, geometries, estimated GPU MB, average sim tick ms, user agent) and shows a results panel with a "Copy JSON" button. The F3 overlay also shows the GPU estimate.
+
+Open on desktop (dev server or deployed build) and on the iPad, one after the other, and paste the JSON back:
+
+```
+/classroom.html?bench=30&preset=medium
+```
+
+```
+/classroom.html?bench=30&preset=battery
+```
+
+SwiftShader (headless CI) numbers are not meaningful for performance; the e2e test only checks that the route completes.
+
 ## Architecture guard
 
 `eslint.config.js` forbids imports of three/render/ui/audio/input and the use of `window`, `document`, `performance`, `Math.random` and `Date.now` inside `src/classroom/sim/**`. If lint fails there, move the code to `render/` or `ui/`, or use `sim/rng.ts` and `sim/clock.ts`.

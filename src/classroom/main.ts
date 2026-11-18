@@ -4,7 +4,10 @@
 //   ?shot=N[&t=SECONDS&bot=STYLE&cam=seat|overview|front|teacher|top&debug=1&hud=1&device=phone|laptop&preset=]
 //       screenshot mode: deterministic, pre-simulates t seconds (optionally with a bot), renders
 //       N fixed-step frames, then sets window.__shotReady = true.
+//   ?bench=SECONDS[&preset=&lesson=&teacher=&seed=]
+//       benchmark: real-time lesson with a sneaky bot, scripted camera path, then window.__bench.
 import { ClassroomApp, type ShotOptions } from './app';
+import type { BenchOptions } from './bench';
 import type { BotStyle } from './sim/bots';
 import { parseSeed } from './sim/rng';
 
@@ -25,5 +28,15 @@ if (q.has('shot')) {
     preset: q.get('preset'),
   };
 }
-const app = new ClassroomApp(document.getElementById('app')!, shot);
+let bench: BenchOptions | null = null;
+if (!shot && q.has('bench')) {
+  bench = {
+    seconds: Math.max(1, Number(q.get('bench')) || 20),
+    preset: q.get('preset'),
+    lesson: q.get('lesson') ?? 'lecture',
+    teacher: q.get('teacher') ?? 'strict',
+    seed: parseSeed(q.get('seed'), 1),
+  };
+}
+const app = new ClassroomApp(document.getElementById('app')!, shot, bench);
 app.boot();

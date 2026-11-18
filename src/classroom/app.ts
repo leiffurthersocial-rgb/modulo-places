@@ -1,8 +1,16 @@
 // Composition root: sim (20 Hz fixed tick) + render interpolation + input + audio + UI + day flow.
 import * as THREE from 'three';
 import { AudioEngine, type SoundKind } from './audio/audio';
+import {
+  BenchCameraPath,
+  type BenchOptions,
+  type BenchResult,
+  showBenchPanel,
+  summarizeFrames,
+} from './bench';
 import { type Action, InputManager } from './input/input';
 import { DeviceView } from './render/device';
+import { estimateGpuMemory } from './render/memory';
 import { RoomView } from './render/scene';
 import { loadRecord, saveRecord, hasSave, clearSave } from './save/save';
 import { Bot, type BotStyle } from './sim/bots';
@@ -28,6 +36,7 @@ import {
   FrameWatch,
   loadSettings,
   PRESET_ORDER,
+  PRESETS,
   resolveQuality,
   saveSettings,
   type Settings,
@@ -106,13 +115,25 @@ export class ClassroomApp {
   private batteryHinted = false;
   private host: HTMLElement;
   private frameIdx = 0;
+  private bench: BenchOptions | null;
+  private benchPath: BenchCameraPath | null = null;
+  private benchStart = -1;
+  private benchLast = 0;
+  private benchTimes: number[] = [];
+  private benchDone = false;
+  private benchSimMs = 0;
+  private benchSimTicks = 0;
+  private gpuMB = 0;
 
-  constructor(host: HTMLElement, shot: ShotOptions | null) {
+  constructor(host: HTMLElement, shot: ShotOptions | null, bench: BenchOptions | null = null) {
     this.host = host;
     this.shot = shot;
+    this.bench = bench;
     this.settings = loadSettings();
-    if (shot?.preset) this.settings.preset = shot.preset as Settings['preset'];
-    this.record = shot ? newRecord() : loadRecord();
+    const presetOverride = shot?.preset ?? bench?.preset;
+    if (presetOverride && presetOverride in PRESETS)
+      this.settings.preset = presetOverride as Settings['preset'];
+    this.record = shot || bench ? newRecord() : loadRecord();
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
       powerPreference: 'high-performance',
@@ -147,6 +168,22 @@ export class ClassroomApp {
   // Boot / flow
 
   boot(): void {
+    if (this.bench) {
+      this.startLesson({
+        lesson: this.bench.lesson,
+        teacher: this.bench.teacher,
+        seed: String(this.bench.seed),
+        cheatSheet: false,
+      });
+      const w = this.world!;
+      this.bot = new Bot('sneaky', new Rng(this.bench.seed ^ 0x5eed));
+      this.benchPath = new BenchCameraPath(w.layout.room.size, () => w.teacher.pos);
+      this.ui.setHudVisible(false);
+      this.input.setTouchVisible(false);
+      this.mode = 'play';
+      requestAnimationFrame((t) => this.frame(t));
+      return;
+    }
     if (this.shot) {
       this.startLesson({
         lesson: this.shot.lesson,
@@ -332,6 +369,7 @@ export class ClassroomApp {
       if (
         this.settings.watchdog &&
         this.mode === 'play' &&
+        !this.bench &&
         this.watch.push(now - this.lastFrame, now, 1000 / q.fpsCap) === 'slow'
       )
         this.stepDownQuality();
@@ -341,6 +379,10 @@ export class ClassroomApp {
     this.frameIdx++;
     const w = this.world;
     if (!w || !this.view) return;
+    if (this.bench) {
+      this.benchFrame(now, realDt, w);
+      return;
+    }
 
     if (this.shot) {
       if (this.shotFrames >= this.shot.frames) return;
@@ -369,16 +411,63 @@ export class ClassroomApp {
     this.maybeSuggestBattery();
   }
 
+  private benchElapsed(): number {
+    return this.benchStart < 0 ? 0 : (this.benchLast - this.benchStart) / 1000;
+  }
+
+  /** Benchmark frame: real rAF timing (FPS cap already applied), bot-driven sim, scripted camera. */
+  private benchFrame(now: number, realDt: number, w: World): void {
+    const b = this.bench!;
+    if (this.benchDone) return;
+    if (this.benchStart < 0) this.benchStart = now;
+    else this.benchTimes.push(now - this.benchLast);
+    this.benchLast = now;
+    if (this.benchElapsed() >= b.seconds) {
+      this.finishBench();
+      return;
+    }
+    const n = this.clock.advance(realDt);
+    for (let i = 0; i < n && !w.over; i++) this.tickSim(this.bot!.command(w), true);
+    this.renderWorld(realDt, this.clock.alpha);
+  }
+
+  private finishBench(): void {
+    const b = this.bench!;
+    this.benchDone = true;
+    const info = this.renderer.info;
+    const stats = summarizeFrames(this.benchTimes);
+    const result: BenchResult = {
+      preset: this.settings.preset,
+      seconds: b.seconds,
+      frames: this.benchTimes.length,
+      ...stats,
+      drawCalls: info.render.calls,
+      triangles: info.render.triangles,
+      textures: info.memory.textures,
+      geometries: info.memory.geometries,
+      estGpuMB: estimateGpuMemory(this.view!.scene, this.renderer).totalMB,
+      simTickMsAvg: this.benchSimTicks ? this.benchSimMs / this.benchSimTicks : 0,
+      userAgent: navigator.userAgent,
+    };
+    (window as unknown as { __bench: BenchResult }).__bench = result;
+    showBenchPanel(result);
+  }
+
   private tickSim(cmd: PlayerCommand, silent: boolean): void {
     const w = this.world!;
     this.prevP = { ...this.curP };
+    const t0 = this.bench ? performance.now() : 0;
     w.step(cmd);
+    if (this.bench) {
+      this.benchSimMs += performance.now() - t0;
+      this.benchSimTicks++;
+    }
     this.curP = { ...w.player.pos };
     this.view?.onTick(w);
     const ev = w.drainEvents();
     this.bot?.observe(ev);
     if (!silent) for (const e of ev) this.onEvent(e);
-    if (w.over && !this.shot && this.mode === 'play') {
+    if (w.over && !this.shot && !this.bench && this.mode === 'play') {
       this.mode = 'summary';
       setTimeout(() => this.lessonSummary(), 1200);
     }
@@ -647,7 +736,8 @@ export class ClassroomApp {
     const p = w.player;
     if (!this.freecam) {
       const shotCam = this.shot?.cam ?? 'seat';
-      if (shotCam === 'seat' || !this.shot) {
+      if (this.benchPath) this.benchPath.place(this.camera, this.benchElapsed());
+      else if (shotCam === 'seat' || !this.shot) {
         const x = this.prevP.x + (this.curP.x - this.prevP.x) * alpha;
         const z = this.prevP.z + (this.curP.z - this.prevP.z) * alpha;
         this.eyeY += (EYE_HEIGHT[p.stance] - this.eyeY) * Math.min(1, dt * 10);
@@ -701,7 +791,7 @@ export class ClassroomApp {
       );
     } else view.setGlow(null, 0, 0);
     this.renderer.render(view.scene, this.camera);
-    if (!this.shot || this.shot.hud) this.updateHud();
+    if (!this.bench && (!this.shot || this.shot.hud)) this.updateHud();
     this.updateAudio();
   }
 
@@ -1107,6 +1197,8 @@ export class ClassroomApp {
           `${id.padEnd(8)} ${s.s.toFixed(2)} heat ${s.heat.toFixed(2)} ${s.lastEvidence?.kind ?? ''}`,
       )
       .join('\n');
+    if (this.frameIdx % 60 === 0 || !this.gpuMB)
+      this.gpuMB = estimateGpuMemory(this.view!.scene, this.renderer).totalMB;
     const t0 = performance.now();
     const probe = new World({ seed: 1, lessonType: w.lessonType, teacher: w.profile.id });
     probe.step(idleCommand());
@@ -1115,7 +1207,7 @@ export class ClassroomApp {
     this.debugEl.innerHTML =
       `FPS ~${(1000 / Math.max(1, this.watch.avg())).toFixed(0)}  frame ${this.watch.avg().toFixed(1)} ms\n` +
       `draw calls ${info.render.calls}  tris ${info.render.triangles}\n` +
-      `geo ${info.memory.geometries}  tex ${info.memory.textures}\n` +
+      `geo ${info.memory.geometries}  tex ${info.memory.textures}  est. GPU ${this.gpuMB.toFixed(1)} MB\n` +
       `sim t ${w.t.toFixed(1)} s  tick ${w.tick}  probe tick ${tickMs.toFixed(2)} ms\n` +
       `phase ${w.phase().id}  clock ${w.clockMinutes().toFixed(1)} min\n` +
       `teacher ${w.brain.state} → ${w.brain.target ?? '-'}  ${w.brain.distracted ? '(distracted)' : ''}\n` +
