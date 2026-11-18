@@ -9,3 +9,9 @@ screenshots/latest/
 !.env.example
 *.log
 public/vendor/
+
+# Reference photos show real people and this repo is public: keep them local only.
+reference/*.jpg
+reference/*.jpeg
+reference/*.png
+reference/*.heic

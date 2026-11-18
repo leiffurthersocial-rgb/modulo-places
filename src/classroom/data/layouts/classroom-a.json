@@ -1,0 +1,140 @@
+{
+  "$comment": "Room layout. 1 unit = 1 m. Origin = front-left floor corner. +x = toward the window wall, +z = toward the back wall, +y = up. Front wall (z=0) holds the board. Rotations are degrees around +y; facing 0 = looking toward -z (the board).",
+  "id": "classroom-a",
+  "version": 1,
+  "room": {
+    "id": "room-a",
+    "size": [9, 2.8, 7],
+    "materials": { "floor": "carpet-brown", "walls": "concrete", "ceiling": "wood-slats" }
+  },
+  "openings": [
+    {
+      "id": "door-main",
+      "kind": "door",
+      "wall": "back",
+      "offset": 0.35,
+      "width": 1.0,
+      "height": 2.1,
+      "leadsTo": null
+    },
+    {
+      "id": "window-a",
+      "kind": "window",
+      "wall": "right",
+      "offset": 0.4,
+      "width": 2.7,
+      "sill": 0.85,
+      "height": 1.75
+    },
+    {
+      "id": "window-b",
+      "kind": "window",
+      "wall": "right",
+      "offset": 3.9,
+      "width": 2.7,
+      "sill": 0.85,
+      "height": 1.75
+    }
+  ],
+  "columns": [{ "id": "column-1", "center": [8.8, 3.65], "size": [0.4, 0.5] }],
+  "fixtures": [
+    {
+      "id": "board",
+      "kind": "whiteboard",
+      "wall": "front",
+      "center": [4.5, 1.45],
+      "size": [3.6, 1.2]
+    },
+    {
+      "id": "pinboard",
+      "kind": "pinboard",
+      "wall": "left",
+      "center": [3.6, 1.55],
+      "size": [2.2, 1.2]
+    },
+    {
+      "id": "poster-1",
+      "kind": "poster",
+      "wall": "back",
+      "center": [4.6, 1.65],
+      "size": [0.6, 0.8]
+    },
+    {
+      "id": "poster-2",
+      "kind": "poster",
+      "wall": "back",
+      "center": [5.6, 1.65],
+      "size": [0.6, 0.8]
+    },
+    {
+      "id": "poster-3",
+      "kind": "poster",
+      "wall": "back",
+      "center": [6.8, 1.65],
+      "size": [0.6, 0.8]
+    },
+    {
+      "id": "poster-4",
+      "kind": "poster",
+      "wall": "back",
+      "center": [7.8, 1.65],
+      "size": [0.6, 0.8]
+    },
+    { "id": "clock", "kind": "clock", "wall": "back", "center": [0.85, 2.4], "size": [0.32, 0.32] },
+    { "id": "sink", "kind": "sink", "wall": "back", "center": [2.4, 0.85], "size": [0.6, 0.45] },
+    {
+      "id": "radiator",
+      "kind": "radiator",
+      "wall": "right",
+      "center": [3.65, 0.4],
+      "size": [6.4, 0.6]
+    }
+  ],
+  "props": [
+    {
+      "id": "teacher-desk",
+      "kind": "standing-desk",
+      "pos": [1.5, 0.95],
+      "rot": 0,
+      "size": [1.4, 1.05, 0.7]
+    },
+    {
+      "id": "doc-camera",
+      "kind": "document-camera",
+      "pos": [1.15, 0.95],
+      "rot": 0,
+      "on": "teacher-desk"
+    },
+    { "id": "projector", "kind": "ceiling-projector", "pos": [4.5, 3.2], "rot": 0, "height": 2.55 },
+    { "id": "bin", "kind": "bin", "pos": [0.35, 6.2], "rot": 0 }
+  ],
+  "tables": [
+    { "id": "t-l1", "pos": [1.625, 2.35], "rot": 90, "size": [1.3, 0.72, 0.65] },
+    { "id": "t-l2", "pos": [1.625, 3.65], "rot": 90, "size": [1.3, 0.72, 0.65] },
+    { "id": "t-l3", "pos": [1.625, 4.95], "rot": 90, "size": [1.3, 0.72, 0.65] },
+    { "id": "t-b1", "pos": [1.95, 5.95], "rot": 0, "size": [1.3, 0.72, 0.65] },
+    { "id": "t-b2", "pos": [3.25, 5.95], "rot": 0, "size": [1.3, 0.72, 0.65] },
+    { "id": "t-b3", "pos": [4.55, 5.95], "rot": 0, "size": [1.3, 0.72, 0.65] },
+    { "id": "t-b4", "pos": [5.85, 5.95], "rot": 0, "size": [1.3, 0.72, 0.65] },
+    { "id": "t-b5", "pos": [7.15, 5.95], "rot": 0, "size": [1.3, 0.72, 0.65] },
+    { "id": "t-r1", "pos": [7.475, 2.35], "rot": 90, "size": [1.3, 0.72, 0.65] },
+    { "id": "t-r2", "pos": [7.475, 3.65], "rot": 90, "size": [1.3, 0.72, 0.65] },
+    { "id": "t-r3", "pos": [7.475, 4.95], "rot": 90, "size": [1.3, 0.72, 0.65] }
+  ],
+  "seats": [
+    { "id": "s-l1", "table": "t-l1", "pos": [0.95, 2.35], "facing": -90 },
+    { "id": "s-l2", "table": "t-l2", "pos": [0.95, 3.65], "facing": -90 },
+    { "id": "s-l3", "table": "t-l3", "pos": [0.95, 4.95], "facing": -90 },
+    { "id": "s-b1", "table": "t-b1", "pos": [1.95, 6.55], "facing": 0 },
+    { "id": "s-b2", "table": "t-b2", "pos": [3.25, 6.55], "facing": 0 },
+    { "id": "s-b3", "table": "t-b3", "pos": [4.55, 6.55], "facing": 0 },
+    { "id": "s-b4", "table": "t-b4", "pos": [5.85, 6.55], "facing": 0 },
+    { "id": "s-b5", "table": "t-b5", "pos": [7.15, 6.55], "facing": 0 },
+    { "id": "s-r1", "table": "t-r1", "pos": [8.15, 2.35], "facing": 90 },
+    { "id": "s-r2", "table": "t-r2", "pos": [8.15, 3.65], "facing": 90 },
+    { "id": "s-r3", "table": "t-r3", "pos": [8.15, 4.95], "facing": 90 }
+  ],
+  "spareChairs": [{ "id": "chair-spare-1", "pos": [0.5, 1.6], "facing": 30 }],
+  "playerSeat": "s-b3",
+  "teacherHome": [1.5, 0.35]
+}

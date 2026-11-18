@@ -48,5 +48,11 @@
         }
       ]
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/classroom",
+      "destination": "/classroom.html"
+    }
   ]
 }

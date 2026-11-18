@@ -9,6 +9,7 @@ export default defineConfig({
       input: {
         main: 'index.html',
         lab: 'lab.html',
+        classroom: 'classroom.html',
       },
     },
   },
